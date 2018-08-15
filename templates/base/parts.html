@@ -83,6 +83,26 @@
     {{ page.title }}
 {% endmacro %}
 
+{% macro article_taxonomies(page, config) %}
+    <div class="article-taxonomies">
+        {%- for taxonomy_config in config.taxonomies -%}
+            {%- set taxonomy_name = taxonomy_config.name -%}
+            {%- set term_names = page.taxonomies[taxonomy_name] -%}
+            <span class="article-taxonomy"><a class="article-taxonomy-name" href="{{ get_url(path=taxonomy_name) }}">
+                {{ taxonomy_name | capitalize }}</a><span class="article-terms">
+                {%- for term_name in term_names -%}
+                    {%- if page.draft == true -%}
+                        <span class="article-term-name">{{ term_name }}</span>
+                    {%- else -%}
+                        {%- set term_url = get_taxonomy_url(kind=taxonomy_name, name=term_name) -%}
+                        <a class="article-term-name" href="{{ term_url }}">{{ term_name }}</a>
+                    {%- endif -%}
+                {%- endfor -%}
+            </span></span>
+        {%- endfor -%}
+    </div>
+{% endmacro %}
+
 {% macro article_title(page, config) %}
     <h1 class="title article-title">
         <a class="article-title-link" href="{{ page.permalink }}">
@@ -105,6 +125,7 @@
                 {{ config.extra.text_continue_reading }}
             </a>
         </p>
+        {{ self::article_taxonomies(page=page, config=config) }}
     </article>
 {% endmacro %}
 
@@ -112,6 +133,7 @@
     <article class="article-container container">
         {{ self::article_title(page=page, config=config) }}
         {{ self::article_datetime(page=page, config=config) }}
+        {{ self::article_taxonomies(page=page, config=config) }}
         <section class="article-content">{{ page.content | safe }}</section>
     </article>
 {% endmacro %}

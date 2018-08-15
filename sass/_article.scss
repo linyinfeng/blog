@@ -39,3 +39,27 @@
         color: $link-default-color;
     }
 }
+
+.article-taxonomies {
+    .article-taxonomy {
+        margin-right: 0.25rem;
+        :last-child {
+            margin-right: inherit;
+        }
+    }
+    .article-taxonomy-name {
+        margin-right: 0.25rem;
+    }
+    .article-taxonomy-name::after  {
+        content: ":";
+    }
+    .article-term-name {
+        margin-right: 0.25rem;
+        :last-child {
+            margin-right: inherit;
+        }
+    }
+    a.article-term-name {
+        color: $theme-color;
+    }
+}
