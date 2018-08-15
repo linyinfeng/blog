@@ -1,0 +1,22 @@
+$theme-color: maroon;
+$theme-contrast: white;
+$theme-shadow: gray;
+$theme-change-level: 20%;
+$header-background-color: white;
+$header-foreground-color: black;
+$header-shadow-color: $theme-shadow;
+$footer-background-color: white;
+$footer-foreground-color: black;
+$footer-shadow-color: $theme-shadow;
+$link-default-color: $theme-color;
+
+$list-indent-size: 1rem;
+
+// Global settings
+@import "global";
+@import "list";
+@import "article";
+@import "header";
+@import "footer";
+@import "pages_list";
+@import "aside";

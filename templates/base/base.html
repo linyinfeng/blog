@@ -1,0 +1,42 @@
+{% import "base/parts.html" as parts %}
+<!DOCTYPE html>
+<html lang={% block language %}{{ config.default_language }}{% endblock language %}>
+<head>
+    {% block head %}
+        {% block meta %}
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% endblock meta %}
+        <link rel=stylesheet type="text/css" href={{ get_url(path="style.css") }}>
+        <title>{% block title %}{{ config.title }}{% endblock title %}</title>
+    {% endblock head %}
+</head>
+<body>
+    {% block body %}
+        <header id="header">
+            {% block header %}
+            {{ parts::header(title=config.title,
+                title_url=config.base_url,
+                nav_items=config.extra.global_nav_items) }}
+            {% endblock header %}
+        </header>
+        <div id="main-aside-container">
+            <main id="main">
+                {% block main %}
+                {% endblock main %}
+            </main>
+            {% block optional_aside %}
+                <aside id="aside">
+                    {% block aside %}
+                    {% endblock aside %}
+                </aside>
+            {% endblock optional_aside %}
+        </div>
+        <footer id="footer">
+            {% block footer %}
+            {{ parts::footer(copyright=config.extra.copyright, powered_by=config.extra.powered_by) }}
+            {% endblock footer %}
+        </footer>
+    {% endblock body %}
+</body>
+</html>

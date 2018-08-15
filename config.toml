@@ -1,0 +1,51 @@
+# The URL the site will be built for
+base_url = "https://www.linyinfeng.com"
+title = "林吟风"
+#description = "博客"
+
+default_language = "cn"
+
+compile_sass = true
+shortcode = true
+
+# Whether to do syntax highlighting
+# Theme can be customised by setting the `highlight_theme` variable to a theme supported by Gutenberg
+highlight_code = true
+# highlight_theme = "gruvbox-light"
+
+# Whether to build a search index to be used later on by a JavaScript library
+# build_search_index = true
+
+taxonomies = [
+    #{name = "tags", paginate_by = 10},
+    {name = "tags"},
+    #{name = "categories", paginate_by = 10},
+    {name = "categories"},
+]
+
+[translations]
+
+[extra]
+# Header settings
+global_nav_items = [
+    {name = "主页", path = "/"},
+    # {name = "Tags", path = "/tags"},
+    # {name = "Categories", path = "/categories"},
+    {name = "GitHub", link = "https://github.com/linyinfeng"},
+]
+
+# Footer settings
+copyright = "© 林吟风 2018"
+powered_by = "由 [Gutenberg](https://github.com/gutenberg) 驱动"
+
+index_aside_taxonomies = [
+    {name = "categories"},
+    {name = "tags"},
+]
+
+# Text settings
+text_continue_reading = "继续阅读"
+text_toc_title = "目录"
+text_draft = "草稿"
+
+date_format = "%Y-%m-%d %H:%M"

@@ -1,0 +1,4 @@
+[submodule "linyinfeng.github.io"]
+	path = linyinfeng.github.io
+	url = git@github.com:linyinfeng/linyinfeng.github.io.git
+	branch = master

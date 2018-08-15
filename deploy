@@ -1,0 +1,21 @@
+#!/bin/bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+OUTDIR_NAME="linyinfeng.github.io"
+OUTDIR="$DIR/$OUTDIR_NAME"
+
+tempfile=$(mktemp)
+cp "$OUTDIR/.git" "$tempfile"
+gutenberg build -o "$OUTDIR"
+cp "$tempfile" "$OUTDIR/.git"
+rm "$tempfile"
+
+cd $OUTDIR
+git add .
+msg="rebuilding site `date`"
+if [ $# -eq 1 ]
+  then msg="$1"
+fi
+git commit -m "$msg" --amend
+git push origin master --force
+

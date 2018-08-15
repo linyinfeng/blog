@@ -1,0 +1,27 @@
+ul{
+    padding-left: $list-indent-size;
+    ul{
+        padding-left: $list-indent-size;
+        ul{
+            padding-left: $list-indent-size;
+            ul{
+                padding-left: $list-indent-size;
+                ul{
+                    padding-left: $list-indent-size;
+                    ul {
+                        padding-left: $list-indent-size;
+                    };
+                }
+            }
+        }
+    }
+}
+
+ul {
+    margin: 0;
+    list-style: none;
+    li::before {
+        content: "• ";
+        color: $theme-color;
+    }
+}

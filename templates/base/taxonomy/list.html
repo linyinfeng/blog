@@ -1,0 +1,16 @@
+{% extends "base/base.html" %}
+{% block title %}
+    {{ super() }}
+    {% set taxonomy_name = taxonomy.name | capitalize %}
+    {{ "- " ~ taxonomy_name }}
+{% endblock title %}
+{% block main %}
+    {{ super() }}
+    {{ parts::taxonomy_list(
+        terms=terms,
+        title=taxonomy.name | capitalize,
+        title_url=current_url,
+        have_title=true
+    ) }}
+{% endblock main %}
+{# Remove sidebar #}{% block optional_aside %}{% endblock optional_aside %}

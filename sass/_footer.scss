@@ -1,0 +1,17 @@
+.footer-container {
+    background: {
+        color: $footer-background-color;
+    }
+    color: $footer-foreground-color;
+    box-shadow: 0 0 .125rem .0625rem $footer-shadow-color;
+    text-align: center;
+
+    padding: .25rem;
+    > * {
+        margin: .125rem;
+        display: block;
+    }
+    a {
+        text-decoration: underline;
+    }
+}

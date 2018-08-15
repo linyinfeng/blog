@@ -1,0 +1,27 @@
+{% extends "base/base.html" %}
+{% block title %}
+    {{ super() }}
+    {% set taxonomy_name = taxonomy.name | capitalize %}
+    {{ "- " ~ taxonomy_name ~ " - " ~ term.name }}
+{% endblock title %}
+{% block main %}
+    {{ super() }}
+    {% set section = get_section(path="posts/_index.md") %}
+    {{ parts::pages_list(
+        pages=term.pages,
+        have_title=false,
+        title=term.name,
+        title_url=current_url,
+        config=config
+    ) }}
+{% endblock main %}
+{% block aside %}
+    {% set taxonomy_with_items = get_taxonomy(kind=taxonomy.name) %}
+    {% set terms = taxonomy_with_items.items %}
+    {{ parts::taxonomy_list(
+        terms=terms,
+        title=taxonomy.name | capitalize,
+        title_url=get_url(path=taxonomy.name),
+        have_title=true
+    ) }}
+{% endblock %}

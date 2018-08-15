@@ -1,0 +1,16 @@
+{% extends "base/base.html" %}
+{% block title %}
+    {{ super() }}
+    {{ "- " ~ page.title }}
+{% endblock title %}
+{% block main %}
+    {{ super() }}
+    {{ parts::article(page=page, config=config) }}
+{% endblock main %}
+{% block optional_aside %}
+{% if page.toc %}
+    <aside id="aside" class="high-priority-aside">
+        {{ parts::toc(toc=page.toc, title=config.extra.text_toc_title) }}
+    </aside>
+{% endif %}
+{% endblock optional_aside %}
