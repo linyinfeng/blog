@@ -26,10 +26,6 @@ body {
     #main {
         padding: 1rem;
     }
-    #aside {
-        overflow: auto;
-        white-space: nowrap;
-    }
     #aside-container {
         padding: 0 1rem;
     }
@@ -47,6 +43,8 @@ body {
             height: 100vh;
             max-width: 20rem;
             box-shadow: 0 0 .125rem .0625rem $sidebar-shadow-color;
+            overflow: auto;
+            white-space: nowrap;
         }
     }
 }
@@ -63,8 +61,11 @@ body {
             border: .125rem solid $theme-color;
             border-left: 0;
             transition: left .3s;
+            
             padding-top: .5rem;
             padding-bottom: .5rem;
+            overflow: auto;
+            white-space: nowrap;
         }
         #aside:hover #aside-container {
             left: 0;
