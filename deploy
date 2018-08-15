@@ -17,5 +17,5 @@ if [ $# -eq 1 ]
   then msg="$1"
 fi
 git commit -m "$msg" --amend
-git push origin master --force
+git push origin master
 
