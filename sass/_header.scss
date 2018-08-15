@@ -19,10 +19,10 @@
         padding: .5rem 1rem;
         // font-size: 1.25rem;
 
-        > a::after {
-            content: "|";
+        .global-nav-item-container::after {
+            content: " | ";
         }
-        :last-child::after {
+        .global-nav-item-container:last-child::after {
             content: none;
         }
     }
