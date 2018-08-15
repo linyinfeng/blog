@@ -3,7 +3,10 @@
         padding: 0;
     }
     li {
-        margin: 2rem 0;
+        margin-bottom: 1rem;
+    }
+    li:last-child {
+        margin-bottom: 0;
     }
     li::before {
         content: none;

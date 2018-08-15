@@ -21,16 +21,16 @@
             {% endblock header %}
         </header>
         <div id="main-aside-container">
-            <main id="main">
-                {% block main %}
-                {% endblock main %}
-            </main>
             {% block optional_aside %}
                 <aside id="aside">
                     {% block aside %}
                     {% endblock aside %}
                 </aside>
             {% endblock optional_aside %}
+            <main id="main">
+                {% block main %}
+                {% endblock main %}
+            </main>
         </div>
         <footer id="footer">
             {% block footer %}
@@ -38,5 +38,7 @@
             {% endblock footer %}
         </footer>
     {% endblock body %}
+
+    <script src={{ get_url(path="layout-helper.js", trailing_slash=false) }}></script>
 </body>
 </html>

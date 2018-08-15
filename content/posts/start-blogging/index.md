@@ -14,4 +14,4 @@ tags = ["博客", "静态网站"]
 
 <!-- more -->
 
-本博客托管在 github 上，代码仓库为 [linyinfeng/blog](https://github.com/linyinfeng/blog)
+这个网站托管在 github 上，代码仓库为 [linyinfeng/blog](https://github.com/linyinfeng/blog)。

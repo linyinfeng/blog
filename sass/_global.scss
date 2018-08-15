@@ -23,24 +23,46 @@ body {
 }
 
 #main-aside-container {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: flex-start;
-    align-items: baseline;
     #main {
         padding: 1rem;
-        flex: 1 1 30rem;
-        order: 20;
-        > * {
-            width: 100%;
-        }
     }
     #aside {
         padding: 1rem;
-        flex: 0 1 auto;
-        order: 30;
     }
-    #aside.high-priority-aside {
-        order: 10;
+}
+
+@media all and (min-width: $layout-change-width) {
+    #header, #footer {
+        z-index: 1; // Cover aside
+    }
+    #main-aside-container {
+        #aside {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            overflow: auto;
+            white-space: nowrap;
+            max-width: 20rem;
+            box-shadow: 0 0 .125rem .0625rem $sidebar-shadow-color;
+        }
+    }
+}
+
+@media not all and (min-width: $layout-change-width) {
+    #main-aside-container {
+        display: flex;
+        flex-flow: column nowrap;
+        #main {
+            order: 20;
+            padding: 1rem;
+        }
+        #aside {
+            order: 30;
+            padding: 1rem;
+        }
+        #aside.high-priority-aside {
+            order: 10;
+        }
     }
 }
