@@ -137,3 +137,17 @@
         <section class="article-content">{{ page.content | safe }}</section>
     </article>
 {% endmacro %}
+
+{% macro pages_list_by_year(pages, title, title_url, have_title=true) %}
+    {% if have_title == true %}
+        <h1 class="title list-title page-list-by-year-title"><a href={{ title_url }}>{{ title }}</a></h1>
+    {% endif %}
+    {% for year, posts in pages | group_by(attribute="year") %}
+        <h2 id="year-{{ year }}"><a class="gutenberg-anchor anchor-link" href="#year-{{ year }}">🔗</a>{{ year }}</h2>
+        <ul>
+            {% for post in posts %}
+                <li><a href="{{ post.permalink }}">{{ post.title }}</a></li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+{% endmacro %}

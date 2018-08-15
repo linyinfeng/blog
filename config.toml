@@ -29,9 +29,9 @@ taxonomies = [
 # Header settings
 global_nav_items = [
     {name = "Home", path = "/"},
-    # {name = "Tags", path = "/tags"},
-    # {name = "Categories", path = "/categories"},
+    {name = "Archive", link = "/archive"},
     {name = "GitHub", link = "https://github.com/linyinfeng"},
+    {name = "Source", link = "https://github.com/linyinfeng/blog"},
 ]
 
 # Footer settings

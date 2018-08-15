@@ -1,0 +1,13 @@
+{% extends "base/base.html" %}
+{% block main %}
+    {{ super() }}
+    {% set section = get_section(path="posts/_index.md") %}
+    {{ parts::pages_list_by_year(
+        pages=section.pages,
+        have_title=true,
+        title=page.title,
+        title_url=current_url,
+        config=config
+    ) }}
+{% endblock main %}
+{# Remove sidebar #}{% block optional_aside %}{% endblock optional_aside %}

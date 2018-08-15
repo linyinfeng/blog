@@ -6,11 +6,12 @@
 {% endblock title %}
 {% block main %}
     {{ super() }}
-    {% set section = get_section(path="posts/_index.md") %}
+    {% set taxonomy_name = taxonomy.name | capitalize %}
+    {% set title = taxonomy_name ~ " - " ~ term.name %}
     {{ parts::pages_list(
         pages=term.pages,
-        have_title=false,
-        title=term.name,
+        have_title=true,
+        title=title,
         title_url=current_url,
         config=config
     ) }}
