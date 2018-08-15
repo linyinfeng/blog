@@ -8,6 +8,7 @@
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
         {% endblock meta %}
         <link rel=stylesheet type="text/css" href={{ get_url(path="style.css", trailing_slash=false) }}>
+        <link rel=stylesheet type="text/css" href={{ get_url(path="normalize.css", trailing_slash=false) }}>
         <title>{% block title %}{{ config.title }}{% endblock title %}</title>
     {% endblock head %}
 </head>
@@ -23,13 +24,17 @@
         <div id="main-aside-container">
             {% block optional_aside %}
                 <aside id="aside">
-                    {% block aside %}
-                    {% endblock aside %}
+                    <div id="aside-container">
+                        {% block aside %}
+                        {% endblock aside %}
+                    </div>
                 </aside>
             {% endblock optional_aside %}
             <main id="main">
-                {% block main %}
-                {% endblock main %}
+                <div id="main-container">
+                    {% block main %}
+                    {% endblock main %}
+                </div>
             </main>
         </div>
         <footer id="footer">

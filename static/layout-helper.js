@@ -17,7 +17,7 @@ function handleMediaChange(mediaQueryList) {
         console.log(marginLeftString);
         main.style.marginLeft = marginLeftString;
     } else {
-        main.style.marginLeft = "0";
+        main.style.marginLeft = "";
     }
     handleScroll(window.scrollY);
 }
@@ -41,8 +41,8 @@ function handleScroll(pos) {
         // aside.style.paddingBottom = "0";
         innerContainer.style.paddingBottom = bottomPadding.toString() + "px"; // Firefox workaround
     } else {
-        aside.style.paddingTop = "0";
-        aside.style.paddingBottom = "0";
+        aside.style.paddingTop = "";
+        innerContainer.style.paddingBottom = "";
     }
 }
 

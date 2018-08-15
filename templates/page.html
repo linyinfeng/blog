@@ -8,9 +8,10 @@
     {{ parts::article(page=page, config=config) }}
 {% endblock main %}
 {% block optional_aside %}
-{% if page.toc %}
-    <aside id="aside" class="high-priority-aside">
-        {{ parts::toc(toc=page.toc, title=config.extra.text_toc_title) }}
-    </aside>
-{% endif %}
+    {% if page.toc %}
+        {{ super() }}
+    {% endif %}
 {% endblock optional_aside %}
+{% block aside %}
+    {{ parts::toc(toc=page.toc, title=config.extra.text_toc_title) }}
+{% endblock aside %}

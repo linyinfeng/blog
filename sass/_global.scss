@@ -27,6 +27,10 @@ body {
         padding: 1rem;
     }
     #aside {
+        overflow: auto;
+        white-space: nowrap;
+    }
+    #aside-container {
         padding: 0 1rem;
     }
 }
@@ -41,8 +45,6 @@ body {
             left: 0;
             top: 0;
             height: 100vh;
-            overflow: auto;
-            white-space: nowrap;
             max-width: 20rem;
             box-shadow: 0 0 .125rem .0625rem $sidebar-shadow-color;
         }
@@ -51,18 +53,45 @@ body {
 
 @media not all and (min-width: $layout-change-width) {
     #main-aside-container {
-        display: flex;
-        flex-flow: column nowrap;
-        #main {
-            order: 20;
-            padding: 1rem;
+        #aside #aside-container {
+            position: fixed;
+            left: -100vw;
+            bottom: 2rem;
+            max-height: 80vh;
+            max-width: 80vw;
+            background: white;
+            border: .125rem solid $theme-color;
+            border-left: 0;
+            transition: left .3s;
+            padding-top: .5rem;
+            padding-bottom: .5rem;
         }
-        #aside {
-            order: 30;
-            padding: 1rem;
+        #aside:hover #aside-container {
+            left: 0;
         }
-        #aside.high-priority-aside {
-            order: 10;
+        #aside::after {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            content: "🔗";
+            position: fixed;
+            bottom: 0rem;
+            left: -.5rem;
+            z-index: 2;
+            width: 2rem;
+            height: 2rem;
+            // border-radius: .25rem;
+            background: white;
+            border-style: solid;
+            border-color: $theme-color;
+            border-width: .125rem .125rem 0 0;
+            cursor: context-menu;
+            opacity: .5;
+            transition: all .3s;
+        }
+        #aside:hover::after {
+            left: 0;
+            opacity: 1;
         }
     }
 }
