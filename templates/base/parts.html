@@ -61,7 +61,7 @@
         <ul class="toc-parent">
                 {% for entry in toc %}
                 <li class="toc-entry">
-                    <a href={{ entry.permalink }}>{{ entry.title }}</a>
+                    <a href={{ entry.permalink }}>{{ entry.title | safe | striptags }}</a>
                     {{ self::toc_inner(toc=entry.children) }}
                 </li>
                 {% endfor %}
