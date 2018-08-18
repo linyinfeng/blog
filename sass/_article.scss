@@ -12,11 +12,13 @@
            color: $link-default-color; 
         }
         pre {
-            font-family: Consolas, DejaVu Sans Mono, monospace, serif;
             padding: .5em;
             border-radius: .25rem;
             max-width: 100%;
             overflow: auto;
+        }
+        code, pre {
+            font-family: Consolas, DejaVu Sans Mono, monospace, serif;
         }
     }
 }

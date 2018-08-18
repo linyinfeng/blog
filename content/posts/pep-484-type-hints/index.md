@@ -28,6 +28,17 @@ tags = ["python", "类型系统"]
 - Generics -- 泛型
 - Constraint -- 约束
 - Metaclass -- 元类
+- comment -- 注释
+- type erasure -- 类型擦除
+- collections -- 集合
+- subscript -- 下标
+- ABCs -- ABCs（Abstract Base Classes，抽象基类）
+- F-bounded polymorphism -- F 限定多态
+- Covariance -- 协变
+- Contravariance -- 逆变
+- Invariant -- 不变
+- Numeric tower -- 数字塔
+- Forward reference -- 前向引用
 
 # 摘要
 
@@ -101,7 +112,7 @@ def greeting(name: str) -> str:
 
 注解应该保持简单，否则静态分析工具可能无法解释它们的值。例如，动态计算的值不太可能被理解。（这个一个故意的有些含混不清的要求，详细的限制可能在未来的版本中被加入，这仍需要讨论来保证（原文：specific inclusions and exclusions may be added to future versions of this PEP as warranted by the discussion）。）
 
-额外的，可以使用以下特殊的结构体：None，Any，Union，Tuple，Callable，所有的 ABCs（Abstract Base Class, 抽象基类）和 typing 中导出的具体类型的替代（例如 Sequence 和 Dict），类型变量和类型别名。
+额外的，可以使用以下特殊的结构体：None，Any，Union，Tuple，Callable，所有的 ABCs（Abstract Base Classes, 抽象基类）和 typing 中导出的具体类型的替代（例如 Sequence 和 Dict），类型变量和类型别名。
 
 所有用来支持以下章节中描述的特性的新的名字都可从 typing 模块中找到。
 
@@ -453,11 +464,230 @@ class Node(Generic[T]):
     ...
 ```
 
+如普通的类一样调用 Node() 创建一个 Node 实例。在运行时实例的类型（类）将为 Node。但是对于类型检查器来说它有什么类型呢？答案是取决于调用时提供了多少信息。如果构造函数（\_\_init\_\_ 或 \_\_new\_\_）在签名中使用了 T 并且传递了相关的参数，这些相关的参数的类型将被取代。否则，它们的类型将被假定为 Any。例如：
+
+```python3
+from typing import TypeVar, Generic
+T = TypeVar('T')
+
+class Node(Generic[T]):
+    x = None  # type: T  # 实例属性（见下文）
+    def __init__(self, label: T = None) -> None:
+        ...
+
+x = Node('')  # 推导出的类型为 Node[str]
+y = Node(0)   # 推导出的类型为 Node[int]
+z = Node()    # 推导出的类型为 Node[Any]
+```
+
+如果推导出的类型使用 [Any] 但是需要一个特定的类型，可以使用类型注释（见后文）强制指定变量的类型，例如：
+
+```python3
+# (continued from previous example)
+a = Node()  # type: Node[int]
+b = Node()  # type: Node[str]
+```
+
+或者，你可以实例化一个特定的具体类型，例如：
+
+```python3
+# (接上例)
+p = Node[int]()
+q = Node[str]()
+r = Node[int]('')  # 错误
+s = Node[str](0)   # 错误
+```
+
+注意，p 和 q 的运行时类型依然仅仅是 Node——Node[int] 和 Node[str] 是可区分的类对象，但它们实例化后产生的对象的运行时类不带有这种区别。这种行为叫做“类型擦除”；这在带有泛型的语言中（例如，Java，TypeScript）是一个常见的实践。
+
+使用泛型类（参数化的或非参数化的）访问属性将导致类型检查失败。在类定义体之外，类属性不能被赋值，只能通过不带有同名实例属性的类实例来访问。
+
+```python3
+# (接上例)
+Node[int].x = 1  # 错误
+Node[int].x      # 错误
+Node.x = 1       # 错误
+Node.x           # 错误
+type(p).x        # 错误
+p.x              # 正确（求值为 None）
+Node[int]().x    # 正确（求值为 None）
+p.x = 1          # 正确, 但将赋值给实例属性
+```
+
+抽象集合（collections）如 Mapping 或者 Sequence 的泛型版本和内置类——List，Dict，Set 和 FrozenSet 的泛型版本——不能被实例化。然而，具体的用户定义的它们的子类型和具体集合的泛型版本能够被实例化：
+
+```python3
+data = DefaultDict[int, bytes]()
+```
+
+注意，不要混淆静态类型和运行时类。类型依然被擦除了，上例是以下表达的一个简写：
+
+```python3
+data = collections.defaultdict()  # type: DefaultDict[int, bytes]
+```
+
+不推荐直接在表达式中使用带有下标的（subscripted）类（例如 Node[int]）——推荐使用类型别名（例如 IntNode = Node[int]）。（首先，创建一个带有下标的类，例如 Node[int]，有运行时开销。第二，使用别名更具有可读性。）
+
+## 任意泛型类作为基类
+
+Generic[T] 只能被用于基类——这不是一个正确的类型。然而，用户定义的泛型类行例如上面例子中的 LinkedList[T] 和内置泛型类型和 ABCs 例如 List[T] 和 Iterable[T] 对于作为类型和作为基类都是合法的。举个例子，可以定义一个指定了类型参数的 Dict 的子类型：
+
+```python3
+from typing import Dict, List, Optional
+
+class Node:
+    ...
+
+class SymbolTable(Dict[str, List[Node]]):
+    def push(self, name: str, node: Node) -> None:
+        self.setdefault(name, []).append(node)
+
+    def pop(self, name: str) -> Node:
+        return self[name].pop()
+
+    def lookup(self, name: str) -> Optional[Node]:
+        nodes = self.get(name)
+        if nodes:
+            return nodes[-1]
+        return None
+```
+
+SymbolTable 是一个 dict 的子类型，也是一个 Dict[str, List[Node]] 的子类型。
+
+如果一个泛型基类有一个类型参数是类型变量，那么定义的类将是一个泛型类。举个例子，可以定义一个泛型的可迭代的 LinkedList 容器。
+
+```python3
+from typing import TypeVar, Iterable, Container
+
+T = TypeVar('T')
+
+class LinkedList(Iterable[T], Container[T]):
+    ...
+```
+
+现在 LinkedList[int] 是一个合法的类型。注意，在基类列表中可以多次使用 T，只要我们不多次将 T用于 Generic[...]。
+
+同时，考虑以下例子：
+
+```python3
+from typing import TypeVar, Mapping
+
+T = TypeVar('T')
+
+class MyDict(Mapping[str, T]):
+    ...
+```
+
+在这个例子中 MyDict 只有一个类型参数 T。
+
+## 抽象泛型类型
+
+Generic 使用的元类是 abc.ABCMeta 的子类。一个泛型类可以通过包含一个抽象方法或者属性成为一个 ABC，一个泛型类也可以在基类中包含 ABCs 而不会引起元类的冲突。
+
+## 带有上界的类型变量
+
+一个类型变量可以使用 bound=\<类型\> 指定一个上界（注意：\<类型\> 本身不能被类型变量参数化）。这意味着实际替换这个类型变量的类型（显式或隐式地）必须是边界类型的子类型。一个常见的例子是 Comparable 类型的定义，这个定义工作地很好，能够发现大部分常见的错误：
+
+```python3
+from typing import TypeVar
+
+class Comparable(metaclass=ABCMeta):
+    @abstractmethod
+    def __lt__(self, other: Any) -> bool: ...
+    ... # __gt__ etc. as well
+
+CT = TypeVar('CT', bound=Comparable)
+
+def min(x: CT, y: CT) -> CT:
+    if x < y:
+        return x
+    else:
+        return y
+
+min(1, 2) # ok, return type int
+min('x', 'y') # ok, return type str
+```
+
+（注意这个定义并不理想——例如，min('x', 1) 在运行时是非法的但类型检查器将简单地推导出返回类型 Comparable。不幸的是，解决这个问题需要提出一个更加强大也更加复杂的概念，F 限定多态。我们可能在未来重温这个例子。）
+
+一个上界不能与类型约束（就像在 AnyStr 中使用的一样，查看以前的例子）组合；类型约束要求实际类型为约束类型中的一个，但是上界仅仅要求实际类型是边界类型的子类型。
+
+## 协变与逆变
+
+考虑类 Employee 和它的一个子类 Manager。现在我们假设有一个参数注解为 List[Employee] 的函数。我们应该允许使用类型 List[Manager] 的变量调用它吗？很多人没有对后果进行充分的思考就回答“是的，当然”。但是除非我们知道有关这个函数的更多信息，否则类型检查器应该拒绝这样的调用：这个函数可能添加一个 Employee 实例到这个列表中，这将使调用者方违反这个变量的类型。
+
+事实证明这样的一个参数表现为逆变，而直觉的回答要求这个参数表现为协变。一个更长的对这些概念的介绍可以在 Wikipedia [wiki-variance][wiki-variance] 和 [PEP 483][pep-483] 中被找到；这里我们仅仅展示如何控制类型检查器的行为。
+
+默认地，泛型类型在所有类型变量中都被认为是不变的，这意味着类型被注解为 List[Employee] 的变量内的值必须精确的匹配它的注解——不允许类型参数（在这个例子中是 Employee）的子类或父类。
+
+为了实现声明类型检查可接受的协变和逆变，类型变量接受关键字参数 covariant=True 或者 contravariant=True。最多传递其中的一个。通过这种类型变量定义的泛型类型被认为在关联的变量中是协变或逆变。基于惯例，推荐使用 \_co 结尾的名字定义带有 covariant=True 的类型变量，使用 \_contra 结尾的名字定义带有 contravariant=True 的类型变量。
+
+一个典型的例子，包含了定义一个不可变（或只读）容器类：
+
+```python3
+from typing import TypeVar, Generic, Iterable, Iterator
+
+T_co = TypeVar('T_co', covariant=True)
+
+class ImmutableList(Generic[T_co]):
+    def __init__(self, items: Iterable[T_co]) -> None: ...
+    def __iter__(self) -> Iterator[T_co]: ...
+    ...
+
+class Employee: ...
+
+class Manager(Employee): ...
+
+def dump_employees(emps: ImmutableList[Employee]) -> None:
+    for emp in emps:
+        ...
+
+mgrs = ImmutableList([Manager()])  # type: ImmutableList[Manager]
+dump_employees(mgrs)  # 正确
+```
+
+定义在 typing 中的只读的集合类都在它们的类型变量中声明了协变（例如 Mapping 和 Sequence）。可变的集合类（例如 MutableMapping 和 MutableSequence）声明了不变。一个逆变的例子是 Generator 类型，它在 send() 方法的参数类型中逆变（The one example of a contravariant type is the Generator type, which is contravariant in the send() argument type）（见下文）。
+
+注意：协变或逆变不是类型变量的属性，而是使用这个类型变量定义的泛型类的属性。协变仅作用于泛型类型；泛型函数没有这种属性。后者应该使用没有 covariant 或 contravariant 关键字参数的泛型变量定义。举个例子，以下例子是对的：
+
+```python3
+from typing import TypeVar
+
+class Employee: ...
+
+class Manager(Employee): ...
+
+E = TypeVar('E', bound=Employee)
+
+def dump_employee(e: E) -> None: ...
+
+dump_employee(Manager())  # 正确
+```
+
+但以下例子是禁止的：
+
+```python3
+B_co = TypeVar('B_co', covariant=True)
+
+def bad_func(x: B_co) -> B_co: # 被类型检查器标记为错误
+    ...
+```
+
+## 数字塔（Numeric tower）
+
+[PEP 3141][pep-3141] 定义了 Python 的数字塔和 stdlib 模块 numbers 实现了相关的 ABCs（Number，Complex，Real，Rational 和 Integral）。存在着一些关于这些 ABCs 的 issues，但内置的具体数字类 complex，float 和 int 被很普遍地使用（特别是后两个 :-）。
+
+相比与要求用户书写 import numbers 然后使用 numbers.Float 等等，这个 PEP 提出一个一样有效的直接的捷径：一个被注解为有类型 float 的参数，也能接受一个 int 类型的参数；类似的，一个被注解为有类型 complex 的参数，也能接受 float 和 int 类型的参数。这种方式无法处理实现了有关 ABCs 或 fractions.Fraction 类的类，但我们相信这些用例非常稀少。
+
+## 前向引用
+
 [my-github-blog]: https://github.com/linyinfeng/blog
 [mypy]: http://mypy-lang.org
 [pep-3107]: https://www.python.org/dev/peps/pep-3107
+[pep-3141]: https://www.python.org/dev/peps/pep-3141
 [pep-333]: https://www.python.org/dev/peps/pep-0333
 [pep-482]: https://www.python.org/dev/peps/pep-0482
 [pep-483]: https://www.python.org/dev/peps/pep-0483
 [pep-484]: https://www.python.org/dev/peps/pep-0484
 [gvr-artima]: http://www.artima.com/weblogs/viewpost.jsp?thread=85551
+[wiki-variance]: https://www.python.org/dev/peps/pep-0484/#wiki-variance
