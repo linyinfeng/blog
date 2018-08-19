@@ -15,7 +15,20 @@ $layout-change-width: 60rem;
 
 $list-indent-size: 1rem;
 
-// Global settings
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.45;
+}
+code, pre {
+    font-family: "DejaVu Sans Mono", "Lucida Console", Monaco, monospace;
+}
+code {
+    padding: 0.0625rem;
+    border-radius: 0.1875rem;
+    border: 0.0625rem solid #e4e4e4;
+    background: #f7f7f7;
+}
+
 @import "global";
 @import "list";
 @import "article";

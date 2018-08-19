@@ -119,12 +119,13 @@
     <article class="article-summary-container container">
         {{ self::article_title(page=page, config=config) }}
         {{ self::article_datetime(page=page, config=config) }}
-        <p class="article-summary">
-            {{ page.summary | safe | striptags }}
+        <section class="article-summary">
+            {# page.summary | safe | striptags #}
+            {{ page.summary | safe }}
             <a class="continue-reading-link" href="{{ page.permalink }}#continue-reading">
                 {{ config.extra.text_continue_reading }}
             </a>
-        </p>
+        </section>
         {{ self::article_taxonomies(page=page, config=config) }}
     </article>
 {% endmacro %}

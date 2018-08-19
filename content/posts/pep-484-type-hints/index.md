@@ -10,7 +10,7 @@ tags = ["python", "类型系统"]
 [extra]
 +++
 
-本文为 [PEP 484 -- Type Hints][pep-484] 的中文翻译。
+本文为 [PEP 484 -- Type Hints](https://www.python.org/dev/peps/pep-0484) 的中文翻译。
 
 <!-- more -->
 

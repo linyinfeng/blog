@@ -12,16 +12,16 @@ tags = ["Rust", "类型系统"]
 
 本文为 Rust RFC 2349 - Pin 的中文翻译。
 
-<!-- more -->
-
 Rust RFC 并非一成不变，本文翻译于 2018 年 08 月 19 日。
 
 文中有众多 Rust 中的其他 RFC 甚至 crates 中的概念，水平有限，如有翻译错误或建议，可以向我的 [GitHub](https://github.com/linyinfeng/blog) 仓库提 Issue 或者直接发起 PR 指正，本文文件：[content/posts/rust-rfc-2349/index.md](https://github.com/linyinfeng/blog/tree/master/content/posts/rust-rfc-2349/index.md)。
 
+<!-- more -->
+
 - 特性名：pin
 - 开始日期：2018-02-19
-- RFC PR：[rust-lang/rfcs#2349][pr-rfcs-2349]
-- Rust Issue: [rust-lang/rust#49150][issue-49150]
+- RFC PR：[rust-lang/rfcs#2349](https://github.com/rust-lang/rfcs/pull/2349)
+- Rust Issue: [rust-lang/rust#49150](https://github.com/rust-lang/rust/issues/49150)
 
 # 摘要
 
@@ -316,6 +316,3 @@ impl<'a, T> PinTemporary<'a, T> {
 除了上述讨论的未来的扩展，std 中的三个 pin 类型将随时间发展，由于它们实现了更多普遍的转换 traits 等等。
 
 我们可能进一步要求 `Pin` 维护更严格的保证，要求 `Pin` 中的 `Unpin` 数据不会泄漏，除非这块内存在程序剩余的生存期中依然有效。这将会导致上文中的栈 API 不健全，但是可能也能用来使其他 API 使用这些保证来确保内存失效时析构器总是会执行。
-
-[pr-rfcs-2349]: https://github.com/rust-lang/rfcs/pull/2349
-[issue-49150]: https://github.com/rust-lang/rust/issues/49150

@@ -17,9 +17,6 @@
             max-width: 100%;
             overflow: auto;
         }
-        code, pre {
-            font-family: Consolas, DejaVu Sans Mono, monospace, serif;
-        }
     }
 }
 
@@ -28,17 +25,21 @@
         display: block;
     }
     .article-title {
-        margin: 0;
+        margin-bottom: 0.5rem;
     }
     time {
         display: block;
-        font-size: .8em;
+        // font-size: .8em;
     }
     .article-summary {
         margin: .5rem 0;
-    }
-    .continue-reading-link {
-        color: $link-default-color;
+        a {
+            text-decoration: underline;
+        }
+        .continue-reading-link {
+            text-decoration: none;
+            color: $link-default-color;
+        }
     }
 }
 

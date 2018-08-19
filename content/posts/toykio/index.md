@@ -10,9 +10,9 @@ tags = ["Rust", "Future"]
 [extra]
 +++
 
-本文为 Rust futures-rs 博客 2018 年 8 月 17 日 的 博文 [Toykio][toykio] 的中文翻译。
+本文为 Rust futures-rs 博客 2018 年 8 月 17 日 的 博文 [Toykio](https://rust-lang-nursery.github.io/futures-rs/blog/2018/08/17/toykio.html) 的中文翻译。
 
-原文作者 Alexander Polakov（[@polachok][polachok]）。
+原文作者 Alexander Polakov（[@polachok](https://github.com/polachok)）。
 
 <!-- more -->
 
