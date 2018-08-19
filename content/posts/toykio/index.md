@@ -68,9 +68,9 @@ struct InnerEventLoop {
 }
 ```
 
-* `read` 和 `write` 是 `BTreeMaps`，将文件描述符映射到唤醒器。
-* `wait_queue` 保存了阻塞的等待事件的任务。
-* `run_queue` 保存了唤醒消息。
+- `read` 和 `write` 是 `BTreeMaps`，将文件描述符映射到唤醒器。
+- `wait_queue` 保存了阻塞的等待事件的任务。
+- `run_queue` 保存了唤醒消息。
 
 事件循环提供了在 `read` 和 `write` 事件中注册（和移除）兴趣的方法。让我们看看 `add_read_interest` 做了什么：
 
@@ -194,10 +194,10 @@ loop {
 
 在这节中，我将概括一个 future（让我们以 read 为例子）是如何在 eventloop 中被执行的：
 
-* 首先它由 `AsyncTcpStream` 的 `read()` 方法创建，这个方法被所有实现了 `AsyncRead` trait 的类型实现。
-* 然后使用 `run()` 或 `spawn()` 方法在 executor 中 spawn 它。
-* Executor 调用这个 future 的 poll 方法。Read 中 `poll` 的实现调用 `AsyncTcpStream` 的 `poll_read()` 方法，这个方法将它的兴趣注册到 `readable` 事件中。
-* 当一个事件发生，future 将被再次 poll。这个循环将被重复直到 future 返回了 ready。
+- 首先它由 `AsyncTcpStream` 的 `read()` 方法创建，这个方法被所有实现了 `AsyncRead` trait 的类型实现。
+- 然后使用 `run()` 或 `spawn()` 方法在 executor 中 spawn 它。
+- Executor 调用这个 future 的 poll 方法。Read 中 `poll` 的实现调用 `AsyncTcpStream` 的 `poll_read()` 方法，这个方法将它的兴趣注册到 `readable` 事件中。
+- 当一个事件发生，future 将被再次 poll。这个循环将被重复直到 future 返回了 ready。
 
 # 感谢
 
