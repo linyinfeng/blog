@@ -8,11 +8,15 @@ draft = false
 categories = ["翻译"]
 tags = ["Rust", "Future"]
 [extra]
+license_image = "![Creative Commons License](https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png)"
+license = "This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/)"
 +++
 
 本文为 Rust futures-rs 博客 2018 年 8 月 17 日 的 博文 [Toykio](https://rust-lang-nursery.github.io/futures-rs/blog/2018/08/17/toykio.html) 的中文翻译。
 
 原文作者 Alexander Polakov（[@polachok](https://github.com/polachok)）。
+
+原文目前（2018-08-21）为可选的 MIT 和 Apache 授权，本文使用了其 MIT 授权。[MIT 许可证副本](https://github.com/linyinfeng/blog/tree/master/content/posts/toykio/LICENSE-MIT)。
 
 <!-- more -->
 

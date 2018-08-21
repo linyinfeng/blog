@@ -8,11 +8,15 @@ draft = false
 categories = ["翻译"]
 tags = ["Rust", "类型系统"]
 [extra]
+license_image = "![Creative Commons License](https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png)"
+license = "This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/)"
 +++
 
-本文为 Rust RFC 2349 - Pin 的中文翻译。
+本文为 [Rust RFC 2349 - Pin](https://github.com/rust-lang/rfcs/blob/master/text/2349-pin.md) 的中文翻译。
 
-Rust RFC 并非一成不变，本文翻译于 2018 年 08 月 19 日。
+Rust RFCs 并非一成不变，本文翻译于 2018 年 08 月 19 日。
+
+Rust RFCs 仓库目前（2018-08-21）为可选的 MIT 和 Apache 授权，本文使用了其 MIT 授权。[MIT 许可证副本](https://github.com/linyinfeng/blog/tree/master/content/posts/rust-rfc-2349/LICENSE-MIT)。
 
 文中有众多 Rust 中的其他 RFC 甚至 crates 中的概念，水平有限，如有翻译错误或建议，可以向我的 [GitHub](https://github.com/linyinfeng/blog) 仓库提 Issue 或者直接发起 PR 指正，本文文件：[content/posts/rust-rfc-2349/index.md](https://github.com/linyinfeng/blog/tree/master/content/posts/rust-rfc-2349/index.md)。
 

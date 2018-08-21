@@ -8,13 +8,13 @@ draft = true
 categories = ["翻译"]
 tags = ["python", "类型系统"]
 [extra]
+license_image = "![Creative Commons License](https://i.creativecommons.org/p/zero/1.0/88x31.png)"
+license = "This work is licensed under a [CC0 License](http://creativecommons.org/licenses/zero/1.0/)"
 +++
 
 本文为 [PEP 484 -- Type Hints](https://www.python.org/dev/peps/pep-0484) 的中文翻译。
 
 <!-- more -->
-
-版权：本译文位于公有领域（Public Domain）。
 
 本文只求信达，不求雅。译者无法理解原句时将注释并把原文附在括号内，如非必要不在翻译中添加其他的评价。任何错误或建议均可向我的 GitHub 仓库 [linyinfeng/blog][my-github-blog] 发起 Issues 或 PR。
 

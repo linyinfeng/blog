@@ -8,6 +8,8 @@ draft = true
 categories = ["笔记"]
 tags = ["rust", "类型系统"]
 [extra]
+license_image = "![Creative Commons License](https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png)"
+license = "This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/)"
 +++
 
 Rust 的类型系统是特别的。它的许多设计令我在使用之初感到疑惑，在使用了一段时间以后才领悟到它设计的目的。而在几周学习尝试 Rust 的过程中，这个类型系统令我感到最大的一个困惑就是函数返回值问题。这篇笔记将记录我的思考。

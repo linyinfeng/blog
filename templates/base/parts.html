@@ -130,11 +130,25 @@
     </article>
 {% endmacro %}
 
+{% macro article_license(page, config) %}
+    {% if page.extra.license %}
+        <section class="article-license">
+            {% if page.extra.license_image %}
+                <div class="license-image">
+                    {{ page.extra.license_image | markdown(inline=true) }}
+                </div>
+            {% endif %}
+            <small class="license">{{ page.extra.license | markdown(inline=true) }}</small>
+        </section>
+    {% endif %}
+{% endmacro %}
+
 {% macro article(page, config) %}
     <article class="article-container container">
         {{ self::article_title(page=page, config=config) }}
         {{ self::article_datetime(page=page, config=config) }}
         {{ self::article_taxonomies(page=page, config=config) }}
+        {{ self::article_license(page=page, config=config) }}
         <section class="article-content">{{ page.content | safe }}</section>
     </article>
 {% endmacro %}
