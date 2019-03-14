@@ -17,6 +17,7 @@ deploy:
   local-dir: public
   repo: linyinfeng/linyinfeng.github.io
   target-branch: master
+  fqdn: www.linyinfeng.com
   skip-cleanup: true
   github-token: $GITHUB_TOKEN
   keep-history: true
