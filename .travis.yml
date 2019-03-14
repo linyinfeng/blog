@@ -1,0 +1,22 @@
+language: rust
+
+cache:
+  - cargo
+
+before_script:
+  - test -x "$(command -v cargo-install-update)" || cargo install cargo-update
+  - test -x "$(command -v zola)" || cargo install --git https://github.com/getzola/zola.git
+  - cargo install-update --all
+
+script:
+  - zola build
+
+deploy:
+  provider: pages
+  local-dir: public
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN
+  keep-history: true
+  on:
+    branch: master
+
