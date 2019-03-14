@@ -1,15 +1,14 @@
-language: rust
-
-cache:
-  - cargo
-
 before_script:
-  - test -x "$(command -v cargo-install-update)" || cargo install cargo-update
-  - test -x "$(command -v zola)" || cargo install --git https://github.com/getzola/zola.git
-  - cargo install-update --all
+  - sudo apt-get update
+  - sudo apt-get install -y jq
+  - which jq
+  - curl https://api.github.com/repos/getzola/zola/releases/latest |
+    jq '.assets[] | select(.name | test("zola.*unknown-linux-gnu.*")) | .browser_download_url' |
+    xargs wget
+  - tar -xvf zola*unknown-linux-gnu*
 
 script:
-  - zola build
+  - ./zola build
 
 deploy:
   provider: pages
