@@ -35,7 +35,7 @@ global_nav_items = [
 ]
 
 # Footer settings
-copyright = "© Lin Yinfeng 2018"
+copyright = "© Lin Yinfeng 2018-2019"
 powered_by = "Powered by [Zola](https://www.getzola.org)"
 
 index_aside_taxonomies = [
