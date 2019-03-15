@@ -9,7 +9,7 @@ compile_sass = true
 shortcode = true
 
 # Whether to do syntax highlighting
-# Theme can be customised by setting the `highlight_theme` variable to a theme supported by Gutenberg
+# Theme can be customised by setting the `highlight_theme` variable to a theme supported by Zola
 highlight_code = true
 # highlight_theme = "gruvbox-light"
 
@@ -36,7 +36,7 @@ global_nav_items = [
 
 # Footer settings
 copyright = "© Lin Yinfeng 2018"
-powered_by = "Powered by [Gutenberg](https://github.com/gutenberg)"
+powered_by = "Powered by [Zola](https://www.getzola.org)"
 
 index_aside_taxonomies = [
     {name = "categories"},
