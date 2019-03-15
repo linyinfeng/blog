@@ -6,7 +6,7 @@ author = "Lin Yinfeng"
 draft = true
 [taxonomies]
 categories = ["翻译"]
-tags = ["python", "类型系统"]
+tags = ["Python", "类型系统"]
 [extra]
 license_image = "![Creative Commons License](https://i.creativecommons.org/p/zero/1.0/88x31.png)"
 license = "This work is licensed under a [CC0 License](http://creativecommons.org/licenses/zero/1.0/)"

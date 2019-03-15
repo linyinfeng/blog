@@ -6,7 +6,7 @@ author = "Lin Yinfeng"
 draft = false
 [taxonomies]
 categories = ["笔记"]
-tags = ["rust", "闭包", "函数式编程"]
+tags = ["Rust", "闭包", "函数式编程"]
 [extra]
 license_image = "![Creative Commons License](https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png)"
 license = "This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/)"
