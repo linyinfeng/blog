@@ -1,7 +1,7 @@
 +++
 title = "Rust 闭包笔记"
 description = ""
-date = 2018-08-02T11:55:02+08:00
+date = 2019-03-15T11:06:01+08:00
 author = "Lin Yinfeng"
 draft = false
 [taxonomies]
