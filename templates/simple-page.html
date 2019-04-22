@@ -1,0 +1,10 @@
+{% extends "base/base.html" %}
+{% block title %}
+    {{ super() }}
+    {{ "- " ~ page.title }}
+{% endblock title %}
+{% block main %}
+    {{ super() }}
+    {{ parts::simple_page(page=page, config=config) }}
+{% endblock main %}
+{# Remove sidebar #}{% block optional_aside %}{% endblock optional_aside %}

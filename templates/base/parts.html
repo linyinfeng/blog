@@ -77,10 +77,14 @@
 {% endmacro %}
 
 {% macro article_title_text(page, config) %}
-    {% if page.draft == true %}
-        {{ "[" ~ config.extra.text_draft ~ "]" }}
-    {% endif %}
-    {{ page.title }}
+    <span class="draft-indicator">
+        {% if page.draft == true %}
+            {{ "[" ~ config.extra.text_draft ~ "]" }}
+        {% endif %}
+    </span>
+    <span>
+        {{ page.title }}
+    </span>
 {% endmacro %}
 
 {% macro article_taxonomies(page, config) %}
@@ -165,4 +169,11 @@
             {% endfor %}
         </ul>
     {% endfor %}
+{% endmacro %}
+
+{% macro simple_page(page, config) %}
+    <article class="article-container simple-artitle-container container">
+        {{ self::article_title(page=page, config=config) }}
+        <section class="article-content">{{ page.content | safe }}</section>
+    </article>
 {% endmacro %}
