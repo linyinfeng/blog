@@ -20,7 +20,7 @@
         
         {% if powered_by %}
             <div id="powered-by-container">
-                <small id="powered-by">{{ powered_by | markdown(inline=true) }}</small>
+                <small id="powered-by">{{ powered_by | markdown(inline=true) | safe }}</small>
             </div>
         {% endif %}
     </div>
