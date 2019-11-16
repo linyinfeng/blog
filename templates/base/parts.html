@@ -139,10 +139,10 @@
         <section class="article-license">
             {% if page.extra.license_image %}
                 <div class="license-image">
-                    {{ page.extra.license_image | markdown(inline=true) }}
+                    {{ page.extra.license_image | markdown(inline=true) | safe }}
                 </div>
             {% endif %}
-            <small class="license">{{ page.extra.license | markdown(inline=true) }}</small>
+            <small class="license">{{ page.extra.license | markdown(inline=true) | safe }}</small>
         </section>
     {% endif %}
 {% endmacro %}
