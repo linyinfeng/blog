@@ -3,14 +3,15 @@ language: generic
 before_script:
   - sudo apt-get update
   - sudo apt-get install -y jq
-  - which jq
-  - curl https://api.github.com/repos/getzola/zola/releases/latest |
-    jq '.assets[] | select(.name | test("zola.*unknown-linux-gnu.*")) | .browser_download_url' |
-    xargs wget
-  - tar -xvf zola*unknown-linux-gnu*
+  - sudo snap install core
+  - sudo snap install --edge zola
+  # - curl https://api.github.com/repos/getzola/zola/releases/latest |
+  #   jq '.assets[] | select(.name | test("zola.*unknown-linux-gnu.*")) | .browser_download_url' |
+  #   xargs wget
+  # - tar -xvf zola*unknown-linux-gnu*
 
 script:
-  - ./zola build
+  - zola build
 
 deploy:
   provider: pages
