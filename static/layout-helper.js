@@ -24,6 +24,7 @@ function handleMediaChange(mediaQueryList) {
 
 function handleScroll(pos) {
     var aside = document.getElementById("aside");
+    if (!aside) return;
     var header = document.getElementById("header");
     var footer = document.getElementById("footer");
     // var innerContainer = aside.querySelectorAll("div:last-child")[0];
