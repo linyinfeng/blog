@@ -5,5 +5,5 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 SOURCE=$(realpath "$DIR/../static/favicon.svg")
 TARGET=$(realpath "$DIR/../static/favicon.ico")
 
-convert -background none "$SOURCE" -define icon:auto-resize "$TARGET"
+convert -background transparent "$SOURCE" -define icon:auto-resize "$TARGET"
 identify "$TARGET"
