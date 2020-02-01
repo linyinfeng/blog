@@ -54,3 +54,7 @@ text_toc_title = "Table of Contents"
 text_draft = "Draft"
 
 date_format = "%Y-%m-%d %H:%M"
+
+# KaTeX
+katex_enable = true
+katex_version = "@0.11.1"

@@ -3,13 +3,19 @@
 <html lang={% block language %}{{ config.default_language }}{% endblock language %}>
 <head>
     {% block head %}
+        <title>{% block title %}{{ config.title }}{% endblock title %}</title>
         {% block meta %}
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
         {% endblock meta %}
         <link rel=stylesheet type="text/css" href={{ get_url(path="normalize.css", trailing_slash=false) }}>
         <link rel=stylesheet type="text/css" href={{ get_url(path="style.css", trailing_slash=false) }}>
-        <title>{% block title %}{{ config.title }}{% endblock title %}</title>
+        {% if config.extra.katex_enable %}
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex{{ config.extra.katex_version }}/dist/katex.min.css" crossorigin="anonymous">
+            <script defer src="https://cdn.jsdelivr.net/npm/katex{{ config.extra.katex_version }}/dist/katex.min.js" crossorigin="anonymous"></script>
+            <script defer src="https://cdn.jsdelivr.net/npm/katex{{ config.extra.katex_version }}/dist/contrib/auto-render.min.js" crossorigin="anonymous"
+                onload="renderMathInElement(document.body);"></script>
+        {% endif %}
     {% endblock head %}
 </head>
 <body>
