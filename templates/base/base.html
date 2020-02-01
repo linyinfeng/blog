@@ -13,8 +13,18 @@
         {% if config.extra.katex_enable %}
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex{{ config.extra.katex_version }}/dist/katex.min.css" crossorigin="anonymous">
             <script defer src="https://cdn.jsdelivr.net/npm/katex{{ config.extra.katex_version }}/dist/katex.min.js" crossorigin="anonymous"></script>
+            <script>
+                function renderMathInBody() {
+                    renderMathInElement(document.body, {
+                        delimiters: [
+                            {left: "$$", right: "$$", display: true},
+                            {left: "$", right: "$", display: false}
+                        ]
+                    });
+                }
+            </script>
             <script defer src="https://cdn.jsdelivr.net/npm/katex{{ config.extra.katex_version }}/dist/contrib/auto-render.min.js" crossorigin="anonymous"
-                onload="renderMathInElement(document.body);"></script>
+                onload="renderMathInBody()"></script>
         {% endif %}
     {% endblock head %}
 </head>
