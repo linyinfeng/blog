@@ -9,7 +9,7 @@
     }
     .article-content {
         a {
-           color: $link-default-color; 
+           color: $link-default-color;
         }
         pre {
             padding: .5em;
@@ -20,6 +20,9 @@
     }
     .article-license {
         margin: 1rem 0;
+        a {
+            color: $link-default-color;
+        }
     }
 }
 
@@ -66,6 +69,6 @@
         }
     }
     a.article-term-name {
-        color: $theme-color;
+        color: $link-default-color;
     }
 }

@@ -34,13 +34,14 @@ global_nav_items = [
     {name = "Home", path = "/"},
     {name = "Archive", path = "/archive"},
     {name = "Links", path = "/links"},
-    {name = "Status", path = "/status"},
+    # {name = "Status", path = "/status"},
     # {name = "GitHub", link = "https://github.com/linyinfeng"},
     # {name = "Source", link = "https://github.com/linyinfeng/blog"},
 ]
 
 # Footer settings
-copyright = "© Lin Yinfeng 2018-2019"
+# copyright = "© Lin Yinfeng 2018-2020"
+copyright = "© Lin Yinfeng"
 powered_by = "Powered by [Zola](https://www.getzola.org)"
 
 index_aside_taxonomies = [

@@ -17,7 +17,7 @@
         <div id="copyright-container">
             <small id="copyright">{{ copyright }}</small>
         </div>
-        
+
         {% if powered_by %}
             <div id="powered-by-container">
                 <small id="powered-by">{{ powered_by | markdown(inline=true) | safe }}</small>
@@ -142,7 +142,7 @@
                     {{ page.extra.license_image | markdown(inline=true) | safe }}
                 </div>
             {% endif %}
-            <small class="license">{{ page.extra.license | markdown(inline=true) | safe }}</small>
+            <small class="license-text">{{ page.extra.license | markdown(inline=true) | safe }}</small>
         </section>
     {% endif %}
 {% endmacro %}

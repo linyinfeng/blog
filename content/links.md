@@ -3,14 +3,17 @@ title = "Links"
 template = "simple-page.html"
 +++
 
-[![My Github](https://img.shields.io/badge/link-github%20profile-24292e.svg)](https://github.com/linyinfeng)
-[![GPG Public Key](https://img.shields.io/badge/link-gpg%20public%20key-blue.svg)](https://github.com/linyinfeng.gpg)
-[![Source fo Site](https://img.shields.io/badge/link-blog%20source-24292e.svg)](https://github.com/linyinfeng/blog)
+My GitHub: [github.com/linyinfeng](https://github.com/linyinfeng)
 
-## Other Bloggers
+GPG public key: [github.com/linyinfeng.gpg](https://github.com/linyinfeng.gpg)
 
-[![mhtt1123.com](https://img.shields.io/badge/link-mhtt1123.com-47c2dc.svg)](https://mhtt1123.com)
+Source of the site: [github.com/linyinfeng/blog](https://github.com/linyinfeng/blog)
+
+## Friends
+
+matrixlt: [matrixlt.github.io](https://matrixlt.github.io)
+mhtt1123.com: [mhtt1123.com](https://mhtt1123.com)
 
 ## Other
 
-[![996.icu](https://img.shields.io/badge/link-996.icu-de335e.svg)](https://996.icu)
+996 ICU: [996.icu](https://996.icu)
