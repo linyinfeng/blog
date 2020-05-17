@@ -11,7 +11,7 @@ deploy:
   provider: pages
   local-dir: public
   repo: linyinfeng/linyinfeng.github.io
-  target-branch: gh-pages
+  target-branch: master
   fqdn: www.linyinfeng.com
   skip-cleanup: true
   github-token: $GITHUB_TOKEN
