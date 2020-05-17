@@ -172,7 +172,7 @@
 {% endmacro %}
 
 {% macro simple_page(page, config) %}
-    <article class="article-container simple-artitle-container container">
+    <article class="article-container simple-article-container container">
         {{ self::article_title(page=page, config=config) }}
         <section class="article-content">{{ page.content | safe }}</section>
     </article>
