@@ -1,8 +1,6 @@
 language: generic
 
 before_script:
-  - sudo apt-get update
-  - sudo apt-get install -y jq
   - sudo snap install core
   - sudo snap install --edge zola
 
@@ -13,11 +11,10 @@ deploy:
   provider: pages
   local-dir: public
   repo: linyinfeng/linyinfeng.github.io
-  target-branch: master
+  target-branch: gh-pages
   fqdn: www.linyinfeng.com
   skip-cleanup: true
   github-token: $GITHUB_TOKEN
   keep-history: true
   on:
     branch: master
-
