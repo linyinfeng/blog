@@ -10,6 +10,9 @@
         {% endblock meta %}
         <link rel=stylesheet type="text/css" href={{ get_url(path="normalize.css", trailing_slash=false) }}>
         <link rel=stylesheet type="text/css" href={{ get_url(path="style.css", trailing_slash=false) }}>
+        {% if config.extra.google_tag_manager_enable %}
+            {{ parts::google_tag_manager(code=config.extra.google_tag_manager_code) }}
+        {% endif %}
         {% if config.extra.katex_enable %}
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex{{ config.extra.katex_version }}/dist/katex.min.css" crossorigin="anonymous">
             <script defer src="https://cdn.jsdelivr.net/npm/katex{{ config.extra.katex_version }}/dist/katex.min.js" crossorigin="anonymous"></script>
@@ -19,6 +22,9 @@
 </head>
 <body>
     {% block body %}
+        {% if config.extra.google_tag_manager_enable %}
+            {{ parts::google_tag_manager_no_script(code=config.extra.google_tag_manager_code) }}
+        {% endif %}
         <header id="header">
             {% block header %}
             {{ parts::header(title=config.title,

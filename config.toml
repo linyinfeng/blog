@@ -59,3 +59,6 @@ date_format = "%Y-%m-%d %H:%M"
 # KaTeX
 katex_enable = true
 katex_version = "@0.11.1"
+
+google_tag_manager_enable = true
+google_tag_manager_code = "GTM-K74P2G7"
