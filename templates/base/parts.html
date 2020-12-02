@@ -54,7 +54,7 @@
             {% endfor %}
         </ul>
     </div>
-{% endmacro pages_list %}
+{% endmacro taxonomy_list %}
 
 {% macro toc_inner(toc) %}
     {% if toc | length != 0 %}
@@ -67,14 +67,14 @@
                 {% endfor %}
         </ul>
     {% endif %}
-{% endmacro %}
+{% endmacro toc_inner %}
 
 {% macro toc(toc, title) %}
     <div class="toc-container container">
         <h1 class="title toc-title">{{ title }}</h1>
         {{ self::toc_inner(toc=toc) }}
     </div>
-{% endmacro %}
+{% endmacro toc %}
 
 {% macro article_title_text(page, config) %}
     <span class="draft-indicator">
@@ -85,7 +85,7 @@
     <span>
         {{ page.title }}
     </span>
-{% endmacro %}
+{% endmacro article_title_text %}
 
 {% macro article_taxonomies(page, config) %}
     <div class="article-taxonomies">
@@ -105,7 +105,7 @@
             </span></span>
         {%- endfor -%}
     </div>
-{% endmacro %}
+{% endmacro article_taxonomies %}
 
 {% macro article_title(page, config) %}
     <h1 class="title article-title">
@@ -113,11 +113,11 @@
             {{ self::article_title_text(page=page, config=config) }}
         </a>
     </h1>
-{% endmacro %}
+{% endmacro article_title %}
 
 {% macro article_datetime(page, config) %}
     <time datetime={{ page.date}}>{{ page.date | date(format=config.extra.date_format) }}</time>
-{% endmacro %}
+{% endmacro article_datetime %}
 
 {% macro article_summary(page, config) %}
     <article class="article-summary-container container">
@@ -132,7 +132,7 @@
         </section>
         {{ self::article_taxonomies(page=page, config=config) }}
     </article>
-{% endmacro %}
+{% endmacro article_summary %}
 
 {% macro article_license(page, config) %}
     {% if page.extra.license %}
@@ -145,7 +145,7 @@
             <small class="license-text">{{ page.extra.license | markdown(inline=true) | safe }}</small>
         </section>
     {% endif %}
-{% endmacro %}
+{% endmacro article_license %}
 
 {% macro article(page, config) %}
     <article class="article-container container">
@@ -155,7 +155,7 @@
         {{ self::article_license(page=page, config=config) }}
         <section class="article-content">{{ page.content | safe }}</section>
     </article>
-{% endmacro %}
+{% endmacro article %}
 
 {% macro pages_list_by_year(pages, title, title_url, have_title=true) %}
     {% if have_title == true %}
@@ -169,14 +169,14 @@
             {% endfor %}
         </ul>
     {% endfor %}
-{% endmacro %}
+{% endmacro pages_list_by_year %}
 
 {% macro simple_page(page, config) %}
     <article class="article-container simple-article-container container">
         {{ self::article_title(page=page, config=config) }}
         <section class="article-content">{{ page.content | safe }}</section>
     </article>
-{% endmacro %}
+{% endmacro simple_page %}
 
 {% macro google_tag_manager(code) %}
     <!-- Google Tag Manager -->
@@ -186,11 +186,11 @@
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','{{ code }}');</script>
     <!-- End Google Tag Manager -->
-{% endmacro %}
+{% endmacro google_tag_manager %}
 
 {% macro google_tag_manager_no_script(code) %}
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ code }}"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
-{% endmacro %}
+{% endmacro google_tag_manager_no_script %}
