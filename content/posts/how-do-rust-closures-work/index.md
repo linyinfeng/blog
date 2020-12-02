@@ -27,7 +27,7 @@ license = "This work is licensed under a [Creative Commons Attribution-NonCommer
 这两个概念之间没有什么关系，就以[维基百科 Closure 词条](https://en.wikipedia.org/wiki/Closure_(computer_programming))上举的一个常见的 `adder` 例子来说：
 
 ```python
- Python
+# Python
 def f(x):
     def g(y):
         return x + y
@@ -36,7 +36,7 @@ def h(x):
     return lambda y: x + y
 a = f(1)
 b = h(1)
- ...
+# ...
 ```
 
 在这两个例子中，a 和 b 均为闭包，JavaScript 中的 `function` 也是一样，是不是闭包当然和没有名字并没有理论和实践上的联系。当然，可以说对于将函数设计为一等对象（First class object）的语言，函数是否匿名一般不产生任何实际区别。
@@ -350,7 +350,7 @@ assert_eq!(s, "Hello!!");
 
 ### `move` 关键字
 
-`move` 关键字的意义有时令人感到困惑。在远古 Rust `中，move` 关键字是另作他用的，后来被删除了。应该是在现在版本的闭包出现以后才重新作为一个有用的关键字出现。在内置闭包捕获变量的时候，Rust 总是尽可能以 `&` > `&mut` > `move` 的顺序进行捕获，这将对捕获的变量产生最少的影响。但是，某些情况下，我们需要闭包获得变量的所有权，但是闭包函数体并不需要获得变量的所有权。这时候我们使用 `move` 关键字强制 Rust 将所有捕获的变量移动入闭包的环境中，以延长被移动的对象的生存期。
+`move` 关键字的意义有时令人感到困惑。在远古 Rust 中，`move` 关键字是另作他用的，后来被删除了。应该是在现在版本的闭包出现以后才重新作为一个有用的关键字出现。在内置闭包捕获变量的时候，Rust 总是尽可能以 `&` > `&mut` > `move` 的顺序进行捕获，这将对捕获的变量产生最少的影响。但是，某些情况下，我们需要闭包获得变量的所有权，但是闭包函数体并不需要获得变量的所有权。这时候我们使用 `move` 关键字强制 Rust 将所有捕获的变量移动入闭包的环境中，以延长被移动的对象的生存期。
 
 可以考虑一下为什么有 `move` 闭包却没有 `mut` 闭包呢？因为强制 `mut` 捕获并不会造成任何的好处却会对被捕获的变量产生一个可变借用，这没有任何意义，就与写了 `let r = &mut x;` 却不修改 r 一样，编译器将提示去除 `mut`。
 
@@ -409,7 +409,7 @@ assert_eq!(s, "Hello!!");
 
 ## 脱离闭包
 
-Rust 中，最简单高阶函数一般通过被这样书写：
+Rust 中，最简单高阶函数一般这样书写：
 
 ```rust
 fn higher_order_fn<F>(f: F)
@@ -440,9 +440,9 @@ Rust 中的函数也是“unboxed“实现，同样也实现了 `Fn` 系列 trai
 * 需要纯函数的时候，书写 `Fn`
 * 需要函数保存内部状态的时候，如伪随机数生成函数，书写 `FnMut`
 * 类似于创建线程这样的调用，选择 `FnOnce`
-    ```rust
-    pub fn spawn<F, T>(f: F) -> JoinHandle<T> where
-        F: FnOnce() -> T,
-        F: Send + 'static,
-        T: Send + 'static, 
-    ```
+  ```rust
+  pub fn spawn<F, T>(f: F) -> JoinHandle<T> where
+      F: FnOnce() -> T,
+      F: Send + 'static,
+      T: Send + 'static,
+  ```
