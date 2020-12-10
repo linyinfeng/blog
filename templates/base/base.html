@@ -10,13 +10,13 @@
         {% endblock meta %}
         <link rel=stylesheet type="text/css" href={{ get_url(path="normalize.css", trailing_slash=false) }}>
         <link rel=stylesheet type="text/css" href={{ get_url(path="style.css", trailing_slash=false) }}>
-        {% if config.extra.google_tag_manager_enable %}
-            {{ parts::google_tag_manager(code=config.extra.google_tag_manager_code) }}
+        {% if config.extra.google_tag_manager.enable %}
+            {{ parts::google_tag_manager(code=config.extra.google_tag_manager.code) }}
         {% endif %}
-        {% if config.extra.katex_enable %}
-            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex{{ config.extra.katex_version }}/dist/katex.min.css" crossorigin="anonymous">
-            <script defer src="https://cdn.jsdelivr.net/npm/katex{{ config.extra.katex_version }}/dist/katex.min.js" crossorigin="anonymous"></script>
-            <script defer src="https://cdn.jsdelivr.net/npm/katex{{ config.extra.katex_version }}/dist/contrib/mathtex-script-type.min.js" crossorigin="anonymous"></script>
+        {% if config.extra.katex.enable %}
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex{{ config.extra.katex.version }}/dist/katex.min.css" crossorigin="anonymous">
+            <script defer src="https://cdn.jsdelivr.net/npm/katex{{ config.extra.katex.version }}/dist/katex.min.js" crossorigin="anonymous"></script>
+            <script defer src="https://cdn.jsdelivr.net/npm/katex{{ config.extra.katex.version }}/dist/contrib/mathtex-script-type.min.js" crossorigin="anonymous"></script>
         {% endif %}
     {% endblock head %}
 </head>

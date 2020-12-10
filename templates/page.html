@@ -6,6 +6,9 @@
 {% block main %}
     {{ super() }}
     {{ parts::article(page=page, config=config) }}
+    {% if config.extra.utterances.enable %}
+        {{  parts::utterances(cfg=config.extra.utterances) }}
+    {% endif %}
 {% endblock main %}
 {% block optional_aside %}
     {% if page.toc %}

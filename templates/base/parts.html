@@ -194,3 +194,14 @@
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
 {% endmacro google_tag_manager_no_script %}
+
+{% macro utterances(cfg) %}
+    <script src="https://utteranc.es/client.js"
+        repo="{{ cfg.repo }}"
+        issue-term="{{ cfg.issue_term }}"
+        label="{{ cfg.label }}"
+        theme="{{ cfg.theme }}"
+        crossorigin="anonymous"
+        async>
+    </script>
+{% endmacro utterances %}

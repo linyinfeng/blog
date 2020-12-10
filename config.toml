@@ -20,10 +20,10 @@ highlight_code = true
 # build_search_index = true
 
 taxonomies = [
-    #{name = "tags", paginate_by = 10},
-    {name = "tags"},
-    #{name = "categories", paginate_by = 10},
-    {name = "categories"},
+    #{ name = "tags", paginate_by = 10 },
+    { name = "tags" },
+    #{ name = "categories", paginate_by = 10 },
+    { name = "categories" },
 ]
 
 [translations]
@@ -31,22 +31,19 @@ taxonomies = [
 [extra]
 # Header settings
 global_nav_items = [
-    {name = "Home", path = "/"},
-    {name = "Archive", path = "/archive"},
-    {name = "Links", path = "/links"},
-    # {name = "Status", path = "/status"},
-    # {name = "GitHub", link = "https://github.com/linyinfeng"},
-    # {name = "Source", link = "https://github.com/linyinfeng/blog"},
+    { name = "Home", path = "/" },
+    { name = "Archive", path = "/archive" },
+    { name = "Links", path = "/links" },
+    { name = "Source", link = "https://github.com/linyinfeng/blog" },
 ]
 
 # Footer settings
-# copyright = "© Lin Yinfeng 2018-2020"
 copyright = "© Lin Yinfeng"
 powered_by = "Powered by [Zola](https://www.getzola.org)"
 
 index_aside_taxonomies = [
-    {name = "categories"},
-    {name = "tags"},
+    { name = "categories" },
+    { name = "tags" },
 ]
 
 # Text settings
@@ -57,8 +54,19 @@ text_draft = "Draft"
 date_format = "%Y-%m-%d %H:%M"
 
 # KaTeX
-katex_enable = true
-katex_version = "@0.12.0"
+[extra.katex]
+enable = true
+version = "@0.12.0"
 
-google_tag_manager_enable = true
-google_tag_manager_code = "GTM-K74P2G7"
+# Google Tag Manager
+[extra.google_tag_manager]
+enable = true
+code = "GTM-K74P2G7"
+
+# Utterances
+[extra.utterances]
+enable = true
+repo = "linyinfeng/blog"
+label = "utterances"
+issue_term = "pathname"
+theme = "github-light"
