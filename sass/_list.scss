@@ -1,16 +1,17 @@
-ul{
+ul {
     padding-left: $list-indent-size;
-    ul{
+    ul {
         padding-left: $list-indent-size;
-        ul{
+        ul {
             padding-left: $list-indent-size;
-            ul{
+            ul {
                 padding-left: $list-indent-size;
-                ul{
+                ul {
                     padding-left: $list-indent-size;
                     ul {
                         padding-left: $list-indent-size;
-                    };
+                    }
+                    ;
                 }
             }
         }

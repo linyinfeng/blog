@@ -1,9 +1,11 @@
 * {
     box-sizing: border-box;
 }
+
 body {
     margin: 0;
 }
+
 a {
     text-decoration: none;
     color: inherit;
@@ -13,7 +15,8 @@ body {
     min-height: 100vh;
     display: flex;
     flex-flow: column nowrap;
-    #header, #footer {
+    #header,
+    #footer {
         flex: none;
     }
     #main-aside-container {
@@ -31,7 +34,8 @@ body {
 }
 
 @media all and (min-width: $layout-change-width) {
-    #header, #footer {
+    #header,
+    #footer {
         z-index: 1; // Cover aside
     }
     #main-aside-container {
@@ -61,7 +65,6 @@ body {
             border: .125rem solid $theme-color;
             border-left: 0;
             transition: left .3s;
-            
             padding-top: .5rem;
             padding-bottom: .5rem;
             overflow: auto;
@@ -72,7 +75,7 @@ body {
         }
         #aside::after {
             display: flex;
-	    z-index: 2;
+            z-index: 2;
             justify-content: center;
             align-items: center;
             content: "🔗";

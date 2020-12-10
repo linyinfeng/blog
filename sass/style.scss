@@ -10,18 +10,18 @@ $footer-foreground-color: black;
 $footer-shadow-color: $theme-shadow;
 $sidebar-shadow-color: $theme-shadow;
 $link-default-color: $theme-color;
-
 $layout-change-width: 60rem;
-
 $list-indent-size: 1rem;
-
 body {
     font-family: Arial, Helvetica, sans-serif;
     line-height: 1.45;
 }
-code, pre {
+
+code,
+pre {
     font-family: "DejaVu Sans Mono", "Lucida Console", Monaco, monospace;
 }
+
 code {
     padding: 0.0625rem;
     border-radius: 0.1875rem;

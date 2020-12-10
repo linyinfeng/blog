@@ -9,7 +9,7 @@
     }
     .article-content {
         a {
-           color: $link-default-color;
+            color: $link-default-color;
         }
         pre {
             padding: .5em;
@@ -27,7 +27,7 @@
 }
 
 .article-summary-container {
-    > * {
+    >* {
         display: block;
     }
     .article-title {
@@ -52,19 +52,19 @@
 .article-taxonomies {
     .article-taxonomy {
         margin-right: 0.25rem;
-        :last-child {
+         :last-child {
             margin-right: inherit;
         }
     }
     .article-taxonomy-name {
         margin-right: 0.25rem;
     }
-    .article-taxonomy-name::after  {
+    .article-taxonomy-name::after {
         content: ":";
     }
     .article-term-name {
         margin-right: 0.25rem;
-        :last-child {
+         :last-child {
             margin-right: inherit;
         }
     }

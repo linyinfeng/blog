@@ -4,21 +4,17 @@
     }
     color: $header-foreground-color;
     box-shadow: 0 0 .125rem .0625rem $header-shadow-color;
-
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
     align-items: center;
-
     #blog-title {
         margin: 0;
         padding: .5rem 1rem;
     }
-
     #global-nav {
         padding: .5rem 1rem;
         // font-size: 1.25rem;
-
         .global-nav-item-container::after {
             content: " | ";
         }
