@@ -5,7 +5,7 @@ var MINIMAL_SIDEBAR_TOP_PADDING = 0;
 var INITIAL_SIDEBAR_BOTTOM_PADDING = 0 * 16;
 var MINIMAL_SIDEBAR_BOTTOM_PADDING = 0 * 16;
 
-var MEDIA_STRING = "(min-width: 1000px)";
+var MEDIA_STRING = "(min-width: 980px)";
 
 function handleMediaChange() {
     handleScroll(window.scrollY);
