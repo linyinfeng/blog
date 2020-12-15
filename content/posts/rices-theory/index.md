@@ -45,7 +45,7 @@ license = "This work is licensed under a [Creative Commons Attribution-NonCommer
 所以最后，莱斯定理真正想表达的东西就是。
 
 $$
-\forall \mathcal{P}, \mathcal{P} \subsetneq \mathit{RE} \land \mathcal{P} \neq \emptyset \implies \set{ \langle M \rangle | L(M) \in \mathcal{P} \set} \notin \mathit{RL}
+\forall \mathcal{P}, \mathcal{P} \subsetneq \mathit{RE} \land \mathcal{P} \neq \emptyset \implies \set{ \langle M \rangle | L(M) \in \mathcal{P} } \notin \mathit{RL}
 $$
 
 我用 $\mathit{RE}$ 表示所有递归可枚举语言的集合，用 $\mathit{RL}$ 表示所有递归语言（可判定语言）的集合。字母 $\mathcal{P}$ 表示性质。用 $M$ 表示一个图灵机，$L(M)$ 表示该图灵机接收的语言。$\langle \cdot \rangle$ 表示一个东西的字符串表示，例如 $\langle M \rangle$ 表示一个图灵机 $M$ 的字符串表示，$\langle M, w \rangle$ 表示一个图灵机和一个字符串构成的有序对的字符串表示。
