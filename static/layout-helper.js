@@ -7,7 +7,7 @@ var MINIMAL_SIDEBAR_BOTTOM_PADDING = 0 * 16;
 
 var MEDIA_STRING = "(min-width: 1000px)";
 
-function handleMediaChange(_mediaQueryList) {
+function handleMediaChange() {
     handleScroll(window.scrollY);
 }
 
@@ -20,7 +20,7 @@ function handleScroll(pos) {
     var mql = window.matchMedia(MEDIA_STRING);
     if (mql.matches) {
         var topPadding = header.offsetHeight + INITIAL_SIDEBAR_TOP_PADDING - pos;
-        console.log(header.offsetHeight);
+        // console.log(header.offsetHeight);
         if (topPadding < MINIMAL_SIDEBAR_TOP_PADDING) topPadding = MINIMAL_SIDEBAR_TOP_PADDING;
         aside.style.paddingTop = topPadding.toString() + "px";
 
