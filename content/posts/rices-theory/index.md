@@ -45,7 +45,7 @@ license = "This work is licensed under a [Creative Commons Attribution-NonCommer
 所以最后，莱斯定理真正想表达的东西就是。
 
 $$
-\forall \mathcal{P}, \mathcal{P} \subsetneq \mathit{RE} \land \mathcal{P} \neq \emptyset \implies \set{ \langle M \rangle | L(M) \in \mathcal{P} } \notin \mathit{RL}
+\forall \mathcal{P}, \mathcal{P} \subsetneq \mathit{RE} \land \mathcal{P} \neq \emptyset \implies \set{ \langle M \rangle \mid L(M) \in \mathcal{P} } \notin \mathit{RL}
 $$
 
 我用 $\mathit{RE}$ 表示所有递归可枚举语言的集合，用 $\mathit{RL}$ 表示所有递归语言（可判定语言）的集合。字母 $\mathcal{P}$ 表示性质。用 $M$ 表示一个图灵机，$L(M)$ 表示该图灵机接收的语言。$\langle \cdot \rangle$ 表示一个东西的字符串表示，例如 $\langle M \rangle$ 表示一个图灵机 $M$ 的字符串表示，$\langle M, w \rangle$ 表示一个图灵机和一个字符串构成的有序对的字符串表示。
@@ -78,7 +78,7 @@ $\langle U' \rangle$ 不能既在 $L_u'$ 里又不在 $L_u'$ 里，我们导出�
 为什么我们花了很多篇幅说明了 $L_u$ 不可判定？因为假设莱斯定理不成立，即存在一个递归可枚举语言的非平凡性质是可判定的，那么 $L_u$ 就可判定。也就是说，我们能把 $L_u$ 规约到任意一个递归可枚举语言的非平凡性质的判定问题上。记 $L_{\mathcal{P}}$ 为性质 $\mathcal{P}$ 表示的语言。
 
 $$
-\set{ \langle M \rangle | L(M) \in \mathcal{P} }
+\set{ \langle M \rangle \mid L(M) \in \mathcal{P} }
 $$
 
 怎么做呢，对于不同的非平凡性质，分为两种情况。
@@ -106,7 +106,7 @@ $$
 考虑包含空语言的性质 $\mathcal{P}$，$\overline{\mathcal{P}} = \mathit{RE} - \mathcal{P}$ 一定不包含空语言（特别注意这里考虑递归可枚举语言性质的补集时全集是递归可枚举语言的集合而不是所有语言的集合）。根据已证明的结论，$L_{\overline{\mathcal{P}}} \notin \mathit{RL}$。可以注意到，因为对于所有图灵机 $M$，$L(M) \in \mathit{RE}$，所以有。
 
 $$
-L_{\overline{\mathcal{P}}} = \set{ \langle M \rangle | L(M) \in \overline{\mathcal{P}} } = \set{ \langle M \rangle | L(M) \in \mathit{RE} - \mathcal{P} } = \overline{L_{\mathcal{P}}}
+L_{\overline{\mathcal{P}}} = \set{ \langle M \rangle \mid L(M) \in \overline{\mathcal{P}} } = \set{ \langle M \rangle \mid L(M) \in \mathit{RE} - \mathcal{P} } = \overline{L_{\mathcal{P}}}
 $$
 
 因为 $\mathit{RL}$ 对补集操作封闭，所以 $L_{\mathcal{P}} \in \mathit{RL} \implies L_{\overline{\mathcal{P}}} \in \mathit{RL}$。由于我们已经证明 $L_{\overline{\mathcal{P}}} \notin \mathit{RL}$，所以 $L_{\mathcal{P}} \notin \mathit{RL}$。
@@ -114,7 +114,7 @@ $$
 综合两种情况，我们带有一些偷懒地证明了莱斯定理。
 
 $$
-\forall \mathcal{P}, \mathcal{P} \subsetneq \mathit{RE} \land \mathcal{P} \neq \emptyset \implies \set{ \langle M \rangle | L(M) \in \mathcal{P} } \notin \mathit{RL}
+\forall \mathcal{P}, \mathcal{P} \subsetneq \mathit{RE} \land \mathcal{P} \neq \emptyset \implies \set{ \langle M \rangle \mid L(M) \in \mathcal{P} } \notin \mathit{RL}
 $$
 
 ## 应用
