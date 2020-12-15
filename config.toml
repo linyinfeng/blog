@@ -57,6 +57,19 @@ date_format = "%Y-%m-%d %H:%M"
 [extra.katex]
 enable = true
 version = "@0.12.0"
+render_options = '''
+{
+    macros: {
+        "\\set": "\\left\\{ #1 \\right\\}"
+    },
+    delimiters: [
+        {left: "$$",  right: "$$",  display: true },
+        {left: "$",   right: "$",   display: false},
+        {left: "\\(", right: "\\)", display: false},
+        {left: "\\[", right: "\\]", display: true }
+    ]
+}
+'''
 
 # Google Tag Manager
 [extra.google_tag_manager]
