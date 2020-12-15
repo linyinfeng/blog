@@ -1,7 +1,8 @@
 +++
 title = "莱斯定理"
 description = ""
-date = 2020-12-13T23:01:20+08:00
+date = 2020-12-13 23:01:20+08:00
+updated = 2020-12-15 19:50:07+08:00
 author = "Lin Yinfeng"
 draft = false
 [taxonomies]

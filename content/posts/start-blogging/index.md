@@ -1,7 +1,8 @@
 +++
 title = "开始写博客"
 description = ""
-date = 2018-08-01T23:53:16+08:00
+date = 2018-08-01 23:53:16+08:00
+updated = 2018-08-15 18:31:16+08:00
 author = "Lin Yinfeng"
 draft = false
 [taxonomies]

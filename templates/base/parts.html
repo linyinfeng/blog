@@ -115,14 +115,28 @@
     </h1>
 {% endmacro article_title %}
 
-{% macro article_datetime(page, config) %}
-    <time datetime={{ page.date}}>{{ page.date | date(format=config.extra.date_format) }}</time>
+{% macro article_datetime(page, config, verbose) %}
+    <div class="dates-container">
+        <div class="date-container">
+            <time datetime={{ page.date}}>{{ page.date | date(format=config.extra.date_format) }}</time>
+ 	    {% if verbose %}
+            <span class="date-label">(created)</span>
+            {% endif %}
+        </div>
+        {% if verbose and page.updated %}
+        <div class="date-container">
+	    <time datetime={{ page.updated }}>{{ page.updated | date(format=config.extra.date_format) }}</time>
+            <span class="date-label">(last updated)</span>
+        </div>
+    </div>
+    {% endif %}
 {% endmacro article_datetime %}
 
 {% macro article_summary(page, config) %}
     <article class="article-summary-container container">
         {{ self::article_title(page=page, config=config) }}
-        {{ self::article_datetime(page=page, config=config) }}
+        {{ self::article_datetime(page=page, config=config, verbose=false) }}
+        {{ self::article_taxonomies(page=page, config=config) }}
         <section class="article-summary">
             {# page.summary | safe | striptags #}
             {{ page.summary | safe }}
@@ -130,7 +144,6 @@
                 {{ config.extra.text_continue_reading }}
             </a>
         </section>
-        {{ self::article_taxonomies(page=page, config=config) }}
     </article>
 {% endmacro article_summary %}
 
@@ -150,7 +163,7 @@
 {% macro article(page, config) %}
     <article class="article-container container">
         {{ self::article_title(page=page, config=config) }}
-        {{ self::article_datetime(page=page, config=config) }}
+        {{ self::article_datetime(page=page, config=config, verbose=true) }}
         {{ self::article_taxonomies(page=page, config=config) }}
         {{ self::article_license(page=page, config=config) }}
         <section class="article-content">{{ page.content | safe }}</section>

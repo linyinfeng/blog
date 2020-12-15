@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+timestamp=$(git log -1 --pretty="format:%ct" "$1")
+
+date -d "@$timestamp" --rfc-3339=seconds

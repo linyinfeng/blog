@@ -7,6 +7,16 @@
     .article-title {
         margin-bottom: 0;
     }
+    .dates-container {
+	display: flex;
+	flex-wrap: wrap;
+	.date-container {
+	    margin-right: 0.5rem;
+	    :last-child {
+		margin-right: inherit;
+	    }
+	}
+    }
     .article-content {
         a {
             color: $link-default-color;
@@ -31,11 +41,7 @@
         display: block;
     }
     .article-title {
-        margin-bottom: 0.5rem;
-    }
-    time {
-        display: block;
-        // font-size: .8em;
+        margin-bottom: 0;
     }
     .article-summary {
         margin: .5rem 0;
@@ -49,7 +55,13 @@
     }
 }
 
+.date-container {
+    color: $date-color;
+}
+
 .article-taxonomies {
+    display: flex;
+    flex-wrap: wrap;
     .article-taxonomy {
         margin-right: 0.25rem;
          :last-child {
@@ -64,7 +76,7 @@
     }
     .article-term-name {
         margin-right: 0.25rem;
-         :last-child {
+        :last-child {
             margin-right: inherit;
         }
     }
