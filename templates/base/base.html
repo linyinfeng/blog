@@ -10,15 +10,16 @@
         {% endblock meta %}
         <link rel=stylesheet type="text/css" href={{ get_url(path="normalize.css", trailing_slash=false) }}>
         <link rel=stylesheet type="text/css" href={{ get_url(path="style.css", trailing_slash=false) }}>
+        <script defer src={{ get_url(path="layout-helper.js", trailing_slash=false) }}></script>
         {% if config.extra.google_tag_manager.enable %}
             {{ parts::google_tag_manager(code=config.extra.google_tag_manager.code) }}
         {% endif %}
         {% if config.extra.katex.enable %}
             {{ parts::katex(cfg=config.extra.katex) }}
         {% endif %}
-	{% block atom %}
-	    <link rel="alternate" type="application/atom+xml" title="Atom" href="{{ get_url(path="atom.xml", trailing_slash=false) }}">
-	{% endblock atom %}
+        {% block atom %}
+            <link rel="alternate" type="application/atom+xml" title="Atom" href="{{ get_url(path="atom.xml", trailing_slash=false) }}">
+        {% endblock atom %}
     {% endblock head %}
 </head>
 <body>
@@ -55,7 +56,5 @@
             {% endblock footer %}
         </footer>
     {% endblock body %}
-
-    <script src={{ get_url(path="layout-helper.js", trailing_slash=false) }}></script>
 </body>
 </html>

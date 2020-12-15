@@ -3,11 +3,11 @@
         color: $footer-background-color;
     }
     color: $footer-foreground-color;
-    box-shadow: 0 0 .125rem .0625rem $footer-shadow-color;
+    box-shadow: 0 0 2px 1px $footer-shadow-color;
     text-align: center;
-    padding: .25rem;
+    padding: 4px;
     >* {
-        margin: .125rem;
+        margin: 2px;
         display: block;
     }
     a {

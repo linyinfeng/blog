@@ -11,8 +11,10 @@ $footer-shadow-color: $theme-shadow;
 $sidebar-shadow-color: $theme-shadow;
 $link-default-color: $theme-color;
 $date-color: gray;
-$layout-change-width: 60rem;
-$list-indent-size: 1rem;
+$main-container-max-width: 760px;
+$aside-width: 240px;
+$layout-change-width: 1000px;
+$list-indent-size: 16px;
 body {
     font-family: Arial, Helvetica, sans-serif;
     line-height: 1.45;
@@ -24,8 +26,8 @@ pre {
 }
 
 code {
-    padding: 0.0625rem;
-    border-radius: 0.1875rem;
+    padding: 1px;
+    border-radius: 3px;
 }
 
 @import "global";

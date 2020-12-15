@@ -11,7 +11,7 @@
 	display: flex;
 	flex-wrap: wrap;
 	.date-container {
-	    margin-right: 0.5rem;
+	    margin-right: 8px;
 	    :last-child {
 		margin-right: inherit;
 	    }
@@ -23,13 +23,13 @@
         }
         pre {
             padding: .5em;
-            border-radius: .25rem;
+            border-radius: 4px;
             max-width: 100%;
             overflow: auto;
         }
     }
     .article-license {
-        margin: 1rem 0;
+        margin: 16px 0;
         a {
             color: $link-default-color;
         }
@@ -44,7 +44,7 @@
         margin-bottom: 0;
     }
     .article-summary {
-        margin: .5rem 0;
+        margin: 8px 0;
         a {
             text-decoration: underline;
         }
@@ -63,19 +63,19 @@
     display: flex;
     flex-wrap: wrap;
     .article-taxonomy {
-        margin-right: 0.25rem;
+        margin-right: 4px;
          :last-child {
             margin-right: inherit;
         }
     }
     .article-taxonomy-name {
-        margin-right: 0.25rem;
+        margin-right: 4px;
     }
     .article-taxonomy-name::after {
         content: ":";
     }
     .article-term-name {
-        margin-right: 0.25rem;
+        margin-right: 4px;
         :last-child {
             margin-right: inherit;
         }

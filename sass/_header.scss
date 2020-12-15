@@ -3,18 +3,18 @@
         color: $header-background-color;
     }
     color: $header-foreground-color;
-    box-shadow: 0 0 .125rem .0625rem $header-shadow-color;
+    box-shadow: 0 0 2px 1px $header-shadow-color;
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
     align-items: center;
     #blog-title {
         margin: 0;
-        padding: .5rem 1rem;
+        padding: 8px 16px;
     }
     #global-nav {
-        padding: .5rem 1rem;
-        // font-size: 1.25rem;
+        padding: 8px 16px;
+        // font-size: 20px;
         .global-nav-item-container::after {
             content: " | ";
         }

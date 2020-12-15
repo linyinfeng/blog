@@ -5,20 +5,9 @@ var MINIMAL_SIDEBAR_TOP_PADDING = 0;
 var INITIAL_SIDEBAR_BOTTOM_PADDING = 0 * 16;
 var MINIMAL_SIDEBAR_BOTTOM_PADDING = 0 * 16;
 
-function handleMediaChange(mediaQueryList) {
-    var main = document.getElementById("main");
-    if (mediaQueryList.matches) {
-        var aside = document.getElementById("aside");
-        var marginLeft = 0;
-        if (aside !== null) {
-            marginLeft = aside.offsetWidth + REAL_ASIDE_MARGIN_LEFT;
-        }
-        var marginLeftString = marginLeft.toString() + "px";
-        console.log(marginLeftString);
-        main.style.marginLeft = marginLeftString;
-    } else {
-        main.style.marginLeft = "";
-    }
+var MEDIA_STRING = "(min-width: 1000px)";
+
+function handleMediaChange(_mediaQueryList) {
     handleScroll(window.scrollY);
 }
 
@@ -28,7 +17,7 @@ function handleScroll(pos) {
     var header = document.getElementById("header");
     var footer = document.getElementById("footer");
     // var innerContainer = aside.querySelectorAll("div:last-child")[0];
-    var mql = window.matchMedia("(min-width: 60rem)");
+    var mql = window.matchMedia(MEDIA_STRING);
     if (mql.matches) {
         var topPadding = header.offsetHeight + INITIAL_SIDEBAR_TOP_PADDING - pos;
         console.log(header.offsetHeight);
@@ -48,8 +37,8 @@ function handleScroll(pos) {
 }
 
 function register() {
-    var mql = window.matchMedia("(min-width: 60rem)");
-    mql.addListener(handleMediaChange);
+    var mql = window.matchMedia(MEDIA_STRING);
+    mql.addEventListener("change", handleMediaChange);
     handleMediaChange(mql);
 
     var last_known_scroll_position = 0;
@@ -64,6 +53,7 @@ function register() {
             ticking = true;
         }
     });
+    window.addEventListener('resize', handleMediaChange);
     window.onhashchange = function() {
         console.log("hash changed");
         console.log(window.scrollY);
