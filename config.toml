@@ -6,7 +6,7 @@ title = "Lin Yinfeng"
 default_language = "cn"
 
 # Generate RSS
-generate_rss = true
+generate_feed = true
 
 compile_sass = true
 shortcode = true
