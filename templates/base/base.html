@@ -14,9 +14,7 @@
             {{ parts::google_tag_manager(code=config.extra.google_tag_manager.code) }}
         {% endif %}
         {% if config.extra.katex.enable %}
-            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex{{ config.extra.katex.version }}/dist/katex.min.css" crossorigin="anonymous">
-            <script defer src="https://cdn.jsdelivr.net/npm/katex{{ config.extra.katex.version }}/dist/katex.min.js" crossorigin="anonymous"></script>
-            <script defer src="https://cdn.jsdelivr.net/npm/katex{{ config.extra.katex.version }}/dist/contrib/mathtex-script-type.min.js" crossorigin="anonymous"></script>
+            {{ parts::katex(cfg=config.extra.katex) }}
         {% endif %}
     {% endblock head %}
 </head>
