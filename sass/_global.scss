@@ -27,6 +27,10 @@ body {
 #main-aside-container {
     #main {
         padding: 16px;
+        #main-container {
+            margin: auto;
+            max-width: $main-container-max-width;
+        }
     }
     #aside-container {
         padding: 0 16px;
@@ -41,10 +45,6 @@ body {
     #main-aside-container {
         #main {
             margin-left: $aside-width;
-            #main-container {
-                margin: auto;
-                max-width: $main-container-max-width;
-            }
         }
         #aside {
             position: fixed;
