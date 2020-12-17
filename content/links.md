@@ -12,7 +12,6 @@ Source of the site: [github.com/linyinfeng/blog](https://github.com/linyinfeng/b
 ## Friends
 
 matrixlt: [matrixlt.github.io](https://matrixlt.github.io)
-mhtt1123.com: [mhtt1123.com](https://mhtt1123.com)
 
 ## Other
 
