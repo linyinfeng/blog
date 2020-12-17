@@ -1,9 +1,17 @@
 #!/usr/bin/env bash
 
+set -e
+
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-SOURCE=$(realpath "$DIR/../static/favicon.svg")
+SOURCE=$(realpath "$DIR/../favicon")
 TARGET=$(realpath "$DIR/../static/favicon.ico")
 
-convert -background transparent "$SOURCE" -define icon:auto-resize "$TARGET"
+cd "$SOURCE"
+xelatex favicon.tex
+
+convert "$SOURCE/favicon.pdf" \
+        -background transparent \
+        -define icon:auto-resize \
+        "$TARGET"
 identify "$TARGET"

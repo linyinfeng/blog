@@ -1,2 +1,10 @@
 /.vscode
 /public
+
+*.aux
+*.log
+*.pdf
+*.fls
+*.synctex.gz
+*.xdv
+*.fdb_latexmk
