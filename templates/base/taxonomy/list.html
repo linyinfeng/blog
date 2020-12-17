@@ -1,8 +1,8 @@
 {% extends "base/base.html" %}
 {% block title %}
-    {{ super() }}
     {% set taxonomy_name = taxonomy.name | capitalize %}
-    {{ "- " ~ taxonomy_name }}
+    {{ taxonomy_name ~ " -" }}
+    {{ super() }}
 {% endblock title %}
 {% block main %}
     {{ super() }}
