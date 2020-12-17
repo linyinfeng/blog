@@ -4,4 +4,18 @@
         margin-top: 8px;
         margin-bottom: 8px;
     }
+
+    .toc-container {
+        ul {
+            margin-top: 0;
+            padding-left: $list-indent-size;
+        }
+    }
+
+    .taxonomy-list-container {
+        ul {
+            margin-top: 0;
+            padding-left: $list-indent-size;
+        }
+    }
 }
