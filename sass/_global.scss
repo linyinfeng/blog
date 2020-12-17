@@ -6,19 +6,16 @@ body {
     margin: 0;
 }
 
-a {
-    text-decoration: none;
-    color: inherit;
-}
-
 body {
     min-height: 100vh;
     display: flex;
     flex-flow: column nowrap;
+
     #header,
     #footer {
         flex: none;
     }
+
     #main-aside-container {
         flex: 1 0 auto;
     }
@@ -27,25 +24,30 @@ body {
 #main-aside-container {
     #main {
         padding: 16px;
+
         #main-container {
             margin: auto;
             max-width: $main-container-max-width;
         }
     }
+
     #aside-container {
         padding: 0 16px;
     }
 }
 
 @media all and (min-width: $layout-change-width) {
+
     #header,
     #footer {
         z-index: 1; // Cover aside
     }
+
     #main-aside-container {
         #main {
             margin-left: $aside-width;
         }
+
         #aside {
             position: fixed;
             left: 0;
@@ -83,9 +85,11 @@ body {
             overflow: auto;
             white-space: nowrap;
         }
+
         #aside:hover #aside-container {
             left: 0;
         }
+
         #aside::after {
             display: flex;
             z-index: 2;
@@ -106,6 +110,7 @@ body {
             opacity: .5;
             transition: all .3s;
         }
+
         #aside:hover::after {
             left: 0;
             opacity: 1;

@@ -2,22 +2,27 @@
     background: {
         color: $header-background-color;
     }
+
     color: $header-foreground-color;
     box-shadow: 0 0 2px 1px $header-shadow-color;
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
     align-items: center;
+
     #blog-title {
         margin: 0;
         padding: 8px 16px;
     }
+
     #global-nav {
         padding: 8px 16px;
+
         // font-size: 20px;
         .global-nav-item-container::after {
             content: " | ";
         }
+
         .global-nav-item-container:last-child::after {
             content: none;
         }

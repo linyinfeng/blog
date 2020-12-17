@@ -2,15 +2,18 @@
     background: {
         color: $footer-background-color;
     }
+
     color: $footer-foreground-color;
     box-shadow: 0 0 2px 1px $footer-shadow-color;
     text-align: center;
     padding: 4px;
+
     >* {
         margin: 2px;
         display: block;
     }
+
     a {
-        text-decoration: underline;
+        color: $link-default-color;
     }
 }

@@ -7,20 +7,25 @@
     .article-title {
         margin-bottom: 0;
     }
+
     .dates-container {
-	display: flex;
-	flex-wrap: wrap;
-	.date-container {
-	    margin-right: 8px;
-	    :last-child {
-		margin-right: inherit;
-	    }
-	}
+        display: flex;
+        flex-wrap: wrap;
+
+        .date-container {
+            margin-right: 8px;
+
+            :last-child {
+                margin-right: inherit;
+            }
+        }
     }
+
     .article-content {
         a {
             color: $link-default-color;
         }
+
         pre {
             padding: .5em;
             border-radius: 4px;
@@ -28,8 +33,10 @@
             overflow: auto;
         }
     }
+
     .article-license {
         margin: 16px 0;
+
         a {
             color: $link-default-color;
         }
@@ -40,16 +47,15 @@
     >* {
         display: block;
     }
+
     .article-title {
         margin-bottom: 0;
     }
+
     .article-summary {
         margin: 8px 0;
+
         a {
-            text-decoration: underline;
-        }
-        .continue-reading-link {
-            text-decoration: none;
             color: $link-default-color;
         }
     }
@@ -62,24 +68,31 @@
 .article-taxonomies {
     display: flex;
     flex-wrap: wrap;
+
     .article-taxonomy {
         margin-right: 4px;
-         :last-child {
-            margin-right: inherit;
-        }
-    }
-    .article-taxonomy-name {
-        margin-right: 4px;
-    }
-    .article-taxonomy-name::after {
-        content: ":";
-    }
-    .article-term-name {
-        margin-right: 4px;
+
         :last-child {
             margin-right: inherit;
         }
     }
+
+    .article-taxonomy-name {
+        margin-right: 4px;
+    }
+
+    .article-taxonomy-name::after {
+        content: ":";
+    }
+
+    .article-term-name {
+        margin-right: 4px;
+
+        :last-child {
+            margin-right: inherit;
+        }
+    }
+
     a.article-term-name {
         color: $link-default-color;
     }

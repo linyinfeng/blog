@@ -15,14 +15,28 @@ $main-container-max-width: 760px;
 $aside-width: 240px;
 $layout-change-width: 980px;
 $list-indent-size: 16px;
+
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    line-height: 1.45;
+    font-family: "lucida grande", "lucida sans unicode", lucida, helvetica, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+    line-height: 1.6;
 }
 
 code,
 pre {
-    font-family: "DejaVu Sans Mono", "Lucida Console", Monaco, monospace;
+    font-family: "Source Code Pro", "Jetbrains Mono", "DejaVu Sans Mono", "Consolas", Monaco, monospace;
+}
+
+p {
+    text-align: justify;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+
+    &:hover {
+        box-shadow: 0 0.125em 0 0 $link-default-color;
+    }
 }
 
 code {
