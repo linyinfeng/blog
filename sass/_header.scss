@@ -4,7 +4,7 @@
     }
 
     color: $header-foreground-color;
-    box-shadow: 0 0 2px 1px $header-shadow-color;
+    box-shadow: 0 0 $shadow-blur-radius $shadow-spread-radius $header-shadow-color;
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;

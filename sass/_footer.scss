@@ -4,7 +4,7 @@
     }
 
     color: $footer-foreground-color;
-    box-shadow: 0 0 2px 1px $footer-shadow-color;
+    box-shadow: 0 0 $shadow-blur-radius $shadow-spread-radius $footer-shadow-color;
     text-align: center;
     padding: 4px;
 

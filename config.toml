@@ -83,3 +83,6 @@ repo = "linyinfeng/blog"
 label = "utterances"
 issue_term = "pathname"
 theme = "github-light"
+
+[extra.font_awesome]
+code = "ba33ff5900"

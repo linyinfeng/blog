@@ -17,6 +17,7 @@
         {% if config.extra.katex.enable %}
             {{ parts::katex(cfg=config.extra.katex) }}
         {% endif %}
+        {{ parts::font_awesome(cfg=config.extra.font_awesome) }}
         {% block atom %}
             <link rel="alternate" type="application/atom+xml" title="Atom" href="{{ get_url(path="atom.xml", trailing_slash=false) }}">
         {% endblock atom %}

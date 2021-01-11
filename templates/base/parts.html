@@ -175,7 +175,11 @@
         <h1 class="title list-title page-list-by-year-title"><a href={{ title_url }}>{{ title }}</a></h1>
     {% endif %}
     {% for year, posts in pages | group_by(attribute="year") %}
-        <h2 id="year-{{ year }}"><a class="zola-anchor anchor-link" href="#year-{{ year }}">🔗</a>{{ year }}</h2>
+        <h2 id="year-{{ year }}">
+            {% set id = "year-{{year}}" %}
+            {% include "anchor-link.html" %}
+            {{ year }}
+        </h2>
         <ul>
             {% for post in posts %}
                 <li><a href="{{ post.permalink }}">{{ post.title }}</a></li>
@@ -232,3 +236,7 @@
         });
     </script>
 {% endmacro katex %}
+
+{% macro font_awesome(cfg) %}
+<script src="https://kit.fontawesome.com/{{ cfg.code }}.js" crossorigin="anonymous"></script>
+{% endmacro font_awesome %}

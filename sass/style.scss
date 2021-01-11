@@ -9,12 +9,15 @@ $footer-background-color: white;
 $footer-foreground-color: black;
 $footer-shadow-color: $theme-shadow;
 $sidebar-shadow-color: $theme-shadow;
+$floating-aside-border-color: black;
 $link-default-color: $theme-color;
 $date-color: gray;
 $main-container-max-width: 760px;
 $aside-width: 240px;
 $layout-change-width: 980px;
 $list-indent-size: 16px;
+$shadow-blur-radius: 0;
+$shadow-spread-radius: 2px;
 
 body {
     font-family: "lucida grande", "lucida sans unicode", lucida, helvetica, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
@@ -37,6 +40,10 @@ a {
     &:hover {
         box-shadow: 0 0.125em 0 0 $link-default-color;
     }
+}
+
+.zola-anchor {
+    color: $theme-color;
 }
 
 code {

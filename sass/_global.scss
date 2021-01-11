@@ -53,7 +53,7 @@ body {
             left: 0;
             top: 0;
             height: 100vh;
-            box-shadow: 0 0 2px 1px $sidebar-shadow-color;
+            box-shadow: 0 0 $shadow-blur-radius $shadow-spread-radius $sidebar-shadow-color;
 
             width: $aside-width;
             // margin-right: 32px;
@@ -77,7 +77,7 @@ body {
             max-height: 80vh;
             max-width: 80vw;
             background: white;
-            border: 2px solid $theme-color;
+            border: 2px solid $floating-aside-border-color;
             border-left: 0;
             transition: left .3s;
             padding-top: 8px;
@@ -95,25 +95,28 @@ body {
             z-index: 2;
             justify-content: center;
             align-items: center;
-            content: "🔗";
+            // color: $theme-color;
+            content: "Navigation";
             position: fixed;
             bottom: 0;
-            left: -8px;
-            width: 32px;
+            // left: -8px;
+            padding: 0 8px;
             height: 32px;
-            // border-radius: 4px;
             background: white;
             border-style: solid;
             border-color: $theme-color;
             border-width: 2px 2px 0 0;
             cursor: context-menu;
-            opacity: .5;
+            // opacity: .5;
             transition: all .3s;
         }
 
         #aside:hover::after {
-            left: 0;
+            // left: 0;
             opacity: 1;
+            // content: "";
+            border-color: white;
+            filter: invert(100%);
         }
     }
 }
