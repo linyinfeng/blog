@@ -19,16 +19,18 @@ $list-indent-size: 16px;
 $shadow-blur-radius: 0;
 $shadow-spread-radius: 2px;
 
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Source+Code+Pro&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;700&family=Source+Code+Pro&display=swap');
 
 body {
     font-family: 'Noto Serif SC', serif;
+    font-weight: 500;
     line-height: 1.6;
 }
 
 code,
 pre {
     font-family: 'Source Code Pro', monospace;
+    font-weight: normal;
 }
 
 p {
