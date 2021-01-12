@@ -15,7 +15,11 @@
             {{ parts::google_tag_manager(code=config.extra.google_tag_manager.code) }}
         {% endif %}
         {% if config.extra.katex.enable %}
-            {{ parts::katex(cfg=config.extra.katex) }}
+            {% if page.extra.katex.render_options %}
+            {{ parts::katex(version=config.extra.katex.version, render_options=page.extra.katex.render_options) }}
+            {% else %}
+                {{ parts::katex(version=config.extra.katex.version, render_options=config.extra.katex.render_options) }}
+            {% endif %}
         {% endif %}
         {{ parts::font_awesome(cfg=config.extra.font_awesome) }}
         {% block atom %}

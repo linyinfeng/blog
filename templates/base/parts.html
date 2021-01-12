@@ -223,16 +223,16 @@
     </script>
 {% endmacro utterances %}
 
-{% macro katex(cfg) %}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex{{ cfg.version }}/dist/katex.min.css" crossorigin="anonymous">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex{{ cfg.version }}/dist/katex.min.js" crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex{{ cfg.version }}/dist/contrib/mathtex-script-type.min.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex{{ cfg.version }}/dist/contrib/copy-tex.css" crossorigin="anonymous">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex{{ cfg.version }}/dist/contrib/copy-tex.min.js" crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex{{ cfg.version }}/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+{% macro katex(version, render_options) %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex{{ version }}/dist/katex.min.css" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex{{ version }}/dist/katex.min.js" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex{{ version }}/dist/contrib/mathtex-script-type.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex{{ version }}/dist/contrib/copy-tex.css" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex{{ version }}/dist/contrib/copy-tex.min.js" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex{{ version }}/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            renderMathInElement(document.body, {{ cfg.render_options | safe }});
+            renderMathInElement(document.body, {{ render_options | safe }} );
         });
     </script>
 {% endmacro katex %}
