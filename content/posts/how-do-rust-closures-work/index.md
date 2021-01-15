@@ -2,7 +2,7 @@
 title = "Rust 闭包笔记"
 description = ""
 date = 2019-03-15 11:06:01+08:00
-updated = 2020-12-15 23:43:49+08:00
+updated = 2021-01-15 13:19:42+08:00
 author = "Lin Yinfeng"
 draft = false
 [taxonomies]
@@ -439,8 +439,11 @@ Rust 中的函数也是“unboxed“实现，同样也实现了 `Fn` 系列 trai
 也就是说：
 
 * 需要纯函数的时候，书写 `Fn`
+
 * 需要函数保存内部状态的时候，如伪随机数生成函数，书写 `FnMut`
+
 * 类似于创建线程这样的调用，选择 `FnOnce`
+
   ```rust
   pub fn spawn<F, T>(f: F) -> JoinHandle<T> where
       F: FnOnce() -> T,
