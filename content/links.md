@@ -5,6 +5,8 @@ template = "simple-page.html"
 
 My GitHub: [github.com/linyinfeng](https://github.com/linyinfeng)
 
+Email: <lin.yinfeng@outlook.com>
+
 GPG public key: [github.com/linyinfeng.gpg](https://github.com/linyinfeng.gpg)
 
 Source of the site: [github.com/linyinfeng/blog](https://github.com/linyinfeng/blog)
