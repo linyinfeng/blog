@@ -2,7 +2,7 @@
 title = "莱斯定理"
 description = ""
 date = 2020-12-13 23:01:20+08:00
-updated = 2020-12-15 19:50:07+08:00
+updated = 2021-04-28 16:04:37+08:00
 author = "Lin Yinfeng"
 draft = false
 [taxonomies]
@@ -13,13 +13,13 @@ license_image = "![Creative Commons License](https://i.creativecommons.org/l/by-
 license = "This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/)"
 +++
 
-学习形式语言自动机这课时不知为啥花了很久才理解莱斯定理（Rice's Theorem）。懂了以后发现，其实就是之前对着书瞎想的时候，没先把全局要做的事情理清楚，这个定理其实并不复杂。这篇**带了一些偷懒**的文章就是莱斯定理的笔记。
+学习形式语言自动机这课时花了很久才理解莱斯定理（Rice's Theorem）。懂了以后发现，其实就是之前对着书瞎想的时候，没先把全局要做的事情理清楚，这个定理其实并不复杂。这篇带了一些偷懒（省略）的文章是我对莱斯定理的笔记。
 
 <!-- more -->
 
 ## 陈述
 
-莱斯定理听起来非常的厉害，似乎难以证明，它是说。
+莱斯定理的陈述听起来非常厉害，似乎难以证明。
 
 > 递归可枚举语言的所有非平凡性质都是不可判定的。
 
