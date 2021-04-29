@@ -25,11 +25,11 @@ license = "This work is licensed under a [Creative Commons Attribution-NonCommer
 
 在下文中，我将向你提供 toykio 组件的快速概述。
 
-# `AsyncTcpStream`
+## `AsyncTcpStream`
 
 Toykio 定义了 `AsyncTcpStream` 类型，这是一个标准库中的 `TcpStream` 的包装。就像标准库中的 `TcpStream` 一样，`connect` 函数打开一个连接并将 socket 设为非阻塞模式。这意味着 `read()` 和 `write()` 方法将会立刻返回数据或者错误。如果没有足够的数据（对于读操作）或者缓冲区空间（对于写操作），一个特殊的错误 `WouldBlock` 将被返回。我们将在下一节中讨论如何处理它。
 
-# `AsyncRead` 和 `AsyncWrite`
+## `AsyncRead` 和 `AsyncWrite`
 
 `AsyncRead` 和 `AsyncWrite` traits 是所有 I/O 特性的基础。`AsyncReadExt` 和 `AsyncWriteExt` 的扩展方法（如 `read` 和 `write_all`）均在其上构建。这些 traits 提供了一种 futures 与事件循环连接的方法，同时保证它们独立于任何特定的事件循环实现。
 
@@ -59,7 +59,7 @@ impl AsyncRead for AsyncTcpStream {
 
 `AsyncWrite` 的实现对 `write` 做了类似的事。
 
-# 事件循环
+## 事件循环
 
 `Eventloop`（通常也被叫做 reactor）是这个 executor 的核心。它像这样被定义：
 
@@ -195,7 +195,7 @@ loop {
 
 我们消耗了 `run_queue`，获取 `wait_queue` 中的任务索引并询问这些任务。Ready(done) 任务将从 `wait_queue` 中被移除。
 
-# 一个 future 的一生
+## 一个 future 的一生
 
 在这节中，我将概括一个 future（让我们以 read 为例子）是如何在 eventloop 中被执行的：
 
@@ -204,7 +204,7 @@ loop {
 - Executor 调用这个 future 的 poll 方法。Read 中 `poll` 的实现调用 `AsyncTcpStream` 的 `poll_read()` 方法，这个方法将它的兴趣注册到 `readable` 事件中。
 - 当一个事件发生，future 将被再次 poll。这个循环将被重复直到 future 返回了 ready。
 
-# 感谢
+## 感谢
 
 感谢 futures 团队的所有人。特别感谢 [@aturon][aturon] 的鼓励和 [@MajorBreakfast][MajorBreakfast] 的编辑。
 
