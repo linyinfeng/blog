@@ -9,6 +9,9 @@
     {% if config.extra.utterances.enable %}
         {{  parts::utterances(cfg=config.extra.utterances) }}
     {% endif %}
+    {% if config.extra.giscus.enable %}
+        {{  parts::giscus_placeholder() }}
+    {% endif %}
 {% endblock main %}
 {% block optional_aside %}
     {% if page.toc %}

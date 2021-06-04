@@ -21,6 +21,9 @@
                 {{ parts::katex(version=config.extra.katex.version, render_options=config.extra.katex.render_options) }}
             {% endif %}
         {% endif %}
+        {% if config.extra.giscus.enable %}
+            {{  parts::giscus(cfg=config.extra.giscus) }}
+        {% endif %}
         {{ parts::font_awesome(cfg=config.extra.font_awesome) }}
         {% block atom %}
             <link rel="alternate" type="application/atom+xml" title="Atom" href="{{ get_url(path="atom.xml", trailing_slash=false) }}">

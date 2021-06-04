@@ -214,14 +214,31 @@
 
 {% macro utterances(cfg) %}
     <script src="https://utteranc.es/client.js"
-        repo="{{ cfg.repo }}"
-        issue-term="{{ cfg.issue_term }}"
-        label="{{ cfg.label }}"
-        theme="{{ cfg.theme }}"
-        crossorigin="anonymous"
-        async>
+            repo="{{ cfg.repo }}"
+            issue-term="{{ cfg.issue_term }}"
+            label="{{ cfg.label }}"
+            theme="{{ cfg.theme }}"
+            crossorigin="anonymous"
+            async>
     </script>
 {% endmacro utterances %}
+
+{% macro giscus(cfg) %}
+    <script src="https://giscus.app/client.js"
+            data-repo="{{ cfg.repo }}"
+            data-repo-id="{{ cfg.repo_id }}"
+            data-category-id="{{ cfg.category_id }}"
+            data-mapping="{{ cfg.mapping }}"
+            data-reactions-enabled="{{ cfg.reactions_enabled }}"
+            data-theme="{{ cfg.theme }}"
+            crossorigin="anonymous"
+            async>
+    </script>
+{% endmacro giscus %}
+
+{% macro giscus_placeholder() %}
+    <div class="giscus" />
+{% endmacro giscus_placeholder %}
 
 {% macro katex(version, render_options) %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex{{ version }}/dist/katex.min.css" crossorigin="anonymous">

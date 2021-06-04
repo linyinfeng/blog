@@ -79,11 +79,21 @@ code = "GTM-K74P2G7"
 
 # Utterances
 [extra.utterances]
-enable = true
+enable = false # use giscus instead
 repo = "linyinfeng/blog"
 label = "utterances"
 issue_term = "pathname"
 theme = "github-light"
+
+# Giscus
+[extra.giscus]
+enable = true
+repo = "linyinfeng/blog"
+repo_id = "MDEwOlJlcG9zaXRvcnkxNDMxMjU5NTA="
+category_id = "MDE4OkRpc2N1c3Npb25DYXRlZ29yeTMyOTkyOTcy"
+mapping = "pathname"
+reactions_enabled="1"
+theme="light"
 
 [extra.font_awesome]
 code = "ba33ff5900"
