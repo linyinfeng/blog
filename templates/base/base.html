@@ -1,6 +1,6 @@
 {% import "base/parts.html" as parts %}
 <!DOCTYPE html>
-<html lang={% block language %}{{ config.default_language }}{% endblock language %}>
+<html lang={% block language %}{{ lang }}{% endblock language %}>
 <head>
     {% block head %}
         <title>{% block title %}{{ config.title }}{% endblock title %}</title>

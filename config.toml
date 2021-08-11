@@ -27,8 +27,6 @@ taxonomies = [
 highlight_code = true
 highlight_theme = "OneHalfLight"
 
-[translations]
-
 [extra]
 # Header settings
 global_nav_items = [

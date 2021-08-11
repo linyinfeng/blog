@@ -52,7 +52,7 @@ b = h(1)
 
 考虑一个名为 closure，调用方式为 `closure(arg1, arg2, ..., argN)`，其捕获了变量 `env_arg1`, `env_arg2`, ..., `env_argM`。可以将其实现为一个函数和其词法环境的组合：
 
-```text
+```txt
 {
     env: (env_arg1, ..., env_argM),
     f: fn(env_arg1, ..., env_argM, arg1, ..., argN),
@@ -322,7 +322,7 @@ fn main() {
 
 输出
 
-```text
+```txt
 Type of a closure c: [closure@src/main.rs:15:21: 15:35 s:&mut std::string::String]
 Size of a closure c: 8
 Type of a closure c: closure::RefMutClosure<(&mut std::string::String,), (), ()>
@@ -370,7 +370,7 @@ c();
 
 能正常运行，输出：
 
-```text
+```txt
 s = hello
 s = hello
 ```
@@ -385,7 +385,7 @@ c();
 
 将编译错误：
 
-```text
+```txt
 error[E0382]: borrow of moved value: `s`
 error[E0382]: use of moved value: `c`
 ```
