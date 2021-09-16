@@ -21,7 +21,6 @@ jobs:
         if: github.ref == 'refs/heads/main'
         uses: shalzz/zola-deploy-action@master
         env:
-          REPOSITORY: linyinfeng/linyinfeng.github.io
           PAGES_BRANCH: gh-pages
           BUILD_DIR: .
           TOKEN: ${{ secrets.TOKEN }}
