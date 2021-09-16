@@ -11,24 +11,23 @@ jobs:
       - name: 'Checkout'
         uses: actions/checkout@master
       - name: 'Build only'
-        if: github.ref != 'refs/heads/master'
+        if: github.ref != 'refs/heads/main'
         uses: shalzz/zola-deploy-action@master
         env:
           BUILD_DIR: .
           TOKEN: ${{ secrets.TOKEN }}
           BUILD_ONLY: true
       - name: 'Build and deploy'
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/main'
         uses: shalzz/zola-deploy-action@master
         env:
-          REPOSITORY: linyinfeng/linyinfeng.github.io
-          PAGES_BRANCH: master
+          PAGES_BRANCH: gh-pages
           BUILD_DIR: .
           TOKEN: ${{ secrets.TOKEN }}
 
   ping:
     needs: build
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - name: 'Checkout'
