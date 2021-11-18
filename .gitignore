@@ -1,4 +1,5 @@
 /.vscode
+/.direnv
 /public
 
 *.aux
