@@ -55,7 +55,7 @@ date_format = "%Y-%m-%d %H:%M"
 # KaTeX
 [extra.katex]
 enable = true
-version = "@0.12.0"
+version = "@0.15.1"
 render_options = '''
 {
     macros: {
