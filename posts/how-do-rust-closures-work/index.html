@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang=cn>
+<head>
+    
+        <title>
+    Rust 闭包笔记 -
+    Lin Yinfeng
+</title>
+        
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel=stylesheet type="text/css" href=https://www.linyinfeng.com/normalize.css>
+        <link rel=stylesheet type="text/css" href=https://www.linyinfeng.com/style.css>
+        <script defer src=https://www.linyinfeng.com/layout-helper.js></script>
+        
+            
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-K74P2G7');</script>
+    <!-- End Google Tag Manager -->
+
+        
+        
+            
+                
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/mathtex-script-type.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/copy-tex.css" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/copy-tex.min.js" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+    macros: {
+        "\\set": "\\left\\{ #1 \\right\\}"
+    },
+    delimiters: [
+        {left: "$$",  right: "$$",  display: true },
+        {left: "$",   right: "$",   display: false},
+        {left: "\\(", right: "\\)", display: false},
+        {left: "\\[", right: "\\]", display: true }
+    ]
+}
+ );
+        });
+    </script>
+
+            
+        
+        
+            
+    <script src="https://giscus.app/client.js"
+            data-repo="linyinfeng&#x2F;blog"
+            data-repo-id="MDEwOlJlcG9zaXRvcnkxNDMxMjU5NTA="
+            data-category-id="MDE4OkRpc2N1c3Npb25DYXRlZ29yeTMyOTkyOTcy"
+            data-mapping="pathname"
+            data-reactions-enabled="1"
+            data-theme="light"
+            crossorigin="anonymous"
+            async>
+    </script>
+
+        
+        
+<script src="https://kit.fontawesome.com/ba33ff5900.js" crossorigin="anonymous"></script>
+
+        
+            <link rel="alternate" type="application/atom+xml" title="Atom" href="https://www.linyinfeng.com/atom.xml">
+        
+    
+</head>
+<body>
+    
+        
+        <header id="header">
+            
+            
+    <div class="header-container container">
+        <h1 id="blog-title" class="title">
+            <a href=https:&#x2F;&#x2F;www.linyinfeng.com>
+                <img src="https://www.linyinfeng.com/favicon.ico" alt="Lin Yinfeng" />
+            </a>
+        </h1>
+        <nav id="global-nav"><span class="global-nav-item-container"><a class="global-nav-item"
+                    href=https://www.linyinfeng.com
+                >Home</a></span><span class="global-nav-item-container"><a class="global-nav-item"
+                    href=https://www.linyinfeng.com/archive
+                >Archive</a></span><span class="global-nav-item-container"><a class="global-nav-item"
+                    href=https://www.linyinfeng.com/links
+                >Links</a></span><span class="global-nav-item-container"><a class="global-nav-item"
+                    href=https:&#x2F;&#x2F;github.com&#x2F;linyinfeng&#x2F;blog
+                >Source</a></span></nav>
+    </div>
+
+            
+        </header>
+        <div id="main-aside-container">
+            
+    
+        
+                <aside id="aside">
+                    <div id="aside-container">
+                        
+    
+    <div class="toc-container container">
+        <h1 class="title toc-title">Table of Contents</h1>
+        
+    
+        <ul class="toc-parent">
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;posts&#x2F;how-do-rust-closures-work&#x2F;#bi-bao-de-gai-nian>闭包的概念</a>
+                    
+    
+        <ul class="toc-parent">
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;posts&#x2F;how-do-rust-closures-work&#x2F;#bi-bao-shi-ni-ming-han-shu-ma>闭包是匿名函数吗？</a>
+                    
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;posts&#x2F;how-do-rust-closures-work&#x2F;#tong-chang-xing-shi>通常形式</a>
+                    
+    
+
+                </li>
+                
+        </ul>
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;posts&#x2F;how-do-rust-closures-work&#x2F;#dong-shou-shi-xian>动手实现</a>
+                    
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;posts&#x2F;how-do-rust-closures-work&#x2F;#nei-zhi-bi-bao>内置闭包</a>
+                    
+    
+        <ul class="toc-parent">
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;posts&#x2F;how-do-rust-closures-work&#x2F;#unboxed>Unboxed</a>
+                    
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;posts&#x2F;how-do-rust-closures-work&#x2F;#move-guan-jian-zi>move 关键字</a>
+                    
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;posts&#x2F;how-do-rust-closures-work&#x2F;#fn-fnmut-yu-fnonce>Fn，FnMut 与 FnOnce</a>
+                    
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;posts&#x2F;how-do-rust-closures-work&#x2F;#bi-bao-de-mut>闭包的 mut</a>
+                    
+    
+
+                </li>
+                
+        </ul>
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;posts&#x2F;how-do-rust-closures-work&#x2F;#tuo-chi-bi-bao>脱离闭包</a>
+                    
+    
+
+                </li>
+                
+        </ul>
+    
+
+    </div>
+
+
+                    </div>
+                </aside>
+            
+    
+
+            <main id="main">
+                <div id="main-container">
+                    
+    
+                    
+    
+    <article class="article-container container">
+        
+    <h1 class="title article-title">
+        <a class="article-title-link" href="https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;posts&#x2F;how-do-rust-closures-work&#x2F;">
+            
+    <span class="draft-indicator">
+        
+    </span>
+    <span>
+        Rust 闭包笔记
+    </span>
+
+        </a>
+    </h1>
+
+        
+    <div class="dates-container">
+        <div class="date-container">
+            <time datetime=2019-03-15T11:06:01+08:00>2019-03-15 11:06</time>
+ 	    
+            <span class="date-label">(created)</span>
+            
+        </div>
+        
+        <div class="date-container">
+	    <time datetime=2021-01-15T13:19:42+08:00>2021-01-15 13:19</time>
+            <span class="date-label">(last updated)</span>
+        </div>
+    </div>
+    
+
+        
+    <div class="article-taxonomies"><span class="article-taxonomy"><a class="article-taxonomy-name" href="https://www.linyinfeng.com/tags">
+                Tags</a><span class="article-terms"><a class="article-term-name" href="https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;tags&#x2F;rust&#x2F;">Rust</a><a class="article-term-name" href="https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;tags&#x2F;bi-bao&#x2F;">闭包</a><a class="article-term-name" href="https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;tags&#x2F;han-shu-shi-bian-cheng&#x2F;">函数式编程</a></span></span><span class="article-taxonomy"><a class="article-taxonomy-name" href="https://www.linyinfeng.com/categories">
+                Categories</a><span class="article-terms"><a class="article-term-name" href="https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;categories&#x2F;bi-ji&#x2F;">笔记</a></span></span></div>
+
+        
+    
+        <section class="article-license">
+            
+                <div class="license-image">
+                    <img src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" alt="Creative Commons License" />
+                </div>
+            
+            <small class="license-text">This work is licensed under a <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a></small>
+        </section>
+    
+
+        <section class="article-content"><p>近日在学习 Rust 语言。Rust 语言的闭包设计非常有趣，一方面，它看起来非常复杂，为了支持闭包设计了三种不同的 trait，<code>Fn</code>、<code>FnMut</code> 和 <code>FnOnce</code>；一方面其设计又透露出了语言设计中闭包的本质。通过考察 Rust 闭包的设计，我们能更好的理解闭包到底是什么，在拥有生存期和借用检查的语言 Rust 中，闭包如何工作。</p>
+<p>本文将在 Rust 下实现一个能够阐述闭包工作原理的朴素版闭包（也是一个 Boxed Closure）。并在实现的基础上对 Rust 闭包作进一步探究。</p>
+<span id="continue-reading"></span><h2 id="bi-bao-de-gai-nian"><a class="zola-anchor" href="#bi-bao-de-gai-nian" aria-label="Anchor link for: bi-bao-de-gai-nian">
+    <i class="fas fa-link"></i>
+</a>
+闭包的概念</h2>
+<p>闭包（Closure）是一个在计算机科学中广泛使用的概念，又叫词法闭包（Lexical Closure）。即闭包能够“捕获”词法作用域中的变量，这是与编译时代码的结构直接相关的。也就是说，在<strong>声明闭包而不是闭包被调用的时候</strong>，其函数体可以捕获外围词法作用域中的变量。</p>
+<h3 id="bi-bao-shi-ni-ming-han-shu-ma"><a class="zola-anchor" href="#bi-bao-shi-ni-ming-han-shu-ma" aria-label="Anchor link for: bi-bao-shi-ni-ming-han-shu-ma">
+    <i class="fas fa-link"></i>
+</a>
+闭包是匿名函数吗？</h3>
+<p>这两个概念之间没有什么关系，就以<a href="https://en.wikipedia.org/wiki/Closure_(computer_programming)">维基百科 Closure 词条</a>上举的一个常见的 <code>adder</code> 例子来说：</p>
+<pre data-lang="python" style="background-color:#fafafa;color:#383a42;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#a0a1a7;"># Python
+</span><span style="color:#a626a4;">def </span><span style="color:#0184bc;">f</span><span>(</span><span style="color:#e45649;">x</span><span>):
+</span><span>    </span><span style="color:#a626a4;">def </span><span style="color:#0184bc;">g</span><span>(</span><span style="color:#e45649;">y</span><span>):
+</span><span>        </span><span style="color:#a626a4;">return </span><span>x </span><span style="color:#a626a4;">+ </span><span>y
+</span><span>    </span><span style="color:#a626a4;">return </span><span>g
+</span><span style="color:#a626a4;">def </span><span style="color:#0184bc;">h</span><span>(</span><span style="color:#e45649;">x</span><span>):
+</span><span>    </span><span style="color:#a626a4;">return lambda </span><span style="color:#e45649;">y</span><span>: x </span><span style="color:#a626a4;">+ </span><span>y
+</span><span>a </span><span style="color:#a626a4;">= </span><span style="color:#e45649;">f</span><span>(</span><span style="color:#c18401;">1</span><span>)
+</span><span>b </span><span style="color:#a626a4;">= </span><span style="color:#e45649;">h</span><span>(</span><span style="color:#c18401;">1</span><span>)
+</span><span style="color:#a0a1a7;"># ...
+</span></code></pre>
+<p>在这两个例子中，a 和 b 均为闭包，JavaScript 中的 <code>function</code> 也是一样，是不是闭包当然和没有名字并没有理论和实践上的联系。当然，可以说对于将函数设计为一等对象（First class object）的语言，函数是否匿名一般不产生任何实际区别。</p>
+<h3 id="tong-chang-xing-shi"><a class="zola-anchor" href="#tong-chang-xing-shi" aria-label="Anchor link for: tong-chang-xing-shi">
+    <i class="fas fa-link"></i>
+</a>
+通常形式</h3>
+<p>对于函数基于栈的且没有垃圾回收（Garbage Collection）的语言，往往无法实现完全的闭包。这是因为，闭包从语义上应当能够延长其捕获的变量的生存期（lifetime）到长于或等于闭包的生存期。对于广泛利用栈进行函数局部变量分配和流程控制的语言，函数的局部变量的生存期严格与函数调用栈绑定，即从函数调用到函数返回（严格来说是局部变量内存的生存期，显然局部变量的生存期必然小于等于其内存的生存期）。</p>
+<p>举例来说，有上述特征的 C++ 的闭包就易于引发未定义行为（Undefined Behavior）。因为其引用捕获的局部变量的生存期无法自动延长。而例如 Java，JavaScript 和 Go 的闭包就不会，因为其编译器（对于 JavaScript 来说往往是 JIT 编译器）将对局部变量做逃逸分析（Escape Analysis）。将可能“逃逸”的变量生存期延长，由垃圾回收器而不是函数调用栈维护其生存期。又或者将所有局部变量分配在堆上由垃圾回收器维护也是一样。</p>
+<p>即使如此，各个语言下闭包的基本表现是不变的。闭包通常被实现为其捕获的词法环境和一个函数的组合。</p>
+<p>考虑一个名为 closure，调用方式为 <code>closure(arg1, arg2, ..., argN)</code>，其捕获了变量 <code>env_arg1</code>, <code>env_arg2</code>, ..., <code>env_argM</code>。可以将其实现为一个函数和其词法环境的组合：</p>
+<pre data-lang="txt" style="background-color:#fafafa;color:#383a42;" class="language-txt "><code class="language-txt" data-lang="txt"><span>{
+</span><span>    env: (env_arg1, ..., env_argM),
+</span><span>    f: fn(env_arg1, ..., env_argM, arg1, ..., argN),
+</span><span>}
+</span></code></pre>
+<h2 id="dong-shou-shi-xian"><a class="zola-anchor" href="#dong-shou-shi-xian" aria-label="Anchor link for: dong-shou-shi-xian">
+    <i class="fas fa-link"></i>
+</a>
+动手实现</h2>
+<p>理解了闭包是什么，我们就可以写出一个朴素的闭包。最终我们实现的闭包<strong>用起来</strong>将会有点繁琐（无自动类型推导），但行为几乎与内置闭包一致。最终实现将会看起来像一个类似于 C++ 14 Generalized Lambda Capture 特性的闭包宏。</p>
+<p>另外，虽然这个闭包看起来将与内置闭包差不多，实际上的区别是有的，不只是无类型推导这一点，这些内容将在实现后一一阐述。</p>
+<p>因为提到了 C++ 14 Generalized Lambda Capture, 所以先解释一下这是什么特性，以下是一个例子：</p>
+<pre data-lang="cpp" style="background-color:#fafafa;color:#383a42;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#a626a4;">auto</span><span> c </span><span style="color:#a626a4;">= </span><span>[ v </span><span style="color:#a626a4;">= </span><span>std::</span><span style="color:#e45649;">move</span><span>(v) ] { </span><span style="color:#a0a1a7;">// A generalized capture list
+</span><span>    </span><span style="color:#e45649;">do_something_with</span><span>( v )
+</span><span>};
+</span></code></pre>
+<p>在 C++ 14 之前，捕获列表中只能按值或者按引用捕获变量，通过 Generalized Lambda Capture，C++ 实现了捕获任意表达式，同时也顺便实现了移动捕获。</p>
+<p>其实，Rust 的闭包与 C++ <strong>语义和使用上的设计</strong>几乎可以说是非常相似，但是由于 Rust 做出的内存安全（Memory Safe）承诺，引入了三个不同的 trait。将这个放在一边，我们按朴素思想实现一个闭包的结构，或者说数据。</p>
+<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#a0a1a7;">/// Wrong implementation
+</span><span style="color:#a626a4;">pub struct </span><span>Closure&lt;Env, Args, Out&gt; {
+</span><span>    </span><span style="color:#e45649;">env</span><span>: Env,
+</span><span>    </span><span style="color:#e45649;">f</span><span>: </span><span style="color:#a626a4;">fn</span><span>(Env, Args) -&gt; Out,
+</span><span>}
+</span></code></pre>
+<p>由于 Rust 中有元组的存在，我们可以简单地把所有捕获变量的类型用一个类型变量（Type Parameter）<code>Env</code> 表示，所有调用参数的类型用 <code>Args</code> 表示，最后单独用 <code>Out</code> 表示调用结果类型。</p>
+<p>考量这个设计，闭包含有一个环境和指针合理吗？从<strong>实现功能的角度</strong>是合理的（后面我们将看到这个设计的问题所在）。</p>
+<p>继续考量这个设计。将环境实现为 <code>Env</code> 类型是否合理？合理，闭包应该拥有（Own）其捕获的内容（即使拥有的是引用（Reference）也是拥有）。这些内容的生存期应与闭包是相同的。将函数设计为 <code>fn(Env, Args) -&gt; Out</code> 是否合理？对于返回值来说肯定是合理的，对于 <code>Args</code> 来说也是，因为函数调用的时候将拥有其参数（即使拥有的是引用）。对于拥有引用的概念，可以举一个例子：</p>
+<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#a626a4;">let</span><span> v1 </span><span style="color:#a626a4;">= </span><span>String::new();
+</span><span style="color:#a626a4;">let</span><span> v2 </span><span style="color:#a626a4;">= </span><span>String::new();
+</span><span style="color:#a626a4;">let mut</span><span> v3 </span><span style="color:#a626a4;">= </span><span>String::new();
+</span><span style="color:#a626a4;">let</span><span> t </span><span style="color:#a626a4;">= </span><span>(v1, </span><span style="color:#a626a4;">&amp;</span><span>v2, </span><span style="color:#a626a4;">&amp;mut</span><span> v3); </span><span style="color:#a0a1a7;">// Type: (String, &amp;String, &amp;mut String)
+</span></code></pre>
+<p>构造的 tuple 字面量按语义来说移动给了变量 t，其包含两个 <code>String</code> 引用并拥有一个 <code>String</code>。</p>
+<p>但是 <code>Env</code> 的设计是不合理的，这样设计意味着函数将获得闭包中 Closure 的所有权并不归还，这样此闭包将只能调用一次。Rust 中，变量可以通过 move, <code>&amp;mut</code> 和 <code>&amp;</code> 方式传递入函数。这三种方式在 Rust 现行类型系统中是无法统一的。因为 move 闭包将获得环境的所有权，<code>&amp;mut</code> 闭包将造成对其环境的可变借用（Mutable borrowing），<code>&amp;</code> 闭包将造成对其环境的不可变借用（Immutable borrowing）。Rust 的生存期机制和借用检查必须对这三种闭包作出区别，或者说，这三种闭包必然在调用时携带不同的类型信息以用来检查。对比之下，C++ 的闭包则并不区别，<code>operator()</code> 的 <code>this</code> 类型可以始终为一个指向闭包对象的指针。</p>
+<p>区分三种不同的 <code>Env</code> 后:</p>
+<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#a626a4;">pub struct </span><span>MoveClosure&lt;Env, Args, Out&gt; {
+</span><span>    </span><span style="color:#e45649;">env</span><span>: Env,
+</span><span>    </span><span style="color:#e45649;">f</span><span>: </span><span style="color:#a626a4;">fn</span><span>(Env, Args) -&gt; Out,
+</span><span>}
+</span><span style="color:#a626a4;">pub struct </span><span>RefMutClosure&lt;Env, Args, Out&gt; {
+</span><span>    </span><span style="color:#e45649;">env</span><span>: Env,
+</span><span>    </span><span style="color:#e45649;">f</span><span>: </span><span style="color:#a626a4;">fn</span><span>(</span><span style="color:#a626a4;">&amp;mut</span><span> Env, Args) -&gt; Out,
+</span><span>}
+</span><span style="color:#a626a4;">pub struct </span><span>RefClosure&lt;Env, Args, Out&gt; {
+</span><span>    </span><span style="color:#e45649;">env</span><span>: Env,
+</span><span>    </span><span style="color:#e45649;">f</span><span>: </span><span style="color:#a626a4;">fn</span><span>(</span><span style="color:#a626a4;">&amp;</span><span>Env, Args) -&gt; Out,
+</span><span>}
+</span></code></pre>
+<p>当我们写出一个闭包，即往往是写出一个函数体时，其携带的函数应该是由编译器自动推导得出的。得益于 Rust 的类型推导机制，Rust 的闭包做到了，而 C++ 的闭包并没有做到，这也是为什么 C++ 需要手动写出捕获列表而 Rust 不用。归根结底，Rust 闭包的这三种类型是由函数体对闭包环境的使用方式决定的。<strong>不要误将 Rust 带有 move 关键字的闭包和 FnOnce 对应</strong>，他们实际上没有什么关系。后面我们可以看到，闭包在捕获时和调用时的行为应该分开分析。</p>
+<p>为了使我们的闭包可以被调用，应该实现对应的 trait。由于上述区别，Rust 对可调用对象也无法有类似 C++ <code>operator()</code> 的统一的 trait。对三种不同的 <code>self</code> 参数必须有三种不同的函数类型。因此，Rust 在 <code>std::ops</code> 中定义了 <code>FnOnce</code>, <code>FnMut</code> 和 <code>Fn</code> 三个不同的 trait：</p>
+<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#a626a4;">pub trait </span><span>FnOnce&lt;Args&gt; {
+</span><span>    </span><span style="color:#a626a4;">type </span><span>Output;
+</span><span>    </span><span style="color:#a626a4;">extern </span><span style="color:#50a14f;">&quot;rust-call&quot; </span><span style="color:#a626a4;">fn </span><span style="color:#0184bc;">call_once</span><span>(</span><span style="color:#e45649;">self</span><span>, </span><span style="color:#e45649;">args</span><span>: Args) -&gt; </span><span style="color:#a626a4;">Self::</span><span>Output;
+</span><span>}
+</span><span style="color:#a626a4;">pub trait </span><span>FnMut&lt;Args&gt;: FnOnce&lt;Args&gt; {
+</span><span>    </span><span style="color:#a626a4;">extern </span><span style="color:#50a14f;">&quot;rust-call&quot; </span><span style="color:#a626a4;">fn </span><span style="color:#0184bc;">call_mut</span><span>(</span><span style="color:#a626a4;">&amp;mut </span><span style="color:#e45649;">self</span><span>, </span><span style="color:#e45649;">args</span><span>: Args) -&gt; </span><span style="color:#a626a4;">Self::</span><span>Output;
+</span><span>}
+</span><span style="color:#a626a4;">pub trait </span><span>Fn&lt;Args&gt;: FnMut&lt;Args&gt; {
+</span><span>    </span><span style="color:#a626a4;">extern </span><span style="color:#50a14f;">&quot;rust-call&quot; </span><span style="color:#a626a4;">fn </span><span style="color:#0184bc;">call</span><span>(</span><span style="color:#a626a4;">&amp;</span><span style="color:#e45649;">self</span><span>, </span><span style="color:#e45649;">args</span><span>: Args) -&gt; </span><span style="color:#a626a4;">Self::</span><span>Output;
+</span><span>}
+</span></code></pre>
+<p>其中 <code>extern &quot;rust-call&quot;</code> 是专用于这几个 trait 的调用约定（Calling Convention，一种 ABI），区别于 Rust 本身的调用约定 <code>extern &quot;Rust&quot;</code>。</p>
+<p>为了手动为我们的对象实现这三种 trait，我们需要开启两个不稳定的 Rust 特性（Feature）：</p>
+<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#a626a4;">!</span><span>[</span><span style="color:#0184bc;">feature</span><span>(fn_traits, unboxed_closures)]
+</span></code></pre>
+<p>为三种闭包实现所有可以实现的 trait：</p>
+<p><code>MoveClosure</code>:</p>
+<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#a626a4;">impl</span><span>&lt;Env, Args, Out&gt; FnOnce&lt;Args&gt; </span><span style="color:#a626a4;">for </span><span>MoveClosure&lt;Env, Args, Out&gt; {
+</span><span>    </span><span style="color:#a626a4;">type </span><span>Output </span><span style="color:#a626a4;">=</span><span> Out;
+</span><span>    </span><span style="color:#a626a4;">extern </span><span style="color:#50a14f;">&quot;rust-call&quot; </span><span style="color:#a626a4;">fn </span><span style="color:#0184bc;">call_once</span><span>(</span><span style="color:#e45649;">self</span><span>, </span><span style="color:#e45649;">args</span><span>: Args) -&gt; </span><span style="color:#a626a4;">Self::</span><span>Output {
+</span><span>        (</span><span style="color:#e45649;">self</span><span>.f)(</span><span style="color:#e45649;">self</span><span>.env, args)
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p><code>RefMutClosure</code>:</p>
+<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#a626a4;">impl</span><span>&lt;Env, Args, Out&gt; FnOnce&lt;Args&gt; </span><span style="color:#a626a4;">for </span><span>RefMutClosure&lt;Env, Args, Out&gt; {
+</span><span>    </span><span style="color:#a626a4;">type </span><span>Output </span><span style="color:#a626a4;">=</span><span> Out;
+</span><span>    </span><span style="color:#a626a4;">extern </span><span style="color:#50a14f;">&quot;rust-call&quot; </span><span style="color:#a626a4;">fn </span><span style="color:#0184bc;">call_once</span><span>(</span><span style="color:#a626a4;">mut </span><span style="color:#e45649;">self</span><span>, </span><span style="color:#e45649;">args</span><span>: Args) -&gt; </span><span style="color:#a626a4;">Self::</span><span>Output {
+</span><span>        (</span><span style="color:#e45649;">self</span><span>.f)(</span><span style="color:#a626a4;">&amp;mut </span><span style="color:#e45649;">self</span><span>.env, args)
+</span><span>    }
+</span><span>}
+</span><span style="color:#a626a4;">impl</span><span>&lt;Env, Args, Out&gt; FnMut&lt;Args&gt; </span><span style="color:#a626a4;">for </span><span>RefMutClosure&lt;Env, Args, Out&gt; {
+</span><span>    </span><span style="color:#a626a4;">extern </span><span style="color:#50a14f;">&quot;rust-call&quot; </span><span style="color:#a626a4;">fn </span><span style="color:#0184bc;">call_mut</span><span>(</span><span style="color:#a626a4;">&amp;mut </span><span style="color:#e45649;">self</span><span>, </span><span style="color:#e45649;">args</span><span>: Args) -&gt; </span><span style="color:#a626a4;">Self::</span><span>Output {
+</span><span>        (</span><span style="color:#e45649;">self</span><span>.f)(</span><span style="color:#a626a4;">&amp;mut </span><span style="color:#e45649;">self</span><span>.env, args)
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p><code>RefClosure</code>:</p>
+<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#a626a4;">impl</span><span>&lt;Env, Args, Out&gt; FnOnce&lt;Args&gt; </span><span style="color:#a626a4;">for </span><span>RefClosure&lt;Env, Args, Out&gt; {
+</span><span>    </span><span style="color:#a626a4;">type </span><span>Output </span><span style="color:#a626a4;">=</span><span> Out;
+</span><span>    </span><span style="color:#a626a4;">extern </span><span style="color:#50a14f;">&quot;rust-call&quot; </span><span style="color:#a626a4;">fn </span><span style="color:#0184bc;">call_once</span><span>(</span><span style="color:#e45649;">self</span><span>, </span><span style="color:#e45649;">args</span><span>: Args) -&gt; </span><span style="color:#a626a4;">Self::</span><span>Output {
+</span><span>        (</span><span style="color:#e45649;">self</span><span>.f)(</span><span style="color:#a626a4;">&amp;</span><span style="color:#e45649;">self</span><span>.env, args)
+</span><span>    }
+</span><span>}
+</span><span style="color:#a626a4;">impl</span><span>&lt;Env, Args, Out&gt; FnMut&lt;Args&gt; </span><span style="color:#a626a4;">for </span><span>RefClosure&lt;Env, Args, Out&gt; {
+</span><span>    </span><span style="color:#a626a4;">extern </span><span style="color:#50a14f;">&quot;rust-call&quot; </span><span style="color:#a626a4;">fn </span><span style="color:#0184bc;">call_mut</span><span>(</span><span style="color:#a626a4;">&amp;mut </span><span style="color:#e45649;">self</span><span>, </span><span style="color:#e45649;">args</span><span>: Args) -&gt; </span><span style="color:#a626a4;">Self::</span><span>Output {
+</span><span>        (</span><span style="color:#e45649;">self</span><span>.f)(</span><span style="color:#a626a4;">&amp;</span><span style="color:#e45649;">self</span><span>.env, args)
+</span><span>    }
+</span><span>}
+</span><span style="color:#a626a4;">impl</span><span>&lt;Env, Args, Out&gt; Fn&lt;Args&gt; </span><span style="color:#a626a4;">for </span><span>RefClosure&lt;Env, Args, Out&gt; {
+</span><span>    </span><span style="color:#a626a4;">extern </span><span style="color:#50a14f;">&quot;rust-call&quot; </span><span style="color:#a626a4;">fn </span><span style="color:#0184bc;">call</span><span>(</span><span style="color:#a626a4;">&amp;</span><span style="color:#e45649;">self</span><span>, </span><span style="color:#e45649;">args</span><span>: Args) -&gt; </span><span style="color:#a626a4;">Self::</span><span>Output {
+</span><span>        (</span><span style="color:#e45649;">self</span><span>.f)(</span><span style="color:#a626a4;">&amp;</span><span style="color:#e45649;">self</span><span>.env, args)
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>编写过程中不难发现，所有的 <code>Fn</code> 一定能被实现为 <code>FnMut</code> 和 <code>FnOnce</code>，所有的 <code>FnMut</code> 一定能够被实现为 <code>FnOnce</code>，反之则不行。对于确定的函数体，Rust 将选择最宽松的一个调用，即按照 <code>Fn</code> &gt; <code>FnMut</code> &gt; <code>FnOnce</code> 的优先级。</p>
+<p>最后再给三个结构实现创建闭包的 <code>new</code> 函数，作用是隐藏内部环境和函数。</p>
+<p>现在我们可以通过翻译一些程序，实际使用上面编写的闭包：</p>
+<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#a0a1a7;">// 内置闭包
+</span><span style="color:#a626a4;">let</span><span> x </span><span style="color:#a626a4;">= </span><span style="color:#c18401;">1</span><span style="color:#a626a4;">i32</span><span>;
+</span><span style="color:#a626a4;">let </span><span style="color:#0184bc;">c </span><span style="color:#a626a4;">= </span><span>|</span><span style="color:#e45649;">y</span><span>| x </span><span style="color:#a626a4;">+</span><span> y;
+</span><span>assert_eq!(</span><span style="color:#0184bc;">c</span><span>(</span><span style="color:#c18401;">1</span><span style="color:#a626a4;">i32</span><span>), </span><span style="color:#c18401;">2</span><span>);
+</span><span>
+</span><span style="color:#a0a1a7;">// 手动实现的闭包
+</span><span style="color:#a626a4;">let</span><span> x </span><span style="color:#a626a4;">= </span><span style="color:#c18401;">1</span><span style="color:#a626a4;">i32</span><span>;
+</span><span style="color:#a626a4;">let</span><span> c </span><span style="color:#a626a4;">= </span><span>{
+</span><span>    </span><span style="color:#a626a4;">let</span><span> env </span><span style="color:#a626a4;">= </span><span>(x,);
+</span><span>    </span><span style="color:#a626a4;">fn </span><span style="color:#0184bc;">f</span><span>((</span><span style="color:#e45649;">x</span><span>,): </span><span style="color:#a626a4;">&amp;</span><span>(</span><span style="color:#e45649;">i32</span><span>,), (</span><span style="color:#e45649;">y</span><span>,): (</span><span style="color:#a626a4;">i32</span><span>,)) -&gt; </span><span style="color:#a626a4;">i32 </span><span>{
+</span><span>        x </span><span style="color:#a626a4;">+</span><span> y
+</span><span>    }
+</span><span>    RefClosure::new(env, f)
+</span><span>};
+</span><span>assert_eq!(</span><span style="color:#0184bc;">c</span><span>(</span><span style="color:#c18401;">1</span><span>), </span><span style="color:#c18401;">2</span><span>);
+</span></code></pre>
+<p>注意上例中 <code>i32</code> 实现了 <code>Copy</code>。</p>
+<p>其中 <code>let c</code> 后创建闭包的内容其实是模式化的，编写一个简单的 macro_rules 宏将其简化：</p>
+<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span>[macro_export] </span><span style="color:#0184bc;">macro_rules! </span><span>boxed_closure {
+</span><span>    (move [</span><span style="color:#a626a4;">$</span><span>(</span><span style="color:#e45649;">$env_name</span><span>:</span><span style="color:#a626a4;">ident</span><span>: </span><span style="color:#e45649;">$env_type</span><span>:</span><span style="color:#a626a4;">ty</span><span> = </span><span style="color:#e45649;">$env_exp</span><span>:</span><span style="color:#a626a4;">expr</span><span>,)</span><span style="color:#a626a4;">*</span><span>]
+</span><span>        (</span><span style="color:#a626a4;">$</span><span>(</span><span style="color:#e45649;">$arg_name</span><span>:</span><span style="color:#a626a4;">ident</span><span>: </span><span style="color:#e45649;">$arg_type</span><span>:</span><span style="color:#a626a4;">ty</span><span>,)</span><span style="color:#a626a4;">*</span><span>) -&gt; </span><span style="color:#e45649;">$out</span><span>:ty </span><span style="color:#e45649;">$body</span><span>:block) =&gt; ({
+</span><span>        fn f((</span><span style="color:#a626a4;">$</span><span>($env_name,)</span><span style="color:#a626a4;">*</span><span>): (</span><span style="color:#a626a4;">$</span><span>($env_type,)</span><span style="color:#a626a4;">*</span><span>), (</span><span style="color:#a626a4;">$</span><span>($arg_name,)</span><span style="color:#a626a4;">*</span><span>): (</span><span style="color:#a626a4;">$</span><span>($arg_type,)</span><span style="color:#a626a4;">*</span><span>)) -&gt; </span><span style="color:#e45649;">$out $body
+</span><span>        </span><span style="color:#e45649;">$crate</span><span>::MoveClosure::new((</span><span style="color:#a626a4;">$</span><span>($env_exp,)</span><span style="color:#a626a4;">*</span><span>), f)
+</span><span>    });
+</span><span>    (</span><span style="color:#a626a4;">move </span><span>[</span><span style="color:#a626a4;">$</span><span>(</span><span style="color:#e45649;">$env_name</span><span>:ident: </span><span style="color:#e45649;">$env_type</span><span>:ty </span><span style="color:#a626a4;">= </span><span style="color:#e45649;">$env_exp</span><span>:expr,)</span><span style="color:#a626a4;">*</span><span>]
+</span><span>        (</span><span style="color:#a626a4;">$</span><span>(</span><span style="color:#e45649;">$arg_name</span><span>:ident: </span><span style="color:#e45649;">$arg_type</span><span>:ty,)</span><span style="color:#a626a4;">*</span><span>) </span><span style="color:#e45649;">$body</span><span>:block) </span><span style="color:#a626a4;">=&gt; </span><span>({
+</span><span>        </span><span style="color:#a626a4;">fn </span><span style="color:#0184bc;">f</span><span>(($(</span><span style="color:#e45649;">$env_name</span><span>,)*): (</span><span style="color:#a626a4;">$</span><span>(</span><span style="color:#e45649;">$env_type</span><span>,)</span><span style="color:#a626a4;">*</span><span>), (</span><span style="color:#a626a4;">$</span><span>(</span><span style="color:#e45649;">$arg_name</span><span>,)</span><span style="color:#a626a4;">*</span><span>): (</span><span style="color:#a626a4;">$</span><span>(</span><span style="color:#e45649;">$arg_type</span><span>,)</span><span style="color:#a626a4;">*</span><span>)) </span><span style="color:#e45649;">$body
+</span><span>        </span><span style="color:#e45649;">$crate</span><span>::MoveClosure::new((</span><span style="color:#a626a4;">$</span><span>(</span><span style="color:#e45649;">$env_exp</span><span>,)</span><span style="color:#a626a4;">*</span><span>), f)
+</span><span>    });
+</span><span>    (</span><span style="color:#a626a4;">ref mut </span><span>[</span><span style="color:#a626a4;">$</span><span>(</span><span style="color:#e45649;">$env_name</span><span>:ident: </span><span style="color:#e45649;">$env_type</span><span>:ty </span><span style="color:#a626a4;">= </span><span style="color:#e45649;">$env_exp</span><span>:expr),</span><span style="color:#a626a4;">*</span><span>,]
+</span><span>        (</span><span style="color:#a626a4;">$</span><span>(</span><span style="color:#e45649;">$arg_name</span><span>:ident: </span><span style="color:#e45649;">$arg_type</span><span>:ty),</span><span style="color:#a626a4;">*</span><span>,) -&gt; </span><span style="color:#e45649;">$out</span><span>:ty </span><span style="color:#e45649;">$body</span><span>:block) </span><span style="color:#a626a4;">=&gt; </span><span>({
+</span><span>        </span><span style="color:#a626a4;">fn </span><span style="color:#0184bc;">f</span><span>(($(</span><span style="color:#e45649;">$env_name</span><span>,)*): </span><span style="color:#a626a4;">&amp;mut </span><span>(</span><span style="color:#a626a4;">$</span><span>(</span><span style="color:#e45649;">$env_type</span><span>,)</span><span style="color:#a626a4;">*</span><span>), (</span><span style="color:#a626a4;">$</span><span>(</span><span style="color:#e45649;">$arg_name</span><span>,)</span><span style="color:#a626a4;">*</span><span>): (</span><span style="color:#a626a4;">$</span><span>(</span><span style="color:#e45649;">$arg_type</span><span>,)</span><span style="color:#a626a4;">*</span><span>)) -&gt; </span><span style="color:#e45649;">$out $body
+</span><span>        </span><span style="color:#e45649;">$crate</span><span>::</span><span style="color:#a626a4;">RefMutClosure::</span><span>new(($(</span><span style="color:#e45649;">$env_exp</span><span>,)*), f)
+</span><span>    });
+</span><span>    (</span><span style="color:#a626a4;">ref mut </span><span>[</span><span style="color:#a626a4;">$</span><span>(</span><span style="color:#e45649;">$env_name</span><span>:ident: </span><span style="color:#e45649;">$env_type</span><span>:ty </span><span style="color:#a626a4;">= </span><span style="color:#e45649;">$env_exp</span><span>:expr),</span><span style="color:#a626a4;">*</span><span>,]
+</span><span>        (</span><span style="color:#a626a4;">$</span><span>(</span><span style="color:#e45649;">$arg_name</span><span>:ident: </span><span style="color:#e45649;">$arg_type</span><span>:ty),</span><span style="color:#a626a4;">*</span><span>,) </span><span style="color:#e45649;">$body</span><span>:block) </span><span style="color:#a626a4;">=&gt; </span><span>({
+</span><span>        </span><span style="color:#a626a4;">fn </span><span style="color:#0184bc;">f</span><span>(($(</span><span style="color:#e45649;">$env_name</span><span>,)*): </span><span style="color:#a626a4;">&amp;mut </span><span>(</span><span style="color:#a626a4;">$</span><span>(</span><span style="color:#e45649;">$env_type</span><span>,)</span><span style="color:#a626a4;">*</span><span>), (</span><span style="color:#a626a4;">$</span><span>(</span><span style="color:#e45649;">$arg_name</span><span>,)</span><span style="color:#a626a4;">*</span><span>): (</span><span style="color:#a626a4;">$</span><span>(</span><span style="color:#e45649;">$arg_type</span><span>,)</span><span style="color:#a626a4;">*</span><span>)) </span><span style="color:#e45649;">$body
+</span><span>        </span><span style="color:#e45649;">$crate</span><span>::RefMutClosure::new((</span><span style="color:#a626a4;">$</span><span>(</span><span style="color:#e45649;">$env_exp</span><span>,)</span><span style="color:#a626a4;">*</span><span>), f)
+</span><span>    });
+</span><span>    (</span><span style="color:#a626a4;">ref </span><span>[</span><span style="color:#a626a4;">$</span><span>(</span><span style="color:#e45649;">$env_name</span><span>:ident: </span><span style="color:#e45649;">$env_type</span><span>:ty </span><span style="color:#a626a4;">= </span><span style="color:#e45649;">$env_exp</span><span>:expr),</span><span style="color:#a626a4;">*</span><span>,]
+</span><span>        (</span><span style="color:#a626a4;">$</span><span>(</span><span style="color:#e45649;">$arg_name</span><span>:ident: </span><span style="color:#e45649;">$arg_type</span><span>:ty),</span><span style="color:#a626a4;">*</span><span>,) -&gt; </span><span style="color:#e45649;">$out</span><span>:ty </span><span style="color:#e45649;">$body</span><span>:block) </span><span style="color:#a626a4;">=&gt; </span><span>({
+</span><span>        </span><span style="color:#a626a4;">fn </span><span style="color:#0184bc;">f</span><span>(($(</span><span style="color:#e45649;">$env_name</span><span>,)*): </span><span style="color:#a626a4;">&amp;</span><span>(</span><span style="color:#a626a4;">$</span><span>(</span><span style="color:#e45649;">$env_type</span><span>,)</span><span style="color:#a626a4;">*</span><span>), (</span><span style="color:#a626a4;">$</span><span>(</span><span style="color:#e45649;">$arg_name</span><span>,)</span><span style="color:#a626a4;">*</span><span>): (</span><span style="color:#a626a4;">$</span><span>(</span><span style="color:#e45649;">$arg_type</span><span>,)</span><span style="color:#a626a4;">*</span><span>)) -&gt; </span><span style="color:#e45649;">$out $body
+</span><span>        </span><span style="color:#e45649;">$crate</span><span>::</span><span style="color:#a626a4;">RefClosure::</span><span>new(($(</span><span style="color:#e45649;">$env_exp</span><span>,)*), f)
+</span><span>    });
+</span><span>    (</span><span style="color:#a626a4;">ref </span><span>[</span><span style="color:#a626a4;">$</span><span>(</span><span style="color:#e45649;">$env_name</span><span>:ident: </span><span style="color:#e45649;">$env_type</span><span>:ty </span><span style="color:#a626a4;">= </span><span style="color:#e45649;">$env_exp</span><span>:expr),</span><span style="color:#a626a4;">*</span><span>,]
+</span><span>        (</span><span style="color:#a626a4;">$</span><span>(</span><span style="color:#e45649;">$arg_name</span><span>:ident: </span><span style="color:#e45649;">$arg_type</span><span>:ty),</span><span style="color:#a626a4;">*</span><span>,) </span><span style="color:#e45649;">$body</span><span>:block) </span><span style="color:#a626a4;">=&gt; </span><span>({
+</span><span>        </span><span style="color:#a626a4;">fn </span><span style="color:#0184bc;">f</span><span>(($(</span><span style="color:#e45649;">$env_name</span><span>,)*): </span><span style="color:#a626a4;">&amp;</span><span>(</span><span style="color:#a626a4;">$</span><span>(</span><span style="color:#e45649;">$env_type</span><span>,)</span><span style="color:#a626a4;">*</span><span>), (</span><span style="color:#a626a4;">$</span><span>(</span><span style="color:#e45649;">$arg_name</span><span>,)</span><span style="color:#a626a4;">*</span><span>): (</span><span style="color:#a626a4;">$</span><span>(</span><span style="color:#e45649;">$arg_type</span><span>,)</span><span style="color:#a626a4;">*</span><span>)) </span><span style="color:#e45649;">$body
+</span><span>        </span><span style="color:#e45649;">$crate</span><span>::RefClosure::new((</span><span style="color:#a626a4;">$</span><span>(</span><span style="color:#e45649;">$env_exp</span><span>,)</span><span style="color:#a626a4;">*</span><span>), f)
+</span><span>    });
+</span><span>}
+</span></code></pre>
+<p>上述闭包可被翻译为：</p>
+<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#a626a4;">let</span><span> x </span><span style="color:#a626a4;">= </span><span style="color:#c18401;">1</span><span style="color:#a626a4;">i32</span><span>;
+</span><span style="color:#a626a4;">let</span><span> c </span><span style="color:#a626a4;">= </span><span>boxed_closure! {
+</span><span>    </span><span style="color:#a626a4;">ref </span><span>[x: </span><span style="color:#a626a4;">i32 =</span><span> x,] (y: </span><span style="color:#a626a4;">i32</span><span>,) -&gt; </span><span style="color:#a626a4;">i32 </span><span>{
+</span><span>        x </span><span style="color:#a626a4;">+</span><span> y
+</span><span>    }
+</span><span>};
+</span><span>assert_eq!(</span><span style="color:#0184bc;">c</span><span>(</span><span style="color:#c18401;">1</span><span>), </span><span style="color:#c18401;">2</span><span>);
+</span></code></pre>
+<p>完整 crate 已经上传到 GitHub 仓库 <a href="https://github.com/linyinfeng/closure">linyinfeng/closure</a>。注意，这是一个非常简陋的闭包设计，仅仅用于阐述一个典型闭包的工作原理。相比于 Rust 内置闭包来说，它的设计是简洁的，使用是繁琐的，性能是低下的。下面将对 Rust 内置闭包的工作进行分析和探讨，同时也与实现的朴素闭包作比较。</p>
+<h2 id="nei-zhi-bi-bao"><a class="zola-anchor" href="#nei-zhi-bi-bao" aria-label="Anchor link for: nei-zhi-bi-bao">
+    <i class="fas fa-link"></i>
+</a>
+内置闭包</h2>
+<h3 id="unboxed"><a class="zola-anchor" href="#unboxed" aria-label="Anchor link for: unboxed">
+    <i class="fas fa-link"></i>
+</a>
+Unboxed</h3>
+<p>上文实现的闭包实际上与内置闭包非常相似，翻译后使用起来基本没有区别。</p>
+<p>但是区别还是有的，首先是先前提到过的没有类型推导，所有捕获和类型都必须显示写出。</p>
+<p>而最重要的一点是上文偶尔提到的 boxed 和 unboxed，这是什么意思呢。可以试验取上文实现的闭包的一个结构的大小和内置闭包的大小作比较：</p>
+<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span>#![</span><span style="color:#e45649;">feature</span><span>(core_intrinsics)]
+</span><span style="color:#a626a4;">use </span><span>boxed_closure::boxed_closure;
+</span><span>
+</span><span style="color:#a626a4;">fn </span><span style="color:#0184bc;">type_of</span><span>&lt;T&gt;(</span><span style="color:#a626a4;">_</span><span>: </span><span style="color:#a626a4;">&amp;</span><span>T) -&gt; </span><span style="color:#a626a4;">&amp;&#39;static str </span><span>{
+</span><span>    </span><span style="color:#a626a4;">unsafe </span><span>{ std::intrinsics::type_name::&lt;T&gt;() }
+</span><span>}
+</span><span>
+</span><span style="color:#a626a4;">fn </span><span style="color:#0184bc;">size_of</span><span>&lt;T&gt;(</span><span style="color:#a626a4;">_</span><span>: </span><span style="color:#a626a4;">&amp;</span><span>T) -&gt; </span><span style="color:#a626a4;">usize </span><span>{
+</span><span>    std::mem::size_of::&lt;T&gt;()
+</span><span>}
+</span><span>
+</span><span style="color:#a626a4;">fn </span><span style="color:#0184bc;">main</span><span>() {
+</span><span>    </span><span style="color:#a626a4;">let mut</span><span> s </span><span style="color:#a626a4;">= </span><span>String::from(</span><span style="color:#50a14f;">&quot;Hello&quot;</span><span>);
+</span><span>    {
+</span><span>        </span><span style="color:#a626a4;">let mut </span><span style="color:#0184bc;">c </span><span style="color:#a626a4;">= </span><span>|| s.</span><span style="color:#0184bc;">push</span><span>(</span><span style="color:#50a14f;">&#39;!&#39;</span><span>);
+</span><span>        println!(</span><span style="color:#50a14f;">&quot;Type of a closure c: </span><span style="color:#c18401;">{}</span><span style="color:#50a14f;">&quot;</span><span>, </span><span style="color:#0184bc;">type_of</span><span>(</span><span style="color:#a626a4;">&amp;</span><span>c));
+</span><span>        println!(</span><span style="color:#50a14f;">&quot;Size of a closure c: </span><span style="color:#c18401;">{}</span><span style="color:#50a14f;">&quot;</span><span>, </span><span style="color:#0184bc;">size_of</span><span>(</span><span style="color:#a626a4;">&amp;</span><span>c));
+</span><span>        </span><span style="color:#0184bc;">c</span><span>();
+</span><span>        </span><span style="color:#0184bc;">c</span><span>();
+</span><span>    }
+</span><span>    assert_eq!(s, </span><span style="color:#50a14f;">&quot;Hello!!&quot;</span><span>);
+</span><span>
+</span><span>    </span><span style="color:#a626a4;">let mut</span><span> s </span><span style="color:#a626a4;">= </span><span>String::from(</span><span style="color:#50a14f;">&quot;Hello&quot;</span><span>);
+</span><span>    {
+</span><span>        </span><span style="color:#a626a4;">let mut</span><span> c </span><span style="color:#a626a4;">= </span><span>boxed_closure! {
+</span><span>            </span><span style="color:#a626a4;">ref mut </span><span>[s: </span><span style="color:#a626a4;">&amp;mut </span><span>String </span><span style="color:#a626a4;">= &amp;mut</span><span> s,] () {
+</span><span>                s.</span><span style="color:#0184bc;">push</span><span>(</span><span style="color:#50a14f;">&#39;!&#39;</span><span>);
+</span><span>            }
+</span><span>        };
+</span><span>        println!(</span><span style="color:#50a14f;">&quot;Type of a closure c: </span><span style="color:#c18401;">{}</span><span style="color:#50a14f;">&quot;</span><span>, </span><span style="color:#0184bc;">type_of</span><span>(</span><span style="color:#a626a4;">&amp;</span><span>c));
+</span><span>        println!(</span><span style="color:#50a14f;">&quot;Size of a closure c: </span><span style="color:#c18401;">{}</span><span style="color:#50a14f;">&quot;</span><span>, </span><span style="color:#0184bc;">size_of</span><span>(</span><span style="color:#a626a4;">&amp;</span><span>c));
+</span><span>        </span><span style="color:#0184bc;">c</span><span>();
+</span><span>        </span><span style="color:#0184bc;">c</span><span>();
+</span><span>    }
+</span><span>    assert_eq!(s, </span><span style="color:#50a14f;">&quot;Hello!!&quot;</span><span>);
+</span><span>}
+</span></code></pre>
+<p>输出</p>
+<pre data-lang="txt" style="background-color:#fafafa;color:#383a42;" class="language-txt "><code class="language-txt" data-lang="txt"><span>Type of a closure c: [closure@src/main.rs:15:21: 15:35 s:&amp;mut std::string::String]
+</span><span>Size of a closure c: 8
+</span><span>Type of a closure c: closure::RefMutClosure&lt;(&amp;mut std::string::String,), (), ()&gt;
+</span><span>Size of a closure c: 16
+</span></code></pre>
+<p>在我的机器上函数指针和引用的大小均为 8，因此整个 <code>RefMutClosure</code> struct 的大小为 16。而内置闭包的大小却仅仅为 8，为什么呢？</p>
+<p>进一步实验：</p>
+<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#a626a4;">let mut</span><span> s </span><span style="color:#a626a4;">= </span><span>String::from(</span><span style="color:#50a14f;">&quot;Hello&quot;</span><span>);
+</span><span style="color:#a626a4;">let</span><span> content_of_c: </span><span style="color:#a626a4;">*const </span><span>();
+</span><span>{
+</span><span>    </span><span style="color:#a626a4;">let mut </span><span style="color:#0184bc;">c </span><span style="color:#a626a4;">= </span><span>|| s.</span><span style="color:#0184bc;">push</span><span>(</span><span style="color:#50a14f;">&#39;!&#39;</span><span>);
+</span><span>    content_of_c </span><span style="color:#a626a4;">= unsafe </span><span>{ std::mem::transmute_copy(</span><span style="color:#a626a4;">&amp;</span><span>c) };
+</span><span>    </span><span style="color:#0184bc;">c</span><span>();
+</span><span>    </span><span style="color:#0184bc;">c</span><span>();
+</span><span>}
+</span><span style="color:#a626a4;">let</span><span> pointer_to_s: </span><span style="color:#a626a4;">*const </span><span>() </span><span style="color:#a626a4;">= unsafe </span><span>{ std::mem::transmute_copy(</span><span style="color:#a626a4;">&amp;&amp;</span><span>s) };
+</span><span>assert_eq!(content_of_c, pointer_to_s);
+</span><span>assert_eq!(s, </span><span style="color:#50a14f;">&quot;Hello!!&quot;</span><span>);
+</span></code></pre>
+<p>可见 Rust 内置闭包实际上<strong>只包含了环境</strong>。原因是 Rust 的闭包是 unboxed 闭包，其函数直接被编译器定义在 <code>FnOnce</code>，<code>FnMut</code> 和 <code>Fn</code> 的实现中，因此，内置闭包对象根本不需要携带函数指针。对内置闭包的函数调用大部分情况下在编译期就绑定了（除非使用 trait object），而不是运行时。这样做的好处是方便 LLVM 做内联优化，同时闭包本身也不需要额外携带一个指针了，可以统一地交给 trait object 做。</p>
+<h3 id="move-guan-jian-zi"><a class="zola-anchor" href="#move-guan-jian-zi" aria-label="Anchor link for: move-guan-jian-zi">
+    <i class="fas fa-link"></i>
+</a>
+<code>move</code> 关键字</h3>
+<p><code>move</code> 关键字的意义有时令人感到困惑。在远古 Rust 中，<code>move</code> 关键字是另作他用的，后来被删除了。应该是在现在版本的闭包出现以后才重新作为一个有用的关键字出现。在内置闭包捕获变量的时候，Rust 总是尽可能以 <code>&amp;</code> &gt; <code>&amp;mut</code> &gt; <code>move</code> 的顺序进行捕获，这将对捕获的变量产生最少的影响。但是，某些情况下，我们需要闭包获得变量的所有权，但是闭包函数体并不需要获得变量的所有权。这时候我们使用 <code>move</code> 关键字强制 Rust 将所有捕获的变量移动入闭包的环境中，以延长被移动的对象的生存期。</p>
+<p>可以考虑一下为什么有 <code>move</code> 闭包却没有 <code>mut</code> 闭包呢？因为强制 <code>mut</code> 捕获并不会造成任何的好处却会对被捕获的变量产生一个可变借用，这没有任何意义，就与写了 <code>let r = &amp;mut x;</code> 却不修改 r 一样，编译器将提示去除 <code>mut</code>。</p>
+<h3 id="fn-fnmut-yu-fnonce"><a class="zola-anchor" href="#fn-fnmut-yu-fnonce" aria-label="Anchor link for: fn-fnmut-yu-fnonce">
+    <i class="fas fa-link"></i>
+</a>
+<code>Fn</code>，<code>FnMut</code> 与 <code>FnOnce</code></h3>
+<p>正如之前反复强调的，闭包究竟实现 <code>Fn</code>，<code>FnMut</code>，<code>FnOnce</code> 中的哪几个 trait，是由闭包对环境的使用，也就是函数体决定的。</p>
+<p>举个例子：</p>
+<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#a626a4;">let</span><span> s </span><span style="color:#a626a4;">= </span><span>String::from(</span><span style="color:#50a14f;">&quot;hello&quot;</span><span>);
+</span><span style="color:#a626a4;">let</span><span> c </span><span style="color:#a626a4;">= move || </span><span>println!(</span><span style="color:#50a14f;">&quot;</span><span style="color:#c18401;">{}</span><span style="color:#50a14f;">&quot;</span><span>, s);
+</span><span style="color:#0184bc;">c</span><span>();
+</span><span style="color:#0184bc;">c</span><span>();
+</span></code></pre>
+<p>能正常运行，输出：</p>
+<pre data-lang="txt" style="background-color:#fafafa;color:#383a42;" class="language-txt "><code class="language-txt" data-lang="txt"><span>s = hello
+</span><span>s = hello
+</span></code></pre>
+<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#a626a4;">let</span><span> s </span><span style="color:#a626a4;">= </span><span>String::from(</span><span style="color:#50a14f;">&quot;hello&quot;</span><span>);
+</span><span style="color:#a626a4;">let </span><span style="color:#0184bc;">c </span><span style="color:#a626a4;">= </span><span>|| dbg!(s);
+</span><span>println!(</span><span style="color:#50a14f;">&quot;</span><span style="color:#c18401;">{}</span><span style="color:#50a14f;">&quot;</span><span>, s);
+</span><span style="color:#0184bc;">c</span><span>();
+</span><span style="color:#0184bc;">c</span><span>();
+</span></code></pre>
+<p>将编译错误：</p>
+<pre data-lang="txt" style="background-color:#fafafa;color:#383a42;" class="language-txt "><code class="language-txt" data-lang="txt"><span>error[E0382]: borrow of moved value: `s`
+</span><span>error[E0382]: use of moved value: `c`
+</span></code></pre>
+<p>这是因为 <code>dbg!(s)</code> 将获取 <code>s</code> 的所有权再返回 <code>s</code>，而 <code>println!(&quot;{}&quot;, s)</code> 只会获取 <code>s</code> 的引用。同样，<code>s</code> 被移动进第一个闭包是因为 <code>move</code> 关键字的作用，而 <code>s</code> 被移动进第二个闭包是因为第二个闭包的函数体要求 <code>s</code> 的所有权。即使两个例子中 <code>s</code> 均被移动进闭包，第一个闭包依然根据函数体被实现了 <code>Fn</code>，<code>FnMut</code>，<code>FnOnce</code>，第二个闭包被根据函数体实现了 <code>FnOnce</code>。</p>
+<h3 id="bi-bao-de-mut"><a class="zola-anchor" href="#bi-bao-de-mut" aria-label="Anchor link for: bi-bao-de-mut">
+    <i class="fas fa-link"></i>
+</a>
+闭包的 <code>mut</code></h3>
+<p>下面示例代码中的 <code>c</code> 变量有时候也令人感到困惑。</p>
+<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#a626a4;">let mut</span><span> s </span><span style="color:#a626a4;">= </span><span>String::from(</span><span style="color:#50a14f;">&quot;Hello&quot;</span><span>);
+</span><span>{
+</span><span>    </span><span style="color:#a626a4;">let mut </span><span style="color:#0184bc;">c </span><span style="color:#a626a4;">= </span><span>|| s.</span><span style="color:#0184bc;">push</span><span>(</span><span style="color:#50a14f;">&#39;!&#39;</span><span>); </span><span style="color:#a0a1a7;">// !
+</span><span>    </span><span style="color:#0184bc;">c</span><span>();
+</span><span>    </span><span style="color:#0184bc;">c</span><span>();
+</span><span>}
+</span><span>assert_eq!(s, </span><span style="color:#50a14f;">&quot;Hello!!&quot;</span><span>);
+</span></code></pre>
+<p>为什么编译器要求 c 必须是可变的才能执行 c() 呢？这是因为不能通过不可变引用闭包修改其内容，包括其中的可变引用。另一方面，也可以从类型上看，无法将不可变的内置闭包传递给要求可变 self 引用的 call_mut。</p>
+<h2 id="tuo-chi-bi-bao"><a class="zola-anchor" href="#tuo-chi-bi-bao" aria-label="Anchor link for: tuo-chi-bi-bao">
+    <i class="fas fa-link"></i>
+</a>
+脱离闭包</h2>
+<p>Rust 中，最简单高阶函数一般这样书写：</p>
+<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#a626a4;">fn </span><span style="color:#0184bc;">higher_order_fn</span><span>&lt;F&gt;(</span><span style="color:#e45649;">f</span><span>: F)
+</span><span style="color:#a626a4;">where
+</span><span>    F: Fn() -&gt; </span><span style="color:#a626a4;">i32</span><span>,
+</span></code></pre>
+<p>不理会对 F 的更多约束，考虑在编写高阶函数时，应该选择 <code>FnOnce</code>，<code>FnMut</code> 还是 <code>Fn</code>？</p>
+<p><code>FnOnce</code>，<code>FnMut</code> 和 <code>Fn</code> 并非只为闭包服务。不管是我们实现的朴素闭包也好，还是普通函数也好，都实现了这几个 traits。事实上：</p>
+<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#a626a4;">fn </span><span style="color:#0184bc;">main</span><span>() {
+</span><span>    println!(</span><span style="color:#50a14f;">&quot;</span><span style="color:#c18401;">{}</span><span style="color:#50a14f;">&quot;</span><span>, std::mem::size_of_val(</span><span style="color:#a626a4;">&amp;</span><span>main)); </span><span style="color:#a0a1a7;">// 0
+</span><span>}
+</span></code></pre>
+<p>Rust 中的函数也是“unboxed“实现，同样也实现了 <code>Fn</code> 系列 traits。</p>
+<p>所以我想最后应该从另一个层面再次考虑 <code>FnOnce</code>，<code>FnMut</code> 和 <code>Fn</code>，以至于在实践中，理解其语义应当就能作出正确的选择：</p>
+<ul>
+<li><code>Fn</code>，函数不保有自己的状态</li>
+<li><code>FnMut</code>，函数可以改变自己的状态</li>
+<li><code>FnOnce</code>，函数消费自己的状态</li>
+</ul>
+<p>也就是说：</p>
+<ul>
+<li>
+<p>需要纯函数的时候，书写 <code>Fn</code></p>
+</li>
+<li>
+<p>需要函数保存内部状态的时候，如伪随机数生成函数，书写 <code>FnMut</code></p>
+</li>
+<li>
+<p>类似于创建线程这样的调用，选择 <code>FnOnce</code></p>
+<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#a626a4;">pub fn </span><span style="color:#0184bc;">spawn</span><span>&lt;F, T&gt;(</span><span style="color:#e45649;">f</span><span>: F) -&gt; JoinHandle&lt;T&gt; </span><span style="color:#a626a4;">where
+</span><span>    F: FnOnce() -&gt; T,
+</span><span>    F: Send + </span><span style="color:#a626a4;">&#39;static</span><span>,
+</span><span>    T: Send + </span><span style="color:#a626a4;">&#39;static</span><span>,
+</span></code></pre>
+</li>
+</ul>
+</section>
+    </article>
+
+    
+    
+        
+    <div class="giscus" />
+
+    
+
+                </div>
+            </main>
+        </div>
+        <footer id="footer">
+            
+            
+    <div class="footer-container container">
+        <div id="copyright-container">
+            <small id="copyright">© Lin Yinfeng</small>
+        </div>
+
+        
+            <div id="powered-by-container">
+                <small id="powered-by">Powered by <a href="https://www.getzola.org">Zola</a></small>
+            </div>
+        
+    </div>
+
+            
+        </footer>
+    
+</body>
+</html>

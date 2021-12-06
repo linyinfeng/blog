@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang=cn>
+<head>
+    
+        <title>
+    Rust RFC 2349 - Pin 翻译 -
+    Lin Yinfeng
+</title>
+        
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel=stylesheet type="text/css" href=https://www.linyinfeng.com/normalize.css>
+        <link rel=stylesheet type="text/css" href=https://www.linyinfeng.com/style.css>
+        <script defer src=https://www.linyinfeng.com/layout-helper.js></script>
+        
+            
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-K74P2G7');</script>
+    <!-- End Google Tag Manager -->
+
+        
+        
+            
+                
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/mathtex-script-type.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/copy-tex.css" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/copy-tex.min.js" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+    macros: {
+        "\\set": "\\left\\{ #1 \\right\\}"
+    },
+    delimiters: [
+        {left: "$$",  right: "$$",  display: true },
+        {left: "$",   right: "$",   display: false},
+        {left: "\\(", right: "\\)", display: false},
+        {left: "\\[", right: "\\]", display: true }
+    ]
+}
+ );
+        });
+    </script>
+
+            
+        
+        
+            
+    <script src="https://giscus.app/client.js"
+            data-repo="linyinfeng&#x2F;blog"
+            data-repo-id="MDEwOlJlcG9zaXRvcnkxNDMxMjU5NTA="
+            data-category-id="MDE4OkRpc2N1c3Npb25DYXRlZ29yeTMyOTkyOTcy"
+            data-mapping="pathname"
+            data-reactions-enabled="1"
+            data-theme="light"
+            crossorigin="anonymous"
+            async>
+    </script>
+
+        
+        
+<script src="https://kit.fontawesome.com/ba33ff5900.js" crossorigin="anonymous"></script>
+
+        
+            <link rel="alternate" type="application/atom+xml" title="Atom" href="https://www.linyinfeng.com/atom.xml">
+        
+    
+</head>
+<body>
+    
+        
+        <header id="header">
+            
+            
+    <div class="header-container container">
+        <h1 id="blog-title" class="title">
+            <a href=https:&#x2F;&#x2F;www.linyinfeng.com>
+                <img src="https://www.linyinfeng.com/favicon.ico" alt="Lin Yinfeng" />
+            </a>
+        </h1>
+        <nav id="global-nav"><span class="global-nav-item-container"><a class="global-nav-item"
+                    href=https://www.linyinfeng.com
+                >Home</a></span><span class="global-nav-item-container"><a class="global-nav-item"
+                    href=https://www.linyinfeng.com/archive
+                >Archive</a></span><span class="global-nav-item-container"><a class="global-nav-item"
+                    href=https://www.linyinfeng.com/links
+                >Links</a></span><span class="global-nav-item-container"><a class="global-nav-item"
+                    href=https:&#x2F;&#x2F;github.com&#x2F;linyinfeng&#x2F;blog
+                >Source</a></span></nav>
+    </div>
+
+            
+        </header>
+        <div id="main-aside-container">
+            
+    
+        
+                <aside id="aside">
+                    <div id="aside-container">
+                        
+    
+    <div class="toc-container container">
+        <h1 class="title toc-title">Table of Contents</h1>
+        
+    
+        <ul class="toc-parent">
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;posts&#x2F;rust-rfc-2349&#x2F;#zhai-yao>摘要</a>
+                    
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;posts&#x2F;rust-rfc-2349&#x2F;#dong-ji>动机</a>
+                    
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;posts&#x2F;rust-rfc-2349&#x2F;#zhi-nan-ceng-ci-de-jie-shi>指南层次的解释</a>
+                    
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;posts&#x2F;rust-rfc-2349&#x2F;#can-kao-ceng-ci-de-jie-shi>参考层次的解释</a>
+                    
+    
+        <ul class="toc-parent">
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;posts&#x2F;rust-rfc-2349&#x2F;#unpin-zi-dong-trait>Unpin 自动 trait</a>
+                    
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;posts&#x2F;rust-rfc-2349&#x2F;#pin>Pin</a>
+                    
+    
+        <ul class="toc-parent">
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;posts&#x2F;rust-rfc-2349&#x2F;#an-quan-apis>安全 APIs</a>
+                    
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;posts&#x2F;rust-rfc-2349&#x2F;#bu-an-quan-apis>不安全 APIs</a>
+                    
+    
+
+                </li>
+                
+        </ul>
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;posts&#x2F;rust-rfc-2349&#x2F;#pinbox>PinBox</a>
+                    
+    
+        <ul class="toc-parent">
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;posts&#x2F;rust-rfc-2349&#x2F;#an-quan-api>安全 API</a>
+                    
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;posts&#x2F;rust-rfc-2349&#x2F;#bu-an-quan-api>不安全 API</a>
+                    
+    
+
+                </li>
+                
+        </ul>
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;posts&#x2F;rust-rfc-2349&#x2F;#bu-ke-yi-dong-sheng-cheng-qi>不可移动生成器</a>
+                    
+    
+
+                </li>
+                
+        </ul>
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;posts&#x2F;rust-rfc-2349&#x2F;#que-dian>缺点</a>
+                    
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;posts&#x2F;rust-rfc-2349&#x2F;#li-you-he-ti-dai-fang-an>理由和替代方案</a>
+                    
+    
+        <ul class="toc-parent">
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;posts&#x2F;rust-rfc-2349&#x2F;#dui-bi-move>对比 ?Move</a>
+                    
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;posts&#x2F;rust-rfc-2349&#x2F;#dui-bi-shi-yong-unsafe-apis>对比使用 unsafe APIs</a>
+                    
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;posts&#x2F;rust-rfc-2349&#x2F;#zuo-wei-bao-zhuang-lei-de-anchor-he-stablederef>作为包装类的 Anchor 和 StableDeref</a>
+                    
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;posts&#x2F;rust-rfc-2349&#x2F;#zhan-pinning-api-qian-zai-de-wei-lai-kuo-zhan>栈 pinning API（潜在的未来扩展）</a>
+                    
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;posts&#x2F;rust-rfc-2349&#x2F;#jiang-pin-zuo-wei-nei-zhi-lei-xing-qian-zai-de-wei-lai-kuo-zhan>将 Pin 作为内置类型（潜在的未来扩展）</a>
+                    
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;posts&#x2F;rust-rfc-2349&#x2F;#tong-shi-you-pin-he-pinmut>同时有 Pin 和 PinMut</a>
+                    
+    
+
+                </li>
+                
+        </ul>
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;posts&#x2F;rust-rfc-2349&#x2F;#wei-jie-jue-de-wen-ti>未解决的问题</a>
+                    
+    
+
+                </li>
+                
+        </ul>
+    
+
+    </div>
+
+
+                    </div>
+                </aside>
+            
+    
+
+            <main id="main">
+                <div id="main-container">
+                    
+    
+                    
+    
+    <article class="article-container container">
+        
+    <h1 class="title article-title">
+        <a class="article-title-link" href="https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;posts&#x2F;rust-rfc-2349&#x2F;">
+            
+    <span class="draft-indicator">
+        
+    </span>
+    <span>
+        Rust RFC 2349 - Pin 翻译
+    </span>
+
+        </a>
+    </h1>
+
+        
+    <div class="dates-container">
+        <div class="date-container">
+            <time datetime=2018-08-19T07:36:17+08:00>2018-08-19 07:36</time>
+ 	    
+            <span class="date-label">(created)</span>
+            
+        </div>
+        
+        <div class="date-container">
+	    <time datetime=2018-08-21T08:52:15+08:00>2018-08-21 08:52</time>
+            <span class="date-label">(last updated)</span>
+        </div>
+    </div>
+    
+
+        
+    <div class="article-taxonomies"><span class="article-taxonomy"><a class="article-taxonomy-name" href="https://www.linyinfeng.com/tags">
+                Tags</a><span class="article-terms"><a class="article-term-name" href="https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;tags&#x2F;rust&#x2F;">Rust</a><a class="article-term-name" href="https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;tags&#x2F;lei-xing-xi-tong&#x2F;">类型系统</a></span></span><span class="article-taxonomy"><a class="article-taxonomy-name" href="https://www.linyinfeng.com/categories">
+                Categories</a><span class="article-terms"><a class="article-term-name" href="https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;categories&#x2F;fan-yi&#x2F;">翻译</a></span></span></div>
+
+        
+    
+        <section class="article-license">
+            
+                <div class="license-image">
+                    <img src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" alt="Creative Commons License" />
+                </div>
+            
+            <small class="license-text">This work is licensed under a <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a></small>
+        </section>
+    
+
+        <section class="article-content"><p>本文为 <a href="https://github.com/rust-lang/rfcs/blob/master/text/2349-pin.md">Rust RFC 2349 - Pin</a> 的中文翻译。</p>
+<p>Rust RFCs 并非一成不变，本文翻译于 2018 年 08 月 19 日。</p>
+<p>Rust RFCs 仓库目前（2018-08-21）为可选的 MIT 和 Apache 授权，本文使用了其 MIT 授权。<a href="https://github.com/linyinfeng/blog/tree/master/content/posts/rust-rfc-2349/LICENSE-MIT">MIT 许可证副本</a>。</p>
+<p>文中有众多 Rust 中的其他 RFC 甚至 crates 中的概念，水平有限，如有翻译错误或建议，可以向我的 <a href="https://github.com/linyinfeng/blog">GitHub</a> 仓库提 Issue 或者直接发起 PR 指正，本文文件：<a href="https://github.com/linyinfeng/blog/tree/master/content/posts/rust-rfc-2349/index.md">content/posts/rust-rfc-2349/index.md</a>。</p>
+<span id="continue-reading"></span>
+<ul>
+<li>特性名：pin</li>
+<li>开始日期：2018-02-19</li>
+<li>RFC PR：<a href="https://github.com/rust-lang/rfcs/pull/2349">rust-lang/rfcs#2349</a></li>
+<li>Rust Issue: <a href="https://github.com/rust-lang/rust/issues/49150">rust-lang/rust#49150</a></li>
+</ul>
+<h2 id="zhai-yao"><a class="zola-anchor" href="#zhai-yao" aria-label="Anchor link for: zhai-yao">
+    <i class="fas fa-link"></i>
+</a>
+摘要</h2>
+<p>提出一套新的 API 加入 libcore/libstd 中作为不可以被安全地移动的数据的安全抽象。</p>
+<h2 id="dong-ji"><a class="zola-anchor" href="#dong-ji" aria-label="Anchor link for: dong-ji">
+    <i class="fas fa-link"></i>
+</a>
+动机</h2>
+<p>不应该被移动的类型是长期困扰 Rust 的一个问题。实现它的一个通常的动机是当一个结构包含指向它自己内存的指针——移动这个结构将会使指针无效。这个用例最近已经在生成器的工作中变得非常重要。因为生成器本质上将栈帧实现为一个可以被操作的对象，看起来如果它被允许，这种生成器的惯用法将导致这种自引用类型。</p>
+<p>这个提案向 std 中加入了 API，允许你保证一个特定的值永远不会被再次移动，使依赖于自引用的安全 API 存在。</p>
+<h2 id="zhi-nan-ceng-ci-de-jie-shi"><a class="zola-anchor" href="#zhi-nan-ceng-ci-de-jie-shi" aria-label="Anchor link for: zhi-nan-ceng-ci-de-jie-shi">
+    <i class="fas fa-link"></i>
+</a>
+指南层次的解释</h2>
+<p>这个 RFC 的核心目标是提供一个引用类型，保证被引用的对象在销毁前不被移动。我们希望对类型系统做最少的开洞来实现它，而且事实上，这个 RFC 展示了我们能在不对类型系统做任何修改的情况下达成这个目标。</p>
+<p>我们把目标拆分，一块一块来看，从 futures（即 async/await）用例看：</p>
+<ul>
+<li>
+<p><strong>引用类型</strong>。我们需要一个引用类型的原因是，当我们处理类似 futures 的东西的时候 我们通常希望将小的 futures 组合成大的，并仅仅在顶层把整个结果 futures 放入一个不可移动的位置。因此，我们需要为类似 poll 的方法提供一个引用类型，这样我们可以将大的 future 分解成小的 future，同时确保不可移动性。</p>
+</li>
+<li>
+<p><strong>在销毁前永不移动</strong>。再次考查 futures 这个例子，一旦我们正在 <code>poll</code> 一个 future，我们希望它能够保存指向自己的引用，这仅仅在整个 future 无法被移动的时候是可能的。我们不尝试从类型层面追踪<em>是否</em>这样的引用是存在的，因为这会导致笨重的类型状态机（typestate）；相反地，我们简单地令从你第一次 <code>poll</code> 开始，承诺永远不再次移动一个不可移动的 future。</p>
+</li>
+</ul>
+<p>同时，我们希望支持<em>可以</em>移动的 futures（以及迭代器，等等）。可能通过提供两种 <code>Future</code>（或 <code>Iterator</code>，等等）traits 来实现这一点，但这样的设计会导致不可接受的人体工学开销。</p>
+<p>这个 RFC 最关键的选择是我们创建了一个新的库类型，<code>Pin&lt;'a, T&gt;</code>，<em>同时</em>包含可移动和不可移动的被引用对象。这个类型对应一个新的自动 trait，<code>Unpin</code>，它决定了 <code>Pin&lt;'a, T&gt;</code> 的意义。</p>
+<ul>
+<li>如果 <code>T: Unpin</code>（默认），那么 <code>Pin&lt;'a, T&gt;</code> 完全等价于 <code>&amp;'a mut T</code>。</li>
+<li>如果 <code>T: !Unpin</code>，那么 <code>Pin&lt;'a, T&gt;</code> 提供一个对具有生命周期 <code>'a</code> 的 <code>T</code> 的唯一引用，但仅仅提供安全的 <code>&amp;'a T</code> 访问。它同时保证了被引用对象<em>永远不</em>被移动。然而，访问 <code>&amp;'a mut T</code> 是不安全的，因为类似 <code>men::replace</code> 的操作意味着 <code>&amp;mut</code> 足够将数据移动出被引用对象；你必须承诺不这么做。</li>
+</ul>
+<p>要清楚：<code>Unpin</code> 的唯一功能是控制 <code>Pin</code> 的意义。将 <code>Unpin</code> 作为一个自动 traits 意味着绝大多数类型自动地成为可移动的，因此 <code>Pin</code> 退化为 <code>&amp;mut</code>。如果你需要不可移动性，你可以<em>去除</em> <code>Unpin</code>，然后 <code>Pin</code> 对于你的类型就会变得有意义。</p>
+<p>结合所有这些，我们获得了以下 <code>Future</code> 的定义：</p>
+<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#a626a4;">trait </span><span>Future {
+</span><span>    </span><span style="color:#a626a4;">type </span><span>Item;
+</span><span>    </span><span style="color:#a626a4;">type </span><span>Error;
+</span><span>
+</span><span>    </span><span style="color:#a626a4;">fn </span><span style="color:#0184bc;">poll</span><span>(</span><span style="color:#e45649;">self</span><span>: Pin&lt;</span><span style="color:#a626a4;">Self</span><span>&gt;, </span><span style="color:#e45649;">cx</span><span>: </span><span style="color:#a626a4;">&amp;mut </span><span>task::Context) -&gt; Poll&lt;</span><span style="color:#a626a4;">Self::</span><span>Item, </span><span style="color:#a626a4;">Self::</span><span>Error&gt;;
+</span><span>}
+</span></code></pre>
+<p>默认情况下当我们为一个结构体实现 <code>Future</code>，这个定义将与目前的相同，<code>poll</code> 将获取 <code>&amp;mut self</code>。但当你想要允许你的 future 自引用，你只需要去除 <code>Unpin</code> 并注意剩下的部分。</p>
+<p>这个 RFC 也给 <code>Box</code> 提供了一个 pinned 类似，叫做 <code>PinBox&lt;T&gt;</code>。它就像这里讨论的 <code>Pin</code> 一样工作——如果类型实现了 <code>Unpin</code>，它的功能就和 <code>Box</code> 一样；如果类型去除了 <code>Unpin</code>，它确保引用之后的类型不会被再次移动。</p>
+<h2 id="can-kao-ceng-ci-de-jie-shi"><a class="zola-anchor" href="#can-kao-ceng-ci-de-jie-shi" aria-label="Anchor link for: can-kao-ceng-ci-de-jie-shi">
+    <i class="fas fa-link"></i>
+</a>
+参考层次的解释</h2>
+<h3 id="unpin-zi-dong-trait"><a class="zola-anchor" href="#unpin-zi-dong-trait" aria-label="Anchor link for: unpin-zi-dong-trait">
+    <i class="fas fa-link"></i>
+</a>
+<code>Unpin</code> 自动 trait</h3>
+<p>这个新的自动 trait 被加入到 <code>core::marker</code> 和 <code>std::marker</code> 模块：</p>
+<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#a626a4;">pub unsafe</span><span> auto </span><span style="color:#a626a4;">trait </span><span>Unpin { }
+</span></code></pre>
+<p>一个实现了 <code>Unpin</code> 的类型能够被移动出下文将提到的某一个 pinned 引用类型。否则，它们不会暴露允许你将值移出的安全 API。因为 <code>Unpin</code> 是一个自动 trait，Rust 中的大部分类型实现了它。没有实现它的类型主要是自引用类型，如某些生成器。</p>
+<p>这个 trait 是一个 lang 项目，但仅仅是为了为某些生成器生成负实现。不同于之前的 <code>?Move</code> 提案，也不同于如 <code>Sized</code> 和 <code>Copy</code> 的一些 traits，这个 trait 不对实现或不实现它的类型施加任何基于编译器的语义。相反地，它的语义是完全由使用 <code>Unpin</code> 作为标记的库 APIs 强制的。</p>
+<h3 id="pin"><a class="zola-anchor" href="#pin" aria-label="Anchor link for: pin">
+    <i class="fas fa-link"></i>
+</a>
+<code>Pin</code></h3>
+<p><code>Pin</code> 结构体被加入到 <code>core::mem</code> 和 <code>std::mem</code>。这是一种新的，相比 <code>&amp;mut T</code> 有更多要求的引用。</p>
+<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#a626a4;">#</span><span>#[</span><span style="color:#e45649;">fundamental</span><span>]
+</span><span style="color:#a626a4;">pub struct </span><span>Pin&lt;</span><span style="color:#a626a4;">&#39;a</span><span>, T: </span><span style="background-color:#e06c75;color:#fafafa;">?</span><span>Sized + &#39;a&gt; {
+</span><span>    </span><span style="color:#e45649;">data</span><span>: </span><span style="color:#a626a4;">&amp;&#39;a mut</span><span> T,
+</span><span>}
+</span></code></pre>
+<h4 id="an-quan-apis"><a class="zola-anchor" href="#an-quan-apis" aria-label="Anchor link for: an-quan-apis">
+    <i class="fas fa-link"></i>
+</a>
+安全 APIs</h4>
+<p><code>Pin</code> 实现了 <code>Deref</code>, 但是仅当类型实现 <code>Unpin</code> 时实现了 <code>DerefMut</code>。这样，当类型没有实现 <code>Unpin</code> 时，调用 <code>mem::swap</code> 或
+<code>mem::replace</code> 是不安全的。</p>
+<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#a626a4;">impl</span><span>&lt;</span><span style="color:#a626a4;">&#39;a</span><span>, T: </span><span style="background-color:#e06c75;color:#fafafa;">?</span><span>Sized&gt; Deref for Pin&lt;</span><span style="color:#a626a4;">&#39;a</span><span>, T&gt; { </span><span style="color:#a626a4;">... </span><span>}
+</span><span>
+</span><span style="color:#a626a4;">impl</span><span>&lt;</span><span style="color:#a626a4;">&#39;a</span><span>, T: Unpin </span><span style="color:#a626a4;">+ </span><span style="background-color:#e06c75;color:#fafafa;">?</span><span>Sized&gt; DerefMut for Pin&lt;</span><span style="color:#a626a4;">&#39;a</span><span>, T&gt; { </span><span style="color:#a626a4;">... </span><span>}
+</span></code></pre>
+<p>它只能安全地被实现了 <code>Unpin</code> 的类型的引用构造：</p>
+<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#a626a4;">impl</span><span>&lt;</span><span style="color:#a626a4;">&#39;a</span><span>, T: Unpin </span><span style="color:#a626a4;">+ </span><span style="background-color:#e06c75;color:#fafafa;">?</span><span>Sized&gt; Pin&lt;</span><span style="color:#a626a4;">&#39;a</span><span>, T&gt; {
+</span><span>    </span><span style="color:#a626a4;">pub fn </span><span style="color:#0184bc;">new</span><span>(</span><span style="color:#e45649;">reference</span><span>: </span><span style="color:#a626a4;">&amp;&#39;a mut</span><span> T) -&gt; Pin&lt;</span><span style="color:#a626a4;">&#39;a</span><span>, T&gt; { </span><span style="color:#a626a4;">... </span><span>}
+</span><span>}
+</span></code></pre>
+<p>它还有一个函数 <code>borrow</code>，允许它被转换成一个有更短生存期的 pin。</p>
+<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#a626a4;">impl</span><span>&lt;</span><span style="color:#a626a4;">&#39;a</span><span>, T: </span><span style="background-color:#e06c75;color:#fafafa;">?</span><span>Sized&gt; Pin&lt;</span><span style="color:#a626a4;">&#39;a</span><span>, T&gt; {
+</span><span>    </span><span style="color:#a626a4;">pub fn </span><span style="color:#0184bc;">borrow</span><span>&lt;</span><span style="color:#a626a4;">&#39;b</span><span>&gt;(</span><span style="color:#e45649;">this</span><span>: </span><span style="color:#a626a4;">&amp;&#39;b mut </span><span>Pin&lt;</span><span style="color:#a626a4;">&#39;a</span><span>, T&gt;) -&gt; Pin&lt;</span><span style="color:#a626a4;">&#39;b</span><span>, T&gt; { </span><span style="color:#a626a4;">... </span><span>}
+</span><span>}
+</span></code></pre>
+<p>它也可以实现额外的 APIs 因为它们对于实现类型转换是很实用的，例如 <code>AsRef</code>，<code>From</code> 等等。<code>Pin</code> 实现了 <code>CoerceUnsized</code>，这对能够将它们转为 trait objects 是必要的。（<code>Pin</code> implements <code>CoerceUnsized</code> as necessary to make coercing them into trait objects possible.）</p>
+<h4 id="bu-an-quan-apis"><a class="zola-anchor" href="#bu-an-quan-apis" aria-label="Anchor link for: bu-an-quan-apis">
+    <i class="fas fa-link"></i>
+</a>
+不安全 APIs</h4>
+<p><code>Pin</code> 能够被不安全地从可能未实现 <code>Unpin</code> 的类型的可变引用构造。使用这个构造函数的用户必须知道他们传递引用的类型在 <code>Pin</code> 被构造后将永远不再被移动，即使这个引用的生存期结束了。（举个例子，通过一个你未创建的引用构造的 <code>Pin</code> 总是不安全的，因为你不知道一旦这个引用的生存期结束会发生什么。）</p>
+<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#a626a4;">impl</span><span>&lt;</span><span style="color:#a626a4;">&#39;a</span><span>, T: </span><span style="background-color:#e06c75;color:#fafafa;">?</span><span>Sized&gt; Pin&lt;</span><span style="color:#a626a4;">&#39;a</span><span>, T&gt; {
+</span><span>    </span><span style="color:#a626a4;">pub unsafe fn </span><span style="color:#0184bc;">new_unchecked</span><span>(</span><span style="color:#e45649;">reference</span><span>: </span><span style="color:#a626a4;">&amp;&#39;a mut</span><span> T) -&gt; Pin&lt;</span><span style="color:#a626a4;">&#39;a</span><span>, T&gt; { </span><span style="color:#a626a4;">... </span><span>}
+</span><span>}
+</span></code></pre>
+<p><code>Pin</code> 也有一个将没有实现 <code>Unpin</code> 的类型的 <code>Pin</code> 转换为可变引用的 API。使用这个 API 的用户必须确保他们不将被引用对象移动出他们获得的可变引用。</p>
+<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#a626a4;">impl</span><span>&lt;</span><span style="color:#a626a4;">&#39;a</span><span>, T: </span><span style="background-color:#e06c75;color:#fafafa;">?</span><span>Sized&gt; Pin&lt;</span><span style="color:#a626a4;">&#39;a</span><span>, T&gt; {
+</span><span>    </span><span style="color:#a626a4;">pub unsafe fn </span><span style="color:#0184bc;">get_mut</span><span>&lt;</span><span style="color:#a626a4;">&#39;b</span><span>&gt;(</span><span style="color:#e45649;">this</span><span>: </span><span style="color:#a626a4;">&amp;&#39;b mut </span><span>Pin&lt;</span><span style="color:#a626a4;">&#39;a</span><span>, T&gt;) -&gt; </span><span style="color:#a626a4;">&amp;&#39;b mut</span><span> T { </span><span style="color:#a626a4;">... </span><span>}
+</span><span>}
+</span></code></pre>
+<p>最后，为了方便，<code>Pin</code> 实现了一个不安全的 <code>map</code> 函数，这使得访问一个字段更简单。调用这个函数的用户必须确保返回的值只要被引用对象不被移动就不被移动（例如，这是一个值的私有字段）。作为闭包参数接收的可变引用也必须不被移动。</p>
+<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#a626a4;">impl</span><span>&lt;</span><span style="color:#a626a4;">&#39;a</span><span>, T: </span><span style="background-color:#e06c75;color:#fafafa;">?</span><span>Sized&gt; Pin&lt;</span><span style="color:#a626a4;">&#39;a</span><span>, T&gt; {
+</span><span>    </span><span style="color:#a626a4;">pub unsafe fn </span><span style="color:#0184bc;">map</span><span>&lt;</span><span style="color:#a626a4;">&#39;b</span><span>, U, F&gt;(</span><span style="color:#e45649;">this</span><span>: </span><span style="color:#a626a4;">&amp;&#39;b mut </span><span>Pin&lt;</span><span style="color:#a626a4;">&#39;a</span><span>, T&gt;, </span><span style="color:#e45649;">f</span><span>: F) -&gt; Pin&lt;</span><span style="color:#a626a4;">&#39;b</span><span>, U&gt;
+</span><span>    </span><span style="color:#a626a4;">where</span><span> F: FnOnce(</span><span style="color:#a626a4;">&amp;mut</span><span> T) -&gt; </span><span style="color:#a626a4;">&amp;mut</span><span> U
+</span><span>    { </span><span style="color:#a626a4;">... </span><span>}
+</span><span>}
+</span><span>
+</span><span style="color:#a0a1a7;">// 举个例子：
+</span><span style="color:#a626a4;">struct </span><span>Foo {
+</span><span>    </span><span style="color:#e45649;">bar</span><span>: Bar,
+</span><span>}
+</span><span>
+</span><span style="color:#a626a4;">let</span><span> foo_pin: Pin&lt;Foo&gt;;
+</span><span>
+</span><span style="color:#a626a4;">let</span><span> bar_pin: Pin&lt;Bar&gt; </span><span style="color:#a626a4;">= unsafe </span><span>{ Pin::map(</span><span style="color:#a626a4;">&amp;mut</span><span> foo_pin, |</span><span style="color:#e45649;">foo</span><span>| </span><span style="color:#a626a4;">&amp;mut</span><span> foo.bar) };
+</span><span style="color:#a0a1a7;">// 等价于：
+</span><span style="color:#a626a4;">let</span><span> bar_pin: Pin&lt;Bar&gt; </span><span style="color:#a626a4;">= unsafe </span><span>{
+</span><span>    </span><span style="color:#a626a4;">let</span><span> foo: </span><span style="color:#a626a4;">&amp;mut</span><span> Foo </span><span style="color:#a626a4;">= </span><span>Pin::get_mut(</span><span style="color:#a626a4;">&amp;mut</span><span> foo_pin);
+</span><span>    Pin::new_unchecked(</span><span style="color:#a626a4;">&amp;mut</span><span> foo.bar)
+</span><span>};
+</span></code></pre>
+<h3 id="pinbox"><a class="zola-anchor" href="#pinbox" aria-label="Anchor link for: pinbox">
+    <i class="fas fa-link"></i>
+</a>
+<code>PinBox</code></h3>
+<p><code>PinBox</code> 类型被加入到 <code>alloc::boxed</code> 和 <code>std::boxed</code>。正如 <code>Pin</code> 类似于引用类型，<code>Box</code> 类似于 <code>Box</code> 类型，它有相似的 API。</p>
+<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#a626a4;">#</span><span>#[</span><span style="color:#e45649;">fundamental</span><span>]
+</span><span style="color:#a626a4;">pub struct </span><span>PinBox&lt;T: </span><span style="background-color:#e06c75;color:#fafafa;">?</span><span>Sized&gt; {
+</span><span>    </span><span style="color:#e45649;">inner</span><span>: Box&lt;T&gt;,
+</span><span>}
+</span></code></pre>
+<h4 id="an-quan-api"><a class="zola-anchor" href="#an-quan-api" aria-label="Anchor link for: an-quan-api">
+    <i class="fas fa-link"></i>
+</a>
+安全 API</h4>
+<p>不同于 <code>Pin</code>，从一个 <code>T</code> 和 <code>Box&lt;T&gt;</code> 构建 <code>PinBox</code> 是安全的，即使类型没有实现 <code>Unpin</code>。</p>
+<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#a626a4;">impl</span><span>&lt;T&gt; PinBox&lt;T&gt; {
+</span><span>    </span><span style="color:#a626a4;">pub fn </span><span style="color:#0184bc;">new</span><span>(</span><span style="color:#e45649;">data</span><span>: T) -&gt; PinBox&lt;T&gt; { </span><span style="color:#a626a4;">... </span><span>}
+</span><span>}
+</span><span>
+</span><span style="color:#a626a4;">impl</span><span>&lt;T: </span><span style="background-color:#e06c75;color:#fafafa;">?</span><span>Sized&gt; From&lt;Box&lt;T&gt;&gt; for PinBox&lt;T&gt; {
+</span><span>    </span><span style="color:#a626a4;">fn </span><span style="color:#0184bc;">from</span><span>(</span><span style="color:#e45649;">boxed</span><span>: Box&lt;T&gt;) -&gt; PinBox&lt;T&gt; { </span><span style="color:#a626a4;">... </span><span>}
+</span><span>}
+</span></code></pre>
+<p>它也提供了和 <code>Pin</code> 同样的 <code>Deref</code> 实现：</p>
+<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#a626a4;">impl</span><span>&lt;T: </span><span style="background-color:#e06c75;color:#fafafa;">?</span><span>Sized&gt; Deref for PinBox&lt;T&gt; { </span><span style="color:#a626a4;">... </span><span>}
+</span><span style="color:#a626a4;">impl</span><span>&lt;T: Unpin </span><span style="color:#a626a4;">+ </span><span style="background-color:#e06c75;color:#fafafa;">?</span><span>Sized&gt; DerefMut for PinBox&lt;T&gt; { </span><span style="color:#a626a4;">... </span><span>}
+</span></code></pre>
+<p>如果数据实现了 <code>Unpin</code>，将 <code>PinBox</code> 转换为 <code>Box</code> 是安全的：</p>
+<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#a626a4;">impl</span><span>&lt;T: Unpin </span><span style="color:#a626a4;">+ </span><span style="background-color:#e06c75;color:#fafafa;">?</span><span>Sized&gt; From&lt;PinBox&lt;T&gt;&gt; for Box&lt;T&gt; { </span><span style="color:#a626a4;">... </span><span>}
+</span></code></pre>
+<p>最后，可以安全地从 <code>PinBox</code> 的借用获取一个 <code>Pin</code>：</p>
+<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#a626a4;">impl</span><span>&lt;T: </span><span style="background-color:#e06c75;color:#fafafa;">?</span><span>Sized&gt; PinBox&lt;T&gt; {
+</span><span>    </span><span style="color:#a626a4;">fn </span><span style="color:#0184bc;">as_pin</span><span>&lt;</span><span style="color:#a626a4;">&#39;a</span><span>&gt;(</span><span style="color:#a626a4;">&amp;&#39;a mut </span><span style="color:#e45649;">self</span><span>) -&gt; Pin&lt;</span><span style="color:#a626a4;">&#39;a</span><span>, T&gt; { </span><span style="color:#a626a4;">... </span><span>}
+</span><span>}
+</span></code></pre>
+<p>这些 APIs 使 <code>PinBox</code> 能够作为一个合理的方法处理没有实现 <code>Unpin</code> 的数据。一旦你在 <code>PinBox</code> 内分配数据到堆上，你知道它的地址不会改变，同时可以分发对这些数据的 <code>Pin</code> 引用。</p>
+<h4 id="bu-an-quan-api"><a class="zola-anchor" href="#bu-an-quan-api" aria-label="Anchor link for: bu-an-quan-api">
+    <i class="fas fa-link"></i>
+</a>
+不安全 API</h4>
+<p>类似 <code>Pin</code>，<code>PinBox</code> 可以被不安全地转换为 <code>&amp;mut T</code> 和 <code>Box&lt;T&gt;</code> 即使它引用的类型没有实现 <code>Unpin</code>：</p>
+<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#a626a4;">impl</span><span>&lt;T: </span><span style="background-color:#e06c75;color:#fafafa;">?</span><span>Sized&gt; PinBox&lt;T&gt; {
+</span><span>    </span><span style="color:#a626a4;">pub unsafe fn </span><span style="color:#0184bc;">get_mut</span><span>&lt;</span><span style="color:#a626a4;">&#39;a</span><span>&gt;(</span><span style="color:#e45649;">this</span><span>: </span><span style="color:#a626a4;">&amp;&#39;a mut </span><span>PinBox&lt;T&gt;) -&gt; </span><span style="color:#a626a4;">&amp;&#39;a mut</span><span> T { </span><span style="color:#a626a4;">... </span><span>}
+</span><span>    </span><span style="color:#a626a4;">pub unsafe fn </span><span style="color:#0184bc;">into_inner</span><span>(</span><span style="color:#e45649;">this</span><span>: PinBox&lt;T&gt;) -&gt; Box&lt;T&gt; { </span><span style="color:#a626a4;">... </span><span>}
+</span><span>}
+</span></code></pre>
+<h3 id="bu-ke-yi-dong-sheng-cheng-qi"><a class="zola-anchor" href="#bu-ke-yi-dong-sheng-cheng-qi" aria-label="Anchor link for: bu-ke-yi-dong-sheng-cheng-qi">
+    <i class="fas fa-link"></i>
+</a>
+不可移动生成器</h3>
+<p>如今，不稳定的生成器特性有选项能够生成包含生存期跨越 yield 点的引用的生成器——这些引用，事实上，是生成器的状态机的引用。因为如果类型移动，内部引用将失效，这类生成器（“不可移动生成器”）的创建目前是不安全的。</p>
+<p>一旦 arbitrary_self_types 特性成为对象安全，我们将对生成器 API 做三个改动：</p>
+<ol>
+<li>我们将改变 <code>resume</code> 方法，接收 <code>self: Pin&lt;Self&gt;</code> 而非 <code>&amp;mut self</code>。</li>
+<li>为不可移动生成器实现 <code>!Unpin</code></li>
+<li>使不可移动生成器的定义变为安全的</li>
+</ol>
+<p>这就是这个 RFC 中的 API 如何允许自引用数据被安全地创建的例子。</p>
+<h2 id="que-dian"><a class="zola-anchor" href="#que-dian" aria-label="Anchor link for: que-dian">
+    <i class="fas fa-link"></i>
+</a>
+缺点</h2>
+<p>这向 std 添加了额外的 APIs，包括一个自动 trait。这样的添加不能被轻易地接受，仅当它们对于它们所表达的抽象完全合理时才能添加。</p>
+<h2 id="li-you-he-ti-dai-fang-an"><a class="zola-anchor" href="#li-you-he-ti-dai-fang-an" aria-label="Anchor link for: li-you-he-ti-dai-fang-an">
+    <i class="fas fa-link"></i>
+</a>
+理由和替代方案</h2>
+<h3 id="dui-bi-move"><a class="zola-anchor" href="#dui-bi-move" aria-label="Anchor link for: dui-bi-move">
+    <i class="fas fa-link"></i>
+</a>
+对比 <code>?Move</code></h3>
+<p>一个之前的提案是添加一个内置的 <code>Move</code> trait，类似于 <code>Sized</code>。一个没有实现 <code>Move</code> 的类型在被引用以后不能被移动。</p>
+<p>这个解决方案有一些问题。首先，<code>?Move</code> 限定最终“传染”了很多不同的不相关的 APIs，并且在几个情况下提出了破坏性的改变，这些 API 的改变无法保持向后兼容。</p>
+<p>在某些场景下，这个提案是一个范围小得多的 <code>?Move</code>。如果使用 <code>?Move</code>，<em>任何</em>引用就会表现得如这里的“Pin”引用一样。然而，因为这个灵活性，使一个类型无法移动的负面后果就是会有更加广泛的不良影响。</p>
+<p>相反地，我们要求 APIs 通过使用 <code>Pin</code> 类型选择支持不可变性，避免“传染”基本的引用类型，与不可移动类型产生关系。</p>
+<h3 id="dui-bi-shi-yong-unsafe-apis"><a class="zola-anchor" href="#dui-bi-shi-yong-unsafe-apis" aria-label="Anchor link for: dui-bi-shi-yong-unsafe-apis">
+    <i class="fas fa-link"></i>
+</a>
+对比使用 <code>unsafe</code> APIs</h3>
+<p>另一个我们考虑的替代选项是仅仅使要求不可移动性的 API 不安全。这些 APIs 的用户必须考查并确保它们没有移动自引用类型。举个例子，生成器将像这样：</p>
+<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#a626a4;">trait </span><span>Generator {
+</span><span>    </span><span style="color:#a626a4;">type </span><span>Yield;
+</span><span>    </span><span style="color:#a626a4;">type </span><span>Return;
+</span><span>
+</span><span>    </span><span style="color:#a626a4;">unsafe fn </span><span style="color:#0184bc;">resume</span><span>(</span><span style="color:#a626a4;">&amp;mut </span><span style="color:#e45649;">self</span><span>) -&gt; CoResult&lt;</span><span style="color:#a626a4;">Self::</span><span>Yield, </span><span style="color:#a626a4;">Self::</span><span>Return&gt;;
+</span><span>}
+</span></code></pre>
+<p>这将不要求对标准库添加任何东西，但这也将使每一个想要调用 resume 的用户负担起保证检查（冒着内存不安全的风险）它们的类型没有被移动或者是可移动的的任务。对于添加这种 APIs，这似乎是一个不良的取舍。</p>
+<h3 id="zuo-wei-bao-zhuang-lei-de-anchor-he-stablederef"><a class="zola-anchor" href="#zuo-wei-bao-zhuang-lei-de-anchor-he-stablederef" aria-label="Anchor link for: zuo-wei-bao-zhuang-lei-de-anchor-he-stablederef">
+    <i class="fas fa-link"></i>
+</a>
+作为包装类的 Anchor 和 <code>StableDeref</code></h3>
+<p>再过去的本 RFC 的迭代中，有一个包装类型叫做 <code>Anchor</code>，这个类型能够“锚定”任何智能指针，而且有一个关于不同指针类型的被引用对象的稳定性的 traits 层级。这个类型被替换为了 <code>PinBox</code>。</p>
+<p>这种方法的主要好处是它与 owning-ref 和 rental 这种 crates 部分整合，这些 crates 也使用稳定性层级。然而，因为要求的不同，owning-ref 以及其他此类 crates 使用的 traits 最终形成了与 Anchor 使用的 traits 没有重叠的一个这个 RFC 提出的 traits 子集。将这些整合进同一个层级结构中相对来说只有很少的好处。</p>
+<p>并且，之前，仅有的几个实现了放入 Anchor 所有必要的 traits 的类型是 <code>Box&lt;T&gt;</code> 和 <code>Vec&lt;T&gt;</code>。因为你无法可变访问一个智能指针（除非被引用对象实现了 <code>Unpin</code>），在这个 RFC 的上一个迭代中一个 <code>Anchor&lt;Vec&lt;T&gt;&gt;</code> 并没有真的与 <code>Anchor&lt;Box&lt;[T]&gt;&gt;</code> 有什么不同。由于这个原因，将 <code>Anchor</code> 替换为 <code>PinBox</code> 并仅支持 <code>PinBox&lt;T&gt;</code>，这在减少了 API 复杂度的同时也没有减少表现力。</p>
+<h3 id="zhan-pinning-api-qian-zai-de-wei-lai-kuo-zhan"><a class="zola-anchor" href="#zhan-pinning-api-qian-zai-de-wei-lai-kuo-zhan" aria-label="Anchor link for: zhan-pinning-api-qian-zai-de-wei-lai-kuo-zhan">
+    <i class="fas fa-link"></i>
+</a>
+栈 pinning API（潜在的未来扩展）</h3>
+<p>这个 API 支持 pinning 一个 <code>!Unpin</code> 类型到堆上。然而，它们也可以被安全地放置在栈上，允许创建一个安全的引用栈上分配的 <code>!Unpin</code> 类型的 <code>Pin</code>。</p>
+<p>这个 API 很小，并且不会成为任何人的公共 API 的一部分。由于这个原因，在加入到 std 之前，我们将在第三方 crates 中发展它。这是这个 API 用于引用目的的一个版本：</p>
+<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#a626a4;">pub fn </span><span style="color:#0184bc;">pinned</span><span>(</span><span style="color:#e45649;">data</span><span>: T) -&gt; PinTemporary&lt;</span><span style="color:#a626a4;">&#39;a</span><span>, T&gt; {
+</span><span>    PinTemporary { data, _marker: PhantomData }
+</span><span>}
+</span><span>
+</span><span style="color:#a626a4;">struct </span><span>PinTemporary&lt;</span><span style="color:#a626a4;">&#39;a</span><span>, T: </span><span style="color:#a626a4;">&#39;a</span><span>&gt; {
+</span><span>    </span><span style="color:#e45649;">data</span><span>: T,
+</span><span>    </span><span style="color:#e45649;">_marker</span><span>: PhantomData&lt;</span><span style="color:#a626a4;">&amp;&#39;a &amp;&#39;a mut </span><span>()&gt;,
+</span><span>}
+</span><span>
+</span><span style="color:#a626a4;">impl</span><span>&lt;</span><span style="color:#a626a4;">&#39;a</span><span>, T&gt; PinTemporary&lt;</span><span style="color:#a626a4;">&#39;a</span><span>, T&gt; {
+</span><span>    </span><span style="color:#a626a4;">pub fn </span><span style="color:#0184bc;">into_pin</span><span>(</span><span style="color:#a626a4;">&amp;&#39;a mut </span><span style="color:#e45649;">self</span><span>) -&gt; Pin&lt;</span><span style="color:#a626a4;">&#39;a</span><span>, T&gt; {
+</span><span>        </span><span style="color:#a626a4;">unsafe </span><span>{ Pin::new_unchecked(</span><span style="color:#a626a4;">&amp;mut </span><span style="color:#e45649;">self</span><span>.data) }
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<h3 id="jiang-pin-zuo-wei-nei-zhi-lei-xing-qian-zai-de-wei-lai-kuo-zhan"><a class="zola-anchor" href="#jiang-pin-zuo-wei-nei-zhi-lei-xing-qian-zai-de-wei-lai-kuo-zhan" aria-label="Anchor link for: jiang-pin-zuo-wei-nei-zhi-lei-xing-qian-zai-de-wei-lai-kuo-zhan">
+    <i class="fas fa-link"></i>
+</a>
+将 <code>Pin</code> 作为内置类型（潜在的未来扩展）</h3>
+<p><code>Pin</code> 类型也可以作为一种新的一级引用——<code>&amp;'a pin T</code>。这将有一些好处——举个例子，映射字段的操作将变得平凡，以及“栈 pinning”将不要求额外 API，这将是自然的。然而，添加一个新的引用类型有不好的一面，一个非常大的语言变化。</p>
+<p>现在，我们对坚持 std 中的 <code>Pin</code> 结构体感到高兴，如果这个类型某天加入了，将 <code>Pin</code> 类型转换为这个引用类型的别名。</p>
+<h3 id="tong-shi-you-pin-he-pinmut"><a class="zola-anchor" href="#tong-shi-you-pin-he-pinmut" aria-label="Anchor link for: tong-shi-you-pin-he-pinmut">
+    <i class="fas fa-link"></i>
+</a>
+同时有 <code>Pin</code> 和 <code>PinMut</code></h3>
+<p>相比与仅有 <code>Pin</code>，叫做 <code>Pin</code> 的类型也可以叫做 <code>PinMut</code>，我们可以有个类型叫做 <code>Pin</code> 的，与 <code>PinMut</code> 类似的类型，但仅包含一个共享的，不可变的引用。</p>
+<p>因为我们已经对 <code>Pin</code>/<code>PinMut</code> 的不可变解引用的安全性有信心，这个 <code>Pin</code> 类型不会提供普通不可变引用不能提供的有意义的保证。如果一个用户需要传递一个 pinned 的数据的引用，一个 <code>&amp;Pin</code>（在本 RFC 中定义的 <code>Pin</code>）是足够的。由于这个原因，区分 <code>Pin</code>/<code>PinMut</code> 导致了额外的类型和复杂性，没有提供有影响力的好处。</p>
+<h2 id="wei-jie-jue-de-wen-ti"><a class="zola-anchor" href="#wei-jie-jue-de-wen-ti" aria-label="Anchor link for: wei-jie-jue-de-wen-ti">
+    <i class="fas fa-link"></i>
+</a>
+未解决的问题</h2>
+<p>除了上述讨论的未来的扩展，std 中的三个 pin 类型将随时间发展，由于它们实现了更多普遍的转换 traits 等等。</p>
+<p>我们可能进一步要求 <code>Pin</code> 维护更严格的保证，要求 <code>Pin</code> 中的 <code>Unpin</code> 数据不会泄漏，除非这块内存在程序剩余的生存期中依然有效。这将会导致上文中的栈 API 不健全，但是可能也能用来使其他 API 使用这些保证来确保内存失效时析构器总是会执行。</p>
+</section>
+    </article>
+
+    
+    
+        
+    <div class="giscus" />
+
+    
+
+                </div>
+            </main>
+        </div>
+        <footer id="footer">
+            
+            
+    <div class="footer-container container">
+        <div id="copyright-container">
+            <small id="copyright">© Lin Yinfeng</small>
+        </div>
+
+        
+            <div id="powered-by-container">
+                <small id="powered-by">Powered by <a href="https://www.getzola.org">Zola</a></small>
+            </div>
+        
+    </div>
+
+            
+        </footer>
+    
+</body>
+</html>

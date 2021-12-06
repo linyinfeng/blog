@@ -1,0 +1,938 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="cn">
+	<title>Lin Yinfeng</title>
+	<link href="https://www.linyinfeng.com/atom.xml" rel="self" type="application/atom+xml"/>
+  <link href="https://www.linyinfeng.com"/>
+	<generator uri="https://www.getzola.org/">Zola</generator>
+	<updated>2021-04-28T16:04:37+08:00</updated>
+	<id>https://www.linyinfeng.com/atom.xml</id>
+	<entry xml:lang="cn">
+		<title>莱斯定理</title>
+		<published>2020-12-13T23:01:20+08:00</published>
+		<updated>2021-04-28T16:04:37+08:00</updated>
+		<link href="https://www.linyinfeng.com/posts/rices-theorem/" type="text/html"/>
+		<id>https://www.linyinfeng.com/posts/rices-theorem/</id>
+		<content type="html">&lt;p&gt;学习形式语言自动机这课时花了很久才理解莱斯定理（Rice&#x27;s Theorem）。懂了以后发现，其实就是之前对着书瞎想的时候，没先把全局要做的事情理清楚，这个定理其实并不复杂。这篇带了一些偷懒（省略）的文章是我对莱斯定理的笔记。&lt;&#x2F;p&gt;
+&lt;span id=&quot;continue-reading&quot;&gt;&lt;&#x2F;span&gt;&lt;h2 id=&quot;chen-shu&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#chen-shu&quot; aria-label=&quot;Anchor link for: chen-shu&quot;&gt;
+    &lt;i class=&quot;fas fa-link&quot;&gt;&lt;&#x2F;i&gt;
+&lt;&#x2F;a&gt;
+陈述&lt;&#x2F;h2&gt;
+&lt;p&gt;莱斯定理的陈述听起来非常厉害，似乎难以证明。&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;递归可枚举语言的所有非平凡性质都是不可判定的。&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;复习和解释一下里面名词的概念。&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;语言（language）：字符串的集合。&lt;&#x2F;li&gt;
+&lt;li&gt;递归可枚举语言（recursive enumerable language）：还可以叫图灵可接收语言（Turing-acceptable language）图灵可识别语言（Turing-recognizable language）等。一个语言是递归可枚举语言，当且仅当存在一个图灵机，该图灵机仅接收该语言中的字符串（也就是说，对于不在该语言中的字符串，该图灵机可以拒绝（reject）或者永远不停机）。&lt;&#x2F;li&gt;
+&lt;li&gt;不可判定（undecidable）：一个语言是可判定的，当且仅当存在一个图灵机，该图灵机接收该语言中的字符串，拒绝不在该语言中的字符串。这样的语言又叫递归语言。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;所以这句话说，“递归可枚举语言的所有非平凡性质”，都是不可判定的。潜台词是说，“性质”是一种语言。一般来说，递归可枚举语言的性质就是一个谓词，对某些递归可枚举语言成立，对某些递归可枚举语言不成立。换一种方式来表示，这里我们讨论的性质就直接是一个集合，如果某个元素在这个集合内，那么这个元素就具有这个性质，否则就不具有。&lt;&#x2F;p&gt;
+&lt;p&gt;但这里还有一个问题，语言是字符串的集合，递归可枚举语言是个集合而不是字符串。因此，这里说的是递归可枚举语言的字符串表示，而不是语言本身。&lt;&#x2F;p&gt;
+&lt;p&gt;因此，这里的“递归可枚举语言的性质”就是递归可枚举语言的字符串表示的一个子集，因为这是语言的性质而不是字符串的性质，这个子集要满足一定条件。如果我们令 $L(w)$ 表示字符串 $w$ 表示的语言。对于性质 $\mathcal{P}$ 任意两个字符串 $w_1$ 和 $w_2$，如果 $L(w_1) = L(w_2)$，就有 $L(w_1) \in \mathcal{P} \land L(w_1) \in \mathcal{P}$ 或者 $L(w_1) \notin \mathcal{P} \land L(w_1) \notin \mathcal{P}$。&lt;&#x2F;p&gt;
+&lt;p&gt;特别的，这里讨论的字符串其实指的是&lt;strong&gt;图灵机的字符串表示&lt;&#x2F;strong&gt;。&lt;&#x2F;p&gt;
+&lt;p&gt;最后。&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;非平凡（nontrivial）：性质不是对所有元素都成立，也不是对所有元素都不成立的。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;所以这里的性质一定会包含部分的而不是全部的递归可枚举语言。&lt;&#x2F;p&gt;
+&lt;p&gt;所以最后，莱斯定理真正想表达的东西就是。&lt;&#x2F;p&gt;
+&lt;p&gt;$$
+\forall \mathcal{P}, \mathcal{P} \subsetneq \mathit{RE} \land \mathcal{P} \neq \emptyset \implies \set{ \langle M \rangle \mid L(M) \in \mathcal{P} } \notin \mathit{RL}
+$$&lt;&#x2F;p&gt;
+&lt;p&gt;我用 $\mathit{RE}$ 表示所有递归可枚举语言的集合，用 $\mathit{RL}$ 表示所有递归语言（可判定语言）的集合。字母 $\mathcal{P}$ 表示性质。用 $M$ 表示一个图灵机，$L(M)$ 表示该图灵机接收的语言。$\langle \cdot \rangle$ 表示一个东西的字符串表示，例如 $\langle M \rangle$ 表示一个图灵机 $M$ 的字符串表示，$\langle M, w \rangle$ 表示一个图灵机和一个字符串构成的有序对的字符串表示。&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;zhun-bei&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#zhun-bei&quot; aria-label=&quot;Anchor link for: zhun-bei&quot;&gt;
+    &lt;i class=&quot;fas fa-link&quot;&gt;&lt;&#x2F;i&gt;
+&lt;&#x2F;a&gt;
+准备&lt;&#x2F;h2&gt;
+&lt;p&gt;在证明莱斯定理前，我们先证明通用图灵机（Universal Turing Machine）接收的语言是不可判定的。什么是通用图灵机？通用图灵机就是输入一个图灵机的字符串表示和一个字符串，模拟输入的图灵机在输入的字符串上运行的图灵机。为什么这种图灵机是存在的呢？这里我偷个懒，不做证明。后续涉及到用图灵机构造的方式来做证明的部分，我都仅简要说明。通用图灵机能接收的语言就是。&lt;&#x2F;p&gt;
+&lt;p&gt;$$
+L_u = \set{ \langle M, w \rangle \mid w \in L(M) }
+$$&lt;&#x2F;p&gt;
+&lt;p&gt;因为我们已经通过偷懒说明它是图灵机接收的语言，$L_u \in \mathit{RE}$。接着，我们可以证明 $L_u \notin \mathit{RL}$。&lt;&#x2F;p&gt;
+&lt;p&gt;假设 $L_u \in \mathit{RL}$，我们有 $\overline{L_u} \in \mathit{RL}$（递归语言对补集操作封闭），且存在通用图灵机 $U$，$U$ 判定 $L_u$。那么，我们可以构造一个新的图灵机 $U&#x27;$，它接收 $\langle M \rangle$，构造 $\langle M, \langle M \rangle \rangle$，并模拟 $U$ 的执行，如果 $U$ 接收 $\langle M, \langle M \rangle \rangle$，$U&#x27;$ 就拒绝，如果 $U$ 拒绝，$U&#x27;$ 就接收。这个新图灵机的构造方式我就再次偷懒略过。新的图灵机 $U&#x27;$ 接收的语言是。&lt;&#x2F;p&gt;
+&lt;p&gt;$$
+L_u&#x27; = L(U&#x27;) = \set{ \langle M \rangle \mid \langle M \rangle \notin L(M) }
+$$&lt;&#x2F;p&gt;
+&lt;p&gt;根据上述偷懒论述可见，如果我们假设 $L_u$ 可判定，那么 $L_u&#x27;$ 就可判定。那么现在，我们考虑 $\langle U&#x27; \rangle \in L_u&#x27;$ 是否成立。&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;若 $\langle U&#x27; \rangle \in L_u&#x27;$，则 $\langle U&#x27; \rangle \notin L(U&#x27;)$，即 $\langle U&#x27; \rangle \notin L_u&#x27;$；&lt;&#x2F;li&gt;
+&lt;li&gt;若 $\langle U&#x27; \rangle \notin L_u&#x27;$，则 $\neg \langle U&#x27; \rangle \notin L(U&#x27;)$，即 $\langle U&#x27; \rangle \in L_u&#x27;$。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;$\langle U&#x27; \rangle$ 不能既在 $L_u&#x27;$ 里又不在 $L_u&#x27;$ 里，我们导出了一个矛盾，表明我们的假设，$L_u$ 可判定，是错误的。因此，通用图灵机 $U$ 识别的语言 $L_u$ 不可判定，$L_u \notin \mathit{RL}$。&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;zheng-ming&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#zheng-ming&quot; aria-label=&quot;Anchor link for: zheng-ming&quot;&gt;
+    &lt;i class=&quot;fas fa-link&quot;&gt;&lt;&#x2F;i&gt;
+&lt;&#x2F;a&gt;
+证明&lt;&#x2F;h2&gt;
+&lt;p&gt;为什么我们花了很多篇幅说明了 $L_u$ 不可判定？因为假设莱斯定理不成立，即存在一个递归可枚举语言的非平凡性质是可判定的，那么 $L_u$ 就可判定。也就是说，我们能把 $L_u$ 规约到任意一个递归可枚举语言的非平凡性质的判定问题上。记 $L_{\mathcal{P}}$ 为性质 $\mathcal{P}$ 表示的语言。&lt;&#x2F;p&gt;
+&lt;p&gt;$$
+\set{ \langle M \rangle \mid L(M) \in \mathcal{P} }
+$$&lt;&#x2F;p&gt;
+&lt;p&gt;怎么做呢，对于不同的非平凡性质，分为两种情况。&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;xing-zhi-bu-bao-han-kong-yu-yan&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#xing-zhi-bu-bao-han-kong-yu-yan&quot; aria-label=&quot;Anchor link for: xing-zhi-bu-bao-han-kong-yu-yan&quot;&gt;
+    &lt;i class=&quot;fas fa-link&quot;&gt;&lt;&#x2F;i&gt;
+&lt;&#x2F;a&gt;
+性质不包含空语言&lt;&#x2F;h3&gt;
+&lt;p&gt;我们首先讨论性质不包含空语言的情况，即 $\emptyset \notin \mathcal{P}$。为什么要区分性质是否包含空语言呢，这主要是由证明方法决定的。&lt;&#x2F;p&gt;
+&lt;p&gt;那么首先，我们要说明我们能把 $L_u$ 的判定问题规约到任意一个，不包含空语言的递归可枚举语言的非平凡性质，的判定问题上。&lt;&#x2F;p&gt;
+&lt;p&gt;对于任意 $L_u$ 的输入 $\langle M, w \rangle$，我们都可以构造一个新的图灵机 $M&#x27;$。
+在构造之前，我们还需要一个额外的图灵机。
+因为 $\mathcal{P}$ 非平凡，因此一定存在一个语言 $L \in \mathcal{P}$；又因为 $\mathcal{P} \subsetneq \mathit{RE}$，一定存在一个图灵机 $M_L$，$L(M_L) = L$。&lt;&#x2F;p&gt;
+&lt;p&gt;然后，我们按如下方式构造新的图灵机 $M&#x27;$。首先，这个图灵机用额外的磁带（多带图灵机在可判定性和识别语言的能力上与图灵机等价）存储 $\langle M \rangle$ 和 $w$，并在 $w$ 上模拟 $M$，如果 $M$ 没有接收（停机但不接收或者永不停机），就不继续做任何事，不接收，拒绝任何输入，此时 $L(M&#x27;) = \emptyset$ 空语言；如果模拟的 $M$ 接收了，$M&#x27;$ 接下来在自己的输入 $x$ 上模拟 $M_L$，此时，$L(M&#x27;) = L$。&lt;&#x2F;p&gt;
+&lt;p&gt;这个构造显然可行。具体细节我继续偷懒不加进一步说明。特别要注意到的是，由于对 $M$ 的模拟可能不停机，此时一定有 $L(M&#x27;) = \emptyset$，所以我们才要求性质不包含空语言。&lt;&#x2F;p&gt;
+&lt;p&gt;现在，我们如果能判定新的图灵机 $M&#x27;$ 的语言 $L(M&#x27;) \in \mathcal{P}$，显然我们就能判定这个图灵机内部模拟的第一个图灵机 $M$ 是否接收 $w$。即 $L_{\mathcal{P}} \in \mathit{RL} \implies L_u \in \mathit{RL}$。由于上节中我们已经证明 $L_u \notin \mathit{RL}$，因此 $L_{\mathcal{P}} \notin \mathit{RL}$。&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;xing-zhi-bao-han-kong-yu-yan&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#xing-zhi-bao-han-kong-yu-yan&quot; aria-label=&quot;Anchor link for: xing-zhi-bao-han-kong-yu-yan&quot;&gt;
+    &lt;i class=&quot;fas fa-link&quot;&gt;&lt;&#x2F;i&gt;
+&lt;&#x2F;a&gt;
+性质包含空语言&lt;&#x2F;h3&gt;
+&lt;p&gt;包含空语言的性质又该如何处理呢。&lt;&#x2F;p&gt;
+&lt;p&gt;考虑包含空语言的性质 $\mathcal{P}$，$\overline{\mathcal{P}} = \mathit{RE} - \mathcal{P}$ 一定不包含空语言（特别注意这里考虑递归可枚举语言性质的补集时全集是递归可枚举语言的集合而不是所有语言的集合）。根据已证明的结论，$L_{\overline{\mathcal{P}}} \notin \mathit{RL}$。可以注意到，因为对于所有图灵机 $M$，$L(M) \in \mathit{RE}$，所以有。&lt;&#x2F;p&gt;
+&lt;p&gt;$$
+L_{\overline{\mathcal{P}}} = \set{ \langle M \rangle \mid L(M) \in \overline{\mathcal{P}} } = \set{ \langle M \rangle \mid L(M) \in \mathit{RE} - \mathcal{P} } = \overline{L_{\mathcal{P}}}
+$$&lt;&#x2F;p&gt;
+&lt;p&gt;因为 $\mathit{RL}$ 对补集操作封闭，所以 $L_{\mathcal{P}} \in \mathit{RL} \implies L_{\overline{\mathcal{P}}} \in \mathit{RL}$。由于我们已经证明 $L_{\overline{\mathcal{P}}} \notin \mathit{RL}$，所以 $L_{\mathcal{P}} \notin \mathit{RL}$。&lt;&#x2F;p&gt;
+&lt;p&gt;综合两种情况，我们带有一些偷懒地证明了莱斯定理。&lt;&#x2F;p&gt;
+&lt;p&gt;$$
+\forall \mathcal{P}, \mathcal{P} \subsetneq \mathit{RE} \land \mathcal{P} \neq \emptyset \implies \set{ \langle M \rangle \mid L(M) \in \mathcal{P} } \notin \mathit{RL}
+$$&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;ying-yong&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#ying-yong&quot; aria-label=&quot;Anchor link for: ying-yong&quot;&gt;
+    &lt;i class=&quot;fas fa-link&quot;&gt;&lt;&#x2F;i&gt;
+&lt;&#x2F;a&gt;
+应用&lt;&#x2F;h2&gt;
+&lt;p&gt;莱斯定理告诉我们啥。举一些例子。&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;$\mathcal{P} = \set{\emptyset}$，判定一个图灵机接收的语言是否是空语言是不可判定问题；&lt;&#x2F;li&gt;
+&lt;li&gt;$\mathcal{P} = \set{L}$，判定一个图灵机接收的语言是某个特定语言，如判定一个图灵机接收回文，判定一个图灵机只接收空串等，都是不可判定问题；&lt;&#x2F;li&gt;
+&lt;li&gt;$\mathcal{P} \set{L \mid L \in \mathit{RE}, w \in L}$，判定一个图灵机能接收某个串是不可判定问题，即 $L_u$ 不可判定。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;等等。&lt;&#x2F;p&gt;
+</content>
+	</entry>
+	<entry xml:lang="cn">
+		<title>Rust 闭包笔记</title>
+		<published>2019-03-15T11:06:01+08:00</published>
+		<updated>2021-01-15T13:19:42+08:00</updated>
+		<link href="https://www.linyinfeng.com/posts/how-do-rust-closures-work/" type="text/html"/>
+		<id>https://www.linyinfeng.com/posts/how-do-rust-closures-work/</id>
+		<content type="html">&lt;p&gt;近日在学习 Rust 语言。Rust 语言的闭包设计非常有趣，一方面，它看起来非常复杂，为了支持闭包设计了三种不同的 trait，&lt;code&gt;Fn&lt;&#x2F;code&gt;、&lt;code&gt;FnMut&lt;&#x2F;code&gt; 和 &lt;code&gt;FnOnce&lt;&#x2F;code&gt;；一方面其设计又透露出了语言设计中闭包的本质。通过考察 Rust 闭包的设计，我们能更好的理解闭包到底是什么，在拥有生存期和借用检查的语言 Rust 中，闭包如何工作。&lt;&#x2F;p&gt;
+&lt;p&gt;本文将在 Rust 下实现一个能够阐述闭包工作原理的朴素版闭包（也是一个 Boxed Closure）。并在实现的基础上对 Rust 闭包作进一步探究。&lt;&#x2F;p&gt;
+&lt;span id=&quot;continue-reading&quot;&gt;&lt;&#x2F;span&gt;&lt;h2 id=&quot;bi-bao-de-gai-nian&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#bi-bao-de-gai-nian&quot; aria-label=&quot;Anchor link for: bi-bao-de-gai-nian&quot;&gt;
+    &lt;i class=&quot;fas fa-link&quot;&gt;&lt;&#x2F;i&gt;
+&lt;&#x2F;a&gt;
+闭包的概念&lt;&#x2F;h2&gt;
+&lt;p&gt;闭包（Closure）是一个在计算机科学中广泛使用的概念，又叫词法闭包（Lexical Closure）。即闭包能够“捕获”词法作用域中的变量，这是与编译时代码的结构直接相关的。也就是说，在&lt;strong&gt;声明闭包而不是闭包被调用的时候&lt;&#x2F;strong&gt;，其函数体可以捕获外围词法作用域中的变量。&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;bi-bao-shi-ni-ming-han-shu-ma&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#bi-bao-shi-ni-ming-han-shu-ma&quot; aria-label=&quot;Anchor link for: bi-bao-shi-ni-ming-han-shu-ma&quot;&gt;
+    &lt;i class=&quot;fas fa-link&quot;&gt;&lt;&#x2F;i&gt;
+&lt;&#x2F;a&gt;
+闭包是匿名函数吗？&lt;&#x2F;h3&gt;
+&lt;p&gt;这两个概念之间没有什么关系，就以&lt;a href=&quot;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Closure_(computer_programming)&quot;&gt;维基百科 Closure 词条&lt;&#x2F;a&gt;上举的一个常见的 &lt;code&gt;adder&lt;&#x2F;code&gt; 例子来说：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;python&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-python &quot;&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span style=&quot;color:#a0a1a7;&quot;&gt;# Python
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;f&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;x&lt;&#x2F;span&gt;&lt;span&gt;):
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;g&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;y&lt;&#x2F;span&gt;&lt;span&gt;):
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span&gt;x &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;+ &lt;&#x2F;span&gt;&lt;span&gt;y
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span&gt;g
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;h&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;x&lt;&#x2F;span&gt;&lt;span&gt;):
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;return lambda &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;y&lt;&#x2F;span&gt;&lt;span&gt;: x &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;+ &lt;&#x2F;span&gt;&lt;span&gt;y
+&lt;&#x2F;span&gt;&lt;span&gt;a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;f&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c18401;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;h&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c18401;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a0a1a7;&quot;&gt;# ...
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;在这两个例子中，a 和 b 均为闭包，JavaScript 中的 &lt;code&gt;function&lt;&#x2F;code&gt; 也是一样，是不是闭包当然和没有名字并没有理论和实践上的联系。当然，可以说对于将函数设计为一等对象（First class object）的语言，函数是否匿名一般不产生任何实际区别。&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;tong-chang-xing-shi&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#tong-chang-xing-shi&quot; aria-label=&quot;Anchor link for: tong-chang-xing-shi&quot;&gt;
+    &lt;i class=&quot;fas fa-link&quot;&gt;&lt;&#x2F;i&gt;
+&lt;&#x2F;a&gt;
+通常形式&lt;&#x2F;h3&gt;
+&lt;p&gt;对于函数基于栈的且没有垃圾回收（Garbage Collection）的语言，往往无法实现完全的闭包。这是因为，闭包从语义上应当能够延长其捕获的变量的生存期（lifetime）到长于或等于闭包的生存期。对于广泛利用栈进行函数局部变量分配和流程控制的语言，函数的局部变量的生存期严格与函数调用栈绑定，即从函数调用到函数返回（严格来说是局部变量内存的生存期，显然局部变量的生存期必然小于等于其内存的生存期）。&lt;&#x2F;p&gt;
+&lt;p&gt;举例来说，有上述特征的 C++ 的闭包就易于引发未定义行为（Undefined Behavior）。因为其引用捕获的局部变量的生存期无法自动延长。而例如 Java，JavaScript 和 Go 的闭包就不会，因为其编译器（对于 JavaScript 来说往往是 JIT 编译器）将对局部变量做逃逸分析（Escape Analysis）。将可能“逃逸”的变量生存期延长，由垃圾回收器而不是函数调用栈维护其生存期。又或者将所有局部变量分配在堆上由垃圾回收器维护也是一样。&lt;&#x2F;p&gt;
+&lt;p&gt;即使如此，各个语言下闭包的基本表现是不变的。闭包通常被实现为其捕获的词法环境和一个函数的组合。&lt;&#x2F;p&gt;
+&lt;p&gt;考虑一个名为 closure，调用方式为 &lt;code&gt;closure(arg1, arg2, ..., argN)&lt;&#x2F;code&gt;，其捕获了变量 &lt;code&gt;env_arg1&lt;&#x2F;code&gt;, &lt;code&gt;env_arg2&lt;&#x2F;code&gt;, ..., &lt;code&gt;env_argM&lt;&#x2F;code&gt;。可以将其实现为一个函数和其词法环境的组合：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;    env: (env_arg1, ..., env_argM),
+&lt;&#x2F;span&gt;&lt;span&gt;    f: fn(env_arg1, ..., env_argM, arg1, ..., argN),
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;dong-shou-shi-xian&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#dong-shou-shi-xian&quot; aria-label=&quot;Anchor link for: dong-shou-shi-xian&quot;&gt;
+    &lt;i class=&quot;fas fa-link&quot;&gt;&lt;&#x2F;i&gt;
+&lt;&#x2F;a&gt;
+动手实现&lt;&#x2F;h2&gt;
+&lt;p&gt;理解了闭包是什么，我们就可以写出一个朴素的闭包。最终我们实现的闭包&lt;strong&gt;用起来&lt;&#x2F;strong&gt;将会有点繁琐（无自动类型推导），但行为几乎与内置闭包一致。最终实现将会看起来像一个类似于 C++ 14 Generalized Lambda Capture 特性的闭包宏。&lt;&#x2F;p&gt;
+&lt;p&gt;另外，虽然这个闭包看起来将与内置闭包差不多，实际上的区别是有的，不只是无类型推导这一点，这些内容将在实现后一一阐述。&lt;&#x2F;p&gt;
+&lt;p&gt;因为提到了 C++ 14 Generalized Lambda Capture, 所以先解释一下这是什么特性，以下是一个例子：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;cpp&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-cpp &quot;&gt;&lt;code class=&quot;language-cpp&quot; data-lang=&quot;cpp&quot;&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;auto&lt;&#x2F;span&gt;&lt;span&gt; c &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;[ v &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;std::&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;move&lt;&#x2F;span&gt;&lt;span&gt;(v) ] { &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a0a1a7;&quot;&gt;&#x2F;&#x2F; A generalized capture list
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;do_something_with&lt;&#x2F;span&gt;&lt;span&gt;( v )
+&lt;&#x2F;span&gt;&lt;span&gt;};
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;在 C++ 14 之前，捕获列表中只能按值或者按引用捕获变量，通过 Generalized Lambda Capture，C++ 实现了捕获任意表达式，同时也顺便实现了移动捕获。&lt;&#x2F;p&gt;
+&lt;p&gt;其实，Rust 的闭包与 C++ &lt;strong&gt;语义和使用上的设计&lt;&#x2F;strong&gt;几乎可以说是非常相似，但是由于 Rust 做出的内存安全（Memory Safe）承诺，引入了三个不同的 trait。将这个放在一边，我们按朴素思想实现一个闭包的结构，或者说数据。&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#a0a1a7;&quot;&gt;&#x2F;&#x2F;&#x2F; Wrong implementation
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;pub struct &lt;&#x2F;span&gt;&lt;span&gt;Closure&amp;lt;Env, Args, Out&amp;gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;env&lt;&#x2F;span&gt;&lt;span&gt;: Env,
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;f&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;fn&lt;&#x2F;span&gt;&lt;span&gt;(Env, Args) -&amp;gt; Out,
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;由于 Rust 中有元组的存在，我们可以简单地把所有捕获变量的类型用一个类型变量（Type Parameter）&lt;code&gt;Env&lt;&#x2F;code&gt; 表示，所有调用参数的类型用 &lt;code&gt;Args&lt;&#x2F;code&gt; 表示，最后单独用 &lt;code&gt;Out&lt;&#x2F;code&gt; 表示调用结果类型。&lt;&#x2F;p&gt;
+&lt;p&gt;考量这个设计，闭包含有一个环境和指针合理吗？从&lt;strong&gt;实现功能的角度&lt;&#x2F;strong&gt;是合理的（后面我们将看到这个设计的问题所在）。&lt;&#x2F;p&gt;
+&lt;p&gt;继续考量这个设计。将环境实现为 &lt;code&gt;Env&lt;&#x2F;code&gt; 类型是否合理？合理，闭包应该拥有（Own）其捕获的内容（即使拥有的是引用（Reference）也是拥有）。这些内容的生存期应与闭包是相同的。将函数设计为 &lt;code&gt;fn(Env, Args) -&amp;gt; Out&lt;&#x2F;code&gt; 是否合理？对于返回值来说肯定是合理的，对于 &lt;code&gt;Args&lt;&#x2F;code&gt; 来说也是，因为函数调用的时候将拥有其参数（即使拥有的是引用）。对于拥有引用的概念，可以举一个例子：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span&gt; v1 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;String::new();
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span&gt; v2 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;String::new();
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;let mut&lt;&#x2F;span&gt;&lt;span&gt; v3 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;String::new();
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span&gt; t &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;(v1, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;&lt;&#x2F;span&gt;&lt;span&gt;v2, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;mut&lt;&#x2F;span&gt;&lt;span&gt; v3); &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a0a1a7;&quot;&gt;&#x2F;&#x2F; Type: (String, &amp;amp;String, &amp;amp;mut String)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;构造的 tuple 字面量按语义来说移动给了变量 t，其包含两个 &lt;code&gt;String&lt;&#x2F;code&gt; 引用并拥有一个 &lt;code&gt;String&lt;&#x2F;code&gt;。&lt;&#x2F;p&gt;
+&lt;p&gt;但是 &lt;code&gt;Env&lt;&#x2F;code&gt; 的设计是不合理的，这样设计意味着函数将获得闭包中 Closure 的所有权并不归还，这样此闭包将只能调用一次。Rust 中，变量可以通过 move, &lt;code&gt;&amp;amp;mut&lt;&#x2F;code&gt; 和 &lt;code&gt;&amp;amp;&lt;&#x2F;code&gt; 方式传递入函数。这三种方式在 Rust 现行类型系统中是无法统一的。因为 move 闭包将获得环境的所有权，&lt;code&gt;&amp;amp;mut&lt;&#x2F;code&gt; 闭包将造成对其环境的可变借用（Mutable borrowing），&lt;code&gt;&amp;amp;&lt;&#x2F;code&gt; 闭包将造成对其环境的不可变借用（Immutable borrowing）。Rust 的生存期机制和借用检查必须对这三种闭包作出区别，或者说，这三种闭包必然在调用时携带不同的类型信息以用来检查。对比之下，C++ 的闭包则并不区别，&lt;code&gt;operator()&lt;&#x2F;code&gt; 的 &lt;code&gt;this&lt;&#x2F;code&gt; 类型可以始终为一个指向闭包对象的指针。&lt;&#x2F;p&gt;
+&lt;p&gt;区分三种不同的 &lt;code&gt;Env&lt;&#x2F;code&gt; 后:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;pub struct &lt;&#x2F;span&gt;&lt;span&gt;MoveClosure&amp;lt;Env, Args, Out&amp;gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;env&lt;&#x2F;span&gt;&lt;span&gt;: Env,
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;f&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;fn&lt;&#x2F;span&gt;&lt;span&gt;(Env, Args) -&amp;gt; Out,
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;pub struct &lt;&#x2F;span&gt;&lt;span&gt;RefMutClosure&amp;lt;Env, Args, Out&amp;gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;env&lt;&#x2F;span&gt;&lt;span&gt;: Env,
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;f&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;fn&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;mut&lt;&#x2F;span&gt;&lt;span&gt; Env, Args) -&amp;gt; Out,
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;pub struct &lt;&#x2F;span&gt;&lt;span&gt;RefClosure&amp;lt;Env, Args, Out&amp;gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;env&lt;&#x2F;span&gt;&lt;span&gt;: Env,
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;f&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;fn&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;&lt;&#x2F;span&gt;&lt;span&gt;Env, Args) -&amp;gt; Out,
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;当我们写出一个闭包，即往往是写出一个函数体时，其携带的函数应该是由编译器自动推导得出的。得益于 Rust 的类型推导机制，Rust 的闭包做到了，而 C++ 的闭包并没有做到，这也是为什么 C++ 需要手动写出捕获列表而 Rust 不用。归根结底，Rust 闭包的这三种类型是由函数体对闭包环境的使用方式决定的。&lt;strong&gt;不要误将 Rust 带有 move 关键字的闭包和 FnOnce 对应&lt;&#x2F;strong&gt;，他们实际上没有什么关系。后面我们可以看到，闭包在捕获时和调用时的行为应该分开分析。&lt;&#x2F;p&gt;
+&lt;p&gt;为了使我们的闭包可以被调用，应该实现对应的 trait。由于上述区别，Rust 对可调用对象也无法有类似 C++ &lt;code&gt;operator()&lt;&#x2F;code&gt; 的统一的 trait。对三种不同的 &lt;code&gt;self&lt;&#x2F;code&gt; 参数必须有三种不同的函数类型。因此，Rust 在 &lt;code&gt;std::ops&lt;&#x2F;code&gt; 中定义了 &lt;code&gt;FnOnce&lt;&#x2F;code&gt;, &lt;code&gt;FnMut&lt;&#x2F;code&gt; 和 &lt;code&gt;Fn&lt;&#x2F;code&gt; 三个不同的 trait：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;pub trait &lt;&#x2F;span&gt;&lt;span&gt;FnOnce&amp;lt;Args&amp;gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;type &lt;&#x2F;span&gt;&lt;span&gt;Output;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;extern &lt;&#x2F;span&gt;&lt;span style=&quot;color:#50a14f;&quot;&gt;&amp;quot;rust-call&amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;call_once&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;args&lt;&#x2F;span&gt;&lt;span&gt;: Args) -&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;Self::&lt;&#x2F;span&gt;&lt;span&gt;Output;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;pub trait &lt;&#x2F;span&gt;&lt;span&gt;FnMut&amp;lt;Args&amp;gt;: FnOnce&amp;lt;Args&amp;gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;extern &lt;&#x2F;span&gt;&lt;span style=&quot;color:#50a14f;&quot;&gt;&amp;quot;rust-call&amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;call_mut&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;mut &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;args&lt;&#x2F;span&gt;&lt;span&gt;: Args) -&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;Self::&lt;&#x2F;span&gt;&lt;span&gt;Output;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;pub trait &lt;&#x2F;span&gt;&lt;span&gt;Fn&amp;lt;Args&amp;gt;: FnMut&amp;lt;Args&amp;gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;extern &lt;&#x2F;span&gt;&lt;span style=&quot;color:#50a14f;&quot;&gt;&amp;quot;rust-call&amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;call&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;args&lt;&#x2F;span&gt;&lt;span&gt;: Args) -&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;Self::&lt;&#x2F;span&gt;&lt;span&gt;Output;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;其中 &lt;code&gt;extern &amp;quot;rust-call&amp;quot;&lt;&#x2F;code&gt; 是专用于这几个 trait 的调用约定（Calling Convention，一种 ABI），区别于 Rust 本身的调用约定 &lt;code&gt;extern &amp;quot;Rust&amp;quot;&lt;&#x2F;code&gt;。&lt;&#x2F;p&gt;
+&lt;p&gt;为了手动为我们的对象实现这三种 trait，我们需要开启两个不稳定的 Rust 特性（Feature）：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;!&lt;&#x2F;span&gt;&lt;span&gt;[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;feature&lt;&#x2F;span&gt;&lt;span&gt;(fn_traits, unboxed_closures)]
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;为三种闭包实现所有可以实现的 trait：&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;MoveClosure&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;impl&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;Env, Args, Out&amp;gt; FnOnce&amp;lt;Args&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;for &lt;&#x2F;span&gt;&lt;span&gt;MoveClosure&amp;lt;Env, Args, Out&amp;gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;type &lt;&#x2F;span&gt;&lt;span&gt;Output &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span&gt; Out;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;extern &lt;&#x2F;span&gt;&lt;span style=&quot;color:#50a14f;&quot;&gt;&amp;quot;rust-call&amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;call_once&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;args&lt;&#x2F;span&gt;&lt;span&gt;: Args) -&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;Self::&lt;&#x2F;span&gt;&lt;span&gt;Output {
+&lt;&#x2F;span&gt;&lt;span&gt;        (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.f)(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.env, args)
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;code&gt;RefMutClosure&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;impl&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;Env, Args, Out&amp;gt; FnOnce&amp;lt;Args&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;for &lt;&#x2F;span&gt;&lt;span&gt;RefMutClosure&amp;lt;Env, Args, Out&amp;gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;type &lt;&#x2F;span&gt;&lt;span&gt;Output &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span&gt; Out;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;extern &lt;&#x2F;span&gt;&lt;span style=&quot;color:#50a14f;&quot;&gt;&amp;quot;rust-call&amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;call_once&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;mut &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;args&lt;&#x2F;span&gt;&lt;span&gt;: Args) -&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;Self::&lt;&#x2F;span&gt;&lt;span&gt;Output {
+&lt;&#x2F;span&gt;&lt;span&gt;        (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.f)(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;mut &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.env, args)
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;impl&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;Env, Args, Out&amp;gt; FnMut&amp;lt;Args&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;for &lt;&#x2F;span&gt;&lt;span&gt;RefMutClosure&amp;lt;Env, Args, Out&amp;gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;extern &lt;&#x2F;span&gt;&lt;span style=&quot;color:#50a14f;&quot;&gt;&amp;quot;rust-call&amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;call_mut&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;mut &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;args&lt;&#x2F;span&gt;&lt;span&gt;: Args) -&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;Self::&lt;&#x2F;span&gt;&lt;span&gt;Output {
+&lt;&#x2F;span&gt;&lt;span&gt;        (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.f)(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;mut &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.env, args)
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;code&gt;RefClosure&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;impl&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;Env, Args, Out&amp;gt; FnOnce&amp;lt;Args&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;for &lt;&#x2F;span&gt;&lt;span&gt;RefClosure&amp;lt;Env, Args, Out&amp;gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;type &lt;&#x2F;span&gt;&lt;span&gt;Output &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span&gt; Out;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;extern &lt;&#x2F;span&gt;&lt;span style=&quot;color:#50a14f;&quot;&gt;&amp;quot;rust-call&amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;call_once&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;args&lt;&#x2F;span&gt;&lt;span&gt;: Args) -&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;Self::&lt;&#x2F;span&gt;&lt;span&gt;Output {
+&lt;&#x2F;span&gt;&lt;span&gt;        (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.f)(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.env, args)
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;impl&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;Env, Args, Out&amp;gt; FnMut&amp;lt;Args&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;for &lt;&#x2F;span&gt;&lt;span&gt;RefClosure&amp;lt;Env, Args, Out&amp;gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;extern &lt;&#x2F;span&gt;&lt;span style=&quot;color:#50a14f;&quot;&gt;&amp;quot;rust-call&amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;call_mut&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;mut &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;args&lt;&#x2F;span&gt;&lt;span&gt;: Args) -&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;Self::&lt;&#x2F;span&gt;&lt;span&gt;Output {
+&lt;&#x2F;span&gt;&lt;span&gt;        (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.f)(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.env, args)
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;impl&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;Env, Args, Out&amp;gt; Fn&amp;lt;Args&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;for &lt;&#x2F;span&gt;&lt;span&gt;RefClosure&amp;lt;Env, Args, Out&amp;gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;extern &lt;&#x2F;span&gt;&lt;span style=&quot;color:#50a14f;&quot;&gt;&amp;quot;rust-call&amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;call&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;args&lt;&#x2F;span&gt;&lt;span&gt;: Args) -&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;Self::&lt;&#x2F;span&gt;&lt;span&gt;Output {
+&lt;&#x2F;span&gt;&lt;span&gt;        (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.f)(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.env, args)
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;编写过程中不难发现，所有的 &lt;code&gt;Fn&lt;&#x2F;code&gt; 一定能被实现为 &lt;code&gt;FnMut&lt;&#x2F;code&gt; 和 &lt;code&gt;FnOnce&lt;&#x2F;code&gt;，所有的 &lt;code&gt;FnMut&lt;&#x2F;code&gt; 一定能够被实现为 &lt;code&gt;FnOnce&lt;&#x2F;code&gt;，反之则不行。对于确定的函数体，Rust 将选择最宽松的一个调用，即按照 &lt;code&gt;Fn&lt;&#x2F;code&gt; &amp;gt; &lt;code&gt;FnMut&lt;&#x2F;code&gt; &amp;gt; &lt;code&gt;FnOnce&lt;&#x2F;code&gt; 的优先级。&lt;&#x2F;p&gt;
+&lt;p&gt;最后再给三个结构实现创建闭包的 &lt;code&gt;new&lt;&#x2F;code&gt; 函数，作用是隐藏内部环境和函数。&lt;&#x2F;p&gt;
+&lt;p&gt;现在我们可以通过翻译一些程序，实际使用上面编写的闭包：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#a0a1a7;&quot;&gt;&#x2F;&#x2F; 内置闭包
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span&gt; x &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c18401;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;i32&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;let &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;c &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;|&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;y&lt;&#x2F;span&gt;&lt;span&gt;| x &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;+&lt;&#x2F;span&gt;&lt;span&gt; y;
+&lt;&#x2F;span&gt;&lt;span&gt;assert_eq!(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;c&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c18401;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;i32&lt;&#x2F;span&gt;&lt;span&gt;), &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c18401;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a0a1a7;&quot;&gt;&#x2F;&#x2F; 手动实现的闭包
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span&gt; x &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c18401;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;i32&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span&gt; c &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span&gt; env &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;(x,);
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;f&lt;&#x2F;span&gt;&lt;span&gt;((&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;x&lt;&#x2F;span&gt;&lt;span&gt;,): &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;i32&lt;&#x2F;span&gt;&lt;span&gt;,), (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;y&lt;&#x2F;span&gt;&lt;span&gt;,): (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;i32&lt;&#x2F;span&gt;&lt;span&gt;,)) -&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;i32 &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;        x &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;+&lt;&#x2F;span&gt;&lt;span&gt; y
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;    RefClosure::new(env, f)
+&lt;&#x2F;span&gt;&lt;span&gt;};
+&lt;&#x2F;span&gt;&lt;span&gt;assert_eq!(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;c&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c18401;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;), &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c18401;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;注意上例中 &lt;code&gt;i32&lt;&#x2F;code&gt; 实现了 &lt;code&gt;Copy&lt;&#x2F;code&gt;。&lt;&#x2F;p&gt;
+&lt;p&gt;其中 &lt;code&gt;let c&lt;&#x2F;code&gt; 后创建闭包的内容其实是模式化的，编写一个简单的 macro_rules 宏将其简化：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span&gt;[macro_export] &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;macro_rules! &lt;&#x2F;span&gt;&lt;span&gt;boxed_closure {
+&lt;&#x2F;span&gt;&lt;span&gt;    (move [&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$env_name&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;ident&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$env_type&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;ty&lt;&#x2F;span&gt;&lt;span&gt; = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$env_exp&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;expr&lt;&#x2F;span&gt;&lt;span&gt;,)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;]
+&lt;&#x2F;span&gt;&lt;span&gt;        (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$arg_name&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;ident&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$arg_type&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;ty&lt;&#x2F;span&gt;&lt;span&gt;,)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;) -&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$out&lt;&#x2F;span&gt;&lt;span&gt;:ty &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$body&lt;&#x2F;span&gt;&lt;span&gt;:block) =&amp;gt; ({
+&lt;&#x2F;span&gt;&lt;span&gt;        fn f((&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt;($env_name,)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;): (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt;($env_type,)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;), (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt;($arg_name,)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;): (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt;($arg_type,)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;)) -&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$out $body
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$crate&lt;&#x2F;span&gt;&lt;span&gt;::MoveClosure::new((&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt;($env_exp,)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;), f)
+&lt;&#x2F;span&gt;&lt;span&gt;    });
+&lt;&#x2F;span&gt;&lt;span&gt;    (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;move &lt;&#x2F;span&gt;&lt;span&gt;[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$env_name&lt;&#x2F;span&gt;&lt;span&gt;:ident: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$env_type&lt;&#x2F;span&gt;&lt;span&gt;:ty &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$env_exp&lt;&#x2F;span&gt;&lt;span&gt;:expr,)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;]
+&lt;&#x2F;span&gt;&lt;span&gt;        (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$arg_name&lt;&#x2F;span&gt;&lt;span&gt;:ident: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$arg_type&lt;&#x2F;span&gt;&lt;span&gt;:ty,)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$body&lt;&#x2F;span&gt;&lt;span&gt;:block) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;=&amp;gt; &lt;&#x2F;span&gt;&lt;span&gt;({
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;f&lt;&#x2F;span&gt;&lt;span&gt;(($(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$env_name&lt;&#x2F;span&gt;&lt;span&gt;,)*): (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$env_type&lt;&#x2F;span&gt;&lt;span&gt;,)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;), (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$arg_name&lt;&#x2F;span&gt;&lt;span&gt;,)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;): (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$arg_type&lt;&#x2F;span&gt;&lt;span&gt;,)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;)) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$body
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$crate&lt;&#x2F;span&gt;&lt;span&gt;::MoveClosure::new((&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$env_exp&lt;&#x2F;span&gt;&lt;span&gt;,)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;), f)
+&lt;&#x2F;span&gt;&lt;span&gt;    });
+&lt;&#x2F;span&gt;&lt;span&gt;    (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;ref mut &lt;&#x2F;span&gt;&lt;span&gt;[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$env_name&lt;&#x2F;span&gt;&lt;span&gt;:ident: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$env_type&lt;&#x2F;span&gt;&lt;span&gt;:ty &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$env_exp&lt;&#x2F;span&gt;&lt;span&gt;:expr),&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;,]
+&lt;&#x2F;span&gt;&lt;span&gt;        (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$arg_name&lt;&#x2F;span&gt;&lt;span&gt;:ident: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$arg_type&lt;&#x2F;span&gt;&lt;span&gt;:ty),&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;,) -&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$out&lt;&#x2F;span&gt;&lt;span&gt;:ty &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$body&lt;&#x2F;span&gt;&lt;span&gt;:block) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;=&amp;gt; &lt;&#x2F;span&gt;&lt;span&gt;({
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;f&lt;&#x2F;span&gt;&lt;span&gt;(($(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$env_name&lt;&#x2F;span&gt;&lt;span&gt;,)*): &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;mut &lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$env_type&lt;&#x2F;span&gt;&lt;span&gt;,)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;), (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$arg_name&lt;&#x2F;span&gt;&lt;span&gt;,)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;): (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$arg_type&lt;&#x2F;span&gt;&lt;span&gt;,)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;)) -&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$out $body
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$crate&lt;&#x2F;span&gt;&lt;span&gt;::&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;RefMutClosure::&lt;&#x2F;span&gt;&lt;span&gt;new(($(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$env_exp&lt;&#x2F;span&gt;&lt;span&gt;,)*), f)
+&lt;&#x2F;span&gt;&lt;span&gt;    });
+&lt;&#x2F;span&gt;&lt;span&gt;    (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;ref mut &lt;&#x2F;span&gt;&lt;span&gt;[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$env_name&lt;&#x2F;span&gt;&lt;span&gt;:ident: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$env_type&lt;&#x2F;span&gt;&lt;span&gt;:ty &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$env_exp&lt;&#x2F;span&gt;&lt;span&gt;:expr),&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;,]
+&lt;&#x2F;span&gt;&lt;span&gt;        (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$arg_name&lt;&#x2F;span&gt;&lt;span&gt;:ident: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$arg_type&lt;&#x2F;span&gt;&lt;span&gt;:ty),&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;,) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$body&lt;&#x2F;span&gt;&lt;span&gt;:block) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;=&amp;gt; &lt;&#x2F;span&gt;&lt;span&gt;({
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;f&lt;&#x2F;span&gt;&lt;span&gt;(($(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$env_name&lt;&#x2F;span&gt;&lt;span&gt;,)*): &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;mut &lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$env_type&lt;&#x2F;span&gt;&lt;span&gt;,)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;), (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$arg_name&lt;&#x2F;span&gt;&lt;span&gt;,)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;): (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$arg_type&lt;&#x2F;span&gt;&lt;span&gt;,)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;)) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$body
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$crate&lt;&#x2F;span&gt;&lt;span&gt;::RefMutClosure::new((&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$env_exp&lt;&#x2F;span&gt;&lt;span&gt;,)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;), f)
+&lt;&#x2F;span&gt;&lt;span&gt;    });
+&lt;&#x2F;span&gt;&lt;span&gt;    (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;ref &lt;&#x2F;span&gt;&lt;span&gt;[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$env_name&lt;&#x2F;span&gt;&lt;span&gt;:ident: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$env_type&lt;&#x2F;span&gt;&lt;span&gt;:ty &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$env_exp&lt;&#x2F;span&gt;&lt;span&gt;:expr),&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;,]
+&lt;&#x2F;span&gt;&lt;span&gt;        (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$arg_name&lt;&#x2F;span&gt;&lt;span&gt;:ident: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$arg_type&lt;&#x2F;span&gt;&lt;span&gt;:ty),&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;,) -&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$out&lt;&#x2F;span&gt;&lt;span&gt;:ty &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$body&lt;&#x2F;span&gt;&lt;span&gt;:block) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;=&amp;gt; &lt;&#x2F;span&gt;&lt;span&gt;({
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;f&lt;&#x2F;span&gt;&lt;span&gt;(($(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$env_name&lt;&#x2F;span&gt;&lt;span&gt;,)*): &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$env_type&lt;&#x2F;span&gt;&lt;span&gt;,)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;), (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$arg_name&lt;&#x2F;span&gt;&lt;span&gt;,)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;): (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$arg_type&lt;&#x2F;span&gt;&lt;span&gt;,)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;)) -&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$out $body
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$crate&lt;&#x2F;span&gt;&lt;span&gt;::&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;RefClosure::&lt;&#x2F;span&gt;&lt;span&gt;new(($(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$env_exp&lt;&#x2F;span&gt;&lt;span&gt;,)*), f)
+&lt;&#x2F;span&gt;&lt;span&gt;    });
+&lt;&#x2F;span&gt;&lt;span&gt;    (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;ref &lt;&#x2F;span&gt;&lt;span&gt;[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$env_name&lt;&#x2F;span&gt;&lt;span&gt;:ident: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$env_type&lt;&#x2F;span&gt;&lt;span&gt;:ty &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$env_exp&lt;&#x2F;span&gt;&lt;span&gt;:expr),&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;,]
+&lt;&#x2F;span&gt;&lt;span&gt;        (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$arg_name&lt;&#x2F;span&gt;&lt;span&gt;:ident: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$arg_type&lt;&#x2F;span&gt;&lt;span&gt;:ty),&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;,) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$body&lt;&#x2F;span&gt;&lt;span&gt;:block) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;=&amp;gt; &lt;&#x2F;span&gt;&lt;span&gt;({
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;f&lt;&#x2F;span&gt;&lt;span&gt;(($(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$env_name&lt;&#x2F;span&gt;&lt;span&gt;,)*): &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$env_type&lt;&#x2F;span&gt;&lt;span&gt;,)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;), (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$arg_name&lt;&#x2F;span&gt;&lt;span&gt;,)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;): (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$arg_type&lt;&#x2F;span&gt;&lt;span&gt;,)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;)) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$body
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$crate&lt;&#x2F;span&gt;&lt;span&gt;::RefClosure::new((&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;$env_exp&lt;&#x2F;span&gt;&lt;span&gt;,)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;), f)
+&lt;&#x2F;span&gt;&lt;span&gt;    });
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;上述闭包可被翻译为：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span&gt; x &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c18401;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;i32&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span&gt; c &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;boxed_closure! {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;ref &lt;&#x2F;span&gt;&lt;span&gt;[x: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;i32 =&lt;&#x2F;span&gt;&lt;span&gt; x,] (y: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;i32&lt;&#x2F;span&gt;&lt;span&gt;,) -&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;i32 &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;        x &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;+&lt;&#x2F;span&gt;&lt;span&gt; y
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;};
+&lt;&#x2F;span&gt;&lt;span&gt;assert_eq!(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;c&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c18401;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;), &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c18401;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;完整 crate 已经上传到 GitHub 仓库 &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;linyinfeng&#x2F;closure&quot;&gt;linyinfeng&#x2F;closure&lt;&#x2F;a&gt;。注意，这是一个非常简陋的闭包设计，仅仅用于阐述一个典型闭包的工作原理。相比于 Rust 内置闭包来说，它的设计是简洁的，使用是繁琐的，性能是低下的。下面将对 Rust 内置闭包的工作进行分析和探讨，同时也与实现的朴素闭包作比较。&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;nei-zhi-bi-bao&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#nei-zhi-bi-bao&quot; aria-label=&quot;Anchor link for: nei-zhi-bi-bao&quot;&gt;
+    &lt;i class=&quot;fas fa-link&quot;&gt;&lt;&#x2F;i&gt;
+&lt;&#x2F;a&gt;
+内置闭包&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;unboxed&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#unboxed&quot; aria-label=&quot;Anchor link for: unboxed&quot;&gt;
+    &lt;i class=&quot;fas fa-link&quot;&gt;&lt;&#x2F;i&gt;
+&lt;&#x2F;a&gt;
+Unboxed&lt;&#x2F;h3&gt;
+&lt;p&gt;上文实现的闭包实际上与内置闭包非常相似，翻译后使用起来基本没有区别。&lt;&#x2F;p&gt;
+&lt;p&gt;但是区别还是有的，首先是先前提到过的没有类型推导，所有捕获和类型都必须显示写出。&lt;&#x2F;p&gt;
+&lt;p&gt;而最重要的一点是上文偶尔提到的 boxed 和 unboxed，这是什么意思呢。可以试验取上文实现的闭包的一个结构的大小和内置闭包的大小作比较：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span&gt;#![&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;feature&lt;&#x2F;span&gt;&lt;span&gt;(core_intrinsics)]
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;boxed_closure::boxed_closure;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;type_of&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;T&amp;gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;_&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;&lt;&#x2F;span&gt;&lt;span&gt;T) -&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;&amp;#39;static str &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;unsafe &lt;&#x2F;span&gt;&lt;span&gt;{ std::intrinsics::type_name::&amp;lt;T&amp;gt;() }
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;size_of&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;T&amp;gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;_&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;&lt;&#x2F;span&gt;&lt;span&gt;T) -&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;usize &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;    std::mem::size_of::&amp;lt;T&amp;gt;()
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;let mut&lt;&#x2F;span&gt;&lt;span&gt; s &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;String::from(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#50a14f;&quot;&gt;&amp;quot;Hello&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;    {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;let mut &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;c &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;|| s.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;push&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#50a14f;&quot;&gt;&amp;#39;!&amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;        println!(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#50a14f;&quot;&gt;&amp;quot;Type of a closure c: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c18401;&quot;&gt;{}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#50a14f;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;type_of&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;&lt;&#x2F;span&gt;&lt;span&gt;c));
+&lt;&#x2F;span&gt;&lt;span&gt;        println!(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#50a14f;&quot;&gt;&amp;quot;Size of a closure c: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c18401;&quot;&gt;{}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#50a14f;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;size_of&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;&lt;&#x2F;span&gt;&lt;span&gt;c));
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;c&lt;&#x2F;span&gt;&lt;span&gt;();
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;c&lt;&#x2F;span&gt;&lt;span&gt;();
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;    assert_eq!(s, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#50a14f;&quot;&gt;&amp;quot;Hello!!&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;let mut&lt;&#x2F;span&gt;&lt;span&gt; s &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;String::from(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#50a14f;&quot;&gt;&amp;quot;Hello&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;    {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;let mut&lt;&#x2F;span&gt;&lt;span&gt; c &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;boxed_closure! {
+&lt;&#x2F;span&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;ref mut &lt;&#x2F;span&gt;&lt;span&gt;[s: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;mut &lt;&#x2F;span&gt;&lt;span&gt;String &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= &amp;amp;mut&lt;&#x2F;span&gt;&lt;span&gt; s,] () {
+&lt;&#x2F;span&gt;&lt;span&gt;                s.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;push&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#50a14f;&quot;&gt;&amp;#39;!&amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;            }
+&lt;&#x2F;span&gt;&lt;span&gt;        };
+&lt;&#x2F;span&gt;&lt;span&gt;        println!(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#50a14f;&quot;&gt;&amp;quot;Type of a closure c: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c18401;&quot;&gt;{}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#50a14f;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;type_of&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;&lt;&#x2F;span&gt;&lt;span&gt;c));
+&lt;&#x2F;span&gt;&lt;span&gt;        println!(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#50a14f;&quot;&gt;&amp;quot;Size of a closure c: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c18401;&quot;&gt;{}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#50a14f;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;size_of&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;&lt;&#x2F;span&gt;&lt;span&gt;c));
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;c&lt;&#x2F;span&gt;&lt;span&gt;();
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;c&lt;&#x2F;span&gt;&lt;span&gt;();
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;    assert_eq!(s, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#50a14f;&quot;&gt;&amp;quot;Hello!!&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;输出&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span&gt;Type of a closure c: [closure@src&#x2F;main.rs:15:21: 15:35 s:&amp;amp;mut std::string::String]
+&lt;&#x2F;span&gt;&lt;span&gt;Size of a closure c: 8
+&lt;&#x2F;span&gt;&lt;span&gt;Type of a closure c: closure::RefMutClosure&amp;lt;(&amp;amp;mut std::string::String,), (), ()&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;Size of a closure c: 16
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;在我的机器上函数指针和引用的大小均为 8，因此整个 &lt;code&gt;RefMutClosure&lt;&#x2F;code&gt; struct 的大小为 16。而内置闭包的大小却仅仅为 8，为什么呢？&lt;&#x2F;p&gt;
+&lt;p&gt;进一步实验：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;let mut&lt;&#x2F;span&gt;&lt;span&gt; s &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;String::from(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#50a14f;&quot;&gt;&amp;quot;Hello&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span&gt; content_of_c: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;*const &lt;&#x2F;span&gt;&lt;span&gt;();
+&lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;let mut &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;c &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;|| s.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;push&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#50a14f;&quot;&gt;&amp;#39;!&amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;    content_of_c &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= unsafe &lt;&#x2F;span&gt;&lt;span&gt;{ std::mem::transmute_copy(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;&lt;&#x2F;span&gt;&lt;span&gt;c) };
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;c&lt;&#x2F;span&gt;&lt;span&gt;();
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;c&lt;&#x2F;span&gt;&lt;span&gt;();
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span&gt; pointer_to_s: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;*const &lt;&#x2F;span&gt;&lt;span&gt;() &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= unsafe &lt;&#x2F;span&gt;&lt;span&gt;{ std::mem::transmute_copy(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;&amp;amp;&lt;&#x2F;span&gt;&lt;span&gt;s) };
+&lt;&#x2F;span&gt;&lt;span&gt;assert_eq!(content_of_c, pointer_to_s);
+&lt;&#x2F;span&gt;&lt;span&gt;assert_eq!(s, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#50a14f;&quot;&gt;&amp;quot;Hello!!&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;可见 Rust 内置闭包实际上&lt;strong&gt;只包含了环境&lt;&#x2F;strong&gt;。原因是 Rust 的闭包是 unboxed 闭包，其函数直接被编译器定义在 &lt;code&gt;FnOnce&lt;&#x2F;code&gt;，&lt;code&gt;FnMut&lt;&#x2F;code&gt; 和 &lt;code&gt;Fn&lt;&#x2F;code&gt; 的实现中，因此，内置闭包对象根本不需要携带函数指针。对内置闭包的函数调用大部分情况下在编译期就绑定了（除非使用 trait object），而不是运行时。这样做的好处是方便 LLVM 做内联优化，同时闭包本身也不需要额外携带一个指针了，可以统一地交给 trait object 做。&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;move-guan-jian-zi&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#move-guan-jian-zi&quot; aria-label=&quot;Anchor link for: move-guan-jian-zi&quot;&gt;
+    &lt;i class=&quot;fas fa-link&quot;&gt;&lt;&#x2F;i&gt;
+&lt;&#x2F;a&gt;
+&lt;code&gt;move&lt;&#x2F;code&gt; 关键字&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;code&gt;move&lt;&#x2F;code&gt; 关键字的意义有时令人感到困惑。在远古 Rust 中，&lt;code&gt;move&lt;&#x2F;code&gt; 关键字是另作他用的，后来被删除了。应该是在现在版本的闭包出现以后才重新作为一个有用的关键字出现。在内置闭包捕获变量的时候，Rust 总是尽可能以 &lt;code&gt;&amp;amp;&lt;&#x2F;code&gt; &amp;gt; &lt;code&gt;&amp;amp;mut&lt;&#x2F;code&gt; &amp;gt; &lt;code&gt;move&lt;&#x2F;code&gt; 的顺序进行捕获，这将对捕获的变量产生最少的影响。但是，某些情况下，我们需要闭包获得变量的所有权，但是闭包函数体并不需要获得变量的所有权。这时候我们使用 &lt;code&gt;move&lt;&#x2F;code&gt; 关键字强制 Rust 将所有捕获的变量移动入闭包的环境中，以延长被移动的对象的生存期。&lt;&#x2F;p&gt;
+&lt;p&gt;可以考虑一下为什么有 &lt;code&gt;move&lt;&#x2F;code&gt; 闭包却没有 &lt;code&gt;mut&lt;&#x2F;code&gt; 闭包呢？因为强制 &lt;code&gt;mut&lt;&#x2F;code&gt; 捕获并不会造成任何的好处却会对被捕获的变量产生一个可变借用，这没有任何意义，就与写了 &lt;code&gt;let r = &amp;amp;mut x;&lt;&#x2F;code&gt; 却不修改 r 一样，编译器将提示去除 &lt;code&gt;mut&lt;&#x2F;code&gt;。&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;fn-fnmut-yu-fnonce&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#fn-fnmut-yu-fnonce&quot; aria-label=&quot;Anchor link for: fn-fnmut-yu-fnonce&quot;&gt;
+    &lt;i class=&quot;fas fa-link&quot;&gt;&lt;&#x2F;i&gt;
+&lt;&#x2F;a&gt;
+&lt;code&gt;Fn&lt;&#x2F;code&gt;，&lt;code&gt;FnMut&lt;&#x2F;code&gt; 与 &lt;code&gt;FnOnce&lt;&#x2F;code&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;正如之前反复强调的，闭包究竟实现 &lt;code&gt;Fn&lt;&#x2F;code&gt;，&lt;code&gt;FnMut&lt;&#x2F;code&gt;，&lt;code&gt;FnOnce&lt;&#x2F;code&gt; 中的哪几个 trait，是由闭包对环境的使用，也就是函数体决定的。&lt;&#x2F;p&gt;
+&lt;p&gt;举个例子：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span&gt; s &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;String::from(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#50a14f;&quot;&gt;&amp;quot;hello&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span&gt; c &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= move || &lt;&#x2F;span&gt;&lt;span&gt;println!(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#50a14f;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c18401;&quot;&gt;{}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#50a14f;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;, s);
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;c&lt;&#x2F;span&gt;&lt;span&gt;();
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;c&lt;&#x2F;span&gt;&lt;span&gt;();
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;能正常运行，输出：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span&gt;s = hello
+&lt;&#x2F;span&gt;&lt;span&gt;s = hello
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span&gt; s &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;String::from(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#50a14f;&quot;&gt;&amp;quot;hello&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;let &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;c &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;|| dbg!(s);
+&lt;&#x2F;span&gt;&lt;span&gt;println!(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#50a14f;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c18401;&quot;&gt;{}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#50a14f;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;, s);
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;c&lt;&#x2F;span&gt;&lt;span&gt;();
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;c&lt;&#x2F;span&gt;&lt;span&gt;();
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;将编译错误：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span&gt;error[E0382]: borrow of moved value: `s`
+&lt;&#x2F;span&gt;&lt;span&gt;error[E0382]: use of moved value: `c`
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;这是因为 &lt;code&gt;dbg!(s)&lt;&#x2F;code&gt; 将获取 &lt;code&gt;s&lt;&#x2F;code&gt; 的所有权再返回 &lt;code&gt;s&lt;&#x2F;code&gt;，而 &lt;code&gt;println!(&amp;quot;{}&amp;quot;, s)&lt;&#x2F;code&gt; 只会获取 &lt;code&gt;s&lt;&#x2F;code&gt; 的引用。同样，&lt;code&gt;s&lt;&#x2F;code&gt; 被移动进第一个闭包是因为 &lt;code&gt;move&lt;&#x2F;code&gt; 关键字的作用，而 &lt;code&gt;s&lt;&#x2F;code&gt; 被移动进第二个闭包是因为第二个闭包的函数体要求 &lt;code&gt;s&lt;&#x2F;code&gt; 的所有权。即使两个例子中 &lt;code&gt;s&lt;&#x2F;code&gt; 均被移动进闭包，第一个闭包依然根据函数体被实现了 &lt;code&gt;Fn&lt;&#x2F;code&gt;，&lt;code&gt;FnMut&lt;&#x2F;code&gt;，&lt;code&gt;FnOnce&lt;&#x2F;code&gt;，第二个闭包被根据函数体实现了 &lt;code&gt;FnOnce&lt;&#x2F;code&gt;。&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;bi-bao-de-mut&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#bi-bao-de-mut&quot; aria-label=&quot;Anchor link for: bi-bao-de-mut&quot;&gt;
+    &lt;i class=&quot;fas fa-link&quot;&gt;&lt;&#x2F;i&gt;
+&lt;&#x2F;a&gt;
+闭包的 &lt;code&gt;mut&lt;&#x2F;code&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;下面示例代码中的 &lt;code&gt;c&lt;&#x2F;code&gt; 变量有时候也令人感到困惑。&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;let mut&lt;&#x2F;span&gt;&lt;span&gt; s &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;String::from(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#50a14f;&quot;&gt;&amp;quot;Hello&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;let mut &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;c &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;|| s.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;push&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#50a14f;&quot;&gt;&amp;#39;!&amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;); &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a0a1a7;&quot;&gt;&#x2F;&#x2F; !
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;c&lt;&#x2F;span&gt;&lt;span&gt;();
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;c&lt;&#x2F;span&gt;&lt;span&gt;();
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;assert_eq!(s, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#50a14f;&quot;&gt;&amp;quot;Hello!!&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;为什么编译器要求 c 必须是可变的才能执行 c() 呢？这是因为不能通过不可变引用闭包修改其内容，包括其中的可变引用。另一方面，也可以从类型上看，无法将不可变的内置闭包传递给要求可变 self 引用的 call_mut。&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;tuo-chi-bi-bao&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#tuo-chi-bi-bao&quot; aria-label=&quot;Anchor link for: tuo-chi-bi-bao&quot;&gt;
+    &lt;i class=&quot;fas fa-link&quot;&gt;&lt;&#x2F;i&gt;
+&lt;&#x2F;a&gt;
+脱离闭包&lt;&#x2F;h2&gt;
+&lt;p&gt;Rust 中，最简单高阶函数一般这样书写：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;higher_order_fn&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;F&amp;gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;f&lt;&#x2F;span&gt;&lt;span&gt;: F)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;where
+&lt;&#x2F;span&gt;&lt;span&gt;    F: Fn() -&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;i32&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;不理会对 F 的更多约束，考虑在编写高阶函数时，应该选择 &lt;code&gt;FnOnce&lt;&#x2F;code&gt;，&lt;code&gt;FnMut&lt;&#x2F;code&gt; 还是 &lt;code&gt;Fn&lt;&#x2F;code&gt;？&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;FnOnce&lt;&#x2F;code&gt;，&lt;code&gt;FnMut&lt;&#x2F;code&gt; 和 &lt;code&gt;Fn&lt;&#x2F;code&gt; 并非只为闭包服务。不管是我们实现的朴素闭包也好，还是普通函数也好，都实现了这几个 traits。事实上：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;    println!(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#50a14f;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c18401;&quot;&gt;{}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#50a14f;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;, std::mem::size_of_val(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;&lt;&#x2F;span&gt;&lt;span&gt;main)); &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a0a1a7;&quot;&gt;&#x2F;&#x2F; 0
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Rust 中的函数也是“unboxed“实现，同样也实现了 &lt;code&gt;Fn&lt;&#x2F;code&gt; 系列 traits。&lt;&#x2F;p&gt;
+&lt;p&gt;所以我想最后应该从另一个层面再次考虑 &lt;code&gt;FnOnce&lt;&#x2F;code&gt;，&lt;code&gt;FnMut&lt;&#x2F;code&gt; 和 &lt;code&gt;Fn&lt;&#x2F;code&gt;，以至于在实践中，理解其语义应当就能作出正确的选择：&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Fn&lt;&#x2F;code&gt;，函数不保有自己的状态&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;FnMut&lt;&#x2F;code&gt;，函数可以改变自己的状态&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;FnOnce&lt;&#x2F;code&gt;，函数消费自己的状态&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;也就是说：&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;需要纯函数的时候，书写 &lt;code&gt;Fn&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;需要函数保存内部状态的时候，如伪随机数生成函数，书写 &lt;code&gt;FnMut&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;类似于创建线程这样的调用，选择 &lt;code&gt;FnOnce&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;pub fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;spawn&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;F, T&amp;gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;f&lt;&#x2F;span&gt;&lt;span&gt;: F) -&amp;gt; JoinHandle&amp;lt;T&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;where
+&lt;&#x2F;span&gt;&lt;span&gt;    F: FnOnce() -&amp;gt; T,
+&lt;&#x2F;span&gt;&lt;span&gt;    F: Send + &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;#39;static&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;span&gt;    T: Send + &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;#39;static&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+</content>
+	</entry>
+	<entry xml:lang="cn">
+		<title>Rust RFC 2349 - Pin 翻译</title>
+		<published>2018-08-19T07:36:17+08:00</published>
+		<updated>2018-08-21T08:52:15+08:00</updated>
+		<link href="https://www.linyinfeng.com/posts/rust-rfc-2349/" type="text/html"/>
+		<id>https://www.linyinfeng.com/posts/rust-rfc-2349/</id>
+		<content type="html">&lt;p&gt;本文为 &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;rust-lang&#x2F;rfcs&#x2F;blob&#x2F;master&#x2F;text&#x2F;2349-pin.md&quot;&gt;Rust RFC 2349 - Pin&lt;&#x2F;a&gt; 的中文翻译。&lt;&#x2F;p&gt;
+&lt;p&gt;Rust RFCs 并非一成不变，本文翻译于 2018 年 08 月 19 日。&lt;&#x2F;p&gt;
+&lt;p&gt;Rust RFCs 仓库目前（2018-08-21）为可选的 MIT 和 Apache 授权，本文使用了其 MIT 授权。&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;linyinfeng&#x2F;blog&#x2F;tree&#x2F;master&#x2F;content&#x2F;posts&#x2F;rust-rfc-2349&#x2F;LICENSE-MIT&quot;&gt;MIT 许可证副本&lt;&#x2F;a&gt;。&lt;&#x2F;p&gt;
+&lt;p&gt;文中有众多 Rust 中的其他 RFC 甚至 crates 中的概念，水平有限，如有翻译错误或建议，可以向我的 &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;linyinfeng&#x2F;blog&quot;&gt;GitHub&lt;&#x2F;a&gt; 仓库提 Issue 或者直接发起 PR 指正，本文文件：&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;linyinfeng&#x2F;blog&#x2F;tree&#x2F;master&#x2F;content&#x2F;posts&#x2F;rust-rfc-2349&#x2F;index.md&quot;&gt;content&#x2F;posts&#x2F;rust-rfc-2349&#x2F;index.md&lt;&#x2F;a&gt;。&lt;&#x2F;p&gt;
+&lt;span id=&quot;continue-reading&quot;&gt;&lt;&#x2F;span&gt;
+&lt;ul&gt;
+&lt;li&gt;特性名：pin&lt;&#x2F;li&gt;
+&lt;li&gt;开始日期：2018-02-19&lt;&#x2F;li&gt;
+&lt;li&gt;RFC PR：&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;rust-lang&#x2F;rfcs&#x2F;pull&#x2F;2349&quot;&gt;rust-lang&#x2F;rfcs#2349&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;Rust Issue: &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;rust-lang&#x2F;rust&#x2F;issues&#x2F;49150&quot;&gt;rust-lang&#x2F;rust#49150&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;zhai-yao&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#zhai-yao&quot; aria-label=&quot;Anchor link for: zhai-yao&quot;&gt;
+    &lt;i class=&quot;fas fa-link&quot;&gt;&lt;&#x2F;i&gt;
+&lt;&#x2F;a&gt;
+摘要&lt;&#x2F;h2&gt;
+&lt;p&gt;提出一套新的 API 加入 libcore&#x2F;libstd 中作为不可以被安全地移动的数据的安全抽象。&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;dong-ji&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#dong-ji&quot; aria-label=&quot;Anchor link for: dong-ji&quot;&gt;
+    &lt;i class=&quot;fas fa-link&quot;&gt;&lt;&#x2F;i&gt;
+&lt;&#x2F;a&gt;
+动机&lt;&#x2F;h2&gt;
+&lt;p&gt;不应该被移动的类型是长期困扰 Rust 的一个问题。实现它的一个通常的动机是当一个结构包含指向它自己内存的指针——移动这个结构将会使指针无效。这个用例最近已经在生成器的工作中变得非常重要。因为生成器本质上将栈帧实现为一个可以被操作的对象，看起来如果它被允许，这种生成器的惯用法将导致这种自引用类型。&lt;&#x2F;p&gt;
+&lt;p&gt;这个提案向 std 中加入了 API，允许你保证一个特定的值永远不会被再次移动，使依赖于自引用的安全 API 存在。&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;zhi-nan-ceng-ci-de-jie-shi&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#zhi-nan-ceng-ci-de-jie-shi&quot; aria-label=&quot;Anchor link for: zhi-nan-ceng-ci-de-jie-shi&quot;&gt;
+    &lt;i class=&quot;fas fa-link&quot;&gt;&lt;&#x2F;i&gt;
+&lt;&#x2F;a&gt;
+指南层次的解释&lt;&#x2F;h2&gt;
+&lt;p&gt;这个 RFC 的核心目标是提供一个引用类型，保证被引用的对象在销毁前不被移动。我们希望对类型系统做最少的开洞来实现它，而且事实上，这个 RFC 展示了我们能在不对类型系统做任何修改的情况下达成这个目标。&lt;&#x2F;p&gt;
+&lt;p&gt;我们把目标拆分，一块一块来看，从 futures（即 async&#x2F;await）用例看：&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;引用类型&lt;&#x2F;strong&gt;。我们需要一个引用类型的原因是，当我们处理类似 futures 的东西的时候 我们通常希望将小的 futures 组合成大的，并仅仅在顶层把整个结果 futures 放入一个不可移动的位置。因此，我们需要为类似 poll 的方法提供一个引用类型，这样我们可以将大的 future 分解成小的 future，同时确保不可移动性。&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;在销毁前永不移动&lt;&#x2F;strong&gt;。再次考查 futures 这个例子，一旦我们正在 &lt;code&gt;poll&lt;&#x2F;code&gt; 一个 future，我们希望它能够保存指向自己的引用，这仅仅在整个 future 无法被移动的时候是可能的。我们不尝试从类型层面追踪&lt;em&gt;是否&lt;&#x2F;em&gt;这样的引用是存在的，因为这会导致笨重的类型状态机（typestate）；相反地，我们简单地令从你第一次 &lt;code&gt;poll&lt;&#x2F;code&gt; 开始，承诺永远不再次移动一个不可移动的 future。&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;同时，我们希望支持&lt;em&gt;可以&lt;&#x2F;em&gt;移动的 futures（以及迭代器，等等）。可能通过提供两种 &lt;code&gt;Future&lt;&#x2F;code&gt;（或 &lt;code&gt;Iterator&lt;&#x2F;code&gt;，等等）traits 来实现这一点，但这样的设计会导致不可接受的人体工学开销。&lt;&#x2F;p&gt;
+&lt;p&gt;这个 RFC 最关键的选择是我们创建了一个新的库类型，&lt;code&gt;Pin&amp;lt;&#x27;a, T&amp;gt;&lt;&#x2F;code&gt;，&lt;em&gt;同时&lt;&#x2F;em&gt;包含可移动和不可移动的被引用对象。这个类型对应一个新的自动 trait，&lt;code&gt;Unpin&lt;&#x2F;code&gt;，它决定了 &lt;code&gt;Pin&amp;lt;&#x27;a, T&amp;gt;&lt;&#x2F;code&gt; 的意义。&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;如果 &lt;code&gt;T: Unpin&lt;&#x2F;code&gt;（默认），那么 &lt;code&gt;Pin&amp;lt;&#x27;a, T&amp;gt;&lt;&#x2F;code&gt; 完全等价于 &lt;code&gt;&amp;amp;&#x27;a mut T&lt;&#x2F;code&gt;。&lt;&#x2F;li&gt;
+&lt;li&gt;如果 &lt;code&gt;T: !Unpin&lt;&#x2F;code&gt;，那么 &lt;code&gt;Pin&amp;lt;&#x27;a, T&amp;gt;&lt;&#x2F;code&gt; 提供一个对具有生命周期 &lt;code&gt;&#x27;a&lt;&#x2F;code&gt; 的 &lt;code&gt;T&lt;&#x2F;code&gt; 的唯一引用，但仅仅提供安全的 &lt;code&gt;&amp;amp;&#x27;a T&lt;&#x2F;code&gt; 访问。它同时保证了被引用对象&lt;em&gt;永远不&lt;&#x2F;em&gt;被移动。然而，访问 &lt;code&gt;&amp;amp;&#x27;a mut T&lt;&#x2F;code&gt; 是不安全的，因为类似 &lt;code&gt;men::replace&lt;&#x2F;code&gt; 的操作意味着 &lt;code&gt;&amp;amp;mut&lt;&#x2F;code&gt; 足够将数据移动出被引用对象；你必须承诺不这么做。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;要清楚：&lt;code&gt;Unpin&lt;&#x2F;code&gt; 的唯一功能是控制 &lt;code&gt;Pin&lt;&#x2F;code&gt; 的意义。将 &lt;code&gt;Unpin&lt;&#x2F;code&gt; 作为一个自动 traits 意味着绝大多数类型自动地成为可移动的，因此 &lt;code&gt;Pin&lt;&#x2F;code&gt; 退化为 &lt;code&gt;&amp;amp;mut&lt;&#x2F;code&gt;。如果你需要不可移动性，你可以&lt;em&gt;去除&lt;&#x2F;em&gt; &lt;code&gt;Unpin&lt;&#x2F;code&gt;，然后 &lt;code&gt;Pin&lt;&#x2F;code&gt; 对于你的类型就会变得有意义。&lt;&#x2F;p&gt;
+&lt;p&gt;结合所有这些，我们获得了以下 &lt;code&gt;Future&lt;&#x2F;code&gt; 的定义：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;trait &lt;&#x2F;span&gt;&lt;span&gt;Future {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;type &lt;&#x2F;span&gt;&lt;span&gt;Item;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;type &lt;&#x2F;span&gt;&lt;span&gt;Error;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;poll&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;: Pin&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;Self&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;cx&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;mut &lt;&#x2F;span&gt;&lt;span&gt;task::Context) -&amp;gt; Poll&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;Self::&lt;&#x2F;span&gt;&lt;span&gt;Item, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;Self::&lt;&#x2F;span&gt;&lt;span&gt;Error&amp;gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;默认情况下当我们为一个结构体实现 &lt;code&gt;Future&lt;&#x2F;code&gt;，这个定义将与目前的相同，&lt;code&gt;poll&lt;&#x2F;code&gt; 将获取 &lt;code&gt;&amp;amp;mut self&lt;&#x2F;code&gt;。但当你想要允许你的 future 自引用，你只需要去除 &lt;code&gt;Unpin&lt;&#x2F;code&gt; 并注意剩下的部分。&lt;&#x2F;p&gt;
+&lt;p&gt;这个 RFC 也给 &lt;code&gt;Box&lt;&#x2F;code&gt; 提供了一个 pinned 类似，叫做 &lt;code&gt;PinBox&amp;lt;T&amp;gt;&lt;&#x2F;code&gt;。它就像这里讨论的 &lt;code&gt;Pin&lt;&#x2F;code&gt; 一样工作——如果类型实现了 &lt;code&gt;Unpin&lt;&#x2F;code&gt;，它的功能就和 &lt;code&gt;Box&lt;&#x2F;code&gt; 一样；如果类型去除了 &lt;code&gt;Unpin&lt;&#x2F;code&gt;，它确保引用之后的类型不会被再次移动。&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;can-kao-ceng-ci-de-jie-shi&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#can-kao-ceng-ci-de-jie-shi&quot; aria-label=&quot;Anchor link for: can-kao-ceng-ci-de-jie-shi&quot;&gt;
+    &lt;i class=&quot;fas fa-link&quot;&gt;&lt;&#x2F;i&gt;
+&lt;&#x2F;a&gt;
+参考层次的解释&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;unpin-zi-dong-trait&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#unpin-zi-dong-trait&quot; aria-label=&quot;Anchor link for: unpin-zi-dong-trait&quot;&gt;
+    &lt;i class=&quot;fas fa-link&quot;&gt;&lt;&#x2F;i&gt;
+&lt;&#x2F;a&gt;
+&lt;code&gt;Unpin&lt;&#x2F;code&gt; 自动 trait&lt;&#x2F;h3&gt;
+&lt;p&gt;这个新的自动 trait 被加入到 &lt;code&gt;core::marker&lt;&#x2F;code&gt; 和 &lt;code&gt;std::marker&lt;&#x2F;code&gt; 模块：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;pub unsafe&lt;&#x2F;span&gt;&lt;span&gt; auto &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;trait &lt;&#x2F;span&gt;&lt;span&gt;Unpin { }
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;一个实现了 &lt;code&gt;Unpin&lt;&#x2F;code&gt; 的类型能够被移动出下文将提到的某一个 pinned 引用类型。否则，它们不会暴露允许你将值移出的安全 API。因为 &lt;code&gt;Unpin&lt;&#x2F;code&gt; 是一个自动 trait，Rust 中的大部分类型实现了它。没有实现它的类型主要是自引用类型，如某些生成器。&lt;&#x2F;p&gt;
+&lt;p&gt;这个 trait 是一个 lang 项目，但仅仅是为了为某些生成器生成负实现。不同于之前的 &lt;code&gt;?Move&lt;&#x2F;code&gt; 提案，也不同于如 &lt;code&gt;Sized&lt;&#x2F;code&gt; 和 &lt;code&gt;Copy&lt;&#x2F;code&gt; 的一些 traits，这个 trait 不对实现或不实现它的类型施加任何基于编译器的语义。相反地，它的语义是完全由使用 &lt;code&gt;Unpin&lt;&#x2F;code&gt; 作为标记的库 APIs 强制的。&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;pin&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#pin&quot; aria-label=&quot;Anchor link for: pin&quot;&gt;
+    &lt;i class=&quot;fas fa-link&quot;&gt;&lt;&#x2F;i&gt;
+&lt;&#x2F;a&gt;
+&lt;code&gt;Pin&lt;&#x2F;code&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;code&gt;Pin&lt;&#x2F;code&gt; 结构体被加入到 &lt;code&gt;core::mem&lt;&#x2F;code&gt; 和 &lt;code&gt;std::mem&lt;&#x2F;code&gt;。这是一种新的，相比 &lt;code&gt;&amp;amp;mut T&lt;&#x2F;code&gt; 有更多要求的引用。&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;#&lt;&#x2F;span&gt;&lt;span&gt;#[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;fundamental&lt;&#x2F;span&gt;&lt;span&gt;]
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;pub struct &lt;&#x2F;span&gt;&lt;span&gt;Pin&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;#39;a&lt;&#x2F;span&gt;&lt;span&gt;, T: &lt;&#x2F;span&gt;&lt;span style=&quot;background-color:#e06c75;color:#fafafa;&quot;&gt;?&lt;&#x2F;span&gt;&lt;span&gt;Sized + &amp;#39;a&amp;gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;data&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;&amp;#39;a mut&lt;&#x2F;span&gt;&lt;span&gt; T,
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h4 id=&quot;an-quan-apis&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#an-quan-apis&quot; aria-label=&quot;Anchor link for: an-quan-apis&quot;&gt;
+    &lt;i class=&quot;fas fa-link&quot;&gt;&lt;&#x2F;i&gt;
+&lt;&#x2F;a&gt;
+安全 APIs&lt;&#x2F;h4&gt;
+&lt;p&gt;&lt;code&gt;Pin&lt;&#x2F;code&gt; 实现了 &lt;code&gt;Deref&lt;&#x2F;code&gt;, 但是仅当类型实现 &lt;code&gt;Unpin&lt;&#x2F;code&gt; 时实现了 &lt;code&gt;DerefMut&lt;&#x2F;code&gt;。这样，当类型没有实现 &lt;code&gt;Unpin&lt;&#x2F;code&gt; 时，调用 &lt;code&gt;mem::swap&lt;&#x2F;code&gt; 或
+&lt;code&gt;mem::replace&lt;&#x2F;code&gt; 是不安全的。&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;impl&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;#39;a&lt;&#x2F;span&gt;&lt;span&gt;, T: &lt;&#x2F;span&gt;&lt;span style=&quot;background-color:#e06c75;color:#fafafa;&quot;&gt;?&lt;&#x2F;span&gt;&lt;span&gt;Sized&amp;gt; Deref for Pin&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;#39;a&lt;&#x2F;span&gt;&lt;span&gt;, T&amp;gt; { &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;... &lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;impl&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;#39;a&lt;&#x2F;span&gt;&lt;span&gt;, T: Unpin &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;+ &lt;&#x2F;span&gt;&lt;span style=&quot;background-color:#e06c75;color:#fafafa;&quot;&gt;?&lt;&#x2F;span&gt;&lt;span&gt;Sized&amp;gt; DerefMut for Pin&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;#39;a&lt;&#x2F;span&gt;&lt;span&gt;, T&amp;gt; { &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;... &lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;它只能安全地被实现了 &lt;code&gt;Unpin&lt;&#x2F;code&gt; 的类型的引用构造：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;impl&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;#39;a&lt;&#x2F;span&gt;&lt;span&gt;, T: Unpin &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;+ &lt;&#x2F;span&gt;&lt;span style=&quot;background-color:#e06c75;color:#fafafa;&quot;&gt;?&lt;&#x2F;span&gt;&lt;span&gt;Sized&amp;gt; Pin&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;#39;a&lt;&#x2F;span&gt;&lt;span&gt;, T&amp;gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;pub fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;new&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;reference&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;&amp;#39;a mut&lt;&#x2F;span&gt;&lt;span&gt; T) -&amp;gt; Pin&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;#39;a&lt;&#x2F;span&gt;&lt;span&gt;, T&amp;gt; { &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;... &lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;它还有一个函数 &lt;code&gt;borrow&lt;&#x2F;code&gt;，允许它被转换成一个有更短生存期的 pin。&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;impl&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;#39;a&lt;&#x2F;span&gt;&lt;span&gt;, T: &lt;&#x2F;span&gt;&lt;span style=&quot;background-color:#e06c75;color:#fafafa;&quot;&gt;?&lt;&#x2F;span&gt;&lt;span&gt;Sized&amp;gt; Pin&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;#39;a&lt;&#x2F;span&gt;&lt;span&gt;, T&amp;gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;pub fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;borrow&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;#39;b&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;this&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;&amp;#39;b mut &lt;&#x2F;span&gt;&lt;span&gt;Pin&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;#39;a&lt;&#x2F;span&gt;&lt;span&gt;, T&amp;gt;) -&amp;gt; Pin&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;#39;b&lt;&#x2F;span&gt;&lt;span&gt;, T&amp;gt; { &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;... &lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;它也可以实现额外的 APIs 因为它们对于实现类型转换是很实用的，例如 &lt;code&gt;AsRef&lt;&#x2F;code&gt;，&lt;code&gt;From&lt;&#x2F;code&gt; 等等。&lt;code&gt;Pin&lt;&#x2F;code&gt; 实现了 &lt;code&gt;CoerceUnsized&lt;&#x2F;code&gt;，这对能够将它们转为 trait objects 是必要的。（&lt;code&gt;Pin&lt;&#x2F;code&gt; implements &lt;code&gt;CoerceUnsized&lt;&#x2F;code&gt; as necessary to make coercing them into trait objects possible.）&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;bu-an-quan-apis&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#bu-an-quan-apis&quot; aria-label=&quot;Anchor link for: bu-an-quan-apis&quot;&gt;
+    &lt;i class=&quot;fas fa-link&quot;&gt;&lt;&#x2F;i&gt;
+&lt;&#x2F;a&gt;
+不安全 APIs&lt;&#x2F;h4&gt;
+&lt;p&gt;&lt;code&gt;Pin&lt;&#x2F;code&gt; 能够被不安全地从可能未实现 &lt;code&gt;Unpin&lt;&#x2F;code&gt; 的类型的可变引用构造。使用这个构造函数的用户必须知道他们传递引用的类型在 &lt;code&gt;Pin&lt;&#x2F;code&gt; 被构造后将永远不再被移动，即使这个引用的生存期结束了。（举个例子，通过一个你未创建的引用构造的 &lt;code&gt;Pin&lt;&#x2F;code&gt; 总是不安全的，因为你不知道一旦这个引用的生存期结束会发生什么。）&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;impl&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;#39;a&lt;&#x2F;span&gt;&lt;span&gt;, T: &lt;&#x2F;span&gt;&lt;span style=&quot;background-color:#e06c75;color:#fafafa;&quot;&gt;?&lt;&#x2F;span&gt;&lt;span&gt;Sized&amp;gt; Pin&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;#39;a&lt;&#x2F;span&gt;&lt;span&gt;, T&amp;gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;pub unsafe fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;new_unchecked&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;reference&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;&amp;#39;a mut&lt;&#x2F;span&gt;&lt;span&gt; T) -&amp;gt; Pin&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;#39;a&lt;&#x2F;span&gt;&lt;span&gt;, T&amp;gt; { &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;... &lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;code&gt;Pin&lt;&#x2F;code&gt; 也有一个将没有实现 &lt;code&gt;Unpin&lt;&#x2F;code&gt; 的类型的 &lt;code&gt;Pin&lt;&#x2F;code&gt; 转换为可变引用的 API。使用这个 API 的用户必须确保他们不将被引用对象移动出他们获得的可变引用。&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;impl&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;#39;a&lt;&#x2F;span&gt;&lt;span&gt;, T: &lt;&#x2F;span&gt;&lt;span style=&quot;background-color:#e06c75;color:#fafafa;&quot;&gt;?&lt;&#x2F;span&gt;&lt;span&gt;Sized&amp;gt; Pin&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;#39;a&lt;&#x2F;span&gt;&lt;span&gt;, T&amp;gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;pub unsafe fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;get_mut&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;#39;b&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;this&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;&amp;#39;b mut &lt;&#x2F;span&gt;&lt;span&gt;Pin&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;#39;a&lt;&#x2F;span&gt;&lt;span&gt;, T&amp;gt;) -&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;&amp;#39;b mut&lt;&#x2F;span&gt;&lt;span&gt; T { &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;... &lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;最后，为了方便，&lt;code&gt;Pin&lt;&#x2F;code&gt; 实现了一个不安全的 &lt;code&gt;map&lt;&#x2F;code&gt; 函数，这使得访问一个字段更简单。调用这个函数的用户必须确保返回的值只要被引用对象不被移动就不被移动（例如，这是一个值的私有字段）。作为闭包参数接收的可变引用也必须不被移动。&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;impl&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;#39;a&lt;&#x2F;span&gt;&lt;span&gt;, T: &lt;&#x2F;span&gt;&lt;span style=&quot;background-color:#e06c75;color:#fafafa;&quot;&gt;?&lt;&#x2F;span&gt;&lt;span&gt;Sized&amp;gt; Pin&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;#39;a&lt;&#x2F;span&gt;&lt;span&gt;, T&amp;gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;pub unsafe fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;map&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;#39;b&lt;&#x2F;span&gt;&lt;span&gt;, U, F&amp;gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;this&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;&amp;#39;b mut &lt;&#x2F;span&gt;&lt;span&gt;Pin&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;#39;a&lt;&#x2F;span&gt;&lt;span&gt;, T&amp;gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;f&lt;&#x2F;span&gt;&lt;span&gt;: F) -&amp;gt; Pin&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;#39;b&lt;&#x2F;span&gt;&lt;span&gt;, U&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;where&lt;&#x2F;span&gt;&lt;span&gt; F: FnOnce(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;mut&lt;&#x2F;span&gt;&lt;span&gt; T) -&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;mut&lt;&#x2F;span&gt;&lt;span&gt; U
+&lt;&#x2F;span&gt;&lt;span&gt;    { &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;... &lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a0a1a7;&quot;&gt;&#x2F;&#x2F; 举个例子：
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;struct &lt;&#x2F;span&gt;&lt;span&gt;Foo {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;bar&lt;&#x2F;span&gt;&lt;span&gt;: Bar,
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span&gt; foo_pin: Pin&amp;lt;Foo&amp;gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span&gt; bar_pin: Pin&amp;lt;Bar&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= unsafe &lt;&#x2F;span&gt;&lt;span&gt;{ Pin::map(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;mut&lt;&#x2F;span&gt;&lt;span&gt; foo_pin, |&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;foo&lt;&#x2F;span&gt;&lt;span&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;mut&lt;&#x2F;span&gt;&lt;span&gt; foo.bar) };
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a0a1a7;&quot;&gt;&#x2F;&#x2F; 等价于：
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span&gt; bar_pin: Pin&amp;lt;Bar&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= unsafe &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span&gt; foo: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;mut&lt;&#x2F;span&gt;&lt;span&gt; Foo &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;Pin::get_mut(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;mut&lt;&#x2F;span&gt;&lt;span&gt; foo_pin);
+&lt;&#x2F;span&gt;&lt;span&gt;    Pin::new_unchecked(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;mut&lt;&#x2F;span&gt;&lt;span&gt; foo.bar)
+&lt;&#x2F;span&gt;&lt;span&gt;};
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;pinbox&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#pinbox&quot; aria-label=&quot;Anchor link for: pinbox&quot;&gt;
+    &lt;i class=&quot;fas fa-link&quot;&gt;&lt;&#x2F;i&gt;
+&lt;&#x2F;a&gt;
+&lt;code&gt;PinBox&lt;&#x2F;code&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;code&gt;PinBox&lt;&#x2F;code&gt; 类型被加入到 &lt;code&gt;alloc::boxed&lt;&#x2F;code&gt; 和 &lt;code&gt;std::boxed&lt;&#x2F;code&gt;。正如 &lt;code&gt;Pin&lt;&#x2F;code&gt; 类似于引用类型，&lt;code&gt;Box&lt;&#x2F;code&gt; 类似于 &lt;code&gt;Box&lt;&#x2F;code&gt; 类型，它有相似的 API。&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;#&lt;&#x2F;span&gt;&lt;span&gt;#[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;fundamental&lt;&#x2F;span&gt;&lt;span&gt;]
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;pub struct &lt;&#x2F;span&gt;&lt;span&gt;PinBox&amp;lt;T: &lt;&#x2F;span&gt;&lt;span style=&quot;background-color:#e06c75;color:#fafafa;&quot;&gt;?&lt;&#x2F;span&gt;&lt;span&gt;Sized&amp;gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;inner&lt;&#x2F;span&gt;&lt;span&gt;: Box&amp;lt;T&amp;gt;,
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h4 id=&quot;an-quan-api&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#an-quan-api&quot; aria-label=&quot;Anchor link for: an-quan-api&quot;&gt;
+    &lt;i class=&quot;fas fa-link&quot;&gt;&lt;&#x2F;i&gt;
+&lt;&#x2F;a&gt;
+安全 API&lt;&#x2F;h4&gt;
+&lt;p&gt;不同于 &lt;code&gt;Pin&lt;&#x2F;code&gt;，从一个 &lt;code&gt;T&lt;&#x2F;code&gt; 和 &lt;code&gt;Box&amp;lt;T&amp;gt;&lt;&#x2F;code&gt; 构建 &lt;code&gt;PinBox&lt;&#x2F;code&gt; 是安全的，即使类型没有实现 &lt;code&gt;Unpin&lt;&#x2F;code&gt;。&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;impl&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;T&amp;gt; PinBox&amp;lt;T&amp;gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;pub fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;new&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;data&lt;&#x2F;span&gt;&lt;span&gt;: T) -&amp;gt; PinBox&amp;lt;T&amp;gt; { &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;... &lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;impl&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;T: &lt;&#x2F;span&gt;&lt;span style=&quot;background-color:#e06c75;color:#fafafa;&quot;&gt;?&lt;&#x2F;span&gt;&lt;span&gt;Sized&amp;gt; From&amp;lt;Box&amp;lt;T&amp;gt;&amp;gt; for PinBox&amp;lt;T&amp;gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;from&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;boxed&lt;&#x2F;span&gt;&lt;span&gt;: Box&amp;lt;T&amp;gt;) -&amp;gt; PinBox&amp;lt;T&amp;gt; { &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;... &lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;它也提供了和 &lt;code&gt;Pin&lt;&#x2F;code&gt; 同样的 &lt;code&gt;Deref&lt;&#x2F;code&gt; 实现：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;impl&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;T: &lt;&#x2F;span&gt;&lt;span style=&quot;background-color:#e06c75;color:#fafafa;&quot;&gt;?&lt;&#x2F;span&gt;&lt;span&gt;Sized&amp;gt; Deref for PinBox&amp;lt;T&amp;gt; { &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;... &lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;impl&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;T: Unpin &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;+ &lt;&#x2F;span&gt;&lt;span style=&quot;background-color:#e06c75;color:#fafafa;&quot;&gt;?&lt;&#x2F;span&gt;&lt;span&gt;Sized&amp;gt; DerefMut for PinBox&amp;lt;T&amp;gt; { &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;... &lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;如果数据实现了 &lt;code&gt;Unpin&lt;&#x2F;code&gt;，将 &lt;code&gt;PinBox&lt;&#x2F;code&gt; 转换为 &lt;code&gt;Box&lt;&#x2F;code&gt; 是安全的：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;impl&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;T: Unpin &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;+ &lt;&#x2F;span&gt;&lt;span style=&quot;background-color:#e06c75;color:#fafafa;&quot;&gt;?&lt;&#x2F;span&gt;&lt;span&gt;Sized&amp;gt; From&amp;lt;PinBox&amp;lt;T&amp;gt;&amp;gt; for Box&amp;lt;T&amp;gt; { &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;... &lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;最后，可以安全地从 &lt;code&gt;PinBox&lt;&#x2F;code&gt; 的借用获取一个 &lt;code&gt;Pin&lt;&#x2F;code&gt;：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;impl&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;T: &lt;&#x2F;span&gt;&lt;span style=&quot;background-color:#e06c75;color:#fafafa;&quot;&gt;?&lt;&#x2F;span&gt;&lt;span&gt;Sized&amp;gt; PinBox&amp;lt;T&amp;gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;as_pin&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;#39;a&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;&amp;#39;a mut &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;) -&amp;gt; Pin&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;#39;a&lt;&#x2F;span&gt;&lt;span&gt;, T&amp;gt; { &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;... &lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;这些 APIs 使 &lt;code&gt;PinBox&lt;&#x2F;code&gt; 能够作为一个合理的方法处理没有实现 &lt;code&gt;Unpin&lt;&#x2F;code&gt; 的数据。一旦你在 &lt;code&gt;PinBox&lt;&#x2F;code&gt; 内分配数据到堆上，你知道它的地址不会改变，同时可以分发对这些数据的 &lt;code&gt;Pin&lt;&#x2F;code&gt; 引用。&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;bu-an-quan-api&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#bu-an-quan-api&quot; aria-label=&quot;Anchor link for: bu-an-quan-api&quot;&gt;
+    &lt;i class=&quot;fas fa-link&quot;&gt;&lt;&#x2F;i&gt;
+&lt;&#x2F;a&gt;
+不安全 API&lt;&#x2F;h4&gt;
+&lt;p&gt;类似 &lt;code&gt;Pin&lt;&#x2F;code&gt;，&lt;code&gt;PinBox&lt;&#x2F;code&gt; 可以被不安全地转换为 &lt;code&gt;&amp;amp;mut T&lt;&#x2F;code&gt; 和 &lt;code&gt;Box&amp;lt;T&amp;gt;&lt;&#x2F;code&gt; 即使它引用的类型没有实现 &lt;code&gt;Unpin&lt;&#x2F;code&gt;：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;impl&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;T: &lt;&#x2F;span&gt;&lt;span style=&quot;background-color:#e06c75;color:#fafafa;&quot;&gt;?&lt;&#x2F;span&gt;&lt;span&gt;Sized&amp;gt; PinBox&amp;lt;T&amp;gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;pub unsafe fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;get_mut&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;#39;a&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;this&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;&amp;#39;a mut &lt;&#x2F;span&gt;&lt;span&gt;PinBox&amp;lt;T&amp;gt;) -&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;&amp;#39;a mut&lt;&#x2F;span&gt;&lt;span&gt; T { &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;... &lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;pub unsafe fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;into_inner&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;this&lt;&#x2F;span&gt;&lt;span&gt;: PinBox&amp;lt;T&amp;gt;) -&amp;gt; Box&amp;lt;T&amp;gt; { &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;... &lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;bu-ke-yi-dong-sheng-cheng-qi&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#bu-ke-yi-dong-sheng-cheng-qi&quot; aria-label=&quot;Anchor link for: bu-ke-yi-dong-sheng-cheng-qi&quot;&gt;
+    &lt;i class=&quot;fas fa-link&quot;&gt;&lt;&#x2F;i&gt;
+&lt;&#x2F;a&gt;
+不可移动生成器&lt;&#x2F;h3&gt;
+&lt;p&gt;如今，不稳定的生成器特性有选项能够生成包含生存期跨越 yield 点的引用的生成器——这些引用，事实上，是生成器的状态机的引用。因为如果类型移动，内部引用将失效，这类生成器（“不可移动生成器”）的创建目前是不安全的。&lt;&#x2F;p&gt;
+&lt;p&gt;一旦 arbitrary_self_types 特性成为对象安全，我们将对生成器 API 做三个改动：&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;我们将改变 &lt;code&gt;resume&lt;&#x2F;code&gt; 方法，接收 &lt;code&gt;self: Pin&amp;lt;Self&amp;gt;&lt;&#x2F;code&gt; 而非 &lt;code&gt;&amp;amp;mut self&lt;&#x2F;code&gt;。&lt;&#x2F;li&gt;
+&lt;li&gt;为不可移动生成器实现 &lt;code&gt;!Unpin&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;使不可移动生成器的定义变为安全的&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;这就是这个 RFC 中的 API 如何允许自引用数据被安全地创建的例子。&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;que-dian&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#que-dian&quot; aria-label=&quot;Anchor link for: que-dian&quot;&gt;
+    &lt;i class=&quot;fas fa-link&quot;&gt;&lt;&#x2F;i&gt;
+&lt;&#x2F;a&gt;
+缺点&lt;&#x2F;h2&gt;
+&lt;p&gt;这向 std 添加了额外的 APIs，包括一个自动 trait。这样的添加不能被轻易地接受，仅当它们对于它们所表达的抽象完全合理时才能添加。&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;li-you-he-ti-dai-fang-an&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#li-you-he-ti-dai-fang-an&quot; aria-label=&quot;Anchor link for: li-you-he-ti-dai-fang-an&quot;&gt;
+    &lt;i class=&quot;fas fa-link&quot;&gt;&lt;&#x2F;i&gt;
+&lt;&#x2F;a&gt;
+理由和替代方案&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;dui-bi-move&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#dui-bi-move&quot; aria-label=&quot;Anchor link for: dui-bi-move&quot;&gt;
+    &lt;i class=&quot;fas fa-link&quot;&gt;&lt;&#x2F;i&gt;
+&lt;&#x2F;a&gt;
+对比 &lt;code&gt;?Move&lt;&#x2F;code&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;一个之前的提案是添加一个内置的 &lt;code&gt;Move&lt;&#x2F;code&gt; trait，类似于 &lt;code&gt;Sized&lt;&#x2F;code&gt;。一个没有实现 &lt;code&gt;Move&lt;&#x2F;code&gt; 的类型在被引用以后不能被移动。&lt;&#x2F;p&gt;
+&lt;p&gt;这个解决方案有一些问题。首先，&lt;code&gt;?Move&lt;&#x2F;code&gt; 限定最终“传染”了很多不同的不相关的 APIs，并且在几个情况下提出了破坏性的改变，这些 API 的改变无法保持向后兼容。&lt;&#x2F;p&gt;
+&lt;p&gt;在某些场景下，这个提案是一个范围小得多的 &lt;code&gt;?Move&lt;&#x2F;code&gt;。如果使用 &lt;code&gt;?Move&lt;&#x2F;code&gt;，&lt;em&gt;任何&lt;&#x2F;em&gt;引用就会表现得如这里的“Pin”引用一样。然而，因为这个灵活性，使一个类型无法移动的负面后果就是会有更加广泛的不良影响。&lt;&#x2F;p&gt;
+&lt;p&gt;相反地，我们要求 APIs 通过使用 &lt;code&gt;Pin&lt;&#x2F;code&gt; 类型选择支持不可变性，避免“传染”基本的引用类型，与不可移动类型产生关系。&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;dui-bi-shi-yong-unsafe-apis&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#dui-bi-shi-yong-unsafe-apis&quot; aria-label=&quot;Anchor link for: dui-bi-shi-yong-unsafe-apis&quot;&gt;
+    &lt;i class=&quot;fas fa-link&quot;&gt;&lt;&#x2F;i&gt;
+&lt;&#x2F;a&gt;
+对比使用 &lt;code&gt;unsafe&lt;&#x2F;code&gt; APIs&lt;&#x2F;h3&gt;
+&lt;p&gt;另一个我们考虑的替代选项是仅仅使要求不可移动性的 API 不安全。这些 APIs 的用户必须考查并确保它们没有移动自引用类型。举个例子，生成器将像这样：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;trait &lt;&#x2F;span&gt;&lt;span&gt;Generator {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;type &lt;&#x2F;span&gt;&lt;span&gt;Yield;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;type &lt;&#x2F;span&gt;&lt;span&gt;Return;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;unsafe fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;resume&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;mut &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;) -&amp;gt; CoResult&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;Self::&lt;&#x2F;span&gt;&lt;span&gt;Yield, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;Self::&lt;&#x2F;span&gt;&lt;span&gt;Return&amp;gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;这将不要求对标准库添加任何东西，但这也将使每一个想要调用 resume 的用户负担起保证检查（冒着内存不安全的风险）它们的类型没有被移动或者是可移动的的任务。对于添加这种 APIs，这似乎是一个不良的取舍。&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;zuo-wei-bao-zhuang-lei-de-anchor-he-stablederef&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#zuo-wei-bao-zhuang-lei-de-anchor-he-stablederef&quot; aria-label=&quot;Anchor link for: zuo-wei-bao-zhuang-lei-de-anchor-he-stablederef&quot;&gt;
+    &lt;i class=&quot;fas fa-link&quot;&gt;&lt;&#x2F;i&gt;
+&lt;&#x2F;a&gt;
+作为包装类的 Anchor 和 &lt;code&gt;StableDeref&lt;&#x2F;code&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;再过去的本 RFC 的迭代中，有一个包装类型叫做 &lt;code&gt;Anchor&lt;&#x2F;code&gt;，这个类型能够“锚定”任何智能指针，而且有一个关于不同指针类型的被引用对象的稳定性的 traits 层级。这个类型被替换为了 &lt;code&gt;PinBox&lt;&#x2F;code&gt;。&lt;&#x2F;p&gt;
+&lt;p&gt;这种方法的主要好处是它与 owning-ref 和 rental 这种 crates 部分整合，这些 crates 也使用稳定性层级。然而，因为要求的不同，owning-ref 以及其他此类 crates 使用的 traits 最终形成了与 Anchor 使用的 traits 没有重叠的一个这个 RFC 提出的 traits 子集。将这些整合进同一个层级结构中相对来说只有很少的好处。&lt;&#x2F;p&gt;
+&lt;p&gt;并且，之前，仅有的几个实现了放入 Anchor 所有必要的 traits 的类型是 &lt;code&gt;Box&amp;lt;T&amp;gt;&lt;&#x2F;code&gt; 和 &lt;code&gt;Vec&amp;lt;T&amp;gt;&lt;&#x2F;code&gt;。因为你无法可变访问一个智能指针（除非被引用对象实现了 &lt;code&gt;Unpin&lt;&#x2F;code&gt;），在这个 RFC 的上一个迭代中一个 &lt;code&gt;Anchor&amp;lt;Vec&amp;lt;T&amp;gt;&amp;gt;&lt;&#x2F;code&gt; 并没有真的与 &lt;code&gt;Anchor&amp;lt;Box&amp;lt;[T]&amp;gt;&amp;gt;&lt;&#x2F;code&gt; 有什么不同。由于这个原因，将 &lt;code&gt;Anchor&lt;&#x2F;code&gt; 替换为 &lt;code&gt;PinBox&lt;&#x2F;code&gt; 并仅支持 &lt;code&gt;PinBox&amp;lt;T&amp;gt;&lt;&#x2F;code&gt;，这在减少了 API 复杂度的同时也没有减少表现力。&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;zhan-pinning-api-qian-zai-de-wei-lai-kuo-zhan&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#zhan-pinning-api-qian-zai-de-wei-lai-kuo-zhan&quot; aria-label=&quot;Anchor link for: zhan-pinning-api-qian-zai-de-wei-lai-kuo-zhan&quot;&gt;
+    &lt;i class=&quot;fas fa-link&quot;&gt;&lt;&#x2F;i&gt;
+&lt;&#x2F;a&gt;
+栈 pinning API（潜在的未来扩展）&lt;&#x2F;h3&gt;
+&lt;p&gt;这个 API 支持 pinning 一个 &lt;code&gt;!Unpin&lt;&#x2F;code&gt; 类型到堆上。然而，它们也可以被安全地放置在栈上，允许创建一个安全的引用栈上分配的 &lt;code&gt;!Unpin&lt;&#x2F;code&gt; 类型的 &lt;code&gt;Pin&lt;&#x2F;code&gt;。&lt;&#x2F;p&gt;
+&lt;p&gt;这个 API 很小，并且不会成为任何人的公共 API 的一部分。由于这个原因，在加入到 std 之前，我们将在第三方 crates 中发展它。这是这个 API 用于引用目的的一个版本：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;pub fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;pinned&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;data&lt;&#x2F;span&gt;&lt;span&gt;: T) -&amp;gt; PinTemporary&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;#39;a&lt;&#x2F;span&gt;&lt;span&gt;, T&amp;gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;    PinTemporary { data, _marker: PhantomData }
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;struct &lt;&#x2F;span&gt;&lt;span&gt;PinTemporary&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;#39;a&lt;&#x2F;span&gt;&lt;span&gt;, T: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;#39;a&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;data&lt;&#x2F;span&gt;&lt;span&gt;: T,
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;_marker&lt;&#x2F;span&gt;&lt;span&gt;: PhantomData&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;&amp;#39;a &amp;amp;&amp;#39;a mut &lt;&#x2F;span&gt;&lt;span&gt;()&amp;gt;,
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;impl&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;#39;a&lt;&#x2F;span&gt;&lt;span&gt;, T&amp;gt; PinTemporary&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;#39;a&lt;&#x2F;span&gt;&lt;span&gt;, T&amp;gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;pub fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;into_pin&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;&amp;#39;a mut &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;) -&amp;gt; Pin&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;#39;a&lt;&#x2F;span&gt;&lt;span&gt;, T&amp;gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;unsafe &lt;&#x2F;span&gt;&lt;span&gt;{ Pin::new_unchecked(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;mut &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.data) }
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;jiang-pin-zuo-wei-nei-zhi-lei-xing-qian-zai-de-wei-lai-kuo-zhan&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#jiang-pin-zuo-wei-nei-zhi-lei-xing-qian-zai-de-wei-lai-kuo-zhan&quot; aria-label=&quot;Anchor link for: jiang-pin-zuo-wei-nei-zhi-lei-xing-qian-zai-de-wei-lai-kuo-zhan&quot;&gt;
+    &lt;i class=&quot;fas fa-link&quot;&gt;&lt;&#x2F;i&gt;
+&lt;&#x2F;a&gt;
+将 &lt;code&gt;Pin&lt;&#x2F;code&gt; 作为内置类型（潜在的未来扩展）&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;code&gt;Pin&lt;&#x2F;code&gt; 类型也可以作为一种新的一级引用——&lt;code&gt;&amp;amp;&#x27;a pin T&lt;&#x2F;code&gt;。这将有一些好处——举个例子，映射字段的操作将变得平凡，以及“栈 pinning”将不要求额外 API，这将是自然的。然而，添加一个新的引用类型有不好的一面，一个非常大的语言变化。&lt;&#x2F;p&gt;
+&lt;p&gt;现在，我们对坚持 std 中的 &lt;code&gt;Pin&lt;&#x2F;code&gt; 结构体感到高兴，如果这个类型某天加入了，将 &lt;code&gt;Pin&lt;&#x2F;code&gt; 类型转换为这个引用类型的别名。&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;tong-shi-you-pin-he-pinmut&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#tong-shi-you-pin-he-pinmut&quot; aria-label=&quot;Anchor link for: tong-shi-you-pin-he-pinmut&quot;&gt;
+    &lt;i class=&quot;fas fa-link&quot;&gt;&lt;&#x2F;i&gt;
+&lt;&#x2F;a&gt;
+同时有 &lt;code&gt;Pin&lt;&#x2F;code&gt; 和 &lt;code&gt;PinMut&lt;&#x2F;code&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;相比与仅有 &lt;code&gt;Pin&lt;&#x2F;code&gt;，叫做 &lt;code&gt;Pin&lt;&#x2F;code&gt; 的类型也可以叫做 &lt;code&gt;PinMut&lt;&#x2F;code&gt;，我们可以有个类型叫做 &lt;code&gt;Pin&lt;&#x2F;code&gt; 的，与 &lt;code&gt;PinMut&lt;&#x2F;code&gt; 类似的类型，但仅包含一个共享的，不可变的引用。&lt;&#x2F;p&gt;
+&lt;p&gt;因为我们已经对 &lt;code&gt;Pin&lt;&#x2F;code&gt;&#x2F;&lt;code&gt;PinMut&lt;&#x2F;code&gt; 的不可变解引用的安全性有信心，这个 &lt;code&gt;Pin&lt;&#x2F;code&gt; 类型不会提供普通不可变引用不能提供的有意义的保证。如果一个用户需要传递一个 pinned 的数据的引用，一个 &lt;code&gt;&amp;amp;Pin&lt;&#x2F;code&gt;（在本 RFC 中定义的 &lt;code&gt;Pin&lt;&#x2F;code&gt;）是足够的。由于这个原因，区分 &lt;code&gt;Pin&lt;&#x2F;code&gt;&#x2F;&lt;code&gt;PinMut&lt;&#x2F;code&gt; 导致了额外的类型和复杂性，没有提供有影响力的好处。&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;wei-jie-jue-de-wen-ti&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#wei-jie-jue-de-wen-ti&quot; aria-label=&quot;Anchor link for: wei-jie-jue-de-wen-ti&quot;&gt;
+    &lt;i class=&quot;fas fa-link&quot;&gt;&lt;&#x2F;i&gt;
+&lt;&#x2F;a&gt;
+未解决的问题&lt;&#x2F;h2&gt;
+&lt;p&gt;除了上述讨论的未来的扩展，std 中的三个 pin 类型将随时间发展，由于它们实现了更多普遍的转换 traits 等等。&lt;&#x2F;p&gt;
+&lt;p&gt;我们可能进一步要求 &lt;code&gt;Pin&lt;&#x2F;code&gt; 维护更严格的保证，要求 &lt;code&gt;Pin&lt;&#x2F;code&gt; 中的 &lt;code&gt;Unpin&lt;&#x2F;code&gt; 数据不会泄漏，除非这块内存在程序剩余的生存期中依然有效。这将会导致上文中的栈 API 不健全，但是可能也能用来使其他 API 使用这些保证来确保内存失效时析构器总是会执行。&lt;&#x2F;p&gt;
+</content>
+	</entry>
+	<entry xml:lang="cn">
+		<title>Futures-rs 博文 Toykio 翻译</title>
+		<published>2018-08-18T18:24:51+08:00</published>
+		<updated>2018-08-21T08:52:15+08:00</updated>
+		<link href="https://www.linyinfeng.com/posts/toykio/" type="text/html"/>
+		<id>https://www.linyinfeng.com/posts/toykio/</id>
+		<content type="html">&lt;p&gt;本文为 Rust futures-rs 博客 2018 年 8 月 17 日 的 博文 &lt;a href=&quot;https:&#x2F;&#x2F;rust-lang-nursery.github.io&#x2F;futures-rs&#x2F;blog&#x2F;2018&#x2F;08&#x2F;17&#x2F;toykio.html&quot;&gt;Toykio&lt;&#x2F;a&gt; 的中文翻译。&lt;&#x2F;p&gt;
+&lt;p&gt;原文作者 Alexander Polakov（&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;polachok&quot;&gt;@polachok&lt;&#x2F;a&gt;）。&lt;&#x2F;p&gt;
+&lt;p&gt;原文目前（2018-08-21）为可选的 MIT 和 Apache 授权，本文使用了其 MIT 授权。&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;linyinfeng&#x2F;blog&#x2F;tree&#x2F;master&#x2F;content&#x2F;posts&#x2F;toykio&#x2F;LICENSE-MIT&quot;&gt;MIT 许可证副本&lt;&#x2F;a&gt;。&lt;&#x2F;p&gt;
+&lt;span id=&quot;continue-reading&quot;&gt;&lt;&#x2F;span&gt;
+&lt;p&gt;在这个博文中我将展示 toykio，一个用于学习带有事件循环的 executor 如何工作的简单 futures executor。Toykio 仅仅提供很少的特性：一个事件循环以及 TCP 流和监听器。但是事实证明，由于 futures 是可组合的，这已经足够用来构建复杂的客户端和服务器程序。&lt;&#x2F;p&gt;
+&lt;p&gt;在下文中，我将向你提供 toykio 组件的快速概述。&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;asynctcpstream&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#asynctcpstream&quot; aria-label=&quot;Anchor link for: asynctcpstream&quot;&gt;
+    &lt;i class=&quot;fas fa-link&quot;&gt;&lt;&#x2F;i&gt;
+&lt;&#x2F;a&gt;
+&lt;code&gt;AsyncTcpStream&lt;&#x2F;code&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;Toykio 定义了 &lt;code&gt;AsyncTcpStream&lt;&#x2F;code&gt; 类型，这是一个标准库中的 &lt;code&gt;TcpStream&lt;&#x2F;code&gt; 的包装。就像标准库中的 &lt;code&gt;TcpStream&lt;&#x2F;code&gt; 一样，&lt;code&gt;connect&lt;&#x2F;code&gt; 函数打开一个连接并将 socket 设为非阻塞模式。这意味着 &lt;code&gt;read()&lt;&#x2F;code&gt; 和 &lt;code&gt;write()&lt;&#x2F;code&gt; 方法将会立刻返回数据或者错误。如果没有足够的数据（对于读操作）或者缓冲区空间（对于写操作），一个特殊的错误 &lt;code&gt;WouldBlock&lt;&#x2F;code&gt; 将被返回。我们将在下一节中讨论如何处理它。&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;asyncread-he-asyncwrite&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#asyncread-he-asyncwrite&quot; aria-label=&quot;Anchor link for: asyncread-he-asyncwrite&quot;&gt;
+    &lt;i class=&quot;fas fa-link&quot;&gt;&lt;&#x2F;i&gt;
+&lt;&#x2F;a&gt;
+&lt;code&gt;AsyncRead&lt;&#x2F;code&gt; 和 &lt;code&gt;AsyncWrite&lt;&#x2F;code&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;&lt;code&gt;AsyncRead&lt;&#x2F;code&gt; 和 &lt;code&gt;AsyncWrite&lt;&#x2F;code&gt; traits 是所有 I&#x2F;O 特性的基础。&lt;code&gt;AsyncReadExt&lt;&#x2F;code&gt; 和 &lt;code&gt;AsyncWriteExt&lt;&#x2F;code&gt; 的扩展方法（如 &lt;code&gt;read&lt;&#x2F;code&gt; 和 &lt;code&gt;write_all&lt;&#x2F;code&gt;）均在其上构建。这些 traits 提供了一种 futures 与事件循环连接的方法，同时保证它们独立于任何特定的事件循环实现。&lt;&#x2F;p&gt;
+&lt;p&gt;让我们看看为 &lt;code&gt;AsyncTcpStream&lt;&#x2F;code&gt; 实现 &lt;code&gt;AsyncRead&lt;&#x2F;code&gt; 的方法：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;impl &lt;&#x2F;span&gt;&lt;span&gt;AsyncRead &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;for &lt;&#x2F;span&gt;&lt;span&gt;AsyncTcpStream {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;poll_read&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;mut &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;cx&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;mut&lt;&#x2F;span&gt;&lt;span&gt; Context, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;buf&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;mut&lt;&#x2F;span&gt;&lt;span&gt; [&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;u8&lt;&#x2F;span&gt;&lt;span&gt;]) -&amp;gt; Poll&amp;lt;Result&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;usize&lt;&#x2F;span&gt;&lt;span&gt;, Error&amp;gt;&amp;gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;match &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c18401;&quot;&gt;0.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;read&lt;&#x2F;span&gt;&lt;span&gt;(buf) {
+&lt;&#x2F;span&gt;&lt;span&gt;            Ok(len) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;=&amp;gt; &lt;&#x2F;span&gt;&lt;span&gt;Poll::Ready(Ok(len)),
+&lt;&#x2F;span&gt;&lt;span&gt;            Err(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;ref&lt;&#x2F;span&gt;&lt;span&gt; err) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;if&lt;&#x2F;span&gt;&lt;span&gt; err.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;kind&lt;&#x2F;span&gt;&lt;span&gt;() &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;== &lt;&#x2F;span&gt;&lt;span&gt;std::io::ErrorKind::WouldBlock &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;=&amp;gt; &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;                &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a0a1a7;&quot;&gt;&#x2F;&#x2F; 获取 TcpStream 文件描述符
+&lt;&#x2F;span&gt;&lt;span&gt;                &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span&gt; fd &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c18401;&quot;&gt;0.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;as_raw_fd&lt;&#x2F;span&gt;&lt;span&gt;();
+&lt;&#x2F;span&gt;&lt;span&gt;                &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span&gt; waker &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span&gt; cx.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;waker&lt;&#x2F;span&gt;&lt;span&gt;();
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;                &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c18401;&quot;&gt;REACTOR&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;with&lt;&#x2F;span&gt;&lt;span&gt;(|&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;reactor&lt;&#x2F;span&gt;&lt;span&gt;| reactor.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;add_read_interest&lt;&#x2F;span&gt;&lt;span&gt;(fd, waker.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;clone&lt;&#x2F;span&gt;&lt;span&gt;()));
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;                Poll::Pending
+&lt;&#x2F;span&gt;&lt;span&gt;            }
+&lt;&#x2F;span&gt;&lt;span&gt;            Err(err) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;=&amp;gt; &lt;&#x2F;span&gt;&lt;span&gt;panic!(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#50a14f;&quot;&gt;&amp;quot;error {:?}&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;, err),
+&lt;&#x2F;span&gt;&lt;span&gt;        }
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;它尝试从底层的 &lt;code&gt;TcpStream&lt;&#x2F;code&gt; 读取。如果读取成功了，切片将被填上数据。如果失败并且返回了 &lt;code&gt;WouldBlock&lt;&#x2F;code&gt; 错误，就将当前任务的唤醒器注册，这样它将在数据可用的时候被唤醒。下一节中将提到更多有关的细节。&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;AsyncWrite&lt;&#x2F;code&gt; 的实现对 &lt;code&gt;write&lt;&#x2F;code&gt; 做了类似的事。&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;shi-jian-xun-huan&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#shi-jian-xun-huan&quot; aria-label=&quot;Anchor link for: shi-jian-xun-huan&quot;&gt;
+    &lt;i class=&quot;fas fa-link&quot;&gt;&lt;&#x2F;i&gt;
+&lt;&#x2F;a&gt;
+事件循环&lt;&#x2F;h2&gt;
+&lt;p&gt;&lt;code&gt;Eventloop&lt;&#x2F;code&gt;（通常也被叫做 reactor）是这个 executor 的核心。它像这样被定义：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;struct &lt;&#x2F;span&gt;&lt;span&gt;InnerEventLoop {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;read&lt;&#x2F;span&gt;&lt;span&gt;: RefCell&amp;lt;BTreeMap&amp;lt;RawFd, Waker&amp;gt;&amp;gt;,
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;write&lt;&#x2F;span&gt;&lt;span&gt;: RefCell&amp;lt;BTreeMap&amp;lt;RawFd, Waker&amp;gt;&amp;gt;,
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;counter&lt;&#x2F;span&gt;&lt;span&gt;: Cell&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;usize&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;,
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;wait_queue&lt;&#x2F;span&gt;&lt;span&gt;: RefCell&amp;lt;BTreeMap&amp;lt;TaskId, Task&amp;gt;&amp;gt;,
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;run_queue&lt;&#x2F;span&gt;&lt;span&gt;: RefCell&amp;lt;VecDeque&amp;lt;Wakeup&amp;gt;&amp;gt;,
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;read&lt;&#x2F;code&gt; 和 &lt;code&gt;write&lt;&#x2F;code&gt; 是 &lt;code&gt;BTreeMaps&lt;&#x2F;code&gt;，将文件描述符映射到唤醒器。&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;wait_queue&lt;&#x2F;code&gt; 保存了阻塞的等待事件的任务。&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;run_queue&lt;&#x2F;code&gt; 保存了唤醒消息。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;事件循环提供了在 &lt;code&gt;read&lt;&#x2F;code&gt; 和 &lt;code&gt;write&lt;&#x2F;code&gt; 事件中注册（和移除）兴趣的方法。让我们看看 &lt;code&gt;add_read_interest&lt;&#x2F;code&gt; 做了什么：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;add_read_interest&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;fd&lt;&#x2F;span&gt;&lt;span&gt;: RawFd, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;waker&lt;&#x2F;span&gt;&lt;span&gt;: Waker) {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;if !&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.read.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;borrow&lt;&#x2F;span&gt;&lt;span&gt;().&lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;contains_key&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;&lt;&#x2F;span&gt;&lt;span&gt;fd) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.read.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;borrow_mut&lt;&#x2F;span&gt;&lt;span&gt;().&lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;insert&lt;&#x2F;span&gt;&lt;span&gt;(fd, waker);
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;但它仅仅是把 &lt;code&gt;fd&lt;&#x2F;code&gt; 和 &lt;code&gt;waker&lt;&#x2F;code&gt; 插入到 &lt;code&gt;read&lt;&#x2F;code&gt; 树中！所有的魔法到底发生在哪里？在主循环中。事件循环被叫做循环是有原因的。让我们看看：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;loop &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a0a1a7;&quot;&gt;&#x2F;&#x2F; 事件循环迭代超时。如果没有描述符就绪我们也继续迭代。
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;let mut&lt;&#x2F;span&gt;&lt;span&gt; tv: timeval &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span&gt; timeval {
+&lt;&#x2F;span&gt;&lt;span&gt;        tv_sec: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c18401;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;span&gt;        tv_usec: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c18401;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;span&gt;    };
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a0a1a7;&quot;&gt;&#x2F;&#x2F; 初始化 fd_sets（文件描述符集）
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;let mut&lt;&#x2F;span&gt;&lt;span&gt; read_fds: fd_set &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= unsafe &lt;&#x2F;span&gt;&lt;span&gt;{ std::mem::zeroed() };
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;let mut&lt;&#x2F;span&gt;&lt;span&gt; write_fds: fd_set &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= unsafe &lt;&#x2F;span&gt;&lt;span&gt;{ std::mem::zeroed() };
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;unsafe &lt;&#x2F;span&gt;&lt;span&gt;{ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c18401;&quot;&gt;FD_ZERO&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;mut&lt;&#x2F;span&gt;&lt;span&gt; read_fds) };
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;unsafe &lt;&#x2F;span&gt;&lt;span&gt;{ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c18401;&quot;&gt;FD_ZERO&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;mut&lt;&#x2F;span&gt;&lt;span&gt; write_fds) };
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;唔哦，这里有非常多的 &lt;code&gt;unsafe&lt;&#x2F;code&gt;！但是别担心，这就是 C FFI 的工作方式。我们需要初始化一些 C 结构体，一个超时和 &lt;code&gt;fd_set&lt;&#x2F;code&gt;s。它们后面将被传递给 select(2) 函数。&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a0a1a7;&quot;&gt;&#x2F;&#x2F; 将所有读兴趣加入到读 fd_sets
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;for&lt;&#x2F;span&gt;&lt;span&gt; fd &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;in &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.read.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;borrow&lt;&#x2F;span&gt;&lt;span&gt;().&lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;keys&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;unsafe &lt;&#x2F;span&gt;&lt;span&gt;{ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c18401;&quot;&gt;FD_SET&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;fd, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;mut&lt;&#x2F;span&gt;&lt;span&gt; read_fds &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;as *mut&lt;&#x2F;span&gt;&lt;span&gt; fd_set) };
+&lt;&#x2F;span&gt;&lt;span&gt;        nfds &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;std::cmp::max(nfds, fd &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;+ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c18401;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a0a1a7;&quot;&gt;&#x2F;&#x2F; 将所有写兴趣加入到写 fd_sets
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;for&lt;&#x2F;span&gt;&lt;span&gt; fd &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;in &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.write.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;borrow&lt;&#x2F;span&gt;&lt;span&gt;().&lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;keys&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;unsafe &lt;&#x2F;span&gt;&lt;span&gt;{ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c18401;&quot;&gt;FD_SET&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;fd, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;mut&lt;&#x2F;span&gt;&lt;span&gt; write_fds &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;as *mut&lt;&#x2F;span&gt;&lt;span&gt; fd_set) };
+&lt;&#x2F;span&gt;&lt;span&gt;        nfds &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;std::cmp::max(nfds, fd &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;+ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c18401;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;这里我们将之前 &lt;code&gt;read&lt;&#x2F;code&gt; 和 &lt;code&gt;write&lt;&#x2F;code&gt; maps 中的文件描述符置入到 &lt;code&gt;fd_set&lt;&#x2F;code&gt;s 中。&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a0a1a7;&quot;&gt;&#x2F;&#x2F; `select` 将阻塞到文件描述符上有一些事件发生或者超时
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span&gt; rv &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= unsafe &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;select&lt;&#x2F;span&gt;&lt;span&gt;(
+&lt;&#x2F;span&gt;&lt;span&gt;            nfds,
+&lt;&#x2F;span&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;mut&lt;&#x2F;span&gt;&lt;span&gt; read_fds,
+&lt;&#x2F;span&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;mut&lt;&#x2F;span&gt;&lt;span&gt; write_fds,
+&lt;&#x2F;span&gt;&lt;span&gt;            std::ptr::null_mut(),
+&lt;&#x2F;span&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;mut&lt;&#x2F;span&gt;&lt;span&gt; tv,
+&lt;&#x2F;span&gt;&lt;span&gt;        )
+&lt;&#x2F;span&gt;&lt;span&gt;    };
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a0a1a7;&quot;&gt;&#x2F;&#x2F; 不在乎错误
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;if&lt;&#x2F;span&gt;&lt;span&gt; rv &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;== -&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c18401;&quot;&gt;1 &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;        panic!(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#50a14f;&quot;&gt;&amp;quot;select()&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;    } &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;else if&lt;&#x2F;span&gt;&lt;span&gt; rv &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;== &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c18401;&quot;&gt;0 &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;        debug!(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#50a14f;&quot;&gt;&amp;quot;timeout&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;    } &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;else &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;        debug!(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#50a14f;&quot;&gt;&amp;quot;data available on {} fds&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;, rv);
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;终于我们使用准备的参数调用了 &lt;code&gt;select&lt;&#x2F;code&gt;。&lt;code&gt;select()&lt;&#x2F;code&gt; 接受 3 个 &lt;code&gt;fd_set&lt;&#x2F;code&gt;s（我们在这个例子中忽略了第三个）和一个超时并且返回一些非 0 值如果一个（或多个）集合中的文件标识符就绪了。我们应该随后找到是哪些文件标识符！&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a0a1a7;&quot;&gt;&#x2F;&#x2F; 检查是哪些文件标识符并将合适的 future 置入 run 队列
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;for &lt;&#x2F;span&gt;&lt;span&gt;(fd, waker) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;in &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.read.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;borrow&lt;&#x2F;span&gt;&lt;span&gt;().&lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;iter&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span&gt; is_set &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= unsafe &lt;&#x2F;span&gt;&lt;span&gt;{ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c18401;&quot;&gt;FD_ISSET&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;fd, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;mut&lt;&#x2F;span&gt;&lt;span&gt; read_fds &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;as *mut&lt;&#x2F;span&gt;&lt;span&gt; fd_set) };
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;if&lt;&#x2F;span&gt;&lt;span&gt; is_set {
+&lt;&#x2F;span&gt;&lt;span&gt;            waker.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;wake&lt;&#x2F;span&gt;&lt;span&gt;();
+&lt;&#x2F;span&gt;&lt;span&gt;        }
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a0a1a7;&quot;&gt;&#x2F;&#x2F; 对 write 做一样的事
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;for &lt;&#x2F;span&gt;&lt;span&gt;(fd, waker) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;in &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.write.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;borrow&lt;&#x2F;span&gt;&lt;span&gt;().&lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;iter&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span&gt; is_set &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= unsafe &lt;&#x2F;span&gt;&lt;span&gt;{ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c18401;&quot;&gt;FD_ISSET&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;fd, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;mut&lt;&#x2F;span&gt;&lt;span&gt; write_fds &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;as *mut&lt;&#x2F;span&gt;&lt;span&gt; fd_set) };
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;if&lt;&#x2F;span&gt;&lt;span&gt; is_set {
+&lt;&#x2F;span&gt;&lt;span&gt;            waker.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;wake&lt;&#x2F;span&gt;&lt;span&gt;();
+&lt;&#x2F;span&gt;&lt;span&gt;        }
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;我们再次遍历了我们的 map 并检查它们是否在 &lt;code&gt;fd_set&lt;&#x2F;code&gt;s 中被设为就绪。当它们被设为就绪，我们就调用它们关联的唤醒器的 wake 方法，这将会把 Wakeup 事件置于准备执行队列上。&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;let mut&lt;&#x2F;span&gt;&lt;span&gt; tasks_done &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;Vec::new();
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a0a1a7;&quot;&gt;&#x2F;&#x2F; 现在从 run 队列中 pop 任务并 poll 它们
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;while let &lt;&#x2F;span&gt;&lt;span&gt;Some(wakeup) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.run_queue.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;borrow_mut&lt;&#x2F;span&gt;&lt;span&gt;().&lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;pop_front&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;let mut&lt;&#x2F;span&gt;&lt;span&gt; handle &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;handle&lt;&#x2F;span&gt;&lt;span&gt;();
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;if let &lt;&#x2F;span&gt;&lt;span&gt;Some(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;ref mut&lt;&#x2F;span&gt;&lt;span&gt; task) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.wait_queue.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;borrow_mut&lt;&#x2F;span&gt;&lt;span&gt;().&lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;get_mut&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;&lt;&#x2F;span&gt;&lt;span&gt;wakeup.index) {
+&lt;&#x2F;span&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a0a1a7;&quot;&gt;&#x2F;&#x2F; 如果一个任务返回了 `Poll::Ready`, 我们就完成了它
+&lt;&#x2F;span&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;if&lt;&#x2F;span&gt;&lt;span&gt; task.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;poll&lt;&#x2F;span&gt;&lt;span&gt;(wakeup.waker, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;mut&lt;&#x2F;span&gt;&lt;span&gt; handle).&lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;is_ready&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;                tasks_done.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;push&lt;&#x2F;span&gt;&lt;span&gt;(wakeup.index);
+&lt;&#x2F;span&gt;&lt;span&gt;            }
+&lt;&#x2F;span&gt;&lt;span&gt;        }
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a0a1a7;&quot;&gt;&#x2F;&#x2F; 删除已经完成的任务
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;for&lt;&#x2F;span&gt;&lt;span&gt; idx &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;in&lt;&#x2F;span&gt;&lt;span&gt; tasks_done {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.wait_queue.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;borrow_mut&lt;&#x2F;span&gt;&lt;span&gt;().&lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;remove&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;&amp;amp;&lt;&#x2F;span&gt;&lt;span&gt;idx);
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a0a1a7;&quot;&gt;&#x2F;&#x2F; 如果 `wait_queue` 中没有更多的任务，停止循环
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e45649;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.wait_queue.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;borrow&lt;&#x2F;span&gt;&lt;span&gt;().&lt;&#x2F;span&gt;&lt;span style=&quot;color:#0184bc;&quot;&gt;is_empty&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a626a4;&quot;&gt;return&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;我们消耗了 &lt;code&gt;run_queue&lt;&#x2F;code&gt;，获取 &lt;code&gt;wait_queue&lt;&#x2F;code&gt; 中的任务索引并询问这些任务。Ready(done) 任务将从 &lt;code&gt;wait_queue&lt;&#x2F;code&gt; 中被移除。&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;yi-ge-future-de-yi-sheng&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#yi-ge-future-de-yi-sheng&quot; aria-label=&quot;Anchor link for: yi-ge-future-de-yi-sheng&quot;&gt;
+    &lt;i class=&quot;fas fa-link&quot;&gt;&lt;&#x2F;i&gt;
+&lt;&#x2F;a&gt;
+一个 future 的一生&lt;&#x2F;h2&gt;
+&lt;p&gt;在这节中，我将概括一个 future（让我们以 read 为例子）是如何在 eventloop 中被执行的：&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;首先它由 &lt;code&gt;AsyncTcpStream&lt;&#x2F;code&gt; 的 &lt;code&gt;read()&lt;&#x2F;code&gt; 方法创建，这个方法被所有实现了 &lt;code&gt;AsyncRead&lt;&#x2F;code&gt; trait 的类型实现。&lt;&#x2F;li&gt;
+&lt;li&gt;然后使用 &lt;code&gt;run()&lt;&#x2F;code&gt; 或 &lt;code&gt;spawn()&lt;&#x2F;code&gt; 方法在 executor 中 spawn 它。&lt;&#x2F;li&gt;
+&lt;li&gt;Executor 调用这个 future 的 poll 方法。Read 中 &lt;code&gt;poll&lt;&#x2F;code&gt; 的实现调用 &lt;code&gt;AsyncTcpStream&lt;&#x2F;code&gt; 的 &lt;code&gt;poll_read()&lt;&#x2F;code&gt; 方法，这个方法将它的兴趣注册到 &lt;code&gt;readable&lt;&#x2F;code&gt; 事件中。&lt;&#x2F;li&gt;
+&lt;li&gt;当一个事件发生，future 将被再次 poll。这个循环将被重复直到 future 返回了 ready。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;gan-xie&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#gan-xie&quot; aria-label=&quot;Anchor link for: gan-xie&quot;&gt;
+    &lt;i class=&quot;fas fa-link&quot;&gt;&lt;&#x2F;i&gt;
+&lt;&#x2F;a&gt;
+感谢&lt;&#x2F;h2&gt;
+&lt;p&gt;感谢 futures 团队的所有人。特别感谢 &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;aturon&quot;&gt;@aturon&lt;&#x2F;a&gt; 的鼓励和 &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;MajorBreakfast&quot;&gt;@MajorBreakfast&lt;&#x2F;a&gt; 的编辑。&lt;&#x2F;p&gt;
+&lt;p&gt;这就是今天的所有内容！你可以在 &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;polachok&#x2F;toykio&#x2F;tree&#x2F;futures-0.3&quot;&gt;github&lt;&#x2F;a&gt; 和 &lt;a href=&quot;https:&#x2F;&#x2F;crates.io&#x2F;crates&#x2F;toykio&quot;&gt;crates.io&lt;&#x2F;a&gt; 上找到 toykio。Hacking 快乐！&lt;&#x2F;p&gt;
+</content>
+	</entry>
+	<entry xml:lang="cn">
+		<title>开始写博客</title>
+		<published>2018-08-01T23:53:16+08:00</published>
+		<updated>2018-08-15T18:31:16+08:00</updated>
+		<link href="https://www.linyinfeng.com/posts/start-blogging/" type="text/html"/>
+		<id>https://www.linyinfeng.com/posts/start-blogging/</id>
+		<content type="html">&lt;p&gt;咸鱼了很久觉得还是应该写个博客记录和总结一下日常的学习。&lt;&#x2F;p&gt;
+&lt;span id=&quot;continue-reading&quot;&gt;&lt;&#x2F;span&gt;
+&lt;p&gt;这个网站托管在 github 上，代码仓库为 &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;linyinfeng&#x2F;blog&quot;&gt;linyinfeng&#x2F;blog&lt;&#x2F;a&gt;。&lt;&#x2F;p&gt;
+</content>
+	</entry>
+</feed>

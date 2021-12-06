@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang=cn>
+<head>
+    
+        <title>
+    Futures-rs 博文 Toykio 翻译 -
+    Lin Yinfeng
+</title>
+        
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel=stylesheet type="text/css" href=https://www.linyinfeng.com/normalize.css>
+        <link rel=stylesheet type="text/css" href=https://www.linyinfeng.com/style.css>
+        <script defer src=https://www.linyinfeng.com/layout-helper.js></script>
+        
+            
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-K74P2G7');</script>
+    <!-- End Google Tag Manager -->
+
+        
+        
+            
+                
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/mathtex-script-type.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/copy-tex.css" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/copy-tex.min.js" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+    macros: {
+        "\\set": "\\left\\{ #1 \\right\\}"
+    },
+    delimiters: [
+        {left: "$$",  right: "$$",  display: true },
+        {left: "$",   right: "$",   display: false},
+        {left: "\\(", right: "\\)", display: false},
+        {left: "\\[", right: "\\]", display: true }
+    ]
+}
+ );
+        });
+    </script>
+
+            
+        
+        
+            
+    <script src="https://giscus.app/client.js"
+            data-repo="linyinfeng&#x2F;blog"
+            data-repo-id="MDEwOlJlcG9zaXRvcnkxNDMxMjU5NTA="
+            data-category-id="MDE4OkRpc2N1c3Npb25DYXRlZ29yeTMyOTkyOTcy"
+            data-mapping="pathname"
+            data-reactions-enabled="1"
+            data-theme="light"
+            crossorigin="anonymous"
+            async>
+    </script>
+
+        
+        
+<script src="https://kit.fontawesome.com/ba33ff5900.js" crossorigin="anonymous"></script>
+
+        
+            <link rel="alternate" type="application/atom+xml" title="Atom" href="https://www.linyinfeng.com/atom.xml">
+        
+    
+</head>
+<body>
+    
+        
+        <header id="header">
+            
+            
+    <div class="header-container container">
+        <h1 id="blog-title" class="title">
+            <a href=https:&#x2F;&#x2F;www.linyinfeng.com>
+                <img src="https://www.linyinfeng.com/favicon.ico" alt="Lin Yinfeng" />
+            </a>
+        </h1>
+        <nav id="global-nav"><span class="global-nav-item-container"><a class="global-nav-item"
+                    href=https://www.linyinfeng.com
+                >Home</a></span><span class="global-nav-item-container"><a class="global-nav-item"
+                    href=https://www.linyinfeng.com/archive
+                >Archive</a></span><span class="global-nav-item-container"><a class="global-nav-item"
+                    href=https://www.linyinfeng.com/links
+                >Links</a></span><span class="global-nav-item-container"><a class="global-nav-item"
+                    href=https:&#x2F;&#x2F;github.com&#x2F;linyinfeng&#x2F;blog
+                >Source</a></span></nav>
+    </div>
+
+            
+        </header>
+        <div id="main-aside-container">
+            
+    
+        
+                <aside id="aside">
+                    <div id="aside-container">
+                        
+    
+    <div class="toc-container container">
+        <h1 class="title toc-title">Table of Contents</h1>
+        
+    
+        <ul class="toc-parent">
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;posts&#x2F;toykio&#x2F;#asynctcpstream>AsyncTcpStream</a>
+                    
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;posts&#x2F;toykio&#x2F;#asyncread-he-asyncwrite>AsyncRead 和 AsyncWrite</a>
+                    
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;posts&#x2F;toykio&#x2F;#shi-jian-xun-huan>事件循环</a>
+                    
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;posts&#x2F;toykio&#x2F;#yi-ge-future-de-yi-sheng>一个 future 的一生</a>
+                    
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;posts&#x2F;toykio&#x2F;#gan-xie>感谢</a>
+                    
+    
+
+                </li>
+                
+        </ul>
+    
+
+    </div>
+
+
+                    </div>
+                </aside>
+            
+    
+
+            <main id="main">
+                <div id="main-container">
+                    
+    
+                    
+    
+    <article class="article-container container">
+        
+    <h1 class="title article-title">
+        <a class="article-title-link" href="https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;posts&#x2F;toykio&#x2F;">
+            
+    <span class="draft-indicator">
+        
+    </span>
+    <span>
+        Futures-rs 博文 Toykio 翻译
+    </span>
+
+        </a>
+    </h1>
+
+        
+    <div class="dates-container">
+        <div class="date-container">
+            <time datetime=2018-08-18T18:24:51+08:00>2018-08-18 18:24</time>
+ 	    
+            <span class="date-label">(created)</span>
+            
+        </div>
+        
+        <div class="date-container">
+	    <time datetime=2018-08-21T08:52:15+08:00>2018-08-21 08:52</time>
+            <span class="date-label">(last updated)</span>
+        </div>
+    </div>
+    
+
+        
+    <div class="article-taxonomies"><span class="article-taxonomy"><a class="article-taxonomy-name" href="https://www.linyinfeng.com/tags">
+                Tags</a><span class="article-terms"><a class="article-term-name" href="https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;tags&#x2F;rust&#x2F;">Rust</a><a class="article-term-name" href="https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;tags&#x2F;future&#x2F;">Future</a></span></span><span class="article-taxonomy"><a class="article-taxonomy-name" href="https://www.linyinfeng.com/categories">
+                Categories</a><span class="article-terms"><a class="article-term-name" href="https:&#x2F;&#x2F;www.linyinfeng.com&#x2F;categories&#x2F;fan-yi&#x2F;">翻译</a></span></span></div>
+
+        
+    
+        <section class="article-license">
+            
+                <div class="license-image">
+                    <img src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" alt="Creative Commons License" />
+                </div>
+            
+            <small class="license-text">This work is licensed under a <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a></small>
+        </section>
+    
+
+        <section class="article-content"><p>本文为 Rust futures-rs 博客 2018 年 8 月 17 日 的 博文 <a href="https://rust-lang-nursery.github.io/futures-rs/blog/2018/08/17/toykio.html">Toykio</a> 的中文翻译。</p>
+<p>原文作者 Alexander Polakov（<a href="https://github.com/polachok">@polachok</a>）。</p>
+<p>原文目前（2018-08-21）为可选的 MIT 和 Apache 授权，本文使用了其 MIT 授权。<a href="https://github.com/linyinfeng/blog/tree/master/content/posts/toykio/LICENSE-MIT">MIT 许可证副本</a>。</p>
+<span id="continue-reading"></span>
+<p>在这个博文中我将展示 toykio，一个用于学习带有事件循环的 executor 如何工作的简单 futures executor。Toykio 仅仅提供很少的特性：一个事件循环以及 TCP 流和监听器。但是事实证明，由于 futures 是可组合的，这已经足够用来构建复杂的客户端和服务器程序。</p>
+<p>在下文中，我将向你提供 toykio 组件的快速概述。</p>
+<h2 id="asynctcpstream"><a class="zola-anchor" href="#asynctcpstream" aria-label="Anchor link for: asynctcpstream">
+    <i class="fas fa-link"></i>
+</a>
+<code>AsyncTcpStream</code></h2>
+<p>Toykio 定义了 <code>AsyncTcpStream</code> 类型，这是一个标准库中的 <code>TcpStream</code> 的包装。就像标准库中的 <code>TcpStream</code> 一样，<code>connect</code> 函数打开一个连接并将 socket 设为非阻塞模式。这意味着 <code>read()</code> 和 <code>write()</code> 方法将会立刻返回数据或者错误。如果没有足够的数据（对于读操作）或者缓冲区空间（对于写操作），一个特殊的错误 <code>WouldBlock</code> 将被返回。我们将在下一节中讨论如何处理它。</p>
+<h2 id="asyncread-he-asyncwrite"><a class="zola-anchor" href="#asyncread-he-asyncwrite" aria-label="Anchor link for: asyncread-he-asyncwrite">
+    <i class="fas fa-link"></i>
+</a>
+<code>AsyncRead</code> 和 <code>AsyncWrite</code></h2>
+<p><code>AsyncRead</code> 和 <code>AsyncWrite</code> traits 是所有 I/O 特性的基础。<code>AsyncReadExt</code> 和 <code>AsyncWriteExt</code> 的扩展方法（如 <code>read</code> 和 <code>write_all</code>）均在其上构建。这些 traits 提供了一种 futures 与事件循环连接的方法，同时保证它们独立于任何特定的事件循环实现。</p>
+<p>让我们看看为 <code>AsyncTcpStream</code> 实现 <code>AsyncRead</code> 的方法：</p>
+<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#a626a4;">impl </span><span>AsyncRead </span><span style="color:#a626a4;">for </span><span>AsyncTcpStream {
+</span><span>    </span><span style="color:#a626a4;">fn </span><span style="color:#0184bc;">poll_read</span><span>(</span><span style="color:#a626a4;">&amp;mut </span><span style="color:#e45649;">self</span><span>, </span><span style="color:#e45649;">cx</span><span>: </span><span style="color:#a626a4;">&amp;mut</span><span> Context, </span><span style="color:#e45649;">buf</span><span>: </span><span style="color:#a626a4;">&amp;mut</span><span> [</span><span style="color:#a626a4;">u8</span><span>]) -&gt; Poll&lt;Result&lt;</span><span style="color:#a626a4;">usize</span><span>, Error&gt;&gt; {
+</span><span>        </span><span style="color:#a626a4;">match </span><span style="color:#e45649;">self</span><span>.</span><span style="color:#c18401;">0.</span><span style="color:#0184bc;">read</span><span>(buf) {
+</span><span>            Ok(len) </span><span style="color:#a626a4;">=&gt; </span><span>Poll::Ready(Ok(len)),
+</span><span>            Err(</span><span style="color:#a626a4;">ref</span><span> err) </span><span style="color:#a626a4;">if</span><span> err.</span><span style="color:#0184bc;">kind</span><span>() </span><span style="color:#a626a4;">== </span><span>std::io::ErrorKind::WouldBlock </span><span style="color:#a626a4;">=&gt; </span><span>{
+</span><span>                </span><span style="color:#a0a1a7;">// 获取 TcpStream 文件描述符
+</span><span>                </span><span style="color:#a626a4;">let</span><span> fd </span><span style="color:#a626a4;">= </span><span style="color:#e45649;">self</span><span>.</span><span style="color:#c18401;">0.</span><span style="color:#0184bc;">as_raw_fd</span><span>();
+</span><span>                </span><span style="color:#a626a4;">let</span><span> waker </span><span style="color:#a626a4;">=</span><span> cx.</span><span style="color:#0184bc;">waker</span><span>();
+</span><span>
+</span><span>                </span><span style="color:#c18401;">REACTOR</span><span>.</span><span style="color:#0184bc;">with</span><span>(|</span><span style="color:#e45649;">reactor</span><span>| reactor.</span><span style="color:#0184bc;">add_read_interest</span><span>(fd, waker.</span><span style="color:#0184bc;">clone</span><span>()));
+</span><span>
+</span><span>                Poll::Pending
+</span><span>            }
+</span><span>            Err(err) </span><span style="color:#a626a4;">=&gt; </span><span>panic!(</span><span style="color:#50a14f;">&quot;error {:?}&quot;</span><span>, err),
+</span><span>        }
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>它尝试从底层的 <code>TcpStream</code> 读取。如果读取成功了，切片将被填上数据。如果失败并且返回了 <code>WouldBlock</code> 错误，就将当前任务的唤醒器注册，这样它将在数据可用的时候被唤醒。下一节中将提到更多有关的细节。</p>
+<p><code>AsyncWrite</code> 的实现对 <code>write</code> 做了类似的事。</p>
+<h2 id="shi-jian-xun-huan"><a class="zola-anchor" href="#shi-jian-xun-huan" aria-label="Anchor link for: shi-jian-xun-huan">
+    <i class="fas fa-link"></i>
+</a>
+事件循环</h2>
+<p><code>Eventloop</code>（通常也被叫做 reactor）是这个 executor 的核心。它像这样被定义：</p>
+<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#a626a4;">struct </span><span>InnerEventLoop {
+</span><span>    </span><span style="color:#e45649;">read</span><span>: RefCell&lt;BTreeMap&lt;RawFd, Waker&gt;&gt;,
+</span><span>    </span><span style="color:#e45649;">write</span><span>: RefCell&lt;BTreeMap&lt;RawFd, Waker&gt;&gt;,
+</span><span>    </span><span style="color:#e45649;">counter</span><span>: Cell&lt;</span><span style="color:#a626a4;">usize</span><span>&gt;,
+</span><span>    </span><span style="color:#e45649;">wait_queue</span><span>: RefCell&lt;BTreeMap&lt;TaskId, Task&gt;&gt;,
+</span><span>    </span><span style="color:#e45649;">run_queue</span><span>: RefCell&lt;VecDeque&lt;Wakeup&gt;&gt;,
+</span><span>}
+</span></code></pre>
+<ul>
+<li><code>read</code> 和 <code>write</code> 是 <code>BTreeMaps</code>，将文件描述符映射到唤醒器。</li>
+<li><code>wait_queue</code> 保存了阻塞的等待事件的任务。</li>
+<li><code>run_queue</code> 保存了唤醒消息。</li>
+</ul>
+<p>事件循环提供了在 <code>read</code> 和 <code>write</code> 事件中注册（和移除）兴趣的方法。让我们看看 <code>add_read_interest</code> 做了什么：</p>
+<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#a626a4;">fn </span><span style="color:#0184bc;">add_read_interest</span><span>(</span><span style="color:#a626a4;">&amp;</span><span style="color:#e45649;">self</span><span>, </span><span style="color:#e45649;">fd</span><span>: RawFd, </span><span style="color:#e45649;">waker</span><span>: Waker) {
+</span><span>    </span><span style="color:#a626a4;">if !</span><span style="color:#e45649;">self</span><span>.read.</span><span style="color:#0184bc;">borrow</span><span>().</span><span style="color:#0184bc;">contains_key</span><span>(</span><span style="color:#a626a4;">&amp;</span><span>fd) {
+</span><span>        </span><span style="color:#e45649;">self</span><span>.read.</span><span style="color:#0184bc;">borrow_mut</span><span>().</span><span style="color:#0184bc;">insert</span><span>(fd, waker);
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>但它仅仅是把 <code>fd</code> 和 <code>waker</code> 插入到 <code>read</code> 树中！所有的魔法到底发生在哪里？在主循环中。事件循环被叫做循环是有原因的。让我们看看：</p>
+<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#a626a4;">loop </span><span>{
+</span><span>    </span><span style="color:#a0a1a7;">// 事件循环迭代超时。如果没有描述符就绪我们也继续迭代。
+</span><span>    </span><span style="color:#a626a4;">let mut</span><span> tv: timeval </span><span style="color:#a626a4;">=</span><span> timeval {
+</span><span>        tv_sec: </span><span style="color:#c18401;">1</span><span>,
+</span><span>        tv_usec: </span><span style="color:#c18401;">0</span><span>,
+</span><span>    };
+</span><span>
+</span><span>    </span><span style="color:#a0a1a7;">// 初始化 fd_sets（文件描述符集）
+</span><span>    </span><span style="color:#a626a4;">let mut</span><span> read_fds: fd_set </span><span style="color:#a626a4;">= unsafe </span><span>{ std::mem::zeroed() };
+</span><span>    </span><span style="color:#a626a4;">let mut</span><span> write_fds: fd_set </span><span style="color:#a626a4;">= unsafe </span><span>{ std::mem::zeroed() };
+</span><span>
+</span><span>    </span><span style="color:#a626a4;">unsafe </span><span>{ </span><span style="color:#c18401;">FD_ZERO</span><span>(</span><span style="color:#a626a4;">&amp;mut</span><span> read_fds) };
+</span><span>    </span><span style="color:#a626a4;">unsafe </span><span>{ </span><span style="color:#c18401;">FD_ZERO</span><span>(</span><span style="color:#a626a4;">&amp;mut</span><span> write_fds) };
+</span></code></pre>
+<p>唔哦，这里有非常多的 <code>unsafe</code>！但是别担心，这就是 C FFI 的工作方式。我们需要初始化一些 C 结构体，一个超时和 <code>fd_set</code>s。它们后面将被传递给 select(2) 函数。</p>
+<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span>    </span><span style="color:#a0a1a7;">// 将所有读兴趣加入到读 fd_sets
+</span><span>    </span><span style="color:#a626a4;">for</span><span> fd </span><span style="color:#a626a4;">in </span><span style="color:#e45649;">self</span><span>.read.</span><span style="color:#0184bc;">borrow</span><span>().</span><span style="color:#0184bc;">keys</span><span>() {
+</span><span>        </span><span style="color:#a626a4;">unsafe </span><span>{ </span><span style="color:#c18401;">FD_SET</span><span>(</span><span style="color:#a626a4;">*</span><span>fd, </span><span style="color:#a626a4;">&amp;mut</span><span> read_fds </span><span style="color:#a626a4;">as *mut</span><span> fd_set) };
+</span><span>        nfds </span><span style="color:#a626a4;">= </span><span>std::cmp::max(nfds, fd </span><span style="color:#a626a4;">+ </span><span style="color:#c18401;">1</span><span>);
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#a0a1a7;">// 将所有写兴趣加入到写 fd_sets
+</span><span>    </span><span style="color:#a626a4;">for</span><span> fd </span><span style="color:#a626a4;">in </span><span style="color:#e45649;">self</span><span>.write.</span><span style="color:#0184bc;">borrow</span><span>().</span><span style="color:#0184bc;">keys</span><span>() {
+</span><span>        </span><span style="color:#a626a4;">unsafe </span><span>{ </span><span style="color:#c18401;">FD_SET</span><span>(</span><span style="color:#a626a4;">*</span><span>fd, </span><span style="color:#a626a4;">&amp;mut</span><span> write_fds </span><span style="color:#a626a4;">as *mut</span><span> fd_set) };
+</span><span>        nfds </span><span style="color:#a626a4;">= </span><span>std::cmp::max(nfds, fd </span><span style="color:#a626a4;">+ </span><span style="color:#c18401;">1</span><span>);
+</span><span>    }
+</span></code></pre>
+<p>这里我们将之前 <code>read</code> 和 <code>write</code> maps 中的文件描述符置入到 <code>fd_set</code>s 中。</p>
+<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span>    </span><span style="color:#a0a1a7;">// `select` 将阻塞到文件描述符上有一些事件发生或者超时
+</span><span>    </span><span style="color:#a626a4;">let</span><span> rv </span><span style="color:#a626a4;">= unsafe </span><span>{
+</span><span>        </span><span style="color:#0184bc;">select</span><span>(
+</span><span>            nfds,
+</span><span>            </span><span style="color:#a626a4;">&amp;mut</span><span> read_fds,
+</span><span>            </span><span style="color:#a626a4;">&amp;mut</span><span> write_fds,
+</span><span>            std::ptr::null_mut(),
+</span><span>            </span><span style="color:#a626a4;">&amp;mut</span><span> tv,
+</span><span>        )
+</span><span>    };
+</span><span>
+</span><span>    </span><span style="color:#a0a1a7;">// 不在乎错误
+</span><span>    </span><span style="color:#a626a4;">if</span><span> rv </span><span style="color:#a626a4;">== -</span><span style="color:#c18401;">1 </span><span>{
+</span><span>        panic!(</span><span style="color:#50a14f;">&quot;select()&quot;</span><span>);
+</span><span>    } </span><span style="color:#a626a4;">else if</span><span> rv </span><span style="color:#a626a4;">== </span><span style="color:#c18401;">0 </span><span>{
+</span><span>        debug!(</span><span style="color:#50a14f;">&quot;timeout&quot;</span><span>);
+</span><span>    } </span><span style="color:#a626a4;">else </span><span>{
+</span><span>        debug!(</span><span style="color:#50a14f;">&quot;data available on {} fds&quot;</span><span>, rv);
+</span><span>    }
+</span></code></pre>
+<p>终于我们使用准备的参数调用了 <code>select</code>。<code>select()</code> 接受 3 个 <code>fd_set</code>s（我们在这个例子中忽略了第三个）和一个超时并且返回一些非 0 值如果一个（或多个）集合中的文件标识符就绪了。我们应该随后找到是哪些文件标识符！</p>
+<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span>    </span><span style="color:#a0a1a7;">// 检查是哪些文件标识符并将合适的 future 置入 run 队列
+</span><span>    </span><span style="color:#a626a4;">for </span><span>(fd, waker) </span><span style="color:#a626a4;">in </span><span style="color:#e45649;">self</span><span>.read.</span><span style="color:#0184bc;">borrow</span><span>().</span><span style="color:#0184bc;">iter</span><span>() {
+</span><span>        </span><span style="color:#a626a4;">let</span><span> is_set </span><span style="color:#a626a4;">= unsafe </span><span>{ </span><span style="color:#c18401;">FD_ISSET</span><span>(</span><span style="color:#a626a4;">*</span><span>fd, </span><span style="color:#a626a4;">&amp;mut</span><span> read_fds </span><span style="color:#a626a4;">as *mut</span><span> fd_set) };
+</span><span>        </span><span style="color:#a626a4;">if</span><span> is_set {
+</span><span>            waker.</span><span style="color:#0184bc;">wake</span><span>();
+</span><span>        }
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#a0a1a7;">// 对 write 做一样的事
+</span><span>    </span><span style="color:#a626a4;">for </span><span>(fd, waker) </span><span style="color:#a626a4;">in </span><span style="color:#e45649;">self</span><span>.write.</span><span style="color:#0184bc;">borrow</span><span>().</span><span style="color:#0184bc;">iter</span><span>() {
+</span><span>        </span><span style="color:#a626a4;">let</span><span> is_set </span><span style="color:#a626a4;">= unsafe </span><span>{ </span><span style="color:#c18401;">FD_ISSET</span><span>(</span><span style="color:#a626a4;">*</span><span>fd, </span><span style="color:#a626a4;">&amp;mut</span><span> write_fds </span><span style="color:#a626a4;">as *mut</span><span> fd_set) };
+</span><span>        </span><span style="color:#a626a4;">if</span><span> is_set {
+</span><span>            waker.</span><span style="color:#0184bc;">wake</span><span>();
+</span><span>        }
+</span><span>    }
+</span></code></pre>
+<p>我们再次遍历了我们的 map 并检查它们是否在 <code>fd_set</code>s 中被设为就绪。当它们被设为就绪，我们就调用它们关联的唤醒器的 wake 方法，这将会把 Wakeup 事件置于准备执行队列上。</p>
+<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span>    </span><span style="color:#a626a4;">let mut</span><span> tasks_done </span><span style="color:#a626a4;">= </span><span>Vec::new();
+</span><span>
+</span><span>    </span><span style="color:#a0a1a7;">// 现在从 run 队列中 pop 任务并 poll 它们
+</span><span>    </span><span style="color:#a626a4;">while let </span><span>Some(wakeup) </span><span style="color:#a626a4;">= </span><span style="color:#e45649;">self</span><span>.run_queue.</span><span style="color:#0184bc;">borrow_mut</span><span>().</span><span style="color:#0184bc;">pop_front</span><span>() {
+</span><span>        </span><span style="color:#a626a4;">let mut</span><span> handle </span><span style="color:#a626a4;">= </span><span style="color:#e45649;">self</span><span>.</span><span style="color:#0184bc;">handle</span><span>();
+</span><span>
+</span><span>        </span><span style="color:#a626a4;">if let </span><span>Some(</span><span style="color:#a626a4;">ref mut</span><span> task) </span><span style="color:#a626a4;">= </span><span style="color:#e45649;">self</span><span>.wait_queue.</span><span style="color:#0184bc;">borrow_mut</span><span>().</span><span style="color:#0184bc;">get_mut</span><span>(</span><span style="color:#a626a4;">&amp;</span><span>wakeup.index) {
+</span><span>            </span><span style="color:#a0a1a7;">// 如果一个任务返回了 `Poll::Ready`, 我们就完成了它
+</span><span>            </span><span style="color:#a626a4;">if</span><span> task.</span><span style="color:#0184bc;">poll</span><span>(wakeup.waker, </span><span style="color:#a626a4;">&amp;mut</span><span> handle).</span><span style="color:#0184bc;">is_ready</span><span>() {
+</span><span>                tasks_done.</span><span style="color:#0184bc;">push</span><span>(wakeup.index);
+</span><span>            }
+</span><span>        }
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#a0a1a7;">// 删除已经完成的任务
+</span><span>    </span><span style="color:#a626a4;">for</span><span> idx </span><span style="color:#a626a4;">in</span><span> tasks_done {
+</span><span>        </span><span style="color:#e45649;">self</span><span>.wait_queue.</span><span style="color:#0184bc;">borrow_mut</span><span>().</span><span style="color:#0184bc;">remove</span><span>(</span><span style="color:#a626a4;">&amp;</span><span>idx);
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#a0a1a7;">// 如果 `wait_queue` 中没有更多的任务，停止循环
+</span><span>    </span><span style="color:#a626a4;">if </span><span style="color:#e45649;">self</span><span>.wait_queue.</span><span style="color:#0184bc;">borrow</span><span>().</span><span style="color:#0184bc;">is_empty</span><span>() {
+</span><span>        </span><span style="color:#a626a4;">return</span><span>;
+</span><span>    }
+</span></code></pre>
+<p>我们消耗了 <code>run_queue</code>，获取 <code>wait_queue</code> 中的任务索引并询问这些任务。Ready(done) 任务将从 <code>wait_queue</code> 中被移除。</p>
+<h2 id="yi-ge-future-de-yi-sheng"><a class="zola-anchor" href="#yi-ge-future-de-yi-sheng" aria-label="Anchor link for: yi-ge-future-de-yi-sheng">
+    <i class="fas fa-link"></i>
+</a>
+一个 future 的一生</h2>
+<p>在这节中，我将概括一个 future（让我们以 read 为例子）是如何在 eventloop 中被执行的：</p>
+<ul>
+<li>首先它由 <code>AsyncTcpStream</code> 的 <code>read()</code> 方法创建，这个方法被所有实现了 <code>AsyncRead</code> trait 的类型实现。</li>
+<li>然后使用 <code>run()</code> 或 <code>spawn()</code> 方法在 executor 中 spawn 它。</li>
+<li>Executor 调用这个 future 的 poll 方法。Read 中 <code>poll</code> 的实现调用 <code>AsyncTcpStream</code> 的 <code>poll_read()</code> 方法，这个方法将它的兴趣注册到 <code>readable</code> 事件中。</li>
+<li>当一个事件发生，future 将被再次 poll。这个循环将被重复直到 future 返回了 ready。</li>
+</ul>
+<h2 id="gan-xie"><a class="zola-anchor" href="#gan-xie" aria-label="Anchor link for: gan-xie">
+    <i class="fas fa-link"></i>
+</a>
+感谢</h2>
+<p>感谢 futures 团队的所有人。特别感谢 <a href="https://github.com/aturon">@aturon</a> 的鼓励和 <a href="https://github.com/MajorBreakfast">@MajorBreakfast</a> 的编辑。</p>
+<p>这就是今天的所有内容！你可以在 <a href="https://github.com/polachok/toykio/tree/futures-0.3">github</a> 和 <a href="https://crates.io/crates/toykio">crates.io</a> 上找到 toykio。Hacking 快乐！</p>
+</section>
+    </article>
+
+    
+    
+        
+    <div class="giscus" />
+
+    
+
+                </div>
+            </main>
+        </div>
+        <footer id="footer">
+            
+            
+    <div class="footer-container container">
+        <div id="copyright-container">
+            <small id="copyright">© Lin Yinfeng</small>
+        </div>
+
+        
+            <div id="powered-by-container">
+                <small id="powered-by">Powered by <a href="https://www.getzola.org">Zola</a></small>
+            </div>
+        
+    </div>
+
+            
+        </footer>
+    
+</body>
+</html>
