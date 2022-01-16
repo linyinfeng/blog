@@ -9,15 +9,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@main
+        uses: actions/checkout@v2
       - name: Install nix
-        uses: cachix/install-nix-action@master
+        uses: cachix/install-nix-action@v16
         with:
           install_url: https://github.com/numtide/nix-unstable-installer/releases/latest/download/install
           extra_nix_config: |
             experimental-features = nix-command flakes
       - name: Setup cachix
-        uses: cachix/cachix-action@master
+        uses: cachix/cachix-action@v10
         with:
           name: linyinfeng
           signingKey: '${{ secrets.CACHIX_SIGNING_KEY }}'
@@ -28,7 +28,7 @@ jobs:
         run: |
           cp --recursive --dereference result public
       - name: 'Upload'
-        uses: actions/upload-artifact@main
+        uses: actions/upload-artifact@v2
         with:
           name: public
           path: public
@@ -40,9 +40,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@main
+        uses: actions/checkout@v2
       - name: 'Download'
-        uses: actions/download-artifact@main
+        uses: actions/download-artifact@v2
         with:
           name: public
           path: public
@@ -58,6 +58,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 'Checkout'
-        uses: actions/checkout@master
+        uses: actions/checkout@v2
       - name: 'Ping site map'
         run: curl "http://www.google.com/ping?sitemap=https://$(cat static/CNAME)/sitemap.xml"
