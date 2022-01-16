@@ -43,6 +43,7 @@ jobs:
         uses: actions/download-artifact@main
         with:
           name: public
+          path: public
       - name: 'Deploy'
         uses: JamesIves/github-pages-deploy-action@v4
         with:
