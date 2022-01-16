@@ -39,6 +39,8 @@ jobs:
     concurrency: deploy-${{ github.ref }}
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@main
       - name: 'Download'
         uses: actions/download-artifact@main
         with:
