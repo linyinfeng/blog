@@ -1,6 +1,9 @@
 /.vscode
 /.direnv
 /public
+/result*
+
+.shake.*
 
 *.aux
 *.log

@@ -55,7 +55,6 @@ date_format = "%Y-%m-%d %H:%M"
 # KaTeX
 [extra.katex]
 enable = true
-version = "@0.15.1"
 render_options = '''
 {
     macros: {
@@ -75,14 +74,6 @@ render_options = '''
 enable = true
 code = "GTM-K74P2G7"
 
-# Utterances
-[extra.utterances]
-enable = false # use giscus instead
-repo = "linyinfeng/blog"
-label = "utterances"
-issue_term = "pathname"
-theme = "github-light"
-
 # Giscus
 [extra.giscus]
 enable = true
@@ -92,6 +83,3 @@ category_id = "MDE4OkRpc2N1c3Npb25DYXRlZ29yeTMyOTkyOTcy"
 mapping = "pathname"
 reactions_enabled="1"
 theme="light"
-
-[extra.font_awesome]
-code = "ba33ff5900"

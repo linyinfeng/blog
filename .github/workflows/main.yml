@@ -8,25 +8,49 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: 'Checkout'
-        uses: actions/checkout@master
-      - name: 'Build only'
-        if: github.ref != 'refs/heads/main'
-        uses: shalzz/zola-deploy-action@master
-        env:
-          BUILD_DIR: .
-          TOKEN: ${{ secrets.TOKEN }}
-          BUILD_ONLY: true
-      - name: 'Build and deploy'
-        if: github.ref == 'refs/heads/main'
-        uses: shalzz/zola-deploy-action@master
-        env:
-          PAGES_BRANCH: gh-pages
-          BUILD_DIR: .
-          TOKEN: ${{ secrets.TOKEN }}
+      - name: Checkout repository
+        uses: actions/checkout@main
+      - name: Install nix
+        uses: cachix/install-nix-action@master
+        with:
+          install_url: https://github.com/numtide/nix-unstable-installer/releases/latest/download/install
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+      - name: Setup cachix
+        uses: cachix/cachix-action@master
+        with:
+          name: linyinfeng
+          signingKey: '${{ secrets.CACHIX_SIGNING_KEY }}'
+      - name: 'Build'
+        run: |
+          nix build .#blog
+      - name: 'Copy'
+        run: |
+          cp --recursive --dereference result public
+      - name: 'Upload'
+        uses: actions/upload-artifact@main
+        with:
+          name: public
+          path: public
 
-  ping:
+  deploy:
     needs: build
+    if: github.ref == 'refs/heads/main'
+    concurrency: deploy-${{ github.ref }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Download'
+        uses: actions/download-artifact@main
+        with:
+          name: public
+      - name: 'Deploy'
+        uses: JamesIves/github-pages-deploy-action@dev
+        with:
+          branch: gh-pages
+          folder: public
+
+  ping-sitemap:
+    needs: deploy
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:

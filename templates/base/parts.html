@@ -216,17 +216,6 @@
     <!-- End Google Tag Manager (noscript) -->
 {% endmacro google_tag_manager_no_script %}
 
-{% macro utterances(cfg) %}
-    <script src="https://utteranc.es/client.js"
-            repo="{{ cfg.repo }}"
-            issue-term="{{ cfg.issue_term }}"
-            label="{{ cfg.label }}"
-            theme="{{ cfg.theme }}"
-            crossorigin="anonymous"
-            async>
-    </script>
-{% endmacro utterances %}
-
 {% macro giscus(cfg) %}
     <script src="https://giscus.app/client.js"
             data-repo="{{ cfg.repo }}"
@@ -244,20 +233,16 @@
     <div class="giscus" />
 {% endmacro giscus_placeholder %}
 
-{% macro katex(version, render_options) %}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex{{ version }}/dist/katex.min.css" crossorigin="anonymous">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex{{ version }}/dist/katex.min.js" crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex{{ version }}/dist/contrib/mathtex-script-type.min.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex{{ version }}/dist/contrib/copy-tex.css" crossorigin="anonymous">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex{{ version }}/dist/contrib/copy-tex.min.js" crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex{{ version }}/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+{% macro katex(render_options) %}
+    <link rel="stylesheet" href="{{ get_url(path="katex/katex.min.css") }}">
+    <script defer src="{{ get_url(path="katex/katex.min.js") }}"></script>
+    <script defer src="{{ get_url(path="katex/contrib/mathtex-script-type.min.js") }}"></script>
+    <link rel="stylesheet" href="{{ get_url(path="katex/contrib/copy-tex.css") }}">
+    <script defer src="{{ get_url(path="katex/contrib/copy-tex.min.js") }}"></script>
+    <script defer src="{{ get_url(path="katex/contrib/auto-render.min.js") }}"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             renderMathInElement(document.body, {{ render_options | safe }} );
         });
     </script>
 {% endmacro katex %}
-
-{% macro font_awesome(cfg) %}
-<script src="https://kit.fontawesome.com/{{ cfg.code }}.js" crossorigin="anonymous"></script>
-{% endmacro font_awesome %}
