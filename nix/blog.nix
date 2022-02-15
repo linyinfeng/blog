@@ -15,10 +15,12 @@ let
       ];
 
       buildPhase = ''
-        cp    "${favicon-ico}"     static/favicon.ico
-        cp -r "${katex}"           static/katex
-        cp -r "${license-buttons}" static/license-buttons
-        cp    "${normalize-css}"   static/normalize.css
+        cp    "${favicon-ico}"   static/favicon.ico
+        cp -r "${katex}"         static/katex
+        cp    "${normalize-css}" static/normalize.css
+
+        mkdir static/license-buttons
+        cp -r "${license-buttons}"/{l,p} static/license-buttons
       '' +
       (if extraOptions == null then ''
         zola build
