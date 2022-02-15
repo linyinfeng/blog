@@ -21,13 +21,16 @@ jobs:
         with:
           name: linyinfeng
           signingKey: '${{ secrets.CACHIX_SIGNING_KEY }}'
-      - name: 'Build'
+      - name: Build
         run: |
           nix build .#blog
-      - name: 'Copy'
+      - name: Check self-contained
+        run: |
+          [ $(nix path-info --recursive ./result | wc -l) == "1" ]
+      - name: Copy
         run: |
           cp --recursive --dereference result public
-      - name: 'Upload'
+      - name: Upload
         uses: actions/upload-artifact@v2
         with:
           name: public
@@ -41,12 +44,12 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      - name: 'Download'
+      - name: Download
         uses: actions/download-artifact@v2
         with:
           name: public
           path: public
-      - name: 'Deploy'
+      - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
