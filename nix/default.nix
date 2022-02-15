@@ -16,6 +16,7 @@ lib.makeScope newScope (
     favicon-pdf = callPackage ./favicon-pdf.nix { };
     favicon-ico = callPackage ./favicon-ico.nix { };
     katex = callPackage ./katex.nix { };
+    license-buttons = callPackage ./license-buttons.nix { };
     normalize-css = callPackage ./normalize-css.nix { };
   })
 )

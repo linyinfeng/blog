@@ -3,7 +3,7 @@
 let
   drvBuilder =
     self:
-    { baseUrl ? null, callPackage, stdenvNoCC, lib, zola, katex, normalize-css, favicon-ico }:
+    { extraOptions ? null, callPackage, stdenvNoCC, lib, zola, katex, license-buttons, normalize-css, favicon-ico }:
 
     stdenvNoCC.mkDerivation {
       name = "blog";
@@ -15,21 +15,26 @@ let
       ];
 
       buildPhase = ''
-        cp    "${normalize-css}" static/normalize.css
-        cp -r "${katex}"         static/katex
-        cp    "${favicon-ico}"   static/favicon.ico
+        cp    "${favicon-ico}"     static/favicon.ico
+        cp -r "${katex}"           static/katex
+        cp -r "${license-buttons}" static/license-buttons
+        cp    "${normalize-css}"   static/normalize.css
       '' +
-      (if baseUrl == null then ''
+      (if extraOptions == null then ''
         zola build
       '' else ''
-        zola build --base-url "${baseUrl}"
+        zola build ${extraOptions}
       '');
 
       installPhase = ''
         cp -r public $out
       '';
 
-      passthru.emptyBaseUrl = callPackage self { baseUrl = "/"; };
+      dontFixup = true;
+
+      passthru.local = callPackage self {
+        extraOptions = "--base-url / --drafts";
+      };
     };
 
   drv = lib.fix drvBuilder;

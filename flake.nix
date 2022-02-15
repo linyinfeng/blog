@@ -16,9 +16,7 @@
           packages = pkgs.callPackage ./nix { };
         in
         {
-          packages = {
-            inherit (packages) blog favicon-pdf favicon-ico katex normalize-css;
-          };
+          packages = utils.flattenTree packages;
         };
     };
 }

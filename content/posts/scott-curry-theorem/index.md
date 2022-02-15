@@ -9,7 +9,8 @@ draft = true
 categories = ["笔记"]
 tags = ["计算理论", "Lambda 演算"]
 [extra]
-license_image = "![Creative Commons License](https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png)"
+license_image = "license-buttons/l/by-nc-sa/4.0/88x31.png"
+license_image_alt = "CC BY-NC-SA 4.0"
 license = "This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/)"
 [extra.katex]
 render_options = '''

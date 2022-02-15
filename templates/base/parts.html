@@ -156,7 +156,7 @@
         <section class="article-license">
             {% if page.extra.license_image %}
                 <div class="license-image">
-                    {{ page.extra.license_image | markdown(inline=true) | safe }}
+                    <img src="{{ get_url(path=page.extra.license_image) }}" alt="{{ page.extra.license_image_alt }}" />
                 </div>
             {% endif %}
             <small class="license-text">{{ page.extra.license | markdown(inline=true) | safe }}</small>

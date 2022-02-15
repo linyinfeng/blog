@@ -5,3 +5,7 @@ fetch.url = "https://github.com/KaTeX/KaTeX/releases/download/$ver/katex.tar.gz"
 [normalize-css]
 src.github_tag = "necolas/normalize.css"
 fetch.github = "necolas/normalize.css"
+
+[license-buttons]
+src.git = "https://github.com/creativecommons/licensebuttons"
+fetch.github = "creativecommons/licensebuttons"

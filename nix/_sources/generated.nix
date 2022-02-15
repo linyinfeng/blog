@@ -9,6 +9,18 @@
       sha256 = "176jh8sj0p4c48bi48lc9p17niwyqz8k06slsl2282bxinim9vcy";
     };
   };
+  license-buttons = {
+    pname = "license-buttons";
+    version = "5a58662701c7ce6bd6e137b256634dbc387c37d6";
+    src = fetchgit {
+      url = "https://github.com/creativecommons/licensebuttons";
+      rev = "5a58662701c7ce6bd6e137b256634dbc387c37d6";
+      fetchSubmodules = false;
+      deepClone = false;
+      leaveDotGit = false;
+      sha256 = "0c9m52vhsnsnzirjdp1h4smx7w5nys3lvnaifyh491pl3apj1d1z";
+    };
+  };
   normalize-css = {
     pname = "normalize-css";
     version = "8.0.1";
