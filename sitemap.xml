@@ -1,77 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-        <loc>https://www.linyinfeng.com/</loc>
+        <loc>https://blog.linyinfeng.com/</loc>
     </url>
     <url>
-        <loc>https://www.linyinfeng.com/archive/</loc>
+        <loc>https://blog.linyinfeng.com/archive/</loc>
     </url>
     <url>
-        <loc>https://www.linyinfeng.com/categories/</loc>
+        <loc>https://blog.linyinfeng.com/categories/</loc>
     </url>
     <url>
-        <loc>https://www.linyinfeng.com/categories/bi-ji/</loc>
+        <loc>https://blog.linyinfeng.com/categories/bi-ji/</loc>
     </url>
     <url>
-        <loc>https://www.linyinfeng.com/categories/fan-yi/</loc>
+        <loc>https://blog.linyinfeng.com/categories/fan-yi/</loc>
     </url>
     <url>
-        <loc>https://www.linyinfeng.com/categories/sui-xiang/</loc>
+        <loc>https://blog.linyinfeng.com/categories/sui-xiang/</loc>
     </url>
     <url>
-        <loc>https://www.linyinfeng.com/links/</loc>
+        <loc>https://blog.linyinfeng.com/links/</loc>
     </url>
     <url>
-        <loc>https://www.linyinfeng.com/posts/how-do-rust-closures-work/</loc>
+        <loc>https://blog.linyinfeng.com/posts/how-do-rust-closures-work/</loc>
         <lastmod>2021-01-15T13:19:42+08:00</lastmod>
     </url>
     <url>
-        <loc>https://www.linyinfeng.com/posts/rices-theorem/</loc>
+        <loc>https://blog.linyinfeng.com/posts/rices-theorem/</loc>
         <lastmod>2021-04-28T16:04:37+08:00</lastmod>
     </url>
     <url>
-        <loc>https://www.linyinfeng.com/posts/rust-rfc-2349/</loc>
+        <loc>https://blog.linyinfeng.com/posts/rust-rfc-2349/</loc>
         <lastmod>2018-08-21T08:52:15+08:00</lastmod>
     </url>
     <url>
-        <loc>https://www.linyinfeng.com/posts/start-blogging/</loc>
+        <loc>https://blog.linyinfeng.com/posts/start-blogging/</loc>
         <lastmod>2018-08-15T18:31:16+08:00</lastmod>
     </url>
     <url>
-        <loc>https://www.linyinfeng.com/posts/toykio/</loc>
+        <loc>https://blog.linyinfeng.com/posts/toykio/</loc>
         <lastmod>2018-08-21T08:52:15+08:00</lastmod>
     </url>
     <url>
-        <loc>https://www.linyinfeng.com/tags/</loc>
+        <loc>https://blog.linyinfeng.com/tags/</loc>
     </url>
     <url>
-        <loc>https://www.linyinfeng.com/tags/bi-bao/</loc>
+        <loc>https://blog.linyinfeng.com/tags/bi-bao/</loc>
     </url>
     <url>
-        <loc>https://www.linyinfeng.com/tags/bo-ke/</loc>
+        <loc>https://blog.linyinfeng.com/tags/bo-ke/</loc>
     </url>
     <url>
-        <loc>https://www.linyinfeng.com/tags/future/</loc>
+        <loc>https://blog.linyinfeng.com/tags/future/</loc>
     </url>
     <url>
-        <loc>https://www.linyinfeng.com/tags/han-shu-shi-bian-cheng/</loc>
+        <loc>https://blog.linyinfeng.com/tags/han-shu-shi-bian-cheng/</loc>
     </url>
     <url>
-        <loc>https://www.linyinfeng.com/tags/ji-suan-li-lun/</loc>
+        <loc>https://blog.linyinfeng.com/tags/ji-suan-li-lun/</loc>
     </url>
     <url>
-        <loc>https://www.linyinfeng.com/tags/jing-tai-wang-zhan/</loc>
+        <loc>https://blog.linyinfeng.com/tags/jing-tai-wang-zhan/</loc>
     </url>
     <url>
-        <loc>https://www.linyinfeng.com/tags/lai-si-ding-li/</loc>
+        <loc>https://blog.linyinfeng.com/tags/lai-si-ding-li/</loc>
     </url>
     <url>
-        <loc>https://www.linyinfeng.com/tags/lei-xing-xi-tong/</loc>
+        <loc>https://blog.linyinfeng.com/tags/lei-xing-xi-tong/</loc>
     </url>
     <url>
-        <loc>https://www.linyinfeng.com/tags/rust/</loc>
+        <loc>https://blog.linyinfeng.com/tags/rust/</loc>
     </url>
     <url>
-        <loc>https://www.linyinfeng.com/tags/xing-shi-yu-yan-yu-zi-dong-ji/</loc>
+        <loc>https://blog.linyinfeng.com/tags/xing-shi-yu-yan-yu-zi-dong-ji/</loc>
     </url>
 </urlset>

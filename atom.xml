@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="cn">
 	<title>Lin Yinfeng</title>
-	<link href="https://www.linyinfeng.com/atom.xml" rel="self" type="application/atom+xml"/>
-  <link href="https://www.linyinfeng.com"/>
+	<link href="https://blog.linyinfeng.com/atom.xml" rel="self" type="application/atom+xml"/>
+  <link href="https://blog.linyinfeng.com"/>
 	<generator uri="https://www.getzola.org/">Zola</generator>
 	<updated>2021-04-28T16:04:37+08:00</updated>
-	<id>https://www.linyinfeng.com/atom.xml</id>
+	<id>https://blog.linyinfeng.com/atom.xml</id>
 	<entry xml:lang="cn">
 		<title>莱斯定理</title>
 		<published>2020-12-13T23:01:20+08:00</published>
 		<updated>2021-04-28T16:04:37+08:00</updated>
-		<link href="https://www.linyinfeng.com/posts/rices-theorem/" type="text/html"/>
-		<id>https://www.linyinfeng.com/posts/rices-theorem/</id>
+		<link href="https://blog.linyinfeng.com/posts/rices-theorem/" type="text/html"/>
+		<id>https://blog.linyinfeng.com/posts/rices-theorem/</id>
 		<content type="html">&lt;p&gt;学习形式语言自动机这课时花了很久才理解莱斯定理（Rice&#x27;s Theorem）。懂了以后发现，其实就是之前对着书瞎想的时候，没先把全局要做的事情理清楚，这个定理其实并不复杂。这篇带了一些偷懒（省略）的文章是我对莱斯定理的笔记。&lt;&#x2F;p&gt;
 &lt;span id=&quot;continue-reading&quot;&gt;&lt;&#x2F;span&gt;&lt;h2 id=&quot;chen-shu&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#chen-shu&quot; aria-label=&quot;Anchor link for: chen-shu&quot;&gt;
     &lt;i class=&quot;fas fa-link&quot;&gt;&lt;&#x2F;i&gt;
@@ -112,8 +112,8 @@ $$&lt;&#x2F;p&gt;
 		<title>Rust 闭包笔记</title>
 		<published>2019-03-15T11:06:01+08:00</published>
 		<updated>2021-01-15T13:19:42+08:00</updated>
-		<link href="https://www.linyinfeng.com/posts/how-do-rust-closures-work/" type="text/html"/>
-		<id>https://www.linyinfeng.com/posts/how-do-rust-closures-work/</id>
+		<link href="https://blog.linyinfeng.com/posts/how-do-rust-closures-work/" type="text/html"/>
+		<id>https://blog.linyinfeng.com/posts/how-do-rust-closures-work/</id>
 		<content type="html">&lt;p&gt;近日在学习 Rust 语言。Rust 语言的闭包设计非常有趣，一方面，它看起来非常复杂，为了支持闭包设计了三种不同的 trait，&lt;code&gt;Fn&lt;&#x2F;code&gt;、&lt;code&gt;FnMut&lt;&#x2F;code&gt; 和 &lt;code&gt;FnOnce&lt;&#x2F;code&gt;；一方面其设计又透露出了语言设计中闭包的本质。通过考察 Rust 闭包的设计，我们能更好的理解闭包到底是什么，在拥有生存期和借用检查的语言 Rust 中，闭包如何工作。&lt;&#x2F;p&gt;
 &lt;p&gt;本文将在 Rust 下实现一个能够阐述闭包工作原理的朴素版闭包（也是一个 Boxed Closure）。并在实现的基础上对 Rust 闭包作进一步探究。&lt;&#x2F;p&gt;
 &lt;span id=&quot;continue-reading&quot;&gt;&lt;&#x2F;span&gt;&lt;h2 id=&quot;bi-bao-de-gai-nian&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#bi-bao-de-gai-nian&quot; aria-label=&quot;Anchor link for: bi-bao-de-gai-nian&quot;&gt;
@@ -475,8 +475,8 @@ Unboxed&lt;&#x2F;h3&gt;
 		<title>Rust RFC 2349 - Pin 翻译</title>
 		<published>2018-08-19T07:36:17+08:00</published>
 		<updated>2018-08-21T08:52:15+08:00</updated>
-		<link href="https://www.linyinfeng.com/posts/rust-rfc-2349/" type="text/html"/>
-		<id>https://www.linyinfeng.com/posts/rust-rfc-2349/</id>
+		<link href="https://blog.linyinfeng.com/posts/rust-rfc-2349/" type="text/html"/>
+		<id>https://blog.linyinfeng.com/posts/rust-rfc-2349/</id>
 		<content type="html">&lt;p&gt;本文为 &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;rust-lang&#x2F;rfcs&#x2F;blob&#x2F;master&#x2F;text&#x2F;2349-pin.md&quot;&gt;Rust RFC 2349 - Pin&lt;&#x2F;a&gt; 的中文翻译。&lt;&#x2F;p&gt;
 &lt;p&gt;Rust RFCs 并非一成不变，本文翻译于 2018 年 08 月 19 日。&lt;&#x2F;p&gt;
 &lt;p&gt;Rust RFCs 仓库目前（2018-08-21）为可选的 MIT 和 Apache 授权，本文使用了其 MIT 授权。&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;linyinfeng&#x2F;blog&#x2F;tree&#x2F;master&#x2F;content&#x2F;posts&#x2F;rust-rfc-2349&#x2F;LICENSE-MIT&quot;&gt;MIT 许可证副本&lt;&#x2F;a&gt;。&lt;&#x2F;p&gt;
@@ -749,8 +749,8 @@ Unboxed&lt;&#x2F;h3&gt;
 		<title>Futures-rs 博文 Toykio 翻译</title>
 		<published>2018-08-18T18:24:51+08:00</published>
 		<updated>2018-08-21T08:52:15+08:00</updated>
-		<link href="https://www.linyinfeng.com/posts/toykio/" type="text/html"/>
-		<id>https://www.linyinfeng.com/posts/toykio/</id>
+		<link href="https://blog.linyinfeng.com/posts/toykio/" type="text/html"/>
+		<id>https://blog.linyinfeng.com/posts/toykio/</id>
 		<content type="html">&lt;p&gt;本文为 Rust futures-rs 博客 2018 年 8 月 17 日 的 博文 &lt;a href=&quot;https:&#x2F;&#x2F;rust-lang-nursery.github.io&#x2F;futures-rs&#x2F;blog&#x2F;2018&#x2F;08&#x2F;17&#x2F;toykio.html&quot;&gt;Toykio&lt;&#x2F;a&gt; 的中文翻译。&lt;&#x2F;p&gt;
 &lt;p&gt;原文作者 Alexander Polakov（&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;polachok&quot;&gt;@polachok&lt;&#x2F;a&gt;）。&lt;&#x2F;p&gt;
 &lt;p&gt;原文目前（2018-08-21）为可选的 MIT 和 Apache 授权，本文使用了其 MIT 授权。&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;linyinfeng&#x2F;blog&#x2F;tree&#x2F;master&#x2F;content&#x2F;posts&#x2F;toykio&#x2F;LICENSE-MIT&quot;&gt;MIT 许可证副本&lt;&#x2F;a&gt;。&lt;&#x2F;p&gt;
@@ -928,8 +928,8 @@ Unboxed&lt;&#x2F;h3&gt;
 		<title>开始写博客</title>
 		<published>2018-08-01T23:53:16+08:00</published>
 		<updated>2018-08-15T18:31:16+08:00</updated>
-		<link href="https://www.linyinfeng.com/posts/start-blogging/" type="text/html"/>
-		<id>https://www.linyinfeng.com/posts/start-blogging/</id>
+		<link href="https://blog.linyinfeng.com/posts/start-blogging/" type="text/html"/>
+		<id>https://blog.linyinfeng.com/posts/start-blogging/</id>
 		<content type="html">&lt;p&gt;咸鱼了很久觉得还是应该写个博客记录和总结一下日常的学习。&lt;&#x2F;p&gt;
 &lt;span id=&quot;continue-reading&quot;&gt;&lt;&#x2F;span&gt;
 &lt;p&gt;这个网站托管在 github 上，代码仓库为 &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;linyinfeng&#x2F;blog&quot;&gt;linyinfeng&#x2F;blog&lt;&#x2F;a&gt;。&lt;&#x2F;p&gt;
