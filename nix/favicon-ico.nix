@@ -5,9 +5,7 @@ stdenvNoCC.mkDerivation {
 
   dontUnpack = true;
 
-  nativeBuildInputs = [
-    imagemagick ghostscript
-  ];
+  nativeBuildInputs = [ imagemagick ghostscript ];
 
   buildPhase = ''
     convert "${favicon-pdf}" \

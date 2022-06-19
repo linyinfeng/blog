@@ -1,0 +1,54 @@
+{
+    "katex": {
+        "cargoLocks": null,
+        "extract": null,
+        "name": "katex",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "name": null,
+            "sha256": "sha256-1tFWtAtgGegbwwJCF1IvPDA7kSjN0BPSAWf1MZc/ftw=",
+            "type": "url",
+            "url": "https://github.com/KaTeX/KaTeX/releases/download/v0.16.0/katex.tar.gz"
+        },
+        "version": "v0.16.0"
+    },
+    "license-buttons": {
+        "cargoLocks": null,
+        "extract": null,
+        "name": "license-buttons",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "creativecommons",
+            "repo": "licensebuttons",
+            "rev": "9bd3608c3a0a2fee342772a9d6d2c20ea616ba82",
+            "sha256": "sha256-kjU/zW5CnkRk0hwHLy/HHzffHdDKAoIATHsdBq5vqkI=",
+            "type": "github"
+        },
+        "version": "9bd3608c3a0a2fee342772a9d6d2c20ea616ba82"
+    },
+    "normalize-css": {
+        "cargoLocks": null,
+        "extract": null,
+        "name": "normalize-css",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "necolas",
+            "repo": "normalize.css",
+            "rev": "8.0.1",
+            "sha256": "sha256-OviSJZM2ggeGoX/NGut4fVMLePNqBHgAjmK53BfvHEU=",
+            "type": "github"
+        },
+        "version": "8.0.1"
+    }
+}

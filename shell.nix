@@ -1,8 +1,3 @@
 { pkgs ? import <nixpkgs> { } }:
 
-pkgs.mkShell {
-  packages = with pkgs; [
-    zola
-    nvfetcher
-  ];
-}
+pkgs.mkShell { packages = with pkgs; [ zola nvfetcher ]; }
