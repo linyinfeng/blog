@@ -255,12 +255,12 @@
         <section class="article-content"><p>近日在学习 Rust 语言。Rust 语言的闭包设计非常有趣，一方面，它看起来非常复杂，为了支持闭包设计了三种不同的 trait，<code>Fn</code>、<code>FnMut</code> 和 <code>FnOnce</code>；一方面其设计又透露出了语言设计中闭包的本质。通过考察 Rust 闭包的设计，我们能更好的理解闭包到底是什么，在拥有生存期和借用检查的语言 Rust 中，闭包如何工作。</p>
 <p>本文将在 Rust 下实现一个能够阐述闭包工作原理的朴素版闭包（也是一个 Boxed Closure）。并在实现的基础上对 Rust 闭包作进一步探究。</p>
 <span id="continue-reading"></span><h2 id="bi-bao-de-gai-nian"><a class="zola-anchor" href="#bi-bao-de-gai-nian" aria-label="Anchor link for: bi-bao-de-gai-nian">
-    <i class="fas fa-link"></i>
+    ⚓
 </a>
 闭包的概念</h2>
 <p>闭包（Closure）是一个在计算机科学中广泛使用的概念，又叫词法闭包（Lexical Closure）。即闭包能够“捕获”词法作用域中的变量，这是与编译时代码的结构直接相关的。也就是说，在<strong>声明闭包而不是闭包被调用的时候</strong>，其函数体可以捕获外围词法作用域中的变量。</p>
 <h3 id="bi-bao-shi-ni-ming-han-shu-ma"><a class="zola-anchor" href="#bi-bao-shi-ni-ming-han-shu-ma" aria-label="Anchor link for: bi-bao-shi-ni-ming-han-shu-ma">
-    <i class="fas fa-link"></i>
+    ⚓
 </a>
 闭包是匿名函数吗？</h3>
 <p>这两个概念之间没有什么关系，就以<a href="https://en.wikipedia.org/wiki/Closure_(computer_programming)">维基百科 Closure 词条</a>上举的一个常见的 <code>adder</code> 例子来说：</p>
@@ -277,7 +277,7 @@
 </span></code></pre>
 <p>在这两个例子中，a 和 b 均为闭包，JavaScript 中的 <code>function</code> 也是一样，是不是闭包当然和没有名字并没有理论和实践上的联系。当然，可以说对于将函数设计为一等对象（First class object）的语言，函数是否匿名一般不产生任何实际区别。</p>
 <h3 id="tong-chang-xing-shi"><a class="zola-anchor" href="#tong-chang-xing-shi" aria-label="Anchor link for: tong-chang-xing-shi">
-    <i class="fas fa-link"></i>
+    ⚓
 </a>
 通常形式</h3>
 <p>对于函数基于栈的且没有垃圾回收（Garbage Collection）的语言，往往无法实现完全的闭包。这是因为，闭包从语义上应当能够延长其捕获的变量的生存期（lifetime）到长于或等于闭包的生存期。对于广泛利用栈进行函数局部变量分配和流程控制的语言，函数的局部变量的生存期严格与函数调用栈绑定，即从函数调用到函数返回（严格来说是局部变量内存的生存期，显然局部变量的生存期必然小于等于其内存的生存期）。</p>
@@ -290,7 +290,7 @@
 </span><span>}
 </span></code></pre>
 <h2 id="dong-shou-shi-xian"><a class="zola-anchor" href="#dong-shou-shi-xian" aria-label="Anchor link for: dong-shou-shi-xian">
-    <i class="fas fa-link"></i>
+    ⚓
 </a>
 动手实现</h2>
 <p>理解了闭包是什么，我们就可以写出一个朴素的闭包。最终我们实现的闭包<strong>用起来</strong>将会有点繁琐（无自动类型推导），但行为几乎与内置闭包一致。最终实现将会看起来像一个类似于 C++ 14 Generalized Lambda Capture 特性的闭包宏。</p>
@@ -454,11 +454,11 @@
 </span></code></pre>
 <p>完整 crate 已经上传到 GitHub 仓库 <a href="https://github.com/linyinfeng/closure">linyinfeng/closure</a>。注意，这是一个非常简陋的闭包设计，仅仅用于阐述一个典型闭包的工作原理。相比于 Rust 内置闭包来说，它的设计是简洁的，使用是繁琐的，性能是低下的。下面将对 Rust 内置闭包的工作进行分析和探讨，同时也与实现的朴素闭包作比较。</p>
 <h2 id="nei-zhi-bi-bao"><a class="zola-anchor" href="#nei-zhi-bi-bao" aria-label="Anchor link for: nei-zhi-bi-bao">
-    <i class="fas fa-link"></i>
+    ⚓
 </a>
 内置闭包</h2>
 <h3 id="unboxed"><a class="zola-anchor" href="#unboxed" aria-label="Anchor link for: unboxed">
-    <i class="fas fa-link"></i>
+    ⚓
 </a>
 Unboxed</h3>
 <p>上文实现的闭包实际上与内置闭包非常相似，翻译后使用起来基本没有区别。</p>
@@ -523,13 +523,13 @@ Unboxed</h3>
 </span></code></pre>
 <p>可见 Rust 内置闭包实际上<strong>只包含了环境</strong>。原因是 Rust 的闭包是 unboxed 闭包，其函数直接被编译器定义在 <code>FnOnce</code>，<code>FnMut</code> 和 <code>Fn</code> 的实现中，因此，内置闭包对象根本不需要携带函数指针。对内置闭包的函数调用大部分情况下在编译期就绑定了（除非使用 trait object），而不是运行时。这样做的好处是方便 LLVM 做内联优化，同时闭包本身也不需要额外携带一个指针了，可以统一地交给 trait object 做。</p>
 <h3 id="move-guan-jian-zi"><a class="zola-anchor" href="#move-guan-jian-zi" aria-label="Anchor link for: move-guan-jian-zi">
-    <i class="fas fa-link"></i>
+    ⚓
 </a>
 <code>move</code> 关键字</h3>
 <p><code>move</code> 关键字的意义有时令人感到困惑。在远古 Rust 中，<code>move</code> 关键字是另作他用的，后来被删除了。应该是在现在版本的闭包出现以后才重新作为一个有用的关键字出现。在内置闭包捕获变量的时候，Rust 总是尽可能以 <code>&amp;</code> &gt; <code>&amp;mut</code> &gt; <code>move</code> 的顺序进行捕获，这将对捕获的变量产生最少的影响。但是，某些情况下，我们需要闭包获得变量的所有权，但是闭包函数体并不需要获得变量的所有权。这时候我们使用 <code>move</code> 关键字强制 Rust 将所有捕获的变量移动入闭包的环境中，以延长被移动的对象的生存期。</p>
 <p>可以考虑一下为什么有 <code>move</code> 闭包却没有 <code>mut</code> 闭包呢？因为强制 <code>mut</code> 捕获并不会造成任何的好处却会对被捕获的变量产生一个可变借用，这没有任何意义，就与写了 <code>let r = &amp;mut x;</code> 却不修改 r 一样，编译器将提示去除 <code>mut</code>。</p>
 <h3 id="fn-fnmut-yu-fnonce"><a class="zola-anchor" href="#fn-fnmut-yu-fnonce" aria-label="Anchor link for: fn-fnmut-yu-fnonce">
-    <i class="fas fa-link"></i>
+    ⚓
 </a>
 <code>Fn</code>，<code>FnMut</code> 与 <code>FnOnce</code></h3>
 <p>正如之前反复强调的，闭包究竟实现 <code>Fn</code>，<code>FnMut</code>，<code>FnOnce</code> 中的哪几个 trait，是由闭包对环境的使用，也就是函数体决定的。</p>
@@ -555,7 +555,7 @@ Unboxed</h3>
 </span></code></pre>
 <p>这是因为 <code>dbg!(s)</code> 将获取 <code>s</code> 的所有权再返回 <code>s</code>，而 <code>println!(&quot;{}&quot;, s)</code> 只会获取 <code>s</code> 的引用。同样，<code>s</code> 被移动进第一个闭包是因为 <code>move</code> 关键字的作用，而 <code>s</code> 被移动进第二个闭包是因为第二个闭包的函数体要求 <code>s</code> 的所有权。即使两个例子中 <code>s</code> 均被移动进闭包，第一个闭包依然根据函数体被实现了 <code>Fn</code>，<code>FnMut</code>，<code>FnOnce</code>，第二个闭包被根据函数体实现了 <code>FnOnce</code>。</p>
 <h3 id="bi-bao-de-mut"><a class="zola-anchor" href="#bi-bao-de-mut" aria-label="Anchor link for: bi-bao-de-mut">
-    <i class="fas fa-link"></i>
+    ⚓
 </a>
 闭包的 <code>mut</code></h3>
 <p>下面示例代码中的 <code>c</code> 变量有时候也令人感到困惑。</p>
@@ -569,7 +569,7 @@ Unboxed</h3>
 </span></code></pre>
 <p>为什么编译器要求 c 必须是可变的才能执行 c() 呢？这是因为不能通过不可变引用闭包修改其内容，包括其中的可变引用。另一方面，也可以从类型上看，无法将不可变的内置闭包传递给要求可变 self 引用的 call_mut。</p>
 <h2 id="tuo-chi-bi-bao"><a class="zola-anchor" href="#tuo-chi-bi-bao" aria-label="Anchor link for: tuo-chi-bi-bao">
-    <i class="fas fa-link"></i>
+    ⚓
 </a>
 脱离闭包</h2>
 <p>Rust 中，最简单高阶函数一般这样书写：</p>

@@ -349,18 +349,18 @@
 <li>Rust Issue: <a href="https://github.com/rust-lang/rust/issues/49150">rust-lang/rust#49150</a></li>
 </ul>
 <h2 id="zhai-yao"><a class="zola-anchor" href="#zhai-yao" aria-label="Anchor link for: zhai-yao">
-    <i class="fas fa-link"></i>
+    ⚓
 </a>
 摘要</h2>
 <p>提出一套新的 API 加入 libcore/libstd 中作为不可以被安全地移动的数据的安全抽象。</p>
 <h2 id="dong-ji"><a class="zola-anchor" href="#dong-ji" aria-label="Anchor link for: dong-ji">
-    <i class="fas fa-link"></i>
+    ⚓
 </a>
 动机</h2>
 <p>不应该被移动的类型是长期困扰 Rust 的一个问题。实现它的一个通常的动机是当一个结构包含指向它自己内存的指针——移动这个结构将会使指针无效。这个用例最近已经在生成器的工作中变得非常重要。因为生成器本质上将栈帧实现为一个可以被操作的对象，看起来如果它被允许，这种生成器的惯用法将导致这种自引用类型。</p>
 <p>这个提案向 std 中加入了 API，允许你保证一个特定的值永远不会被再次移动，使依赖于自引用的安全 API 存在。</p>
 <h2 id="zhi-nan-ceng-ci-de-jie-shi"><a class="zola-anchor" href="#zhi-nan-ceng-ci-de-jie-shi" aria-label="Anchor link for: zhi-nan-ceng-ci-de-jie-shi">
-    <i class="fas fa-link"></i>
+    ⚓
 </a>
 指南层次的解释</h2>
 <p>这个 RFC 的核心目标是提供一个引用类型，保证被引用的对象在销毁前不被移动。我们希望对类型系统做最少的开洞来实现它，而且事实上，这个 RFC 展示了我们能在不对类型系统做任何修改的情况下达成这个目标。</p>
@@ -391,11 +391,11 @@
 <p>默认情况下当我们为一个结构体实现 <code>Future</code>，这个定义将与目前的相同，<code>poll</code> 将获取 <code>&amp;mut self</code>。但当你想要允许你的 future 自引用，你只需要去除 <code>Unpin</code> 并注意剩下的部分。</p>
 <p>这个 RFC 也给 <code>Box</code> 提供了一个 pinned 类似，叫做 <code>PinBox&lt;T&gt;</code>。它就像这里讨论的 <code>Pin</code> 一样工作——如果类型实现了 <code>Unpin</code>，它的功能就和 <code>Box</code> 一样；如果类型去除了 <code>Unpin</code>，它确保引用之后的类型不会被再次移动。</p>
 <h2 id="can-kao-ceng-ci-de-jie-shi"><a class="zola-anchor" href="#can-kao-ceng-ci-de-jie-shi" aria-label="Anchor link for: can-kao-ceng-ci-de-jie-shi">
-    <i class="fas fa-link"></i>
+    ⚓
 </a>
 参考层次的解释</h2>
 <h3 id="unpin-zi-dong-trait"><a class="zola-anchor" href="#unpin-zi-dong-trait" aria-label="Anchor link for: unpin-zi-dong-trait">
-    <i class="fas fa-link"></i>
+    ⚓
 </a>
 <code>Unpin</code> 自动 trait</h3>
 <p>这个新的自动 trait 被加入到 <code>core::marker</code> 和 <code>std::marker</code> 模块：</p>
@@ -404,7 +404,7 @@
 <p>一个实现了 <code>Unpin</code> 的类型能够被移动出下文将提到的某一个 pinned 引用类型。否则，它们不会暴露允许你将值移出的安全 API。因为 <code>Unpin</code> 是一个自动 trait，Rust 中的大部分类型实现了它。没有实现它的类型主要是自引用类型，如某些生成器。</p>
 <p>这个 trait 是一个 lang 项目，但仅仅是为了为某些生成器生成负实现。不同于之前的 <code>?Move</code> 提案，也不同于如 <code>Sized</code> 和 <code>Copy</code> 的一些 traits，这个 trait 不对实现或不实现它的类型施加任何基于编译器的语义。相反地，它的语义是完全由使用 <code>Unpin</code> 作为标记的库 APIs 强制的。</p>
 <h3 id="pin"><a class="zola-anchor" href="#pin" aria-label="Anchor link for: pin">
-    <i class="fas fa-link"></i>
+    ⚓
 </a>
 <code>Pin</code></h3>
 <p><code>Pin</code> 结构体被加入到 <code>core::mem</code> 和 <code>std::mem</code>。这是一种新的，相比 <code>&amp;mut T</code> 有更多要求的引用。</p>
@@ -414,7 +414,7 @@
 </span><span>}
 </span></code></pre>
 <h4 id="an-quan-apis"><a class="zola-anchor" href="#an-quan-apis" aria-label="Anchor link for: an-quan-apis">
-    <i class="fas fa-link"></i>
+    ⚓
 </a>
 安全 APIs</h4>
 <p><code>Pin</code> 实现了 <code>Deref</code>, 但是仅当类型实现 <code>Unpin</code> 时实现了 <code>DerefMut</code>。这样，当类型没有实现 <code>Unpin</code> 时，调用 <code>mem::swap</code> 或
@@ -435,7 +435,7 @@
 </span></code></pre>
 <p>它也可以实现额外的 APIs 因为它们对于实现类型转换是很实用的，例如 <code>AsRef</code>，<code>From</code> 等等。<code>Pin</code> 实现了 <code>CoerceUnsized</code>，这对能够将它们转为 trait objects 是必要的。（<code>Pin</code> implements <code>CoerceUnsized</code> as necessary to make coercing them into trait objects possible.）</p>
 <h4 id="bu-an-quan-apis"><a class="zola-anchor" href="#bu-an-quan-apis" aria-label="Anchor link for: bu-an-quan-apis">
-    <i class="fas fa-link"></i>
+    ⚓
 </a>
 不安全 APIs</h4>
 <p><code>Pin</code> 能够被不安全地从可能未实现 <code>Unpin</code> 的类型的可变引用构造。使用这个构造函数的用户必须知道他们传递引用的类型在 <code>Pin</code> 被构造后将永远不再被移动，即使这个引用的生存期结束了。（举个例子，通过一个你未创建的引用构造的 <code>Pin</code> 总是不安全的，因为你不知道一旦这个引用的生存期结束会发生什么。）</p>
@@ -470,7 +470,7 @@
 </span><span>};
 </span></code></pre>
 <h3 id="pinbox"><a class="zola-anchor" href="#pinbox" aria-label="Anchor link for: pinbox">
-    <i class="fas fa-link"></i>
+    ⚓
 </a>
 <code>PinBox</code></h3>
 <p><code>PinBox</code> 类型被加入到 <code>alloc::boxed</code> 和 <code>std::boxed</code>。正如 <code>Pin</code> 类似于引用类型，<code>Box</code> 类似于 <code>Box</code> 类型，它有相似的 API。</p>
@@ -480,7 +480,7 @@
 </span><span>}
 </span></code></pre>
 <h4 id="an-quan-api"><a class="zola-anchor" href="#an-quan-api" aria-label="Anchor link for: an-quan-api">
-    <i class="fas fa-link"></i>
+    ⚓
 </a>
 安全 API</h4>
 <p>不同于 <code>Pin</code>，从一个 <code>T</code> 和 <code>Box&lt;T&gt;</code> 构建 <code>PinBox</code> 是安全的，即使类型没有实现 <code>Unpin</code>。</p>
@@ -506,7 +506,7 @@
 </span></code></pre>
 <p>这些 APIs 使 <code>PinBox</code> 能够作为一个合理的方法处理没有实现 <code>Unpin</code> 的数据。一旦你在 <code>PinBox</code> 内分配数据到堆上，你知道它的地址不会改变，同时可以分发对这些数据的 <code>Pin</code> 引用。</p>
 <h4 id="bu-an-quan-api"><a class="zola-anchor" href="#bu-an-quan-api" aria-label="Anchor link for: bu-an-quan-api">
-    <i class="fas fa-link"></i>
+    ⚓
 </a>
 不安全 API</h4>
 <p>类似 <code>Pin</code>，<code>PinBox</code> 可以被不安全地转换为 <code>&amp;mut T</code> 和 <code>Box&lt;T&gt;</code> 即使它引用的类型没有实现 <code>Unpin</code>：</p>
@@ -516,7 +516,7 @@
 </span><span>}
 </span></code></pre>
 <h3 id="bu-ke-yi-dong-sheng-cheng-qi"><a class="zola-anchor" href="#bu-ke-yi-dong-sheng-cheng-qi" aria-label="Anchor link for: bu-ke-yi-dong-sheng-cheng-qi">
-    <i class="fas fa-link"></i>
+    ⚓
 </a>
 不可移动生成器</h3>
 <p>如今，不稳定的生成器特性有选项能够生成包含生存期跨越 yield 点的引用的生成器——这些引用，事实上，是生成器的状态机的引用。因为如果类型移动，内部引用将失效，这类生成器（“不可移动生成器”）的创建目前是不安全的。</p>
@@ -528,16 +528,16 @@
 </ol>
 <p>这就是这个 RFC 中的 API 如何允许自引用数据被安全地创建的例子。</p>
 <h2 id="que-dian"><a class="zola-anchor" href="#que-dian" aria-label="Anchor link for: que-dian">
-    <i class="fas fa-link"></i>
+    ⚓
 </a>
 缺点</h2>
 <p>这向 std 添加了额外的 APIs，包括一个自动 trait。这样的添加不能被轻易地接受，仅当它们对于它们所表达的抽象完全合理时才能添加。</p>
 <h2 id="li-you-he-ti-dai-fang-an"><a class="zola-anchor" href="#li-you-he-ti-dai-fang-an" aria-label="Anchor link for: li-you-he-ti-dai-fang-an">
-    <i class="fas fa-link"></i>
+    ⚓
 </a>
 理由和替代方案</h2>
 <h3 id="dui-bi-move"><a class="zola-anchor" href="#dui-bi-move" aria-label="Anchor link for: dui-bi-move">
-    <i class="fas fa-link"></i>
+    ⚓
 </a>
 对比 <code>?Move</code></h3>
 <p>一个之前的提案是添加一个内置的 <code>Move</code> trait，类似于 <code>Sized</code>。一个没有实现 <code>Move</code> 的类型在被引用以后不能被移动。</p>
@@ -545,7 +545,7 @@
 <p>在某些场景下，这个提案是一个范围小得多的 <code>?Move</code>。如果使用 <code>?Move</code>，<em>任何</em>引用就会表现得如这里的“Pin”引用一样。然而，因为这个灵活性，使一个类型无法移动的负面后果就是会有更加广泛的不良影响。</p>
 <p>相反地，我们要求 APIs 通过使用 <code>Pin</code> 类型选择支持不可变性，避免“传染”基本的引用类型，与不可移动类型产生关系。</p>
 <h3 id="dui-bi-shi-yong-unsafe-apis"><a class="zola-anchor" href="#dui-bi-shi-yong-unsafe-apis" aria-label="Anchor link for: dui-bi-shi-yong-unsafe-apis">
-    <i class="fas fa-link"></i>
+    ⚓
 </a>
 对比使用 <code>unsafe</code> APIs</h3>
 <p>另一个我们考虑的替代选项是仅仅使要求不可移动性的 API 不安全。这些 APIs 的用户必须考查并确保它们没有移动自引用类型。举个例子，生成器将像这样：</p>
@@ -558,14 +558,14 @@
 </span></code></pre>
 <p>这将不要求对标准库添加任何东西，但这也将使每一个想要调用 resume 的用户负担起保证检查（冒着内存不安全的风险）它们的类型没有被移动或者是可移动的的任务。对于添加这种 APIs，这似乎是一个不良的取舍。</p>
 <h3 id="zuo-wei-bao-zhuang-lei-de-anchor-he-stablederef"><a class="zola-anchor" href="#zuo-wei-bao-zhuang-lei-de-anchor-he-stablederef" aria-label="Anchor link for: zuo-wei-bao-zhuang-lei-de-anchor-he-stablederef">
-    <i class="fas fa-link"></i>
+    ⚓
 </a>
 作为包装类的 Anchor 和 <code>StableDeref</code></h3>
 <p>再过去的本 RFC 的迭代中，有一个包装类型叫做 <code>Anchor</code>，这个类型能够“锚定”任何智能指针，而且有一个关于不同指针类型的被引用对象的稳定性的 traits 层级。这个类型被替换为了 <code>PinBox</code>。</p>
 <p>这种方法的主要好处是它与 owning-ref 和 rental 这种 crates 部分整合，这些 crates 也使用稳定性层级。然而，因为要求的不同，owning-ref 以及其他此类 crates 使用的 traits 最终形成了与 Anchor 使用的 traits 没有重叠的一个这个 RFC 提出的 traits 子集。将这些整合进同一个层级结构中相对来说只有很少的好处。</p>
 <p>并且，之前，仅有的几个实现了放入 Anchor 所有必要的 traits 的类型是 <code>Box&lt;T&gt;</code> 和 <code>Vec&lt;T&gt;</code>。因为你无法可变访问一个智能指针（除非被引用对象实现了 <code>Unpin</code>），在这个 RFC 的上一个迭代中一个 <code>Anchor&lt;Vec&lt;T&gt;&gt;</code> 并没有真的与 <code>Anchor&lt;Box&lt;[T]&gt;&gt;</code> 有什么不同。由于这个原因，将 <code>Anchor</code> 替换为 <code>PinBox</code> 并仅支持 <code>PinBox&lt;T&gt;</code>，这在减少了 API 复杂度的同时也没有减少表现力。</p>
 <h3 id="zhan-pinning-api-qian-zai-de-wei-lai-kuo-zhan"><a class="zola-anchor" href="#zhan-pinning-api-qian-zai-de-wei-lai-kuo-zhan" aria-label="Anchor link for: zhan-pinning-api-qian-zai-de-wei-lai-kuo-zhan">
-    <i class="fas fa-link"></i>
+    ⚓
 </a>
 栈 pinning API（潜在的未来扩展）</h3>
 <p>这个 API 支持 pinning 一个 <code>!Unpin</code> 类型到堆上。然而，它们也可以被安全地放置在栈上，允许创建一个安全的引用栈上分配的 <code>!Unpin</code> 类型的 <code>Pin</code>。</p>
@@ -586,19 +586,19 @@
 </span><span>}
 </span></code></pre>
 <h3 id="jiang-pin-zuo-wei-nei-zhi-lei-xing-qian-zai-de-wei-lai-kuo-zhan"><a class="zola-anchor" href="#jiang-pin-zuo-wei-nei-zhi-lei-xing-qian-zai-de-wei-lai-kuo-zhan" aria-label="Anchor link for: jiang-pin-zuo-wei-nei-zhi-lei-xing-qian-zai-de-wei-lai-kuo-zhan">
-    <i class="fas fa-link"></i>
+    ⚓
 </a>
 将 <code>Pin</code> 作为内置类型（潜在的未来扩展）</h3>
 <p><code>Pin</code> 类型也可以作为一种新的一级引用——<code>&amp;'a pin T</code>。这将有一些好处——举个例子，映射字段的操作将变得平凡，以及“栈 pinning”将不要求额外 API，这将是自然的。然而，添加一个新的引用类型有不好的一面，一个非常大的语言变化。</p>
 <p>现在，我们对坚持 std 中的 <code>Pin</code> 结构体感到高兴，如果这个类型某天加入了，将 <code>Pin</code> 类型转换为这个引用类型的别名。</p>
 <h3 id="tong-shi-you-pin-he-pinmut"><a class="zola-anchor" href="#tong-shi-you-pin-he-pinmut" aria-label="Anchor link for: tong-shi-you-pin-he-pinmut">
-    <i class="fas fa-link"></i>
+    ⚓
 </a>
 同时有 <code>Pin</code> 和 <code>PinMut</code></h3>
 <p>相比与仅有 <code>Pin</code>，叫做 <code>Pin</code> 的类型也可以叫做 <code>PinMut</code>，我们可以有个类型叫做 <code>Pin</code> 的，与 <code>PinMut</code> 类似的类型，但仅包含一个共享的，不可变的引用。</p>
 <p>因为我们已经对 <code>Pin</code>/<code>PinMut</code> 的不可变解引用的安全性有信心，这个 <code>Pin</code> 类型不会提供普通不可变引用不能提供的有意义的保证。如果一个用户需要传递一个 pinned 的数据的引用，一个 <code>&amp;Pin</code>（在本 RFC 中定义的 <code>Pin</code>）是足够的。由于这个原因，区分 <code>Pin</code>/<code>PinMut</code> 导致了额外的类型和复杂性，没有提供有影响力的好处。</p>
 <h2 id="wei-jie-jue-de-wen-ti"><a class="zola-anchor" href="#wei-jie-jue-de-wen-ti" aria-label="Anchor link for: wei-jie-jue-de-wen-ti">
-    <i class="fas fa-link"></i>
+    ⚓
 </a>
 未解决的问题</h2>
 <p>除了上述讨论的未来的扩展，std 中的三个 pin 类型将随时间发展，由于它们实现了更多普遍的转换 traits 等等。</p>

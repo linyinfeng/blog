@@ -222,7 +222,7 @@
 
         <section class="article-content"><p>学习形式语言自动机这课时花了很久才理解莱斯定理（Rice's Theorem）。懂了以后发现，其实就是之前对着书瞎想的时候，没先把全局要做的事情理清楚，这个定理其实并不复杂。这篇带了一些偷懒（省略）的文章是我对莱斯定理的笔记。</p>
 <span id="continue-reading"></span><h2 id="chen-shu"><a class="zola-anchor" href="#chen-shu" aria-label="Anchor link for: chen-shu">
-    <i class="fas fa-link"></i>
+    ⚓
 </a>
 陈述</h2>
 <p>莱斯定理的陈述听起来非常厉害，似乎难以证明。</p>
@@ -250,7 +250,7 @@
 $$</p>
 <p>我用 $\mathit{RE}$ 表示所有递归可枚举语言的集合，用 $\mathit{RL}$ 表示所有递归语言（可判定语言）的集合。字母 $\mathcal{P}$ 表示性质。用 $M$ 表示一个图灵机，$L(M)$ 表示该图灵机接收的语言。$\langle \cdot \rangle$ 表示一个东西的字符串表示，例如 $\langle M \rangle$ 表示一个图灵机 $M$ 的字符串表示，$\langle M, w \rangle$ 表示一个图灵机和一个字符串构成的有序对的字符串表示。</p>
 <h2 id="zhun-bei"><a class="zola-anchor" href="#zhun-bei" aria-label="Anchor link for: zhun-bei">
-    <i class="fas fa-link"></i>
+    ⚓
 </a>
 准备</h2>
 <p>在证明莱斯定理前，我们先证明通用图灵机（Universal Turing Machine）接收的语言是不可判定的。什么是通用图灵机？通用图灵机就是输入一个图灵机的字符串表示和一个字符串，模拟输入的图灵机在输入的字符串上运行的图灵机。为什么这种图灵机是存在的呢？这里我偷个懒，不做证明。后续涉及到用图灵机构造的方式来做证明的部分，我都仅简要说明。通用图灵机能接收的语言就是。</p>
@@ -269,7 +269,7 @@ $$</p>
 </ul>
 <p>$\langle U' \rangle$ 不能既在 $L_u'$ 里又不在 $L_u'$ 里，我们导出了一个矛盾，表明我们的假设，$L_u$ 可判定，是错误的。因此，通用图灵机 $U$ 识别的语言 $L_u$ 不可判定，$L_u \notin \mathit{RL}$。</p>
 <h2 id="zheng-ming"><a class="zola-anchor" href="#zheng-ming" aria-label="Anchor link for: zheng-ming">
-    <i class="fas fa-link"></i>
+    ⚓
 </a>
 证明</h2>
 <p>为什么我们花了很多篇幅说明了 $L_u$ 不可判定？因为假设莱斯定理不成立，即存在一个递归可枚举语言的非平凡性质是可判定的，那么 $L_u$ 就可判定。也就是说，我们能把 $L_u$ 规约到任意一个递归可枚举语言的非平凡性质的判定问题上。记 $L_{\mathcal{P}}$ 为性质 $\mathcal{P}$ 表示的语言。</p>
@@ -278,7 +278,7 @@ $$</p>
 $$</p>
 <p>怎么做呢，对于不同的非平凡性质，分为两种情况。</p>
 <h3 id="xing-zhi-bu-bao-han-kong-yu-yan"><a class="zola-anchor" href="#xing-zhi-bu-bao-han-kong-yu-yan" aria-label="Anchor link for: xing-zhi-bu-bao-han-kong-yu-yan">
-    <i class="fas fa-link"></i>
+    ⚓
 </a>
 性质不包含空语言</h3>
 <p>我们首先讨论性质不包含空语言的情况，即 $\emptyset \notin \mathcal{P}$。为什么要区分性质是否包含空语言呢，这主要是由证明方法决定的。</p>
@@ -290,7 +290,7 @@ $$</p>
 <p>这个构造显然可行。具体细节我继续偷懒不加进一步说明。特别要注意到的是，由于对 $M$ 的模拟可能不停机，此时一定有 $L(M') = \emptyset$，所以我们才要求性质不包含空语言。</p>
 <p>现在，我们如果能判定新的图灵机 $M'$ 的语言 $L(M') \in \mathcal{P}$，显然我们就能判定这个图灵机内部模拟的第一个图灵机 $M$ 是否接收 $w$。即 $L_{\mathcal{P}} \in \mathit{RL} \implies L_u \in \mathit{RL}$。由于上节中我们已经证明 $L_u \notin \mathit{RL}$，因此 $L_{\mathcal{P}} \notin \mathit{RL}$。</p>
 <h3 id="xing-zhi-bao-han-kong-yu-yan"><a class="zola-anchor" href="#xing-zhi-bao-han-kong-yu-yan" aria-label="Anchor link for: xing-zhi-bao-han-kong-yu-yan">
-    <i class="fas fa-link"></i>
+    ⚓
 </a>
 性质包含空语言</h3>
 <p>包含空语言的性质又该如何处理呢。</p>
@@ -304,7 +304,7 @@ $$</p>
 \forall \mathcal{P}, \mathcal{P} \subsetneq \mathit{RE} \land \mathcal{P} \neq \emptyset \implies \set{ \langle M \rangle \mid L(M) \in \mathcal{P} } \notin \mathit{RL}
 $$</p>
 <h2 id="ying-yong"><a class="zola-anchor" href="#ying-yong" aria-label="Anchor link for: ying-yong">
-    <i class="fas fa-link"></i>
+    ⚓
 </a>
 应用</h2>
 <p>莱斯定理告诉我们啥。举一些例子。</p>

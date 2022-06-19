@@ -216,12 +216,12 @@
 <p>在这个博文中我将展示 toykio，一个用于学习带有事件循环的 executor 如何工作的简单 futures executor。Toykio 仅仅提供很少的特性：一个事件循环以及 TCP 流和监听器。但是事实证明，由于 futures 是可组合的，这已经足够用来构建复杂的客户端和服务器程序。</p>
 <p>在下文中，我将向你提供 toykio 组件的快速概述。</p>
 <h2 id="asynctcpstream"><a class="zola-anchor" href="#asynctcpstream" aria-label="Anchor link for: asynctcpstream">
-    <i class="fas fa-link"></i>
+    ⚓
 </a>
 <code>AsyncTcpStream</code></h2>
 <p>Toykio 定义了 <code>AsyncTcpStream</code> 类型，这是一个标准库中的 <code>TcpStream</code> 的包装。就像标准库中的 <code>TcpStream</code> 一样，<code>connect</code> 函数打开一个连接并将 socket 设为非阻塞模式。这意味着 <code>read()</code> 和 <code>write()</code> 方法将会立刻返回数据或者错误。如果没有足够的数据（对于读操作）或者缓冲区空间（对于写操作），一个特殊的错误 <code>WouldBlock</code> 将被返回。我们将在下一节中讨论如何处理它。</p>
 <h2 id="asyncread-he-asyncwrite"><a class="zola-anchor" href="#asyncread-he-asyncwrite" aria-label="Anchor link for: asyncread-he-asyncwrite">
-    <i class="fas fa-link"></i>
+    ⚓
 </a>
 <code>AsyncRead</code> 和 <code>AsyncWrite</code></h2>
 <p><code>AsyncRead</code> 和 <code>AsyncWrite</code> traits 是所有 I/O 特性的基础。<code>AsyncReadExt</code> 和 <code>AsyncWriteExt</code> 的扩展方法（如 <code>read</code> 和 <code>write_all</code>）均在其上构建。这些 traits 提供了一种 futures 与事件循环连接的方法，同时保证它们独立于任何特定的事件循环实现。</p>
@@ -247,7 +247,7 @@
 <p>它尝试从底层的 <code>TcpStream</code> 读取。如果读取成功了，切片将被填上数据。如果失败并且返回了 <code>WouldBlock</code> 错误，就将当前任务的唤醒器注册，这样它将在数据可用的时候被唤醒。下一节中将提到更多有关的细节。</p>
 <p><code>AsyncWrite</code> 的实现对 <code>write</code> 做了类似的事。</p>
 <h2 id="shi-jian-xun-huan"><a class="zola-anchor" href="#shi-jian-xun-huan" aria-label="Anchor link for: shi-jian-xun-huan">
-    <i class="fas fa-link"></i>
+    ⚓
 </a>
 事件循环</h2>
 <p><code>Eventloop</code>（通常也被叫做 reactor）是这个 executor 的核心。它像这样被定义：</p>
@@ -364,7 +364,7 @@
 </span></code></pre>
 <p>我们消耗了 <code>run_queue</code>，获取 <code>wait_queue</code> 中的任务索引并询问这些任务。Ready(done) 任务将从 <code>wait_queue</code> 中被移除。</p>
 <h2 id="yi-ge-future-de-yi-sheng"><a class="zola-anchor" href="#yi-ge-future-de-yi-sheng" aria-label="Anchor link for: yi-ge-future-de-yi-sheng">
-    <i class="fas fa-link"></i>
+    ⚓
 </a>
 一个 future 的一生</h2>
 <p>在这节中，我将概括一个 future（让我们以 read 为例子）是如何在 eventloop 中被执行的：</p>
@@ -375,7 +375,7 @@
 <li>当一个事件发生，future 将被再次 poll。这个循环将被重复直到 future 返回了 ready。</li>
 </ul>
 <h2 id="gan-xie"><a class="zola-anchor" href="#gan-xie" aria-label="Anchor link for: gan-xie">
-    <i class="fas fa-link"></i>
+    ⚓
 </a>
 感谢</h2>
 <p>感谢 futures 团队的所有人。特别感谢 <a href="https://github.com/aturon">@aturon</a> 的鼓励和 <a href="https://github.com/MajorBreakfast">@MajorBreakfast</a> 的编辑。</p>
