@@ -83,3 +83,8 @@ category_id = "MDE4OkRpc2N1c3Npb25DYXRlZ29yeTMyOTkyOTcy"
 mapping = "pathname"
 reactions_enabled="1"
 theme="light"
+
+# Mastodon
+[extra.mastodon]
+enable = true
+link = "https://mastodon.li7g.com/@yinfeng"

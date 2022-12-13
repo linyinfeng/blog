@@ -27,6 +27,9 @@
         {% block atom %}
             <link rel="alternate" type="application/atom+xml" title="Atom" href="{{ get_url(path="atom.xml", trailing_slash=false) }}">
         {% endblock atom %}
+        {% if config.extra.mastodon.enable %}
+            <link rel="me" href="{{ config.extra.mastodon.link }}">
+        {% endif %}
     {% endblock head %}
 </head>
 <body>
