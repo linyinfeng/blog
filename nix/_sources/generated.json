@@ -7,11 +7,11 @@
         "pinned": false,
         "src": {
             "name": null,
-            "sha256": "sha256-1tFWtAtgGegbwwJCF1IvPDA7kSjN0BPSAWf1MZc/ftw=",
+            "sha256": "sha256-9n2WOKPY6YbjADg3H8GvlqR2Dc9JXROEqWQuLE0YmY4=",
             "type": "url",
-            "url": "https://github.com/KaTeX/KaTeX/releases/download/v0.16.0/katex.tar.gz"
+            "url": "https://github.com/KaTeX/KaTeX/releases/download/v0.16.4/katex.tar.gz"
         },
-        "version": "v0.16.0"
+        "version": "v0.16.4"
     },
     "license-buttons": {
         "cargoLocks": null,
