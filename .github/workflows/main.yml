@@ -49,10 +49,9 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: public
-          path: public.tar.zst
       - name: Unarchive
         run: |
-          tar --create --use-compress-program=zstd --file public.tar.zst public
+          tar --create --use-compress-program=zstd --file public.tar.zst
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
