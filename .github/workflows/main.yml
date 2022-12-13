@@ -27,14 +27,15 @@ jobs:
       - name: Check self-contained
         run: |
           [ $(nix path-info --recursive ./result | wc -l) == "1" ]
-      - name: Copy
+      - name: Copy and archive
         run: |
           cp --recursive --dereference result public
+          tar --create --use-compress-program=zstd --file public.tar.zst public
       - name: Upload
         uses: actions/upload-artifact@v3
         with:
           name: public
-          path: public
+          path: public.tar.zst
 
   deploy:
     needs: build
@@ -48,7 +49,10 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: public
-          path: public
+          path: public.tar.zst
+      - name: Unarchive
+        run: |
+          tar --create --use-compress-program=zstd --file public.tar.zst public
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
