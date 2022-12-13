@@ -1,5 +1,11 @@
-{ sources, stdenvNoCC, python3, makeFontsConf, wrapGAppsHook
-, gobject-introspection, gtk3 }:
+{ sources
+, stdenvNoCC
+, python3
+, makeFontsConf
+, wrapGAppsHook
+, gobject-introspection
+, gtk3
+}:
 
 let python = python3.withPackages (p: with p; [ pycairo pygobject3 ]);
 in stdenvNoCC.mkDerivation rec {

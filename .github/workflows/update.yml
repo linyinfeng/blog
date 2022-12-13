@@ -1,0 +1,46 @@
+name: "Automatic update"
+on:
+  schedule:
+    # every day 00:00 +08:00
+    - cron: '0 16 * * *'
+  workflow_dispatch:
+
+concurrency: push-to-main
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        ref: main
+        token: '${{ secrets.PAT_FOR_AUTOMATED_UPDATE }}'
+    - name: Install nix
+      uses: cachix/install-nix-action@v18
+      with:
+        install_url: https://github.com/numtide/nix-unstable-installer/releases/latest/download/install
+        nix_path: nixpkgs=channel:nixos-unstable
+        extra_nix_config: |
+          experimental-features = nix-command flakes
+    - name: Setup cachix
+      uses: cachix/cachix-action@v12
+      with:
+        name: linyinfeng
+        signingKey: '${{ secrets.CACHIX_SIGNING_KEY }}'
+    - name: Git config
+      run: |
+        git config --global user.email "nano@linyinfeng.com"
+        git config --global user.name "Nano"
+    - name: Nix flake update
+      run: |
+        nix flake update --commit-lock-file
+    - name: Run nvfetcher
+      run: |
+        nix develop --command nvfetcher --commit-changes
+    - name: Nix flake check
+      run: |
+        nix flake check
+    - name: Git push
+      run: |
+        git push

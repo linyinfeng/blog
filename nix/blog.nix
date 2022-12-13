@@ -1,5 +1,12 @@
-{ extraOptions ? null, callPackage, stdenvNoCC, writeShellScriptBin, python3
-, lib, zola, katex, license-buttons, normalize-css, favicon-ico }:
+{ extraOptions ? null
+, stdenvNoCC
+, lib
+, zola
+, katex
+, license-buttons
+, normalize-css
+, favicon-ico
+}:
 
 stdenvNoCC.mkDerivation {
   name = "blog";
