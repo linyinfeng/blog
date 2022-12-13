@@ -30,7 +30,7 @@ jobs:
       - name: Copy and archive
         run: |
           cp --recursive --dereference result public
-          tar --create --use-compress-program=zstd --file public.tar.zst public
+          tar --verbose --create --use-compress-program=zstd --file public.tar.zst public
       - name: Upload
         uses: actions/upload-artifact@v3
         with:
@@ -51,7 +51,7 @@ jobs:
           name: public
       - name: Unarchive
         run: |
-          tar --extract --use-compress-program=zstd --file public.tar.zst
+          tar --verbose --extract --file public.tar.zst
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
