@@ -37,7 +37,9 @@ jobs:
         nix flake update --commit-lock-file
     - name: Run nvfetcher
       run: |
+        pushd nix
         nix develop --command nvfetcher --commit-changes
+        popd
     - name: Nix flake check
       run: |
         nix flake check
