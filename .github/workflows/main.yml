@@ -51,7 +51,7 @@ jobs:
           name: public
       - name: Unarchive
         run: |
-          tar --create --use-compress-program=zstd --file public.tar.zst
+          tar --extract --use-compress-program=zstd --file public.tar.zst
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
