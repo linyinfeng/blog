@@ -19,11 +19,18 @@
         <loc>https://blog.linyinfeng.com/categories/sui-xiang/</loc>
     </url>
     <url>
+        <loc>https://blog.linyinfeng.com/categories/yun-wei-ri-zhi/</loc>
+    </url>
+    <url>
         <loc>https://blog.linyinfeng.com/links/</loc>
     </url>
     <url>
         <loc>https://blog.linyinfeng.com/posts/how-do-rust-closures-work/</loc>
         <lastmod>2021-01-15T13:19:42+08:00</lastmod>
+    </url>
+    <url>
+        <loc>https://blog.linyinfeng.com/posts/oracle-fuck-you/</loc>
+        <lastmod>2023-02-24T10:46:01+08:00</lastmod>
     </url>
     <url>
         <loc>https://blog.linyinfeng.com/posts/rices-theorem/</loc>
@@ -69,7 +76,16 @@
         <loc>https://blog.linyinfeng.com/tags/lei-xing-xi-tong/</loc>
     </url>
     <url>
+        <loc>https://blog.linyinfeng.com/tags/oracle-cloud/</loc>
+    </url>
+    <url>
+        <loc>https://blog.linyinfeng.com/tags/oracle/</loc>
+    </url>
+    <url>
         <loc>https://blog.linyinfeng.com/tags/rust/</loc>
+    </url>
+    <url>
+        <loc>https://blog.linyinfeng.com/tags/tu-cao/</loc>
     </url>
     <url>
         <loc>https://blog.linyinfeng.com/tags/xing-shi-yu-yan-yu-zi-dong-ji/</loc>

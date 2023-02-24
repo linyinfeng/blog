@@ -4,8 +4,117 @@
 	<link href="https://blog.linyinfeng.com/atom.xml" rel="self" type="application/atom+xml"/>
   <link href="https://blog.linyinfeng.com"/>
 	<generator uri="https://www.getzola.org/">Zola</generator>
-	<updated>2021-04-28T16:04:37+08:00</updated>
+	<updated>2023-02-24T10:46:01+08:00</updated>
 	<id>https://blog.linyinfeng.com/atom.xml</id>
+	<entry xml:lang="cn">
+		<title>珍爱数据，远离 Oracle Cloud</title>
+		<published>2023-02-24T10:46:01+08:00</published>
+		<updated>2023-02-24T10:46:01+08:00</updated>
+		<link rel="alternate" href="https://blog.linyinfeng.com/posts/oracle-fuck-you/" type="text/html"/>
+		<id>https://blog.linyinfeng.com/posts/oracle-fuck-you/</id>
+		<content type="html">&lt;p&gt;我的 Oracle Cloud 免费账户的权限被禁用了，无任何邮件提醒，不提供数据恢复手段。好在我没有部署任何存储有价值数据的服务到 Oracle Cloud 实例上。现已重部署所有服务到其他机器上。提醒大家珍爱数据，远离 Oracle Cloud。&lt;&#x2F;p&gt;
+&lt;span id=&quot;continue-reading&quot;&gt;&lt;&#x2F;span&gt;&lt;h2 id=&quot;shi-yong-qing-kuang&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#shi-yong-qing-kuang&quot; aria-label=&quot;Anchor link for: shi-yong-qing-kuang&quot;&gt;
+    ⚓
+&lt;&#x2F;a&gt;
+使用情况&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Tier：Always Free Tier&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;卡：中行跨境通 Visa&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;Region：us-ashburn-1&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;使用时间：2022-09 至 2022-02-23&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;实例：1 台 arm 机器，4C24G，150G 硬盘&lt;&#x2F;p&gt;
+&lt;p&gt;日常运行服务：grafana，influxdb，loki，alertmanager，以及作为 nix build server&lt;&#x2F;p&gt;
+&lt;p&gt;负载较轻，每日凌晨 hydra build 时负载较重&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;shi-jian-jing-guo&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#shi-jian-jing-guo&quot; aria-label=&quot;Anchor link for: shi-jian-jing-guo&quot;&gt;
+    ⚓
+&lt;&#x2F;a&gt;
+事件经过&lt;&#x2F;h2&gt;
+&lt;p&gt;2023-02-24 晨发现 github 仓库 &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;linyinfeng&#x2F;dotfiles&quot;&gt;linyinfeng&#x2F;dotfiles&lt;&#x2F;a&gt; terraform worflow 报错，查看了 23 日晚 23 点被触发的 workflow 没有报错，因此事件应该发生在 24 日凌晨（东 8 区）。由于帐号在 Oracle 新加坡，不明白为何事件发生在凌晨。&lt;&#x2F;p&gt;
+&lt;p&gt;报错内容（&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;linyinfeng&#x2F;dotfiles&#x2F;actions&#x2F;runs&#x2F;4258439141&#x2F;jobs&#x2F;7409677425&quot;&gt;runs&#x2F;4258439141&#x2F;jobs7409677425&lt;&#x2F;a&gt;）：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span&gt;╷
+&lt;&#x2F;span&gt;&lt;span&gt;│ Error: 401-NotAuthenticated, The required information to complete authentication was not provided or was incorrect.
+&lt;&#x2F;span&gt;&lt;span&gt;│ Suggestion: Please retry or contact support for help with service: Identity Compartment
+&lt;&#x2F;span&gt;&lt;span&gt;│ Documentation: https:&#x2F;&#x2F;registry.terraform.io&#x2F;providers&#x2F;oracle&#x2F;oci&#x2F;latest&#x2F;docs&#x2F;resources&#x2F;identity_compartment
+&lt;&#x2F;span&gt;&lt;span&gt;│ API Reference: https:&#x2F;&#x2F;docs.oracle.com&#x2F;iaas&#x2F;api&#x2F;#&#x2F;en&#x2F;identity&#x2F;20160918&#x2F;Compartment&#x2F;GetCompartment
+&lt;&#x2F;span&gt;&lt;span&gt;│ Request Target: GET https:&#x2F;&#x2F;identity.us-ashburn-1.oci.oraclecloud.com&#x2F;20160918&#x2F;compartments&#x2F;ocid1.compartment.oc1..aaaaaaaaikp5stvcw3ynsrbxkermuo4uz7atqo2nmmkn6mh4gnmc3ouokssa
+&lt;&#x2F;span&gt;&lt;span&gt;│ Provider version: 4.108.1, released on 2023-02-21.
+&lt;&#x2F;span&gt;&lt;span&gt;│ Service: Identity Compartment
+&lt;&#x2F;span&gt;&lt;span&gt;│ Operation Name: GetCompartment
+&lt;&#x2F;span&gt;&lt;span&gt;│ OPC request ID: 1c52a2ed4c66355a2311e9a2c397c49d&#x2F;D27F3EFEB233947ED8FDBBDB2776B59E&#x2F;B75CC5B022B3B7A000DEFF6347E1ABC1
+&lt;&#x2F;span&gt;&lt;span&gt;│
+&lt;&#x2F;span&gt;&lt;span&gt;│
+&lt;&#x2F;span&gt;&lt;span&gt;│   with oci_identity_compartment.terraform,
+&lt;&#x2F;span&gt;&lt;span&gt;│   on oci.tf line 13, in resource &amp;quot;oci_identity_compartment&amp;quot; &amp;quot;terraform&amp;quot;:
+&lt;&#x2F;span&gt;&lt;span&gt;│   13: resource &amp;quot;oci_identity_compartment&amp;quot; &amp;quot;terraform&amp;quot; {
+&lt;&#x2F;span&gt;&lt;span&gt;│
+&lt;&#x2F;span&gt;&lt;span&gt;╵
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;code&gt;GetCompartment&lt;&#x2F;code&gt; 操作 &lt;code&gt;401&lt;&#x2F;code&gt;，随即尝试打开机器上部署的 grafana 查看，Cloudflare 提示主机无响应。&lt;&#x2F;p&gt;
+&lt;p&gt;登录 Oracle Cloud web 页面（它居然还给我登录）查看 instance 状态，结果为：You don’t have permission to view these resources in this compartment. Try another compartment, or contact your administrator for help.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;oracle-fuck-you&#x2F;instances-page.png&quot; alt=&quot;Instances page says: You don’t have permission to view these resources in this compartment. Try another compartment, or contact your administrator for help.&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;看来我的免费实例是彻底挂了。&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;fu-wu-zhong-bu-shu&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#fu-wu-zhong-bu-shu&quot; aria-label=&quot;Anchor link for: fu-wu-zhong-bu-shu&quot;&gt;
+    ⚓
+&lt;&#x2F;a&gt;
+服务重部署&lt;&#x2F;h2&gt;
+&lt;p&gt;选择重新部署服务到另一台机器上。&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;清理 terraform 状态。用 &lt;code&gt;state list&lt;&#x2F;code&gt; 获得需要被清理的状态，然后用 &lt;code&gt;state rm&lt;&#x2F;code&gt; 将它们全部从 terraform 状态中删除。&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span&gt;$ terraform state list | grep oci
+&lt;&#x2F;span&gt;&lt;span&gt;$ terraform state rm xxxxx.yyy
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;删除 terraform 配置中所有相关的配置。&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;更改 terraform 配置将四个服务的 CNAME 指向新的机器。&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;更改 nixos 配置将四个服务的配置加入新机器的配置，得益于编写模块时特意使模块是机器无关的，只需要复制粘贴并引用模块即可。&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;进行简单的 nixos 配置构建测试。&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;部署 nixos 配置，应用 terraform 配置。&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;测试新部署的服务，成功恢复。&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;得益于 terraform 和 nixos 本次重部署只花了几十分钟，commit &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;linyinfeng&#x2F;dotfiles&#x2F;commit&#x2F;153780cbfcac324c87a7fbc2e0eed4559ebc8f4f&quot;&gt;Oracle, Fuck You&lt;&#x2F;a&gt; 记录了所有的改动。&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#fafafa;color:#383a42;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span&gt;commit 153780cbfcac324c87a7fbc2e0eed4559ebc8f4f
+&lt;&#x2F;span&gt;&lt;span&gt;Author: Lin Yinfeng &amp;lt;lin.yinfeng@outlook.com&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;Date:   Fri Feb 24 10:22:01 2023 +0800
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    Oracle, Fuck You
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    Oracle Cloud just disabled my free account *without any notice*, and
+&lt;&#x2F;span&gt;&lt;span&gt;    *does not provide any data recovery method*.
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    Remove all Oracle OCI state from terraform.  Deploy all services
+&lt;&#x2F;span&gt;&lt;span&gt;    previously on the Oracle Ampere A1 machine to rica.
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;hou-xu-ji-hua&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#hou-xu-ji-hua&quot; aria-label=&quot;Anchor link for: hou-xu-ji-hua&quot;&gt;
+    ⚓
+&lt;&#x2F;a&gt;
+后续（计划）&lt;&#x2F;h2&gt;
+&lt;p&gt;计划后续联系一下客服，问问啥情况，不过就算解封了我估计也不会去用了。&lt;&#x2F;p&gt;
+</content>
+	</entry>
 	<entry xml:lang="cn">
 		<title>莱斯定理</title>
 		<published>2020-12-13T23:01:20+08:00</published>
