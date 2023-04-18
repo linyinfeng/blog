@@ -3,10 +3,10 @@
 {
   katex = {
     pname = "katex";
-    version = "v0.16.4";
+    version = "v0.16.6";
     src = fetchurl {
-      url = "https://github.com/KaTeX/KaTeX/releases/download/v0.16.4/katex.tar.gz";
-      sha256 = "sha256-9n2WOKPY6YbjADg3H8GvlqR2Dc9JXROEqWQuLE0YmY4=";
+      url = "https://github.com/KaTeX/KaTeX/releases/download/v0.16.6/katex.tar.gz";
+      sha256 = "sha256-LEM/hvZcSvfy1AQHU08A2PQTIyG8UCGODdGO6v83KWc=";
     };
   };
   license-buttons = {
