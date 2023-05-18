@@ -12,24 +12,24 @@
   license-buttons = {
     pname = "license-buttons";
     version = "2b08014a252142a1b312d4f68b1b4fbcac8b20b7";
-    src = fetchFromGitHub ({
+    src = fetchFromGitHub {
       owner = "creativecommons";
       repo = "licensebuttons";
       rev = "2b08014a252142a1b312d4f68b1b4fbcac8b20b7";
       fetchSubmodules = false;
       sha256 = "sha256-d80k9CuGBe1OIkReBhuPV1a5VJGXicfxxVGnj+8AbTk=";
-    });
+    };
     date = "2023-03-08";
   };
   normalize-css = {
     pname = "normalize-css";
     version = "8.0.1";
-    src = fetchFromGitHub ({
+    src = fetchFromGitHub {
       owner = "necolas";
       repo = "normalize.css";
       rev = "8.0.1";
       fetchSubmodules = false;
       sha256 = "sha256-OviSJZM2ggeGoX/NGut4fVMLePNqBHgAjmK53BfvHEU=";
-    });
+    };
   };
 }
