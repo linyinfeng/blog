@@ -77,11 +77,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1684337341,
-        "narHash": "sha256-v9bOz/mZ58kS1x2YYfPoWy6CfK3w1R/ZyZmqSCs1QO8=",
+        "lastModified": 1684661880,
+        "narHash": "sha256-S1G0a+Eppk/L+nTZ9u8dDgWppS906D3u8VDOKBldZEs=",
         "owner": "berberman",
         "repo": "nvfetcher",
-        "rev": "d3226cb40df74dd6b432d5ce15bbcb05f3825ce2",
+        "rev": "9785e4fa1ac59d3513a6f1ad26a0ee1ebc6c1ae5",
         "type": "github"
       },
       "original": {
