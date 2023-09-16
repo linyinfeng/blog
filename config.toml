@@ -3,7 +3,7 @@ base_url = "https://blog.linyinfeng.com"
 title = "Lin Yinfeng"
 #description = "Just a blog"
 
-default_language = "cn"
+default_language = "zh-CN"
 
 # Generate RSS
 generate_feed = true
