@@ -8,11 +8,11 @@
         "pinned": false,
         "src": {
             "name": null,
-            "sha256": "sha256-7O1JXwLuajzJBEqByOG+f+M51TZVJd3UmddZn+M+2Kk=",
+            "sha256": "sha256-uWjTide5RV4ZFgXkmExS+vMSMhMnGICwKrxF5q1Lv0M=",
             "type": "url",
-            "url": "https://github.com/KaTeX/KaTeX/releases/download/v0.16.10/katex.tar.gz"
+            "url": "https://github.com/KaTeX/KaTeX/releases/download/v0.16.11/katex.tar.gz"
         },
-        "version": "v0.16.10"
+        "version": "v0.16.11"
     },
     "license-buttons": {
         "cargoLocks": null,
@@ -30,6 +30,7 @@
             "repo": "licensebuttons",
             "rev": "2b08014a252142a1b312d4f68b1b4fbcac8b20b7",
             "sha256": "sha256-d80k9CuGBe1OIkReBhuPV1a5VJGXicfxxVGnj+8AbTk=",
+            "sparseCheckout": [],
             "type": "github"
         },
         "version": "2b08014a252142a1b312d4f68b1b4fbcac8b20b7"
@@ -50,6 +51,7 @@
             "repo": "normalize.css",
             "rev": "8.0.1",
             "sha256": "sha256-OviSJZM2ggeGoX/NGut4fVMLePNqBHgAjmK53BfvHEU=",
+            "sparseCheckout": [],
             "type": "github"
         },
         "version": "8.0.1"
