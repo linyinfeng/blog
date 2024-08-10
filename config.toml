@@ -9,7 +9,6 @@ default_language = "zh-CN"
 generate_feeds = true
 
 compile_sass = true
-shortcode = true
 
 # Whether to build a search index to be used later on by a JavaScript library
 # build_search_index = true
