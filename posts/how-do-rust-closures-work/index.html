@@ -348,7 +348,7 @@
 </span><span>    </span><span style="color:#a626a4;">extern </span><span style="color:#50a14f;">&quot;rust-call&quot; </span><span style="color:#a626a4;">fn </span><span style="color:#0184bc;">call</span><span>(</span><span style="color:#a626a4;">&amp;</span><span style="color:#e45649;">self</span><span>, </span><span style="color:#e45649;">args</span><span>: Args) -&gt; </span><span style="color:#a626a4;">Self::</span><span>Output;
 </span><span>}
 </span></code></pre>
-<p>其中 <code>extern &quot;rust-call&quot;</code> 是专用于这几个 trait 的调用约定（Calling Convention，一种 ABI），区别于 Rust 本身的调用约定 <code>extern &quot;Rust&quot;</code>。</p>
+<p>其中 <code>extern "rust-call"</code> 是专用于这几个 trait 的调用约定（Calling Convention，一种 ABI），区别于 Rust 本身的调用约定 <code>extern "Rust"</code>。</p>
 <p>为了手动为我们的对象实现这三种 trait，我们需要开启两个不稳定的 Rust 特性（Feature）：</p>
 <pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#a626a4;">!</span><span>[</span><span style="color:#0184bc;">feature</span><span>(fn_traits, unboxed_closures)]
 </span></code></pre>
@@ -556,7 +556,7 @@ Unboxed</h3>
 <pre data-lang="txt" style="background-color:#fafafa;color:#383a42;" class="language-txt "><code class="language-txt" data-lang="txt"><span>error[E0382]: borrow of moved value: `s`
 </span><span>error[E0382]: use of moved value: `c`
 </span></code></pre>
-<p>这是因为 <code>dbg!(s)</code> 将获取 <code>s</code> 的所有权再返回 <code>s</code>，而 <code>println!(&quot;{}&quot;, s)</code> 只会获取 <code>s</code> 的引用。同样，<code>s</code> 被移动进第一个闭包是因为 <code>move</code> 关键字的作用，而 <code>s</code> 被移动进第二个闭包是因为第二个闭包的函数体要求 <code>s</code> 的所有权。即使两个例子中 <code>s</code> 均被移动进闭包，第一个闭包依然根据函数体被实现了 <code>Fn</code>，<code>FnMut</code>，<code>FnOnce</code>，第二个闭包被根据函数体实现了 <code>FnOnce</code>。</p>
+<p>这是因为 <code>dbg!(s)</code> 将获取 <code>s</code> 的所有权再返回 <code>s</code>，而 <code>println!("{}", s)</code> 只会获取 <code>s</code> 的引用。同样，<code>s</code> 被移动进第一个闭包是因为 <code>move</code> 关键字的作用，而 <code>s</code> 被移动进第二个闭包是因为第二个闭包的函数体要求 <code>s</code> 的所有权。即使两个例子中 <code>s</code> 均被移动进闭包，第一个闭包依然根据函数体被实现了 <code>Fn</code>，<code>FnMut</code>，<code>FnOnce</code>，第二个闭包被根据函数体实现了 <code>FnOnce</code>。</p>
 <h3 id="bi-bao-de-mut"><a class="zola-anchor" href="#bi-bao-de-mut" aria-label="Anchor link for: bi-bao-de-mut">
     ⚓
 </a>

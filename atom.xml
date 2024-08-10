@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN">
+    <title>Lin Yinfeng</title>
+    <link rel="self" type="application/atom+xml" href="https://blog.linyinfeng.com/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://blog.linyinfeng.com"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2023-02-24T10:46:01+08:00</updated>
+    <id>https://blog.linyinfeng.com/atom.xml</id>
+    <entry xml:lang="zh-CN">
+        <title>珍爱数据，远离 Oracle Cloud</title>
+        <published>2023-02-24T10:46:01+08:00</published>
+        <updated>2023-02-24T10:46:01+08:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://blog.linyinfeng.com/posts/oracle-fuck-you/"/>
+        <id>https://blog.linyinfeng.com/posts/oracle-fuck-you/</id>
+        
+        <summary type="html">&lt;p&gt;我的 Oracle Cloud 免费账户的权限被禁用了，无任何邮件提醒，不提供数据恢复手段。好在我没有部署任何存储有价值数据的服务到 Oracle Cloud 实例上。现已重部署所有服务到其他机器上。提醒大家珍爱数据，远离 Oracle Cloud。&lt;&#x2F;p&gt;
+</summary>
+        
+    </entry>
+    <entry xml:lang="zh-CN">
+        <title>莱斯定理</title>
+        <published>2020-12-13T23:01:20+08:00</published>
+        <updated>2021-04-28T16:04:37+08:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://blog.linyinfeng.com/posts/rices-theorem/"/>
+        <id>https://blog.linyinfeng.com/posts/rices-theorem/</id>
+        
+        <summary type="html">&lt;p&gt;学习形式语言自动机这课时花了很久才理解莱斯定理（Rice&#x27;s Theorem）。懂了以后发现，其实就是之前对着书瞎想的时候，没先把全局要做的事情理清楚，这个定理其实并不复杂。这篇带了一些偷懒（省略）的文章是我对莱斯定理的笔记。&lt;&#x2F;p&gt;
+</summary>
+        
+    </entry>
+    <entry xml:lang="zh-CN">
+        <title>Rust 闭包笔记</title>
+        <published>2019-03-15T11:06:01+08:00</published>
+        <updated>2021-01-15T13:19:42+08:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://blog.linyinfeng.com/posts/how-do-rust-closures-work/"/>
+        <id>https://blog.linyinfeng.com/posts/how-do-rust-closures-work/</id>
+        
+        <summary type="html">&lt;p&gt;近日在学习 Rust 语言。Rust 语言的闭包设计非常有趣，一方面，它看起来非常复杂，为了支持闭包设计了三种不同的 trait，&lt;code&gt;Fn&lt;&#x2F;code&gt;、&lt;code&gt;FnMut&lt;&#x2F;code&gt; 和 &lt;code&gt;FnOnce&lt;&#x2F;code&gt;；一方面其设计又透露出了语言设计中闭包的本质。通过考察 Rust 闭包的设计，我们能更好的理解闭包到底是什么，在拥有生存期和借用检查的语言 Rust 中，闭包如何工作。&lt;&#x2F;p&gt;
+&lt;p&gt;本文将在 Rust 下实现一个能够阐述闭包工作原理的朴素版闭包（也是一个 Boxed Closure）。并在实现的基础上对 Rust 闭包作进一步探究。&lt;&#x2F;p&gt;
+</summary>
+        
+    </entry>
+    <entry xml:lang="zh-CN">
+        <title>Rust RFC 2349 - Pin 翻译</title>
+        <published>2018-08-19T07:36:17+08:00</published>
+        <updated>2018-08-21T08:52:15+08:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://blog.linyinfeng.com/posts/rust-rfc-2349/"/>
+        <id>https://blog.linyinfeng.com/posts/rust-rfc-2349/</id>
+        
+        <summary type="html">&lt;p&gt;本文为 &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;rust-lang&#x2F;rfcs&#x2F;blob&#x2F;master&#x2F;text&#x2F;2349-pin.md&quot;&gt;Rust RFC 2349 - Pin&lt;&#x2F;a&gt; 的中文翻译。&lt;&#x2F;p&gt;
+&lt;p&gt;Rust RFCs 并非一成不变，本文翻译于 2018 年 08 月 19 日。&lt;&#x2F;p&gt;
+&lt;p&gt;Rust RFCs 仓库目前（2018-08-21）为可选的 MIT 和 Apache 授权，本文使用了其 MIT 授权。&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;linyinfeng&#x2F;blog&#x2F;tree&#x2F;master&#x2F;content&#x2F;posts&#x2F;rust-rfc-2349&#x2F;LICENSE-MIT&quot;&gt;MIT 许可证副本&lt;&#x2F;a&gt;。&lt;&#x2F;p&gt;
+&lt;p&gt;文中有众多 Rust 中的其他 RFC 甚至 crates 中的概念，水平有限，如有翻译错误或建议，可以向我的 &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;linyinfeng&#x2F;blog&quot;&gt;GitHub&lt;&#x2F;a&gt; 仓库提 Issue 或者直接发起 PR 指正，本文文件：&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;linyinfeng&#x2F;blog&#x2F;tree&#x2F;master&#x2F;content&#x2F;posts&#x2F;rust-rfc-2349&#x2F;index.md&quot;&gt;content&#x2F;posts&#x2F;rust-rfc-2349&#x2F;index.md&lt;&#x2F;a&gt;。&lt;&#x2F;p&gt;
+</summary>
+        
+    </entry>
+    <entry xml:lang="zh-CN">
+        <title>Futures-rs 博文 Toykio 翻译</title>
+        <published>2018-08-18T18:24:51+08:00</published>
+        <updated>2018-08-21T08:52:15+08:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://blog.linyinfeng.com/posts/toykio/"/>
+        <id>https://blog.linyinfeng.com/posts/toykio/</id>
+        
+        <summary type="html">&lt;p&gt;本文为 Rust futures-rs 博客 2018 年 8 月 17 日 的 博文 &lt;a href=&quot;https:&#x2F;&#x2F;rust-lang-nursery.github.io&#x2F;futures-rs&#x2F;blog&#x2F;2018&#x2F;08&#x2F;17&#x2F;toykio.html&quot;&gt;Toykio&lt;&#x2F;a&gt; 的中文翻译。&lt;&#x2F;p&gt;
+&lt;p&gt;原文作者 Alexander Polakov（&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;polachok&quot;&gt;@polachok&lt;&#x2F;a&gt;）。&lt;&#x2F;p&gt;
+&lt;p&gt;原文目前（2018-08-21）为可选的 MIT 和 Apache 授权，本文使用了其 MIT 授权。&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;linyinfeng&#x2F;blog&#x2F;tree&#x2F;master&#x2F;content&#x2F;posts&#x2F;toykio&#x2F;LICENSE-MIT&quot;&gt;MIT 许可证副本&lt;&#x2F;a&gt;。&lt;&#x2F;p&gt;
+</summary>
+        
+    </entry>
+    <entry xml:lang="zh-CN">
+        <title>开始写博客</title>
+        <published>2018-08-01T23:53:16+08:00</published>
+        <updated>2018-08-15T18:31:16+08:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://blog.linyinfeng.com/posts/start-blogging/"/>
+        <id>https://blog.linyinfeng.com/posts/start-blogging/</id>
+        
+        <summary type="html">&lt;p&gt;咸鱼了很久觉得还是应该写个博客记录和总结一下日常的学习。&lt;&#x2F;p&gt;
+</summary>
+        
+    </entry>
+</feed>
