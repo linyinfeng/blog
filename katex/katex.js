@@ -5027,9 +5027,10 @@ defineSymbol(math, main, inner, "\u2026", "\\mathellipsis");
 defineSymbol(symbols_text, main, inner, "\u2026", "\\ldots", true);
 defineSymbol(math, main, inner, "\u2026", "\\ldots", true);
 defineSymbol(math, main, inner, "\u22ef", "\\@cdots", true);
-defineSymbol(math, main, inner, "\u22f1", "\\ddots", true);
-defineSymbol(math, main, textord, "\u22ee", "\\varvdots"); // \vdots is a macro
+defineSymbol(math, main, inner, "\u22f1", "\\ddots", true); // \vdots is a macro that uses one of these two symbols (with made-up names):
 
+defineSymbol(math, main, textord, "\u22ee", "\\varvdots");
+defineSymbol(symbols_text, main, textord, "\u22ee", "\\varvdots");
 defineSymbol(math, main, accent, "\u02ca", "\\acute");
 defineSymbol(math, main, accent, "\u02cb", "\\grave");
 defineSymbol(math, main, accent, "\u00a8", "\\ddot");
@@ -9111,7 +9112,7 @@ const makeGlyphSpan = function (symbol, font, mode) {
 
 const makeInner = function (ch, height, options) {
   // Create a span with inline SVG for the inner part of a tall stacked delimiter.
-  const width = fontMetricsData["Size4-Regular"][ch.charCodeAt(0)] ? fontMetricsData["Size4-Regular"][ch.charCodeAt(0)][4] : fontMetricsData["Size1-Regular"][ch.charCodeAt(0)][4];
+  const width = fontMetricsData['Size4-Regular'][ch.charCodeAt(0)] ? fontMetricsData['Size4-Regular'][ch.charCodeAt(0)][4] : fontMetricsData['Size1-Regular'][ch.charCodeAt(0)][4];
   const path = new PathNode("inner", innerPath(ch, Math.round(1000 * height)));
   const svgNode = new SvgNode([path], {
     "width": makeEm(width),
@@ -14156,6 +14157,8 @@ defineFunction({
   props: {
     numArgs: 2,
     numOptionalArgs: 1,
+    allowedInText: true,
+    allowedInMath: true,
     argTypes: ["size", "size", "size"]
   },
 
@@ -15978,7 +15981,7 @@ defineMacro("\\lrcorner", "\\html@mathml{\\@lrcorner}{\\mathop{\\char\"231f}}");
 // We'll call \varvdots, which gets a glyph from symbols.js.
 // The zero-width rule gets us an equivalent to the vertical 6pt kern.
 
-defineMacro("\\vdots", "\\mathord{\\varvdots\\rule{0pt}{15pt}}");
+defineMacro("\\vdots", "{\\varvdots\\rule{0pt}{15pt}}");
 defineMacro("\u22ee", "\\vdots"); //////////////////////////////////////////////////////////////////////
 // amsmath.sty
 // http://mirrors.concertpass.com/tex-archive/macros/latex/required/amsmath/amsmath.pdf
@@ -16008,7 +16011,12 @@ defineMacro("\\boxed", "\\fbox{$\\displaystyle{#1}$}"); // \def\iff{\DOTSB\;\Lon
 
 defineMacro("\\iff", "\\DOTSB\\;\\Longleftrightarrow\\;");
 defineMacro("\\implies", "\\DOTSB\\;\\Longrightarrow\\;");
-defineMacro("\\impliedby", "\\DOTSB\\;\\Longleftarrow\\;"); // AMSMath's automatic \dots, based on \mdots@@ macro.
+defineMacro("\\impliedby", "\\DOTSB\\;\\Longleftarrow\\;"); // \def\dddot#1{{\mathop{#1}\limits^{\vbox to-1.4\ex@{\kern-\tw@\ex@
+//  \hbox{\normalfont ...}\vss}}}}
+// We use \overset which avoids the vertical shift of \mathop.
+
+defineMacro("\\dddot", "{\\overset{\\raisebox{-0.1ex}{\\normalsize ...}}{#1}}");
+defineMacro("\\ddddot", "{\\overset{\\raisebox{-0.1ex}{\\normalsize ....}}{#1}}"); // AMSMath's automatic \dots, based on \mdots@@ macro.
 
 const dotsByToken = {
   ',': '\\dotsc',
@@ -16239,7 +16247,7 @@ defineMacro("\\TeX", "\\textrm{\\html@mathml{" + "T\\kern-.1667em\\raisebox{-.5e
 // We compute the corresponding \raisebox when A is rendered in \normalsize
 // \scriptstyle, which has a scale factor of 0.7 (see Options.js).
 
-const latexRaiseA = makeEm(fontMetricsData["Main-Regular"]["T".charCodeAt(0)][1] - 0.7 * fontMetricsData["Main-Regular"]["A".charCodeAt(0)][1]);
+const latexRaiseA = makeEm(fontMetricsData['Main-Regular']["T".charCodeAt(0)][1] - 0.7 * fontMetricsData['Main-Regular']["A".charCodeAt(0)][1]);
 defineMacro("\\LaTeX", "\\textrm{\\html@mathml{" + ("L\\kern-.36em\\raisebox{" + latexRaiseA + "}{\\scriptstyle A}") + "\\kern-.15em\\TeX}{LaTeX}}"); // New KaTeX logo based on tweaking LaTeX logo
 
 defineMacro("\\KaTeX", "\\textrm{\\html@mathml{" + ("K\\kern-.17em\\raisebox{" + latexRaiseA + "}{\\scriptstyle A}") + "\\kern-.15em\\TeX}{KaTeX}}"); // \DeclareRobustCommand\hspace{\@ifstar\@hspacer\@hspace}
@@ -18886,7 +18894,7 @@ const renderToHTMLTree = function (expression, options) {
   /**
    * Current KaTeX version
    */
-  version: "0.16.11",
+  version: "0.16.14",
 
   /**
    * Renders the given LaTeX into an HTML+MathML combination, and adds
