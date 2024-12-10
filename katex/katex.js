@@ -5951,6 +5951,10 @@ const fontMap = {
     variant: "italic",
     fontName: "Math-Italic"
   },
+  "mathsfit": {
+    variant: "sans-serif-italic",
+    fontName: "SansSerif-Italic"
+  },
   // "boldsymbol" is missing because they require the use of multiple fonts:
   // Math-BoldItalic and Main-Bold.  This is handled by a special case in
   // makeOrd which ends up calling boldsymbol.
@@ -6924,6 +6928,8 @@ const getVariant = function (group, options) {
     return "bold";
   } else if (font === "mathbb") {
     return "double-struck";
+  } else if (font === "mathsfit") {
+    return "sans-serif-italic";
   } else if (font === "mathfrak") {
     return "fraktur";
   } else if (font === "mathscr" || font === "mathcal") {
@@ -11783,7 +11789,7 @@ const fontAliases = {
 defineFunction({
   type: "font",
   names: [// styles, except \boldsymbol defined below
-  "\\mathrm", "\\mathit", "\\mathbf", "\\mathnormal", // families
+  "\\mathrm", "\\mathit", "\\mathbf", "\\mathnormal", "\\mathsfit", // families
   "\\mathbb", "\\mathcal", "\\mathfrak", "\\mathscr", "\\mathsf", "\\mathtt", // aliases, except \bm defined below
   "\\Bbb", "\\bold", "\\frak"],
   props: {
@@ -18894,7 +18900,7 @@ const renderToHTMLTree = function (expression, options) {
   /**
    * Current KaTeX version
    */
-  version: "0.16.14",
+  version: "0.16.15",
 
   /**
    * Renders the given LaTeX into an HTML+MathML combination, and adds
