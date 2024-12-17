@@ -8,11 +8,11 @@
         "pinned": false,
         "src": {
             "name": null,
-            "sha256": "sha256-n7w5mJ7SDQ4/s+pBG192VyA/14307zpjg8hn1wPjUM8=",
+            "sha256": "sha256-SlsFZnrePOY5Cz7Yjbtm/iL3rJ0e1k86plYENdNhSlQ=",
             "type": "url",
-            "url": "https://github.com/KaTeX/KaTeX/releases/download/v0.16.15/katex.tar.gz"
+            "url": "https://github.com/KaTeX/KaTeX/releases/download/v0.16.17/katex.tar.gz"
         },
-        "version": "v0.16.15"
+        "version": "v0.16.17"
     },
     "license-buttons": {
         "cargoLocks": null,
