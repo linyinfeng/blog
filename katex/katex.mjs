@@ -6677,7 +6677,19 @@ class MathNode {
     }
 
     for (var i = 0; i < this.children.length; i++) {
-      node.appendChild(this.children[i].toNode());
+      // Combine multiple TextNodes into one TextNode, to prevent
+      // screen readers from reading each as a separate word [#3995]
+      if (this.children[i] instanceof TextNode && this.children[i + 1] instanceof TextNode) {
+        var text = this.children[i].toText() + this.children[++i].toText();
+
+        while (this.children[i + 1] instanceof TextNode) {
+          text += this.children[++i].toText();
+        }
+
+        node.appendChild(new TextNode(text).toNode());
+      } else {
+        node.appendChild(this.children[i].toNode());
+      }
     }
 
     return node;
@@ -6948,10 +6960,32 @@ var getVariant = function getVariant(group, options) {
   return null;
 };
 /**
+ * Check for <mi>.</mi> which is how a dot renders in MathML,
+ * or <mo separator="true" lspace="0em" rspace="0em">,</mo>
+ * which is how a braced comma {,} renders in MathML
+ */
+
+function isNumberPunctuation(group) {
+  if (!group) {
+    return false;
+  }
+
+  if (group.type === 'mi' && group.children.length === 1) {
+    var child = group.children[0];
+    return child instanceof TextNode && child.text === '.';
+  } else if (group.type === 'mo' && group.children.length === 1 && group.getAttribute('separator') === 'true' && group.getAttribute('lspace') === '0em' && group.getAttribute('rspace') === '0em') {
+    var _child = group.children[0];
+    return _child instanceof TextNode && _child.text === ',';
+  } else {
+    return false;
+  }
+}
+/**
  * Takes a list of nodes, builds them, and returns a list of the generated
  * MathML nodes.  Also combine consecutive <mtext> outputs into a single
  * <mtext> tag.
  */
+
 
 var buildExpression = function buildExpression(expression, options, isOrdgroup) {
   if (expression.length === 1) {
@@ -6981,22 +7015,30 @@ var buildExpression = function buildExpression(expression, options, isOrdgroup) 
       } else if (_group.type === 'mn' && lastGroup.type === 'mn') {
         lastGroup.children.push(..._group.children);
         continue; // Concatenate <mn>...</mn> followed by <mi>.</mi>
-      } else if (_group.type === 'mi' && _group.children.length === 1 && lastGroup.type === 'mn') {
-        var child = _group.children[0];
+      } else if (isNumberPunctuation(_group) && lastGroup.type === 'mn') {
+        lastGroup.children.push(..._group.children);
+        continue; // Concatenate <mi>.</mi> followed by <mn>...</mn>
+      } else if (_group.type === 'mn' && isNumberPunctuation(lastGroup)) {
+        _group.children = [...lastGroup.children, ..._group.children];
+        groups.pop(); // Put preceding <mn>...</mn> or <mi>.</mi> inside base of
+        // <msup><mn>...base...</mn>...exponent...</msup> (or <msub>)
+      } else if ((_group.type === 'msup' || _group.type === 'msub') && _group.children.length >= 1 && (lastGroup.type === 'mn' || isNumberPunctuation(lastGroup))) {
+        var base = _group.children[0];
 
-        if (child instanceof TextNode && child.text === '.') {
-          lastGroup.children.push(..._group.children);
-          continue;
-        }
+        if (base instanceof MathNode && base.type === 'mn') {
+          base.children = [...lastGroup.children, ...base.children];
+          groups.pop();
+        } // \not
+
       } else if (lastGroup.type === 'mi' && lastGroup.children.length === 1) {
         var lastChild = lastGroup.children[0];
 
         if (lastChild instanceof TextNode && lastChild.text === '\u0338' && (_group.type === 'mo' || _group.type === 'mi' || _group.type === 'mn')) {
-          var _child = _group.children[0];
+          var child = _group.children[0];
 
-          if (_child instanceof TextNode && _child.text.length > 0) {
+          if (child instanceof TextNode && child.text.length > 0) {
             // Overlay with combining character long solidus
-            _child.text = _child.text.slice(0, 1) + "\u0338" + _child.text.slice(1);
+            child.text = child.text.slice(0, 1) + "\u0338" + child.text.slice(1);
             groups.pop();
           }
         }
@@ -18371,11 +18413,21 @@ var renderToHTMLTree = function renderToHTMLTree(expression, options) {
   }
 };
 
+var version = "0.16.17";
+var __domTree = {
+  Span,
+  Anchor,
+  SymbolNode,
+  SvgNode,
+  PathNode,
+  LineNode
+}; // ESM exports
+
 var katex = {
   /**
    * Current KaTeX version
    */
-  version: "0.16.15",
+  version,
 
   /**
    * Renders the given LaTeX into an HTML+MathML combination, and adds
@@ -18395,7 +18447,7 @@ var katex = {
   ParseError,
 
   /**
-   * The shema of Settings
+   * The schema of Settings
    */
   SETTINGS_SCHEMA,
 
@@ -18455,18 +18507,11 @@ var katex = {
   /**
    * Expose the dom tree node types, which can be useful for type checking nodes.
    *
-   * NOTE: This method is not currently recommended for public use.
+   * NOTE: These methods are not currently recommended for public use.
    * The internal tree representation is unstable and is very likely
    * to change. Use at your own risk.
    */
-  __domTree: {
-    Span,
-    Anchor,
-    SymbolNode,
-    SvgNode,
-    PathNode,
-    LineNode
-  }
+  __domTree
 };
 
-export { katex as default };
+export { ParseError, SETTINGS_SCHEMA, defineFunction as __defineFunction, defineMacro as __defineMacro, defineSymbol as __defineSymbol, __domTree, generateParseTree as __parse, renderToDomTree as __renderToDomTree, renderToHTMLTree as __renderToHTMLTree, setFontMetrics as __setFontMetrics, katex as default, render, renderToString, version };

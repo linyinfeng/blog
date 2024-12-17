@@ -6681,7 +6681,19 @@ class MathNode {
     }
 
     for (let i = 0; i < this.children.length; i++) {
-      node.appendChild(this.children[i].toNode());
+      // Combine multiple TextNodes into one TextNode, to prevent
+      // screen readers from reading each as a separate word [#3995]
+      if (this.children[i] instanceof TextNode && this.children[i + 1] instanceof TextNode) {
+        let text = this.children[i].toText() + this.children[++i].toText();
+
+        while (this.children[i + 1] instanceof TextNode) {
+          text += this.children[++i].toText();
+        }
+
+        node.appendChild(new TextNode(text).toNode());
+      } else {
+        node.appendChild(this.children[i].toNode());
+      }
     }
 
     return node;
@@ -6960,10 +6972,32 @@ const getVariant = function (group, options) {
   return null;
 };
 /**
+ * Check for <mi>.</mi> which is how a dot renders in MathML,
+ * or <mo separator="true" lspace="0em" rspace="0em">,</mo>
+ * which is how a braced comma {,} renders in MathML
+ */
+
+function isNumberPunctuation(group) {
+  if (!group) {
+    return false;
+  }
+
+  if (group.type === 'mi' && group.children.length === 1) {
+    const child = group.children[0];
+    return child instanceof TextNode && child.text === '.';
+  } else if (group.type === 'mo' && group.children.length === 1 && group.getAttribute('separator') === 'true' && group.getAttribute('lspace') === '0em' && group.getAttribute('rspace') === '0em') {
+    const child = group.children[0];
+    return child instanceof TextNode && child.text === ',';
+  } else {
+    return false;
+  }
+}
+/**
  * Takes a list of nodes, builds them, and returns a list of the generated
  * MathML nodes.  Also combine consecutive <mtext> outputs into a single
  * <mtext> tag.
  */
+
 
 const buildMathML_buildExpression = function (expression, options, isOrdgroup) {
   if (expression.length === 1) {
@@ -6993,13 +7027,21 @@ const buildMathML_buildExpression = function (expression, options, isOrdgroup) {
       } else if (group.type === 'mn' && lastGroup.type === 'mn') {
         lastGroup.children.push(...group.children);
         continue; // Concatenate <mn>...</mn> followed by <mi>.</mi>
-      } else if (group.type === 'mi' && group.children.length === 1 && lastGroup.type === 'mn') {
-        const child = group.children[0];
+      } else if (isNumberPunctuation(group) && lastGroup.type === 'mn') {
+        lastGroup.children.push(...group.children);
+        continue; // Concatenate <mi>.</mi> followed by <mn>...</mn>
+      } else if (group.type === 'mn' && isNumberPunctuation(lastGroup)) {
+        group.children = [...lastGroup.children, ...group.children];
+        groups.pop(); // Put preceding <mn>...</mn> or <mi>.</mi> inside base of
+        // <msup><mn>...base...</mn>...exponent...</msup> (or <msub>)
+      } else if ((group.type === 'msup' || group.type === 'msub') && group.children.length >= 1 && (lastGroup.type === 'mn' || isNumberPunctuation(lastGroup))) {
+        const base = group.children[0];
 
-        if (child instanceof TextNode && child.text === '.') {
-          lastGroup.children.push(...group.children);
-          continue;
-        }
+        if (base instanceof MathNode && base.type === 'mn') {
+          base.children = [...lastGroup.children, ...base.children];
+          groups.pop();
+        } // \not
+
       } else if (lastGroup.type === 'mi' && lastGroup.children.length === 1) {
         const lastChild = lastGroup.children[0];
 
@@ -18896,11 +18938,23 @@ const renderToHTMLTree = function (expression, options) {
   }
 };
 
+const version = "0.16.17";
+const __domTree = {
+  Span: Span,
+  Anchor: Anchor,
+  SymbolNode: SymbolNode,
+  SvgNode: SvgNode,
+  PathNode: PathNode,
+  LineNode: LineNode
+}; // ESM exports
+
+ // CJS exports and ESM default export
+
 /* harmony default export */ var katex = ({
   /**
    * Current KaTeX version
    */
-  version: "0.16.15",
+  version,
 
   /**
    * Renders the given LaTeX into an HTML+MathML combination, and adds
@@ -18920,7 +18974,7 @@ const renderToHTMLTree = function (expression, options) {
   ParseError: src_ParseError,
 
   /**
-   * The shema of Settings
+   * The schema of Settings
    */
   SETTINGS_SCHEMA: SETTINGS_SCHEMA,
 
@@ -18980,18 +19034,11 @@ const renderToHTMLTree = function (expression, options) {
   /**
    * Expose the dom tree node types, which can be useful for type checking nodes.
    *
-   * NOTE: This method is not currently recommended for public use.
+   * NOTE: These methods are not currently recommended for public use.
    * The internal tree representation is unstable and is very likely
    * to change. Use at your own risk.
    */
-  __domTree: {
-    Span: Span,
-    Anchor: Anchor,
-    SymbolNode: SymbolNode,
-    SvgNode: SvgNode,
-    PathNode: PathNode,
-    LineNode: LineNode
-  }
+  __domTree
 });
 ;// CONCATENATED MODULE: ./katex.webpack.js
 /**
