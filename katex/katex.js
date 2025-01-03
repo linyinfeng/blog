@@ -18938,7 +18938,7 @@ const renderToHTMLTree = function (expression, options) {
   }
 };
 
-const version = "0.16.18";
+const version = "0.16.19";
 const __domTree = {
   Span: Span,
   Anchor: Anchor,
