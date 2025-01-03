@@ -34,11 +34,12 @@ jobs:
     - name: Nix flake update
       run: |
         nix flake update --commit-lock-file
-    - name: Set locale
+    - name: Run locale-gen
       run: |
         sudo locale-gen en_US.UTF-8
-        sudo update-locale LANG=en_US.UTF-8
     - name: Run nvfetcher
+      env:
+        LANG: en_US.UTF-8
       run: |
         pushd nix
         nix develop --command nvfetcher --commit-changes
