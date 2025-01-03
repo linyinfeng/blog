@@ -34,6 +34,10 @@ jobs:
     - name: Nix flake update
       run: |
         nix flake update --commit-lock-file
+    - name: Set locale
+      run: |
+        sudo locale-gen en_US.UTF-8
+        sudo update-locale LANG=en_US.UTF-8
     - name: Run nvfetcher
       run: |
         pushd nix
