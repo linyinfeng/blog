@@ -26,9 +26,9 @@ license = "This work is licensed under a [Creative Commons Attribution-NonCommer
 
 复习和解释一下里面名词的概念。
 
-* 语言（language）：字符串的集合。
-* 递归可枚举语言（recursive enumerable language）：还可以叫图灵可接收语言（Turing-acceptable language）图灵可识别语言（Turing-recognizable language）等。一个语言是递归可枚举语言，当且仅当存在一个图灵机，该图灵机仅接收该语言中的字符串（也就是说，对于不在该语言中的字符串，该图灵机可以拒绝（reject）或者永远不停机）。
-* 不可判定（undecidable）：一个语言是可判定的，当且仅当存在一个图灵机，该图灵机接收该语言中的字符串，拒绝不在该语言中的字符串。这样的语言又叫递归语言。
+- 语言（language）：字符串的集合。
+- 递归可枚举语言（recursive enumerable language）：还可以叫图灵可接收语言（Turing-acceptable language）图灵可识别语言（Turing-recognizable language）等。一个语言是递归可枚举语言，当且仅当存在一个图灵机，该图灵机仅接收该语言中的字符串（也就是说，对于不在该语言中的字符串，该图灵机可以拒绝（reject）或者永远不停机）。
+- 不可判定（undecidable）：一个语言是可判定的，当且仅当存在一个图灵机，该图灵机接收该语言中的字符串，拒绝不在该语言中的字符串。这样的语言又叫递归语言。
 
 所以这句话说，“递归可枚举语言的所有非平凡性质”，都是不可判定的。潜台词是说，“性质”是一种语言。一般来说，递归可枚举语言的性质就是一个谓词，对某些递归可枚举语言成立，对某些递归可枚举语言不成立。换一种方式来表示，这里我们讨论的性质就直接是一个集合，如果某个元素在这个集合内，那么这个元素就具有这个性质，否则就不具有。
 
@@ -40,7 +40,7 @@ license = "This work is licensed under a [Creative Commons Attribution-NonCommer
 
 最后。
 
-* 非平凡（nontrivial）：性质不是对所有元素都成立，也不是对所有元素都不成立的。
+- 非平凡（nontrivial）：性质不是对所有元素都成立，也不是对所有元素都不成立的。
 
 所以这里的性质一定会包含部分的而不是全部的递归可枚举语言。
 
@@ -70,8 +70,8 @@ $$
 
 根据上述偷懒论述可见，如果我们假设 $L_u$ 可判定，那么 $L_u'$ 就可判定。那么现在，我们考虑 $\langle U' \rangle \in L_u'$ 是否成立。
 
-* 若 $\langle U' \rangle \in L_u'$，则 $\langle U' \rangle \notin L(U')$，即 $\langle U' \rangle \notin L_u'$；
-* 若 $\langle U' \rangle \notin L_u'$，则 $\neg \langle U' \rangle \notin L(U')$，即 $\langle U' \rangle \in L_u'$。
+- 若 $\langle U' \rangle \in L_u'$，则 $\langle U' \rangle \notin L(U')$，即 $\langle U' \rangle \notin L_u'$；
+- 若 $\langle U' \rangle \notin L_u'$，则 $\neg \langle U' \rangle \notin L(U')$，即 $\langle U' \rangle \in L_u'$。
 
 $\langle U' \rangle$ 不能既在 $L_u'$ 里又不在 $L_u'$ 里，我们导出了一个矛盾，表明我们的假设，$L_u$ 可判定，是错误的。因此，通用图灵机 $U$ 识别的语言 $L_u$ 不可判定，$L_u \notin \mathit{RL}$。
 
@@ -123,8 +123,8 @@ $$
 
 莱斯定理告诉我们啥。举一些例子。
 
-* $\mathcal{P} = \set{\emptyset}$，判定一个图灵机接收的语言是否是空语言是不可判定问题；
-* $\mathcal{P} = \set{L}$，判定一个图灵机接收的语言是某个特定语言，如判定一个图灵机接收回文，判定一个图灵机只接收空串等，都是不可判定问题；
-* $\mathcal{P} \set{L \mid L \in \mathit{RE}, w \in L}$，判定一个图灵机能接收某个串是不可判定问题，即 $L_u$ 不可判定。
+- $\mathcal{P} = \set{\emptyset}$，判定一个图灵机接收的语言是否是空语言是不可判定问题；
+- $\mathcal{P} = \set{L}$，判定一个图灵机接收的语言是某个特定语言，如判定一个图灵机接收回文，判定一个图灵机只接收空串等，都是不可判定问题；
+- $\mathcal{P} \set{L \mid L \in \mathit{RE}, w \in L}$，判定一个图灵机能接收某个串是不可判定问题，即 $L_u$ 不可判定。
 
 等等。

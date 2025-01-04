@@ -1,123 +1,123 @@
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-    margin: 0;
+  margin: 0;
 }
 
 body {
-    min-height: 100vh;
-    display: flex;
-    flex-flow: column nowrap;
+  min-height: 100vh;
+  display: flex;
+  flex-flow: column nowrap;
 
-    #header,
-    #footer {
-        flex: none;
-    }
+  #header,
+  #footer {
+    flex: none;
+  }
 
-    #main-aside-container {
-        flex: 1 0 auto;
-    }
+  #main-aside-container {
+    flex: 1 0 auto;
+  }
 }
 
 #main-aside-container {
-    #main {
-        padding: 16px;
+  #main {
+    padding: 16px;
 
-        #main-container {
-            margin: auto;
-            max-width: $main-container-max-width;
-        }
+    #main-container {
+      margin: auto;
+      max-width: $main-container-max-width;
     }
+  }
 
-    #aside-container {
-        padding: 0 16px;
-    }
+  #aside-container {
+    padding: 0 16px;
+  }
 }
 
 @media all and (min-width: $layout-change-width) {
+  #header,
+  #footer {
+    z-index: 1; // Cover aside
+  }
 
-    #header,
-    #footer {
-        z-index: 1; // Cover aside
+  #main-aside-container {
+    #main {
+      margin-left: $aside-width;
     }
 
-    #main-aside-container {
-        #main {
-            margin-left: $aside-width;
-        }
+    #aside {
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 100vh;
+      box-shadow: 0 0 $shadow-blur-radius $shadow-spread-radius
+        $sidebar-shadow-color;
 
-        #aside {
-            position: fixed;
-            left: 0;
-            top: 0;
-            height: 100vh;
-            box-shadow: 0 0 $shadow-blur-radius $shadow-spread-radius $sidebar-shadow-color;
+      width: $aside-width;
+      // margin-right: 32px;
+      overflow-y: auto;
 
-            width: $aside-width;
-            // margin-right: 32px;
-            overflow-y: auto;
-
-            #aside-container {
-                // direction: ltr;
-                padding-bottom: 16px;
-            }
-        }
+      #aside-container {
+        // direction: ltr;
+        padding-bottom: 16px;
+      }
     }
+  }
 }
 
 @media not all and (min-width: $layout-change-width) {
-    #main-aside-container {
-        #aside #aside-container {
-            position: fixed;
-            z-index: 2;
-            left: -100vw;
-            bottom: 32px;
-            max-height: 80vh;
-            max-width: 80vw;
-            background: white;
-            border: 2px solid $floating-aside-border-color;
-            border-left: 0;
-            transition: left .3s;
-            padding-top: 8px;
-            padding-bottom: 8px;
-            overflow: auto;
-            white-space: nowrap;
-        }
-
-        #aside:hover #aside-container {
-            left: 0;
-        }
-
-        #aside::after {
-            display: flex;
-            z-index: 2;
-            justify-content: center;
-            align-items: center;
-            // color: $theme-color;
-            content: "Navigation";
-            font-weight: bold;
-            position: fixed;
-            bottom: 0;
-            // left: -8px;
-            padding: 0 8px;
-            height: 32px;
-            background: white;
-            border-style: solid;
-            border-color: $theme-color;
-            border-width: 2px 2px 0 0;
-            cursor: context-menu;
-            // opacity: .5;
-            transition: all .3s;
-        }
-
-        #aside:hover::after {
-            // left: 0;
-            opacity: 1;
-            // content: "";
-            border-color: white;
-            filter: invert(100%);
-        }
+  #main-aside-container {
+    #aside #aside-container {
+      position: fixed;
+      z-index: 2;
+      left: -100vw;
+      bottom: 32px;
+      max-height: 80vh;
+      max-width: 80vw;
+      background: white;
+      border: 2px solid $floating-aside-border-color;
+      border-left: 0;
+      transition: left 0.3s;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      overflow: auto;
+      white-space: nowrap;
     }
+
+    #aside:hover #aside-container {
+      left: 0;
+    }
+
+    #aside::after {
+      display: flex;
+      z-index: 2;
+      justify-content: center;
+      align-items: center;
+      // color: $theme-color;
+      content: "Navigation";
+      font-weight: bold;
+      position: fixed;
+      bottom: 0;
+      // left: -8px;
+      padding: 0 8px;
+      height: 32px;
+      background: white;
+      border-style: solid;
+      border-color: $theme-color;
+      border-width: 2px 2px 0 0;
+      cursor: context-menu;
+      // opacity: .5;
+      transition: all 0.3s;
+    }
+
+    #aside:hover::after {
+      // left: 0;
+      opacity: 1;
+      // content: "";
+      border-color: white;
+      filter: invert(100%);
+    }
+  }
 }

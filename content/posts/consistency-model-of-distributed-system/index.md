@@ -51,15 +51,15 @@ render_options = '''
 
 我们都知道串行的**可变的**数据结构具有什么行为。比如，如果我们把一个串行数据结构（sequential data type）叫做计数器，它的状态是 $\mathbb{N}$ 的元素，它的初始值是 $0$，有两个操作，$\read$（读）和 $\inc$（递增）。那么它的工作方式可以看作一个，状态是 $\mathbb{N}$，输入是 $\set{\read, \inc}$ 这两个操作，在转移时会输出 $\mathbb{N} \cup \set{\ok}$ 的状态迁移系统。
 
-* 初始状态为 $0$；
-* 在 $n$ 状态进行 $\read$ 操作时，转移到 $n$ 状态，输出 $n$；
-* 在 $n$ 状态进行 $\inc$ 操作时，转移到 $n + 1$ 状态，输出 $\ok$。
+- 初始状态为 $0$；
+- 在 $n$ 状态进行 $\read$ 操作时，转移到 $n$ 状态，输出 $n$；
+- 在 $n$ 状态进行 $\inc$ 操作时，转移到 $n + 1$ 状态，输出 $\ok$。
 
 再举一个例子，如果我们有一个串行数据结构叫做寄存器，它能存储一个自然数，初始值为 $0$，有两个操作 $\read$（读）和 $\write$（写）。那么同样，它的工作方式也立刻可以看作一个，状态是 $\mathbb{N}$，输入是 $\set{\read} \cup \set{\write(n) \mid n \in \mathbb{N}}$ 这可数无穷个操作，在转移时会输出 $\mathbb{N} \cup \set{\ok}$ 的状态迁移系统。
 
-* 初始状态为 $0$；
-* 在 $n$ 状态进行 $\read$ 操作时，转移到 $n$ 状态，输出 $n$；
-* 在 $n$ 状态进行 $\write(m)$ 操作时，转移到 $m$ 状态，输出 $\ok$。
+- 初始状态为 $0$；
+- 在 $n$ 状态进行 $\read$ 操作时，转移到 $n$ 状态，输出 $n$；
+- 在 $n$ 状态进行 $\write(m)$ 操作时，转移到 $m$ 状态，输出 $\ok$。
 
 可变串行数据结构的行为是显而易见的，我们可以通过状态的迁移来定义计数器，寄存器，栈，队列，火车票售票系统等等一切我们需要的串行数据结构，不过，这一切的实用性是建立在一些假设上的。
 
@@ -93,8 +93,8 @@ render_options = '''
 
 文中有大量的关系的存在，不便于为每一种关系定一种箭头或者等号。为了读者更好地辨识某个关系的意义，使用了一些记号。
 
-* 如果 $\commonRelation$ 是一个偏序关系，$a \stackrel{\commonRelation}{\to} b$，表示 $(a, b) \in \commonRelation$。
-* 如果 $\commonRelation$ 是一个等价关系，$a \approx_{\commonRelation} b$，表示 $(a, b) \in \commonRelation$。
+- 如果 $\commonRelation$ 是一个偏序关系，$a \stackrel{\commonRelation}{\to} b$，表示 $(a, b) \in \commonRelation$。
+- 如果 $\commonRelation$ 是一个等价关系，$a \approx_{\commonRelation} b$，表示 $(a, b) \in \commonRelation$。
 
 ## 事件图
 

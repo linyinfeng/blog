@@ -2,7 +2,7 @@ name: "Automatic update"
 on:
   schedule:
     # every day 00:00 +08:00
-    - cron: '0 16 * * *'
+    - cron: "0 16 * * *"
   workflow_dispatch:
 
 concurrency: push-to-main
@@ -11,42 +11,50 @@ jobs:
   update:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-      with:
-        ref: main
-        token: '${{ secrets.PAT_FOR_AUTOMATED_UPDATE }}'
-    - name: Install nix
-      uses: cachix/install-nix-action@v30
-      with:
-        nix_path: nixpkgs=channel:nixos-unstable
-        extra_nix_config: |
-          experimental-features = nix-command flakes
-    - name: Setup cachix
-      uses: cachix/cachix-action@v15
-      with:
-        name: linyinfeng
-        signingKey: '${{ secrets.CACHIX_SIGNING_KEY }}'
-    - name: Git config
-      run: |
-        git config --global user.email "nano@linyinfeng.com"
-        git config --global user.name "Nano"
-    - name: Nix flake update
-      run: |
-        nix flake update --commit-lock-file
-    - name: Run locale-gen
-      run: |
-        sudo locale-gen en_US.UTF-8
-    - name: Run nvfetcher
-      env:
-        LANG: en_US.UTF-8
-      run: |
-        pushd nix
-        nix develop --command nvfetcher --commit-changes
-        popd
-    - name: Nix flake check
-      run: |
-        nix flake check
-    - name: Git push
-      run: |
-        git push
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          token: "${{ secrets.PAT_FOR_AUTOMATED_UPDATE }}"
+      - name: Install nix
+        uses: cachix/install-nix-action@v30
+        with:
+          nix_path: nixpkgs=channel:nixos-unstable
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+      - name: Setup cachix
+        uses: cachix/cachix-action@v15
+        with:
+          name: linyinfeng
+          signingKey: "${{ secrets.CACHIX_SIGNING_KEY }}"
+      - name: Git config
+        run: |
+          git config --global user.email "nano@linyinfeng.com"
+          git config --global user.name "Nano"
+      - name: Nix flake update
+        run: |
+          nix flake update --commit-lock-file
+      - name: Run locale-gen
+        run: |
+          sudo locale-gen en_US.UTF-8
+      - name: Run nvfetcher
+        env:
+          LANG: en_US.UTF-8
+        run: |
+          pushd nix
+          nix develop --command nvfetcher --commit-changes
+          popd
+      - name: Format
+        run: |
+          nix fmt
+          if git diff-index --quiet HEAD; then
+            # clean
+          else
+            git commit --message "Apply nix fmt" --all
+          fi
+      - name: Nix flake check
+        run: |
+          nix flake check
+      - name: Git push
+        run: |
+          git push

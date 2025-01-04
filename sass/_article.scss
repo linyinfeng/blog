@@ -1,99 +1,99 @@
 // Fix overflow
 #main {
-    min-width: 0;
+  min-width: 0;
 }
 
 .article-container {
-    .article-title {
-        margin-bottom: 0;
-    }
+  .article-title {
+    margin-bottom: 0;
+  }
 
-    .dates-container {
-        display: flex;
-        flex-wrap: wrap;
-
-        .date-container {
-            margin-right: 8px;
-
-            :last-child {
-                margin-right: inherit;
-            }
-        }
-    }
-
-    .article-content {
-        a {
-            color: $link-default-color;
-        }
-
-        pre {
-            padding: .5em;
-            border-radius: 4px;
-            max-width: 100%;
-            overflow: auto;
-        }
-    }
-
-    .article-license {
-        margin: 16px 0;
-
-        a {
-            color: $link-default-color;
-        }
-    }
-}
-
-.article-summary-container {
-    >* {
-        display: block;
-    }
-
-    .article-title {
-        margin-bottom: 0;
-    }
-
-    .article-summary {
-        margin: 8px 0;
-
-        a {
-            color: $link-default-color;
-        }
-    }
-}
-
-.date-container {
-    color: $date-color;
-}
-
-.article-taxonomies {
+  .dates-container {
     display: flex;
     flex-wrap: wrap;
 
-    .article-taxonomy {
-        margin-right: 4px;
+    .date-container {
+      margin-right: 8px;
 
-        :last-child {
-            margin-right: inherit;
-        }
+      :last-child {
+        margin-right: inherit;
+      }
+    }
+  }
+
+  .article-content {
+    a {
+      color: $link-default-color;
     }
 
-    .article-taxonomy-name {
-        margin-right: 4px;
+    pre {
+      padding: 0.5em;
+      border-radius: 4px;
+      max-width: 100%;
+      overflow: auto;
     }
+  }
 
-    .article-taxonomy-name::after {
-        content: ":";
+  .article-license {
+    margin: 16px 0;
+
+    a {
+      color: $link-default-color;
     }
+  }
+}
 
-    .article-term-name {
-        margin-right: 4px;
+.article-summary-container {
+  > * {
+    display: block;
+  }
 
-        :last-child {
-            margin-right: inherit;
-        }
+  .article-title {
+    margin-bottom: 0;
+  }
+
+  .article-summary {
+    margin: 8px 0;
+
+    a {
+      color: $link-default-color;
     }
+  }
+}
 
-    a.article-term-name {
-        color: $link-default-color;
+.date-container {
+  color: $date-color;
+}
+
+.article-taxonomies {
+  display: flex;
+  flex-wrap: wrap;
+
+  .article-taxonomy {
+    margin-right: 4px;
+
+    :last-child {
+      margin-right: inherit;
     }
+  }
+
+  .article-taxonomy-name {
+    margin-right: 4px;
+  }
+
+  .article-taxonomy-name::after {
+    content: ":";
+  }
+
+  .article-term-name {
+    margin-right: 4px;
+
+    :last-child {
+      margin-right: inherit;
+    }
+  }
+
+  a.article-term-name {
+    color: $link-default-color;
+  }
 }

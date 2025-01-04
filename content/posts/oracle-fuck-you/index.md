@@ -20,11 +20,11 @@ license = "This work is licensed under a [Creative Commons Attribution-NonCommer
 
 ## 使用情况
 
-* Tier：Always Free Tier
-* 卡：中行跨境通 Visa
-* Region：us-ashburn-1
-* 使用时间：2022-09 至 2023-02-23
-* 实例：1 台 arm 机器，4C24G，150G 硬盘
+- Tier：Always Free Tier
+- 卡：中行跨境通 Visa
+- Region：us-ashburn-1
+- 使用时间：2022-09 至 2023-02-23
+- 实例：1 台 arm 机器，4C24G，150G 硬盘
 
   日常运行服务：grafana，influxdb，loki，alertmanager，以及作为 nix build server
 
@@ -70,10 +70,10 @@ license = "This work is licensed under a [Creative Commons Attribution-NonCommer
 
 1. 清理 terraform 状态。用 `state list` 获得需要被清理的状态，然后用 `state rm` 将它们全部从 terraform 状态中删除。
 
-    ```txt
-    $ terraform state list | grep oci
-    $ terraform state rm xxxxx.yyy
-    ```
+   ```txt
+   $ terraform state list | grep oci
+   $ terraform state rm xxxxx.yyy
+   ```
 
 2. 删除 terraform 配置中所有相关的配置。
 3. 更改 terraform 配置将四个服务的 CNAME 指向新的机器。

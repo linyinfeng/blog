@@ -26,7 +26,7 @@ license = "This work is licensed under a [Creative Commons Attribution-NonCommer
 
 ### 闭包是匿名函数吗？
 
-这两个概念之间没有什么关系，就以[维基百科 Closure 词条](https://en.wikipedia.org/wiki/Closure_(computer_programming))上举的一个常见的 `adder` 例子来说：
+这两个概念之间没有什么关系，就以[维基百科 Closure 词条](<https://en.wikipedia.org/wiki/Closure_(computer_programming)>)上举的一个常见的 `adder` 例子来说：
 
 ```python
 # Python
@@ -433,17 +433,17 @@ Rust 中的函数也是“unboxed“实现，同样也实现了 `Fn` 系列 trai
 
 所以我想最后应该从另一个层面再次考虑 `FnOnce`，`FnMut` 和 `Fn`，以至于在实践中，理解其语义应当就能作出正确的选择：
 
-* `Fn`，函数不保有自己的状态
-* `FnMut`，函数可以改变自己的状态
-* `FnOnce`，函数消费自己的状态
+- `Fn`，函数不保有自己的状态
+- `FnMut`，函数可以改变自己的状态
+- `FnOnce`，函数消费自己的状态
 
 也就是说：
 
-* 需要纯函数的时候，书写 `Fn`
+- 需要纯函数的时候，书写 `Fn`
 
-* 需要函数保存内部状态的时候，如伪随机数生成函数，书写 `FnMut`
+- 需要函数保存内部状态的时候，如伪随机数生成函数，书写 `FnMut`
 
-* 类似于创建线程这样的调用，选择 `FnOnce`
+- 类似于创建线程这样的调用，选择 `FnOnce`
 
   ```rust
   pub fn spawn<F, T>(f: F) -> JoinHandle<T> where

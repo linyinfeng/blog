@@ -1,11 +1,19 @@
-{ stdenvNoCC, imagemagick, favicon-pdf, ghostscript }:
+{
+  stdenvNoCC,
+  imagemagick,
+  favicon-pdf,
+  ghostscript,
+}:
 
 stdenvNoCC.mkDerivation {
   name = "favicon-ico";
 
   dontUnpack = true;
 
-  nativeBuildInputs = [ imagemagick ghostscript ];
+  nativeBuildInputs = [
+    imagemagick
+    ghostscript
+  ];
 
   buildPhase = ''
     convert "${favicon-pdf}" \

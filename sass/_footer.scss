@@ -1,19 +1,19 @@
 .footer-container {
-    background: {
-        color: $footer-background-color;
-    }
+  background: {
+    color: $footer-background-color;
+  }
 
-    color: $footer-foreground-color;
-    box-shadow: 0 0 $shadow-blur-radius $shadow-spread-radius $footer-shadow-color;
-    text-align: center;
-    padding: 4px;
+  color: $footer-foreground-color;
+  box-shadow: 0 0 $shadow-blur-radius $shadow-spread-radius $footer-shadow-color;
+  text-align: center;
+  padding: 4px;
 
-    >* {
-        margin: 2px;
-        display: block;
-    }
+  > * {
+    margin: 2px;
+    display: block;
+  }
 
-    a {
-        color: $link-default-color;
-    }
+  a {
+    color: $link-default-color;
+  }
 }
