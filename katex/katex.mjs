@@ -15375,7 +15375,7 @@ defineMacro("\\char", function (context) {
 // \renewcommand{\macro}[args]{definition}
 // TODO: Optional arguments: \newcommand{\macro}[args][default]{definition}
 
-var newcommand = (context, existsOK, nonexistsOK) => {
+var newcommand = (context, existsOK, nonexistsOK, skipIfExists) => {
   var arg = context.consumeArg().tokens;
 
   if (arg.length !== 1) {
@@ -15412,19 +15412,22 @@ var newcommand = (context, existsOK, nonexistsOK) => {
 
     numArgs = parseInt(argText);
     arg = context.consumeArg().tokens;
-  } // Final arg is the expansion of the macro
+  }
 
+  if (!(exists && skipIfExists)) {
+    // Final arg is the expansion of the macro
+    context.macros.set(name, {
+      tokens: arg,
+      numArgs
+    });
+  }
 
-  context.macros.set(name, {
-    tokens: arg,
-    numArgs
-  });
   return '';
 };
 
-defineMacro("\\newcommand", context => newcommand(context, false, true));
-defineMacro("\\renewcommand", context => newcommand(context, true, false));
-defineMacro("\\providecommand", context => newcommand(context, true, true)); // terminal (console) tools
+defineMacro("\\newcommand", context => newcommand(context, false, true, false));
+defineMacro("\\renewcommand", context => newcommand(context, true, false, false));
+defineMacro("\\providecommand", context => newcommand(context, true, true, true)); // terminal (console) tools
 
 defineMacro("\\message", context => {
   var arg = context.consumeArgs(1)[0]; // eslint-disable-next-line no-console
@@ -18413,7 +18416,7 @@ var renderToHTMLTree = function renderToHTMLTree(expression, options) {
   }
 };
 
-var version = "0.16.19";
+var version = "0.16.20";
 var __domTree = {
   Span,
   Anchor,
