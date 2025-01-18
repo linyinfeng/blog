@@ -3870,6 +3870,7 @@ const makeEm = function (n) {
 
 
 
+
 /**
  * Create an HTML className based on a list of classes. In addition to joining
  * with spaces, we also remove empty classes.
@@ -3930,9 +3931,19 @@ const toNode = function (tagName) {
   return node;
 };
 /**
- * Convert into an HTML markup string
+ * https://w3c.github.io/html-reference/syntax.html#syntax-attributes
+ *
+ * > Attribute Names must consist of one or more characters
+ * other than the space characters, U+0000 NULL,
+ * '"', "'", ">", "/", "=", the control characters,
+ * and any characters that are not defined by Unicode.
  */
 
+
+const invalidAttributeNameRegex = /[\s"'>/=\x00-\x1f]/;
+/**
+ * Convert into an HTML markup string
+ */
 
 const toMarkup = function (tagName) {
   let markup = "<" + tagName; // Add the class
@@ -3956,6 +3967,10 @@ const toMarkup = function (tagName) {
 
   for (const attr in this.attributes) {
     if (this.attributes.hasOwnProperty(attr)) {
+      if (invalidAttributeNameRegex.test(attr)) {
+        throw new src_ParseError("Invalid attribute name '" + attr + "'");
+      }
+
       markup += " " + attr + "=\"" + utils.escape(this.attributes[attr]) + "\"";
     }
   }
@@ -18941,7 +18956,7 @@ const renderToHTMLTree = function (expression, options) {
   }
 };
 
-const version = "0.16.20";
+const version = "0.16.21";
 const __domTree = {
   Span: Span,
   Anchor: Anchor,

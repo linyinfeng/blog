@@ -3942,9 +3942,19 @@ var toNode = function toNode(tagName) {
   return node;
 };
 /**
- * Convert into an HTML markup string
+ * https://w3c.github.io/html-reference/syntax.html#syntax-attributes
+ *
+ * > Attribute Names must consist of one or more characters
+ * other than the space characters, U+0000 NULL,
+ * '"', "'", ">", "/", "=", the control characters,
+ * and any characters that are not defined by Unicode.
  */
 
+
+var invalidAttributeNameRegex = /[\s"'>/=\x00-\x1f]/;
+/**
+ * Convert into an HTML markup string
+ */
 
 var toMarkup = function toMarkup(tagName) {
   var markup = "<" + tagName; // Add the class
@@ -3968,6 +3978,10 @@ var toMarkup = function toMarkup(tagName) {
 
   for (var attr in this.attributes) {
     if (this.attributes.hasOwnProperty(attr)) {
+      if (invalidAttributeNameRegex.test(attr)) {
+        throw new ParseError("Invalid attribute name '" + attr + "'");
+      }
+
       markup += " " + attr + "=\"" + utils.escape(this.attributes[attr]) + "\"";
     }
   }
@@ -18416,7 +18430,7 @@ var renderToHTMLTree = function renderToHTMLTree(expression, options) {
   }
 };
 
-var version = "0.16.20";
+var version = "0.16.21";
 var __domTree = {
   Span,
   Anchor,
