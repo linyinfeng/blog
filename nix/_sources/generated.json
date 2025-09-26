@@ -1,6 +1,6 @@
 {
   "katex": {
-    "cargoLocks": null,
+    "cargoLock": null,
     "date": null,
     "extract": null,
     "name": "katex",
@@ -15,7 +15,7 @@
     "version": "v0.16.22"
   },
   "license-buttons": {
-    "cargoLocks": null,
+    "cargoLock": null,
     "date": "2025-07-01",
     "extract": null,
     "name": "license-buttons",
@@ -36,7 +36,7 @@
     "version": "2ae879e0d7a4cd9474c0fc5773abc26b0ba45189"
   },
   "normalize-css": {
-    "cargoLocks": null,
+    "cargoLock": null,
     "date": null,
     "extract": null,
     "name": "normalize-css",
