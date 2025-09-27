@@ -12,3 +12,5 @@
 *.synctex.gz
 *.xdv
 *.fdb_latexmk
+
+__pycache__
