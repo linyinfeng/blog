@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang=zh-CN>
+<head>
+    
+        <title>
+    不要在 Python 里 exec/eval/import 不可信代码 -
+    Lin Yinfeng
+</title>
+        
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel=stylesheet type="text/css" href=https://blog.linyinfeng.com/normalize.css>
+        <link rel=stylesheet type="text/css" href=https://blog.linyinfeng.com/style.css>
+        <script defer src=https://blog.linyinfeng.com/layout-helper.js></script>
+        
+            
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-K74P2G7');</script>
+    <!-- End Google Tag Manager -->
+
+        
+        
+            
+                
+    <link rel="stylesheet" href="https://blog.linyinfeng.com/katex/katex.min.css">
+    <script defer src="https://blog.linyinfeng.com/katex/katex.min.js"></script>
+    <script defer src="https://blog.linyinfeng.com/katex/contrib/mathtex-script-type.min.js"></script>
+    <script defer src="https://blog.linyinfeng.com/katex/contrib/copy-tex.min.js"></script>
+    <script defer src="https://blog.linyinfeng.com/katex/contrib/auto-render.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+    macros: {
+        "\\set": "\\left\\{ #1 \\right\\}"
+    },
+    delimiters: [
+        {left: "$$",  right: "$$",  display: true },
+        {left: "$",   right: "$",   display: false},
+        {left: "\\(", right: "\\)", display: false},
+        {left: "\\[", right: "\\]", display: true }
+    ]
+}
+ );
+        });
+    </script>
+
+            
+        
+        
+            
+    <script src="https://giscus.app/client.js"
+            data-repo="linyinfeng&#x2F;blog"
+            data-repo-id="MDEwOlJlcG9zaXRvcnkxNDMxMjU5NTA="
+            data-category-id="MDE4OkRpc2N1c3Npb25DYXRlZ29yeTMyOTkyOTcy"
+            data-mapping="pathname"
+            data-reactions-enabled="1"
+            data-theme="light"
+            crossorigin="anonymous"
+            async>
+    </script>
+
+        
+        
+            <link rel="alternate" type="application/atom+xml" title="Atom" href="https://blog.linyinfeng.com/atom.xml">
+        
+        
+            <link rel="me" href="https:&#x2F;&#x2F;mastodon.li7g.com&#x2F;@yinfeng">
+        
+    
+</head>
+<body>
+    
+        
+        <header id="header">
+            
+            
+    <div class="header-container container">
+        <h1 id="blog-title" class="title">
+            <a href=https:&#x2F;&#x2F;blog.linyinfeng.com>
+                <img src="https://blog.linyinfeng.com/favicon.ico" alt="Lin Yinfeng" />
+            </a>
+        </h1>
+        <nav id="global-nav"><span class="global-nav-item-container"><a class="global-nav-item"
+                    href=https://blog.linyinfeng.com
+                >Home</a></span><span class="global-nav-item-container"><a class="global-nav-item"
+                    href=https://blog.linyinfeng.com/archive
+                >Archive</a></span><span class="global-nav-item-container"><a class="global-nav-item"
+                    href=https://blog.linyinfeng.com/links
+                >Links</a></span><span class="global-nav-item-container"><a class="global-nav-item"
+                    href=https:&#x2F;&#x2F;github.com&#x2F;linyinfeng&#x2F;blog
+                >Source</a></span></nav>
+    </div>
+
+            
+        </header>
+        <div id="main-aside-container">
+            
+    
+        
+                <aside id="aside">
+                    <div id="aside-container">
+                        
+    
+    <div class="toc-container container">
+        <h1 class="title toc-title">Table of Contents</h1>
+        
+    
+        <ul class="toc-parent">
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;python-jailbreak&#x2F;#zao-jian-yu>造监狱</a>
+                    
+    
+        <ul class="toc-parent">
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;python-jailbreak&#x2F;#chang-shi-1>尝试 1</a>
+                    
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;python-jailbreak&#x2F;#chang-shi-2>尝试 2</a>
+                    
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;python-jailbreak&#x2F;#chang-shi-3>尝试 3</a>
+                    
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;python-jailbreak&#x2F;#chang-shi-4>尝试 4</a>
+                    
+    
+
+                </li>
+                
+        </ul>
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;python-jailbreak&#x2F;#yue-yu>越狱</a>
+                    
+    
+
+                </li>
+                
+        </ul>
+    
+
+    </div>
+
+
+                    </div>
+                </aside>
+            
+    
+
+            <main id="main">
+                <div id="main-container">
+                    
+    
+                    
+    
+    <article class="article-container container">
+        
+    <h1 class="title article-title">
+        <a class="article-title-link" href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;python-jailbreak&#x2F;">
+            
+    <span class="draft-indicator">
+        
+    </span>
+    <span>
+        不要在 Python 里 exec&#x2F;eval&#x2F;import 不可信代码
+    </span>
+
+        </a>
+    </h1>
+
+        
+    <div class="dates-container">
+        <div class="date-container">
+            <time datetime=2025-09-27T13:11:10+08:00>2025-09-27 13:11</time>
+ 	    
+            <span class="date-label">(created)</span>
+            
+        </div>
+        
+        <div class="date-container">
+	    <time datetime=2025-09-27T13:11:10+08:00>2025-09-27 13:11</time>
+            <span class="date-label">(last updated)</span>
+        </div>
+    </div>
+    
+
+        
+    <div class="article-taxonomies"><span class="article-taxonomy"><a class="article-taxonomy-name" href="https://blog.linyinfeng.com/tags">
+                Tags</a><span class="article-terms"><a class="article-term-name" href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;tags&#x2F;python&#x2F;">Python</a></span></span><span class="article-taxonomy"><a class="article-taxonomy-name" href="https://blog.linyinfeng.com/categories">
+                Categories</a><span class="article-terms"><a class="article-term-name" href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;categories&#x2F;bi-ji&#x2F;">笔记</a></span></span></div>
+
+        
+    
+        <section class="article-license">
+            
+                <div class="license-image">
+                    <img src="https://blog.linyinfeng.com/license-buttons/l/by-nc-sa/4.0/88x31.png" alt="CC BY-NC-SA 4.0" />
+                </div>
+            
+            <small class="license-text">This work is licensed under a <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a></small>
+        </section>
+    
+
+        <section class="article-content"><p>在同一个 Python 解释器中为部分代码做沙箱是不现实的。</p>
+<span id="continue-reading"></span><h2 id="zao-jian-yu"><a class="zola-anchor" href="#zao-jian-yu" aria-label="Anchor link for: zao-jian-yu">
+    ⚓
+</a>
+造监狱</h2>
+<p>最近遇到一个需求，限制 Python 代码中某些 builtins 的使用，具体的，我想限制在代码中使用列表，包括 <code>list</code> 和 <code>[..]</code>。
+用户代码放置在 <code>homework.py</code> 文件中。评测程序不是我写的，但总而言之，评测代码会 <code>import homework</code> 然后调用 <code>homework</code> 中定义的函数并比较输出。</p>
+<pre data-lang="python" style="background-color:#fafafa;color:#383a42;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#a0a1a7;"># homework.py
+</span><span style="color:#a626a4;">def </span><span style="color:#0184bc;">answer</span><span>():
+</span><span>    a </span><span style="color:#a626a4;">= </span><span style="color:#e45649;">list</span><span>() </span><span style="color:#a0a1a7;"># should be forbidden
+</span><span>    a </span><span style="color:#a626a4;">= </span><span>[ ]    </span><span style="color:#a0a1a7;"># should be forbidden
+</span><span>    </span><span style="color:#a626a4;">pass
+</span></code></pre>
+<h3 id="chang-shi-1"><a class="zola-anchor" href="#chang-shi-1" aria-label="Anchor link for: chang-shi-1">
+    ⚓
+</a>
+尝试 1</h3>
+<p>因为 Python 是如此的动态，以至于我们可以直接修改 <code>builtins</code>.</p>
+<pre data-lang="python" style="background-color:#fafafa;color:#383a42;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#a0a1a7;"># utils.py
+</span><span style="color:#a626a4;">def </span><span style="color:#0184bc;">make_forbidden_function</span><span>(</span><span style="color:#e45649;">name</span><span>, </span><span style="color:#e45649;">original</span><span>):
+</span><span>    </span><span style="color:#a626a4;">def </span><span style="color:#0184bc;">f</span><span>(</span><span style="color:#a626a4;">*</span><span style="color:#e45649;">args</span><span>, </span><span style="color:#a626a4;">**</span><span style="color:#e45649;">kwargs</span><span>):
+</span><span>        </span><span style="color:#a0a1a7;"># print some
+</span><span>        </span><span style="color:#0184bc;">print</span><span>(</span><span style="color:#a626a4;">f</span><span style="color:#50a14f;">&quot;You should not use &#39;</span><span>{name}</span><span style="color:#50a14f;">&#39; in this problem.&quot;</span><span>)
+</span><span>        </span><span style="color:#a626a4;">return </span><span style="color:#e45649;">original</span><span>(</span><span style="color:#a626a4;">*</span><span>args, </span><span style="color:#a626a4;">**</span><span>kwargs)
+</span><span>    </span><span style="color:#a626a4;">return </span><span>f
+</span></code></pre>
+<pre data-lang="python" style="background-color:#fafafa;color:#383a42;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#a0a1a7;"># jail1.py
+</span><span style="color:#a626a4;">from </span><span>utils </span><span style="color:#a626a4;">import </span><span style="color:#c18401;">*
+</span><span style="color:#a626a4;">import </span><span>importlib
+</span><span>
+</span><span style="color:#a626a4;">def </span><span style="color:#0184bc;">jail1</span><span>(</span><span style="color:#e45649;">module</span><span>):
+</span><span>    </span><span style="color:#a626a4;">import </span><span>builtins
+</span><span>    builtins.list </span><span style="color:#a626a4;">= </span><span style="color:#e45649;">make_forbidden_function</span><span>(</span><span style="color:#50a14f;">&quot;list&quot;</span><span>, list)
+</span><span>    </span><span style="color:#a626a4;">return </span><span>importlib.</span><span style="color:#e45649;">import_module</span><span>(module)
+</span><span>
+</span><span>homework </span><span style="color:#a626a4;">= </span><span style="color:#e45649;">jail1</span><span>(</span><span style="color:#50a14f;">&quot;homework&quot;</span><span>)
+</span><span>homework.</span><span style="color:#e45649;">answer</span><span>()
+</span></code></pre>
+<pre data-lang="console" style="background-color:#fafafa;color:#383a42;" class="language-console "><code class="language-console" data-lang="console"><span>$ python jail1.py
+</span><span>You should not use &#39;list&#39; in this problem.
+</span></code></pre>
+<p>因为评测代码比较的是输出，因此使 <code>list</code> 函数额外输出一句话完全可以阻止代码通过评测。</p>
+<p>问题在于，修改 builtins 是全局的，调用方也会被影响。</p>
+<pre data-lang="console" style="background-color:#fafafa;color:#383a42;" class="language-console "><code class="language-console" data-lang="console"><span>$ python -i jail1.py
+</span><span>You should not use &#39;list&#39; in this problem.
+</span><span>Failed calling sys.__interactivehook__
+</span><span>You should not use &#39;list&#39; in this problem.
+</span><span>You should not use &#39;list&#39; in this problem.
+</span><span>You should not use &#39;list&#39; in this problem.
+</span><span>You should not use &#39;list&#39; in this problem.
+</span><span>You should not use &#39;list&#39; in this problem.
+</span><span>You should not use &#39;list&#39; in this problem.
+</span><span>You should not use &#39;list&#39; in this problem.
+</span><span>You should not use &#39;list&#39; in this problem.
+</span><span>You should not use &#39;list&#39; in this problem.
+</span><span>You should not use &#39;list&#39; in this problem.
+</span><span>You should not use &#39;list&#39; in this problem.
+</span><span>You should not use &#39;list&#39; in this problem.
+</span><span>You should not use &#39;list&#39; in this problem.
+</span><span>You should not use &#39;list&#39; in this problem.
+</span><span>You should not use &#39;list&#39; in this problem.
+</span><span>You should not use &#39;list&#39; in this problem.
+</span><span>You should not use &#39;list&#39; in this problem.
+</span><span>Traceback (most recent call last):
+</span><span>  File &quot;&lt;frozen site&gt;&quot;, line 520, in register_readline
+</span><span>  File &quot;/nix/store/829wb290i87wngxlh404klwxql5v18p4-python3-3.13.7/lib/python3.13/_pyrepl/readline.py&quot;, line 32, in &lt;module&gt;
+</span><span>    from dataclasses import dataclass, field
+</span><span>  File &quot;/nix/store/829wb290i87wngxlh404klwxql5v18p4-python3-3.13.7/lib/python3.13/dataclasses.py&quot;, line 3, in &lt;module&gt;
+</span><span>    import copy
+</span><span>  File &quot;/nix/store/829wb290i87wngxlh404klwxql5v18p4-python3-3.13.7/lib/python3.13/copy.py&quot;, line 112, in &lt;module&gt;
+</span><span>    d[list] = list.copy
+</span><span>AttributeError: &#39;function&#39; object has no attribute &#39;copy&#39;
+</span><span>warning: can&#39;t use pyrepl: function() argument &#39;code&#39; must be code, not str
+</span><span>&gt;&gt;&gt;
+</span></code></pre>
+<p>可见修改 builtins 直接炸烂了 Python 的 REPL。因为 <code>list</code> 是个 class，而我们把它改成了一个 function。</p>
+<p>在 <code>importlib.import_module</code> 后改回 builtins 也是不行的，因为 <code>homework</code> module 的 builtins 对象和全局的是同一个。
+改回来之后就把监狱拆了。</p>
+<pre data-lang="python" style="background-color:#fafafa;color:#383a42;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#a0a1a7;"># jail1_1.py
+</span><span style="color:#a626a4;">from </span><span>utils </span><span style="color:#a626a4;">import </span><span style="color:#c18401;">*
+</span><span style="color:#a626a4;">import </span><span>importlib
+</span><span>
+</span><span style="color:#a626a4;">def </span><span style="color:#0184bc;">jail1_1</span><span>(</span><span style="color:#e45649;">module_name</span><span>):
+</span><span>    </span><span style="color:#a626a4;">import </span><span>builtins
+</span><span>    old_list </span><span style="color:#a626a4;">= </span><span>list
+</span><span>    builtins.list </span><span style="color:#a626a4;">= </span><span style="color:#e45649;">make_forbidden_function</span><span>(</span><span style="color:#50a14f;">&quot;list&quot;</span><span>, list)
+</span><span>    module </span><span style="color:#a626a4;">= </span><span>importlib.</span><span style="color:#e45649;">import_module</span><span>(module_name)
+</span><span>    builtins.list </span><span style="color:#a626a4;">= </span><span>old_list
+</span><span>    </span><span style="color:#a626a4;">return </span><span>module
+</span><span>
+</span><span>homework </span><span style="color:#a626a4;">= </span><span style="color:#e45649;">jail1_1</span><span>(</span><span style="color:#50a14f;">&quot;homework&quot;</span><span>)
+</span><span>homework.</span><span style="color:#e45649;">answer</span><span>()
+</span></code></pre>
+<pre data-lang="console" style="background-color:#fafafa;color:#383a42;" class="language-console "><code class="language-console" data-lang="console"><span>$ python jail1_1.py
+</span><span>$ # nothing
+</span></code></pre>
+<h3 id="chang-shi-2"><a class="zola-anchor" href="#chang-shi-2" aria-label="Anchor link for: chang-shi-2">
+    ⚓
+</a>
+尝试 2</h3>
+<p>因为 Python 是如此的动态，我们当然可以给不同的模块指定不同的 builtins。</p>
+<pre data-lang="python" style="background-color:#fafafa;color:#383a42;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#a0a1a7;"># jail2.py
+</span><span style="color:#a626a4;">from </span><span>utils </span><span style="color:#a626a4;">import </span><span style="color:#c18401;">*
+</span><span style="color:#a626a4;">import </span><span>importlib.util </span><span style="color:#a626a4;">as </span><span>imp_util
+</span><span style="color:#a626a4;">import </span><span>inspect
+</span><span>
+</span><span style="color:#a626a4;">def </span><span style="color:#0184bc;">forbidden_builtins</span><span>(</span><span style="color:#e45649;">names</span><span>):
+</span><span>    builtins_dict </span><span style="color:#a626a4;">= </span><span>inspect.</span><span style="color:#e45649;">currentframe</span><span>().f_builtins
+</span><span>    result </span><span style="color:#a626a4;">= </span><span>builtins_dict.</span><span style="color:#e45649;">copy</span><span>()
+</span><span>    </span><span style="color:#a626a4;">for </span><span>name </span><span style="color:#a626a4;">in </span><span>names:
+</span><span>        result[name] </span><span style="color:#a626a4;">= </span><span style="color:#e45649;">make_forbidden_function</span><span>(name, builtins_dict[name])
+</span><span>    </span><span style="color:#a626a4;">return </span><span>result
+</span><span>
+</span><span style="color:#a626a4;">def </span><span style="color:#0184bc;">restricted_import</span><span>(</span><span style="color:#e45649;">module_name</span><span>, </span><span style="color:#e45649;">names</span><span>):
+</span><span>    spec </span><span style="color:#a626a4;">= </span><span>imp_util.</span><span style="color:#e45649;">find_spec</span><span>(module_name)
+</span><span>    module </span><span style="color:#a626a4;">= </span><span>imp_util.</span><span style="color:#e45649;">module_from_spec</span><span>(spec)
+</span><span>    module.__builtins__ </span><span style="color:#a626a4;">= </span><span style="color:#e45649;">forbidden_builtins</span><span>(names)
+</span><span>    spec.loader.</span><span style="color:#e45649;">exec_module</span><span>(module)
+</span><span>    </span><span style="color:#a626a4;">return </span><span>module
+</span><span>
+</span><span style="color:#a626a4;">def </span><span style="color:#0184bc;">jail2</span><span>(</span><span style="color:#e45649;">module</span><span>):
+</span><span>    </span><span style="color:#a626a4;">return </span><span style="color:#e45649;">restricted_import</span><span>(module, [</span><span style="color:#50a14f;">&quot;list&quot;</span><span>])
+</span><span>
+</span><span>homework </span><span style="color:#a626a4;">= </span><span style="color:#e45649;">jail2</span><span>(</span><span style="color:#50a14f;">&quot;homework&quot;</span><span>)
+</span><span>homework.</span><span style="color:#e45649;">answer</span><span>()
+</span><span>a </span><span style="color:#a626a4;">= </span><span style="color:#e45649;">list</span><span>() </span><span style="color:#a0a1a7;"># homework 之外的代码不受影响
+</span></code></pre>
+<pre data-lang="console" style="background-color:#fafafa;color:#383a42;" class="language-console "><code class="language-console" data-lang="console"><span>$ python jail2.py
+</span><span>You should not use &#39;list&#39; in this problem.
+</span></code></pre>
+<p>任务完成！但是等等，homework 里除了 <code>a = list()</code>，还有一句 <code>a = [ ]</code>。怎么只打出了一句话？
+看起来 <code>[...]</code> 语法并不调用 <code>list</code>？</p>
+<p>看起来 <code>[...]</code> 的创建就是一个魔法，没有办法去修改它。</p>
+<h3 id="chang-shi-3"><a class="zola-anchor" href="#chang-shi-3" aria-label="Anchor link for: chang-shi-3">
+    ⚓
+</a>
+尝试 3</h3>
+<p>因为 Python 是如此的动态，它提供了 <a href="https://docs.python.org/3/library/sys.html#sys.setprofile"><code>sys.setprofile</code></a> 能追踪各种事件。
+其中的 <code>c_call</code> 事件让我眼前一亮。</p>
+<blockquote>
+<p>'c_call': A C function is about to be called. This may be an extension function or a built-in. <em>arg</em> is the C function object.</p>
+</blockquote>
+<p>看起来，列表操作会产生 <code>c_call</code> 事件（？），我在这些事件发生时打印一些东西不就行了么？
+让我们试试：</p>
+<pre data-lang="python" style="background-color:#fafafa;color:#383a42;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#a0a1a7;"># jail3.py
+</span><span style="color:#a626a4;">import </span><span>sys
+</span><span>
+</span><span style="color:#a626a4;">def </span><span style="color:#0184bc;">profiler</span><span>(</span><span style="color:#e45649;">frame</span><span>, </span><span style="color:#e45649;">event</span><span>, </span><span style="color:#e45649;">arg</span><span>):
+</span><span>    </span><span style="color:#0184bc;">print</span><span>(</span><span style="color:#a626a4;">f</span><span style="color:#50a14f;">&quot;</span><span>{frame}</span><span style="color:#50a14f;">, </span><span>{event}</span><span style="color:#50a14f;">, </span><span>{arg}</span><span style="color:#50a14f;">&quot;</span><span>)
+</span><span>    </span><span style="color:#a626a4;">return </span><span>profiler
+</span><span>
+</span><span style="color:#a626a4;">import </span><span>homework
+</span><span>
+</span><span>sys.</span><span style="color:#e45649;">setprofile</span><span>(profiler)
+</span><span>homework.</span><span style="color:#e45649;">answer</span><span>()
+</span><span>a </span><span style="color:#a626a4;">= </span><span>[</span><span style="color:#c18401;">1</span><span>, </span><span style="color:#c18401;">2</span><span>, </span><span style="color:#c18401;">3</span><span>]
+</span><span>b </span><span style="color:#a626a4;">= </span><span>a[</span><span style="color:#c18401;">1</span><span>]
+</span></code></pre>
+<pre data-lang="console" style="background-color:#fafafa;color:#383a42;" class="language-console "><code class="language-console" data-lang="console"><span>$ python jail3.py
+</span><span>&lt;frame at 0x7f87a99f0040, file &#39;.../codes/homework.py&#39;, line 1, code answer&gt;, call, None
+</span><span>&lt;frame at 0x7f87a99f0040, file &#39;.../codes/homework.py&#39;, line 4, code answer&gt;, return, None
+</span><span>&lt;frame at 0x7f87a99f0040, file &#39;.../codes/jail3.py&#39;, line 10, code &lt;module&gt;&gt;, return, None
+</span></code></pre>
+<p>我明明已经追踪了全部事件，也创建，尝试读取了列表，但是我那么大一堆 <code>c_call</code> 事件呢？
+看起来 CPython 根本不会让 profile 函数追踪 <code>[...]</code>，<code>list[n]</code> 这些操作，列表操作并不总是会产生 <code>c_call</code> 事件。</p>
+<h3 id="chang-shi-4"><a class="zola-anchor" href="#chang-shi-4" aria-label="Anchor link for: chang-shi-4">
+    ⚓
+</a>
+尝试 4</h3>
+<p>最后，看来似乎只能过滤源码了，我认为这是非常不优雅的方法，但没办法了，配合尝试 2，这也是我最终使用的办法。
+毕竟作业的对象是新生，只要让绕过限制所需的努力比好好做做作业更大就行了。</p>
+<pre data-lang="python" style="background-color:#fafafa;color:#383a42;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#a0a1a7;"># jail4.py
+</span><span style="color:#a626a4;">import </span><span>re
+</span><span style="color:#a626a4;">import </span><span>inspect
+</span><span>
+</span><span style="color:#a626a4;">def </span><span style="color:#0184bc;">check_no_square_brackets</span><span>(</span><span style="color:#e45649;">function</span><span>):
+</span><span>    </span><span style="color:#a626a4;">if </span><span style="color:#0184bc;">len</span><span>(re.</span><span style="color:#e45649;">findall</span><span>(</span><span style="color:#a626a4;">r</span><span style="color:#50a14f;">&#39;</span><span style="color:#0997b3;">\[</span><span style="color:#a626a4;">|</span><span style="color:#0997b3;">\]</span><span style="color:#50a14f;">&#39;</span><span>, inspect.</span><span style="color:#e45649;">getsource</span><span>(function), re.M)) </span><span style="color:#a626a4;">!= </span><span style="color:#c18401;">0</span><span>:
+</span><span>        </span><span style="color:#a626a4;">raise </span><span style="color:#e45649;">RuntimeError</span><span>(</span><span style="color:#50a14f;">&quot;You should not use square brackets `[...]` in this problem&quot;</span><span>)
+</span><span>
+</span><span style="color:#a626a4;">import </span><span>jail2
+</span><span style="color:#e45649;">check_no_square_brackets</span><span>(jail2.homework.answer)
+</span></code></pre>
+<pre data-lang="console" style="background-color:#fafafa;color:#383a42;" class="language-console "><code class="language-console" data-lang="console"><span>$ python jail4.py
+</span><span>You should not use &#39;list&#39; in this problem.
+</span><span>Traceback (most recent call last):
+</span><span>  File &quot;.../codes/jail3.py&quot;, line 9, in &lt;module&gt;
+</span><span>    check_no_square_brackets(jail2.homework.answer)
+</span><span>    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+</span><span>  File &quot;.../codes/jail3.py&quot;, line 6, in check_no_square_brackets
+</span><span>    raise RuntimeError(&quot;You should not use square brackets `[...]` in this problem&quot;)
+</span><span>RuntimeError: You should not use square brackets `[...]` in this problem
+</span></code></pre>
+<h2 id="yue-yu"><a class="zola-anchor" href="#yue-yu" aria-label="Anchor link for: yue-yu">
+    ⚓
+</a>
+越狱</h2>
+<p>因为 Python 是如此的动态，即使我们把一切预先定义的东西都禁止掉，但除了过滤源码，看起来没有什么办法去阻止用户重新获得 builtins。</p>
+<p>让我们建一个最严格的 <code>jail</code>：什么都不给。</p>
+<pre data-lang="python" style="background-color:#fafafa;color:#383a42;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#a0a1a7;"># jail.py
+</span><span style="color:#a626a4;">def </span><span style="color:#0184bc;">jail</span><span>(</span><span style="color:#e45649;">code</span><span>):
+</span><span>    </span><span style="color:#a0a1a7;"># disable everything
+</span><span>    </span><span style="color:#a0a1a7;"># https://docs.python.org/3/library/functions.html#exec
+</span><span>    </span><span style="color:#a0a1a7;"># If the globals dictionary does not contain a value for the key __builtins__,
+</span><span>    </span><span style="color:#a0a1a7;"># a reference to the dictionary of the built-in module builtins is inserted under that key.
+</span><span>    </span><span style="color:#0184bc;">exec</span><span>(code, </span><span style="color:#e45649;">globals</span><span style="color:#a626a4;">=</span><span>{</span><span style="color:#50a14f;">&quot;__builtins__&quot;</span><span>: {}})
+</span></code></pre>
+<pre data-lang="console" style="background-color:#fafafa;color:#383a42;" class="language-console "><code class="language-console" data-lang="console"><span>$ python -i jail.py
+</span><span>&gt;&gt;&gt; jail(&quot;import builtins&quot;)
+</span><span>Traceback (most recent call last):
+</span><span>  File &quot;&lt;python-input-0&gt;&quot;, line 1, in &lt;module&gt;
+</span><span>    jail(&quot;import builtins&quot;)
+</span><span>    ~~~~^^^^^^^^^^^^^^^^^^^
+</span><span>  File &quot;/home/yinfeng/Source/blog/content/posts/python-jailbreak/codes/jail.py&quot;, line 6, in jail
+</span><span>    exec(code, globals={&quot;__builtins__&quot;: {}})
+</span><span>    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+</span><span>  File &quot;&lt;string&gt;&quot;, line 1, in &lt;module&gt;
+</span><span>ImportError: __import__ not found
+</span></code></pre>
+<p>如何越狱？以下内容参考自 <a href="https://github.com/jailctf/pyjailbreaker">https://github.com/jailctf/pyjailbreaker</a>。</p>
+<ol>
+<li>获得 object。</li>
+<li>获得目前 <code>object</code> 的所有的子类，并从中找一个用 <code>def</code> 定义了函数的类，获得这个函数。
+因为 <code>def</code> 定义的函数带有 <code>__globals__</code> 属性，其中包含了定义时的 <code>globals()</code>。
+我们希望还 <code>__globals__</code> 里包含 <code>sys</code> 模块，一个常见的选择是 <code>os._wrap_close</code>。</li>
+<li>从 <code>__globals__</code> 里拿到 <code>sys</code> 模块。</li>
+<li>从 <code>sys.modules</code> 里拿到目前导入的其他模块，比如 <code>builtins</code>。</li>
+<li>用 <code>builtins.__import__</code> 导入任何想要的模块，比如 <code>inspect</code>。</li>
+<li>因为 Python 是如此的动态，我们直接用 <code>inspect</code> 修改栈帧，就能把环境恢复了。</li>
+</ol>
+<pre data-lang="python" style="background-color:#fafafa;color:#383a42;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#a0a1a7;"># jailbreak.py
+</span><span style="color:#a626a4;">def </span><span style="color:#0184bc;">jailbreak</span><span>():
+</span><span>    </span><span style="color:#a0a1a7;"># https://github.com/jailctf/pyjailbreaker
+</span><span>    object </span><span style="color:#a626a4;">= </span><span>().__class__.__base__
+</span><span>    list_classes </span><span style="color:#a626a4;">= </span><span>object.</span><span style="color:#0184bc;">__subclasses__</span><span>()
+</span><span>    func_with_sys </span><span style="color:#a626a4;">= </span><span>[</span><span style="color:#e45649;">cls </span><span style="color:#a626a4;">for </span><span style="color:#e45649;">cls </span><span style="color:#a626a4;">in </span><span>list_classes </span><span style="color:#a626a4;">if </span><span style="color:#50a14f;">&#39;os._wrap_close&#39; </span><span style="color:#a626a4;">in </span><span>object.</span><span style="color:#0184bc;">__str__</span><span>(</span><span style="color:#e45649;">cls</span><span>)][</span><span style="color:#c18401;">0</span><span>]
+</span><span>    sys </span><span style="color:#a626a4;">= </span><span>func_with_sys.</span><span style="color:#0184bc;">__init__</span><span>.__globals__[</span><span style="color:#50a14f;">&#39;sys&#39;</span><span>]
+</span><span>    builtins </span><span style="color:#a626a4;">= </span><span>sys.modules[</span><span style="color:#50a14f;">&#39;builtins&#39;</span><span>]
+</span><span>    inspect </span><span style="color:#a626a4;">= </span><span>builtins.</span><span style="color:#e45649;">__import__</span><span>(</span><span style="color:#50a14f;">&#39;inspect&#39;</span><span>)
+</span><span>    parent_frame </span><span style="color:#a626a4;">= </span><span>inspect.</span><span style="color:#e45649;">currentframe</span><span>().f_back
+</span><span>    </span><span style="color:#a626a4;">for </span><span>name </span><span style="color:#a626a4;">in </span><span>builtins.</span><span style="color:#e45649;">dir</span><span>(builtins):
+</span><span>        parent_frame.f_builtins[name] </span><span style="color:#a626a4;">= </span><span>builtins.</span><span style="color:#e45649;">getattr</span><span>(builtins, name)
+</span><span>
+</span><span style="color:#a626a4;">try</span><span>:
+</span><span>    </span><span style="color:#0184bc;">print</span><span>(</span><span style="color:#50a14f;">&quot;in jail.&quot;</span><span>)
+</span><span style="color:#a626a4;">except</span><span>:
+</span><span>    </span><span style="color:#a626a4;">pass
+</span><span>
+</span><span style="color:#e45649;">jailbreak</span><span>()
+</span><span>
+</span><span style="color:#0184bc;">print</span><span>(</span><span style="color:#50a14f;">&quot;free!&quot;</span><span>)
+</span></code></pre>
+<pre data-lang="console" style="background-color:#fafafa;color:#383a42;" class="language-console "><code class="language-console" data-lang="console"><span>$ python
+</span><span>&gt;&gt;&gt; import jail
+</span><span>&gt;&gt;&gt; jail.jail(open(&#39;jailbreak.py&#39;).read())
+</span><span>free!
+</span></code></pre>
+</section>
+    </article>
+
+    
+        
+    <div class="giscus" />
+
+    
+
+                </div>
+            </main>
+        </div>
+        <footer id="footer">
+            
+            
+    <div class="footer-container container">
+        <div id="copyright-container">
+            <small id="copyright">© Lin Yinfeng</small>
+        </div>
+
+        
+            <div id="powered-by-container">
+                <small id="powered-by">Powered by <a href="https://www.getzola.org">Zola</a></small>
+            </div>
+        
+    </div>
+
+            
+        </footer>
+    
+</body>
+</html>
