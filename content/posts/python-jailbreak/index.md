@@ -124,7 +124,7 @@ You should not use 'list' in this problem.
 因为 Python 是如此的动态，它提供了 [`sys.setprofile`](https://docs.python.org/3/library/sys.html#sys.setprofile) 能追踪各种事件。
 其中的 `c_call` 事件让我眼前一亮。
 
-> 'c_call': A C function is about to be called. This may be an extension function or a built-in. *arg* is the C function object.
+> 'c_call': A C function is about to be called. This may be an extension function or a built-in. _arg_ is the C function object.
 
 看起来，列表操作会产生 `c_call` 事件（？），我在这些事件发生时打印一些东西不就行了么？
 让我们试试：
