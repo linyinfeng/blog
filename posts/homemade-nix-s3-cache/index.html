@@ -11,7 +11,7 @@
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <link rel=stylesheet type="text/css" href=https://blog.linyinfeng.com/normalize.css?h=580818700724d42d7fcc />
-        <link rel=stylesheet type="text/css" href=https://blog.linyinfeng.com/style.css?h=ad13708a8c32b996160d />
+        <link rel=stylesheet type="text/css" href=https://blog.linyinfeng.com/style.css?h=055736ec043ea4794f77 />
         <script defer src=https://blog.linyinfeng.com/layout-helper.js?h=f433ff057abd07e8dc0b></script>
         
             
@@ -85,7 +85,7 @@
     <div class="header-container container">
         <h1 id="blog-title" class="title">
             <a href=https:&#x2F;&#x2F;blog.linyinfeng.com>
-                <img src="https://blog.linyinfeng.com/favicon.svg?h=00660d3148f8119a1063" alt="Yinfeng&#x27;s" />
+                <img src="https://blog.linyinfeng.com/favicon.svg?h=13cd5e503c308246963d" alt="Yinfeng&#x27;s" />
             </a>
         </h1>
         <nav id="global-nav"><span class="global-nav-item-container"><a class="global-nav-item"
@@ -267,7 +267,7 @@
         </div>
         
         <div class="date-container">
-	    <time datetime=2026-01-23T16:21:36+08:00>2026-01-23 16:21</time>
+	    <time datetime=2026-01-23T23:32:25+08:00>2026-01-23 23:32</time>
             <span class="date-label">(last updated)</span>
         </div>
     </div>
@@ -299,7 +299,10 @@
 <li><strong>极佳兼容性</strong>：使用 <code>nix copy</code> 直接上传</li>
 </ol>
 <p>注：第一点与其他特色并没有冲突。</p>
-<span id="continue-reading"></span><img src="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;homemade-nix-s3-cache&#x2F;s3-cache-flow.svg?h=bc0611f630ddd9583a4f" alt="一张 S3 binary cache 的流程图">
+<span id="continue-reading"></span><figure>
+    <img src="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;homemade-nix-s3-cache&#x2F;s3-cache-flow.svg?h=bc0611f630ddd9583a4f" alt="一张 S3 binary cache 的流程图" />
+    <figcaption>我的 S3 cache 的工作流程图</figcaption>
+</figure>
 <p>本文所有命令都使用实验性的 Nix CLI v3，需开启 <code>experimental-features = nix-command flakes</code>。</p>
 <h2 id="zui-jian-dan-de-nix-s3-binary-cache"><a class="zola-anchor" href="#zui-jian-dan-de-nix-s3-binary-cache" aria-label="Anchor link for: zui-jian-dan-de-nix-s3-binary-cache">
     ⚓
@@ -339,7 +342,6 @@
 </a>
 我的配置</h3>
 <p>我使用公开的 Cloudflare R2 作为存储，设置了自定义域名 <code>cache.li7g.com</code>，并配置好写入使用的 token：</p>
-<p><a rel="external" href="https://github.com/linyinfeng/dotfiles/blob/3e0be19e10fbbcf08bab95583f6e3ae61cdf4af9/terraform/cloudflare.tf#L427-L472">https://github.com/linyinfeng/dotfiles/blob/3e0be19e10fbbcf08bab95583f6e3ae61cdf4af9/terraform/cloudflare.tf#L427-L472</a></p>
 <pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="terraform"><span class="giallo-l"><span style="color: #953800;">resource</span><span style="color: #0550AE;"> &quot;cloudflare_r2_bucket&quot; &quot;cache&quot;</span><span> {</span></span>
 <span class="giallo-l"><span>  account_id</span><span style="color: #CF222E;">    =</span><span> local</span><span style="color: #CF222E;">.</span><span>cloudflare_main_account_id</span></span>
 <span class="giallo-l"><span>  name</span><span style="color: #CF222E;">          =</span><span style="color: #0A3069;"> &quot;cache-li7g-com&quot;</span></span>
@@ -368,8 +370,8 @@
 <span class="giallo-l"><span>    })</span></span>
 <span class="giallo-l"><span>  }]</span></span>
 <span class="giallo-l"><span>}</span></span></code></pre>
+<p><a rel="external" href="https://github.com/linyinfeng/dotfiles/blob/3e0be19e10fbbcf08bab95583f6e3ae61cdf4af9/terraform/cloudflare.tf#L427-L472">（代码链接）</a></p>
 <p>使用时，只需要做如下设置：</p>
-<p><a rel="external" href="https://github.com/linyinfeng/dotfiles/blob/3e0be19e10fbbcf08bab95583f6e3ae61cdf4af9/nixos/profiles/nix/settings/default.nix#L45-L52">https://github.com/linyinfeng/dotfiles/blob/3e0be19e10fbbcf08bab95583f6e3ae61cdf4af9/nixos/profiles/nix/settings/default.nix#L45-L52</a></p>
 <pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="nix"><span class="giallo-l"><span>{</span></span>
 <span class="giallo-l"><span style="color: #0550AE;">    nix</span><span>.</span><span style="color: #0550AE;">settings</span><span style="color: #CF222E;"> =</span><span> {</span></span>
 <span class="giallo-l"><span style="color: #0550AE;">        substituters</span><span style="color: #CF222E;"> =</span><span> [</span><span style="color: #0A3069;"> &quot;https://cache.li7g.com&quot;</span><span> ];</span></span>
@@ -377,7 +379,9 @@
 <span class="giallo-l"><span style="color: #0A3069;">            &quot;cache.li7g.com:YIVuYf8AjnOc5oncjClmtM19RaAZfOKLFFyZUpOrfqM=&quot;</span></span>
 <span class="giallo-l"><span>        ];</span></span>
 <span class="giallo-l"><span>    };</span></span>
-<span class="giallo-l"><span>}</span></span></code></pre><h2 id="hu-lue-shang-you-yi-you-nei-rong"><a class="zola-anchor" href="#hu-lue-shang-you-yi-you-nei-rong" aria-label="Anchor link for: hu-lue-shang-you-yi-you-nei-rong">
+<span class="giallo-l"><span>}</span></span></code></pre>
+<p><a rel="external" href="https://github.com/linyinfeng/dotfiles/blob/3e0be19e10fbbcf08bab95583f6e3ae61cdf4af9/nixos/profiles/nix/settings/default.nix#L45-L52">（代码链接）</a></p>
+<h2 id="hu-lue-shang-you-yi-you-nei-rong"><a class="zola-anchor" href="#hu-lue-shang-you-yi-you-nei-rong" aria-label="Anchor link for: hu-lue-shang-you-yi-you-nei-rong">
     ⚓
 </a>
 忽略上游已有内容</h2>
@@ -489,9 +493,7 @@ GC</h2>
     ⚓
 </a>
 我的配置</h3>
-<p>我配置了一个 systemd 服务对 S3 cache 每晚执行一次 GC：</p>
-<p><a rel="external" href="https://github.com/linyinfeng/dotfiles/blob/3e0be19e10fbbcf08bab95583f6e3ae61cdf4af9/nixos/profiles/services/hydra/_cache.nix#L58-L99">https://github.com/linyinfeng/dotfiles/blob/3e0be19e10fbbcf08bab95583f6e3ae61cdf4af9/nixos/profiles/services/hydra/_cache.nix#L58-L99</a></p>
-<p>服务内容其实就是调用一次 <code>nix-gc-s3</code> 脚本。</p>
+<p>我配置了一个 <a rel="external" href="https://github.com/linyinfeng/dotfiles/blob/3e0be19e10fbbcf08bab95583f6e3ae61cdf4af9/nixos/profiles/services/hydra/_cache.nix#L58-L99">systemd 服务</a>对 S3 cache 每晚执行一次 GC，服务内容其实就是调用一次 <code>nix-gc-s3</code> 脚本。</p>
 <p>但这里仍然有需要注意的事项：<code>nix-gc-s3</code> 和 <code>nix copy</code> 不应该同时运行，所以我只在固定的 systemd 服务中运行 <code>nix-gc-s3</code> 和 <code>nix copy</code>，并且用 <code>flock</code> 加了互斥锁。</p>
 <h2 id="jie-yu"><a class="zola-anchor" href="#jie-yu" aria-label="Anchor link for: jie-yu">
     ⚓

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang=zh-CN>
+<head>
+    
+        <title>
+    如何用 LaTeX 画 SVG 矢量图 -
+    Yinfeng&#x27;s
+</title>
+        
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel=stylesheet type="text/css" href=https://blog.linyinfeng.com/normalize.css?h=580818700724d42d7fcc />
+        <link rel=stylesheet type="text/css" href=https://blog.linyinfeng.com/style.css?h=055736ec043ea4794f77 />
+        <script defer src=https://blog.linyinfeng.com/layout-helper.js?h=f433ff057abd07e8dc0b></script>
+        
+            
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-K74P2G7');</script>
+    <!-- End Google Tag Manager -->
+
+        
+        
+            
+                
+    <link rel="stylesheet" href="https://blog.linyinfeng.com/katex/katex.min.css?h=e189fd0238811989c364" />
+    <script defer src="https://blog.linyinfeng.com/katex/katex.min.js?h=6b909443e6c8f6e5d24c"></script>
+    <script defer src="https://blog.linyinfeng.com/katex/contrib/mathtex-script-type.min.js?h=0799b28b8bc80621fc86"></script>
+    <script defer src="https://blog.linyinfeng.com/katex/contrib/copy-tex.min.js?h=07770af90943a1de1a10"></script>
+    <script defer src="https://blog.linyinfeng.com/katex/contrib/auto-render.min.js?h=bb53eb953394531aae36"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+    macros: {
+        "\\set": "\\left\\{ #1 \\right\\}"
+    },
+    delimiters: [
+        {left: "$$",  right: "$$",  display: true },
+        {left: "$",   right: "$",   display: false},
+        {left: "\\(", right: "\\)", display: false},
+        {left: "\\[", right: "\\]", display: true }
+    ]
+}
+ );
+        });
+    </script>
+
+            
+        
+        
+            
+    <script src="https://giscus.app/client.js"
+            data-repo="linyinfeng&#x2F;blog"
+            data-repo-id="MDEwOlJlcG9zaXRvcnkxNDMxMjU5NTA="
+            data-category-id="MDE4OkRpc2N1c3Npb25DYXRlZ29yeTMyOTkyOTcy"
+            data-mapping="pathname"
+            data-reactions-enabled="1"
+            data-theme="light"
+            crossorigin="anonymous"
+            async>
+    </script>
+
+        
+        
+            <link rel="alternate" type="application/atom+xml" title="Atom" href="https://blog.linyinfeng.com/atom.xml" />
+        
+        
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.linyinfeng.com/rss.xml" />
+        
+        
+            <link rel="me" href="https:&#x2F;&#x2F;mastodon.li7g.com&#x2F;@yinfeng" />
+        
+    
+</head>
+<body>
+    
+        
+        <header id="header">
+            
+            
+    <div class="header-container container">
+        <h1 id="blog-title" class="title">
+            <a href=https:&#x2F;&#x2F;blog.linyinfeng.com>
+                <img src="https://blog.linyinfeng.com/favicon.svg?h=13cd5e503c308246963d" alt="Yinfeng&#x27;s" />
+            </a>
+        </h1>
+        <nav id="global-nav"><span class="global-nav-item-container"><a class="global-nav-item"
+                    href=https://blog.linyinfeng.com
+                >Home</a></span><span class="global-nav-item-container"><a class="global-nav-item"
+                    href=https://blog.linyinfeng.com/archive
+                >Archive</a></span><span class="global-nav-item-container"><a class="global-nav-item"
+                    href=https://blog.linyinfeng.com/links
+                >Links</a></span><span class="global-nav-item-container"><a class="global-nav-item"
+                    href=https:&#x2F;&#x2F;github.com&#x2F;linyinfeng&#x2F;blog
+                >Source</a></span></nav>
+    </div>
+
+            
+        </header>
+        <div id="main-aside-container">
+            
+    
+        
+                <aside id="aside">
+                    <div id="aside-container">
+                        
+    
+    <div class="toc-container container">
+        <h1 class="title toc-title">Table of Contents</h1>
+        
+    
+        <ul class="toc-parent">
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;latex-svg&#x2F;#tex-de-shu-chu-ji-zhi>$\TeX$ 的输出机制</a>
+                    
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;latex-svg&#x2F;#shi-yong-dvisvgm-sheng-cheng-svg>使用 dvisvgm 生成 SVG</a>
+                    
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;latex-svg&#x2F;#zi-ti-qian-ru-wen-ti>字体嵌入问题</a>
+                    
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;latex-svg&#x2F;#ben-zhan-de-logo>本站的 logo</a>
+                    
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;latex-svg&#x2F;#can-kao>参考</a>
+                    
+    
+
+                </li>
+                
+        </ul>
+    
+
+    </div>
+
+
+                    </div>
+                </aside>
+            
+    
+
+            <main id="main">
+                <div id="main-container">
+                    
+    
+                    
+    
+    <article class="article-container container">
+        
+    <h1 class="title article-title">
+        <a class="article-title-link" href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;latex-svg&#x2F;">
+            
+    <span class="draft-indicator">
+        
+    </span>
+    <span>
+        如何用 LaTeX 画 SVG 矢量图
+    </span>
+
+        </a>
+    </h1>
+
+        
+    <div class="dates-container">
+        <div class="date-container">
+            <time datetime=2026-01-23T23:32:25+08:00>2026-01-23 23:32</time>
+ 	    
+            <span class="date-label">(created)</span>
+            
+        </div>
+        
+        <div class="date-container">
+	    <time datetime=2026-01-23T23:32:25+08:00>2026-01-23 23:32</time>
+            <span class="date-label">(last updated)</span>
+        </div>
+    </div>
+    
+
+        
+    <div class="article-taxonomies"><span class="article-taxonomy"><a class="article-taxonomy-name" href="https://blog.linyinfeng.com/tags">
+                Tags</a><span class="article-terms"><a class="article-term-name" href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;tags&#x2F;tex&#x2F;">TeX</a><a class="article-term-name" href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;tags&#x2F;latex&#x2F;">LaTeX</a><a class="article-term-name" href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;tags&#x2F;tikz&#x2F;">TikZ</a><a class="article-term-name" href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;tags&#x2F;dvisvgm&#x2F;">dvisvgm</a><a class="article-term-name" href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;tags&#x2F;leng-zhi-shi&#x2F;">冷知识</a></span></span><span class="article-taxonomy"><a class="article-taxonomy-name" href="https://blog.linyinfeng.com/categories">
+                Categories</a><span class="article-terms"><a class="article-term-name" href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;categories&#x2F;bi-ji&#x2F;">笔记</a></span></span></div>
+
+        
+    
+        <section class="article-license">
+            
+                <div class="license-image">
+                    <img src="https://blog.linyinfeng.com/license-buttons/l/by-nc-sa/4.0/88x31.png?h=f46d7b11bac0d593eab6" alt="CC BY-NC-SA 4.0" />
+                </div>
+            
+            <small class="license-text">This work is licensed under a <a rel="external" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a></small>
+        </section>
+    
+
+        <section class="article-content"><p>眼尖的你一定已经发现了，本博客的 logo 其实是一个圈里面写了一个 <code>\mathfrak{Y}</code>，其实它是我用 <a rel="external" href="https://tikz.dev/">TikZ</a> 画的。
+我们可以使用 <a rel="external" href="https://dvisvgm.de/">dvisvgm</a> 生成高质量的 SVG 在各种地方使用。</p>
+<span id="continue-reading"></span><h2 id="tex-de-shu-chu-ji-zhi"><a class="zola-anchor" href="#tex-de-shu-chu-ji-zhi" aria-label="Anchor link for: tex-de-shu-chu-ji-zhi">
+    ⚓
+</a>
+$\TeX$ 的输出机制</h2>
+<p>一般来说，$\TeX$ 的输出可以被看成两个步骤：</p>
+<ol>
+<li>$\TeX$ 做排版后，输出一个 <code>.dvi</code>（device independent file）文件。DVI 文件本身的指令能力不强，只能排版文字和黑白框。但是 DVI 有一个机制叫作 specials，在 $\TeX$ 中对应 <code>\special</code>。Specials 允许在 DVI 文件中嵌入一些特定设备相关的指令，比如插入图片、颜色、超链接等。</li>
+<li>一个其他的程序（比如 <code>dvipdfm</code>、<code>dvisvgm</code> 等）读取 DVI 文件，并根据其中的指令生成最终的输出文件，比如 PDF、SVG 等。</li>
+</ol>
+<p>可以看到，DVI 的“设备无关”其实挺局限的，因为它依赖程序来解释设备相关的 special 指令。</p>
+<h2 id="shi-yong-dvisvgm-sheng-cheng-svg"><a class="zola-anchor" href="#shi-yong-dvisvgm-sheng-cheng-svg" aria-label="Anchor link for: shi-yong-dvisvgm-sheng-cheng-svg">
+    ⚓
+</a>
+使用 dvisvgm 生成 SVG</h2>
+<p>所以我们要做的就是两步：</p>
+<ol>
+<li>
+<p>指示 $\TeX$ 生成 <code>dvisvgm</code> 能够理解的 DVI。</p>
+<p>$\LaTeX$ 的 <code>graphics</code> 包有一个复杂的机制选择驱动程序（driver），用来生成不同设备的输出。TikZ 也是基于这个机制来选择驱动的。对于 TikZ 来说，支持的驱动程序可以在<a rel="external" href="https://tikz.dev/drivers">这里</a>找到。</p>
+<p>我们只需要在 $\LaTeX$ 文档的 <code>\documentclass</code> 中指定全局 <code>dvisvgm</code> 选项即可。</p>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="latex"><span class="giallo-l"><span style="color: #CF222E;">\documentclass</span><span>[dvisvgm]{</span><span style="color: #0550AE;">standalone</span><span>}</span></span></code></pre>
+<p>调用任意 $\LaTeX$ 程序（比如 <code>lualatex</code>、<code>xelatex</code>、<code>latex</code> 等）生成 DVI 文件。</p>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #953800;">latex</span><span style="color: #0A3069;"> image.tex</span></span>
+<span class="giallo-l"><span style="color: #953800;">xelatex</span><span style="color: #0550AE;"> --no-pdf</span><span style="color: #0A3069;"> image.tex</span></span>
+<span class="giallo-l"><span style="color: #953800;">lualatex</span><span style="color: #0550AE;"> --output-format=dvi</span><span style="color: #0A3069;"> image.tex</span></span></code></pre>
+<p>生成 <code>image.dvi</code> 文件。
+如果是 <code>xelatex</code> 将生成 <code>image.xdv</code>（扩展 DVI 文件），<code>dvisvgm</code> 也支持。</p>
+</li>
+<li>
+<p>使用 <code>dvisvgm</code> 将 DVI 转换为 SVG。</p>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #953800;">dvisvgm</span><span style="color: #0A3069;"> image.dvi</span></span></code></pre></li>
+</ol>
+<h2 id="zi-ti-qian-ru-wen-ti"><a class="zola-anchor" href="#zi-ti-qian-ru-wen-ti" aria-label="Anchor link for: zi-ti-qian-ru-wen-ti">
+    ⚓
+</a>
+字体嵌入问题</h2>
+<p>默认情况下可能会发现 <code>dvisvgm</code> 生成的 SVG 里面字体显示不正确。这是因为默认情况下，<code>dvisvgm</code> 会使用几乎没有什么浏览器支持的 SVG <code>&lt;font&gt;</code> 元素将字体嵌入图片。</p>
+<figure>
+    <img src="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;latex-svg&#x2F;with-svg-font.svg?h=42c6ff7d95a1cb707bd1" alt="一张只能在极少数浏览器中正确显示的 SVG 图片" width="200" />
+    <figcaption>使用 SVG 字体的本站 logo</figcaption>
+</figure>
+<p>解决方法有多种：</p>
+<ol>
+<li>
+<p>我们可以使用现代的 WOFF/WOFF2 字体格式，将字体嵌入 SVG。使用 <code>--font-format=woff</code> 选项。</p>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #953800;">dvisvgm</span><span style="color: #0550AE;"> --font-format=woff2</span><span style="color: #0A3069;"> image.dvi</span></span></code></pre>
+<p>这样生成的 SVG 可以在大多数现代浏览器中正确显示。</p>
+<figure>
+    <img src="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;latex-svg&#x2F;with-woff-font.svg?h=ed5a00e37689babdd8e6" alt="一张可以在大多数现代浏览器中正确显示的 SVG 图片" width="200" />
+    <figcaption>使用 WOFF 字体的本站 logo</figcaption>
+</figure>
+<p>但是在非浏览器中，比如一些图片查看器中，可能仍然无法正确显示字体。</p>
+</li>
+<li>
+<p>或者，我们可以让 <code>dvisvgm</code> 将字体转换为路径，这样就彻底不依赖字体支持了。使用 <code>--no-fonts</code> 选项即可。</p>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #953800;">dvisvgm</span><span style="color: #0550AE;"> --no-fonts</span><span style="color: #0A3069;"> image.dvi</span></span></code></pre>
+<p>代价是如果文字很多那么文件将会变得大，文字信息也会从 SVG 中被彻底去除，无法从图片中选择字体。</p>
+</li>
+</ol>
+<h2 id="ben-zhan-de-logo"><a class="zola-anchor" href="#ben-zhan-de-logo" aria-label="Anchor link for: ben-zhan-de-logo">
+    ⚓
+</a>
+本站的 logo</h2>
+<p>最后，本站的 logo 定义如下：</p>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="latex"><span class="giallo-l"><span style="color: #CF222E;">\documentclass</span><span>[dvisvgm]{</span><span style="color: #0550AE;">standalone</span><span>}</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #CF222E;">\usepackage</span><span>{</span><span style="color: #0550AE;">tikz</span><span>}</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">\usepackage</span><span>{</span><span style="color: #0550AE;">amsfonts</span><span>}</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #0550AE;">\begin</span><span>{document}</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #0550AE;">\begin</span><span>{tikzpicture}[every node/.style={inner sep=0,outer sep=0}]</span></span>
+<span class="giallo-l"><span style="color: #0550AE;">    \fill</span><span> [black] (0, 0) circle (20cm);</span></span>
+<span class="giallo-l"><span style="color: #0550AE;">    \node</span><span> [color=white, scale=100] at (0, 0) {</span><span style="color: #0550AE;">$\mathfrak{Y}$</span><span>};</span></span>
+<span class="giallo-l"><span style="color: #0550AE;">\end</span><span>{tikzpicture}</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #0550AE;">\end</span><span>{document}</span></span></code></pre>
+<p>（当时我不知道怎么想的就画了一个直径 40cm 的巨大 logo。）</p>
+<p>由 Nix 调用 $\TeX$ 和 ImageMagick <a rel="external" href="https://github.com/linyinfeng/blog/blob/b6f1d0dd8fba8d38fc45488f8461580ebaae7d47/nix/favicon.nix">构建</a>生成。</p>
+<h2 id="can-kao"><a class="zola-anchor" href="#can-kao" aria-label="Anchor link for: can-kao">
+    ⚓
+</a>
+参考</h2>
+<ul>
+<li><a rel="external" href="https://tikz.dev/drivers">PGF/TikZ - Supported Formats</a></li>
+<li><a rel="external" href="https://en.wikipedia.org/wiki/Device_independent_file_format">Device independent file format</a></li>
+<li><a rel="external" href="https://dvisvgm.de/Manpage/">dvisvgm Manual</a></li>
+</ul>
+</section>
+    </article>
+
+    
+        
+    <div class="giscus" />
+
+    
+
+                </div>
+            </main>
+        </div>
+        <footer id="footer">
+            
+            
+    <div class="footer-container container">
+        <div id="copyright-container">
+            <small id="copyright">© <a rel="external" href="https://github.com/linyinfeng">Yinfeng</a></small>
+        </div>
+
+        
+            <div id="powered-by-container">
+                <small id="powered-by">Powered by <a rel="external" href="https://www.getzola.org">Zola</a></small>
+            </div>
+        
+    </div>
+
+            
+        </footer>
+    
+</body>
+</html>
