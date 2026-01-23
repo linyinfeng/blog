@@ -3,7 +3,7 @@ title = "分布式系统一致性模型简介"
 description = ""
 date = 2021-01-12 14:06:51+08:00
 updated = 2021-01-12 14:06:51+08:00
-author = "Lin Yinfeng"
+author = "Yinfeng"
 draft = true
 [taxonomies]
 categories = ["笔记"]
