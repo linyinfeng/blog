@@ -19,7 +19,7 @@
 {% macro footer(copyright, powered_by) %}
     <div class="footer-container container">
         <div id="copyright-container">
-            <small id="copyright">{{ copyright }}</small>
+            <small id="copyright">{{ copyright | markdown(inline=true) | safe }}</small>
         </div>
 
         {% if powered_by %}

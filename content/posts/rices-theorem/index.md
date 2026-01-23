@@ -3,7 +3,7 @@ title = "莱斯定理"
 description = ""
 date = 2020-12-13 23:01:20+08:00
 updated = 2021-04-28 16:04:37+08:00
-author = "Lin Yinfeng"
+author = "Yinfeng"
 draft = false
 [taxonomies]
 categories = ["笔记"]

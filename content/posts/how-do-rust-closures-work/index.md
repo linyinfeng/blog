@@ -3,7 +3,7 @@ title = "Rust 闭包笔记"
 description = ""
 date = 2019-03-15 11:06:01+08:00
 updated = 2021-01-15 13:19:42+08:00
-author = "Lin Yinfeng"
+author = "Yinfeng"
 draft = false
 [taxonomies]
 categories = ["笔记"]

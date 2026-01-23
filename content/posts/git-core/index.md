@@ -3,7 +3,7 @@ title = "Git plumbling 命令"
 description = ""
 date = 2021-09-16 23:40:53+08:00
 updated = 2021-09-16 23:40:53+08:00
-author = "Lin Yinfeng"
+author = "Yinfeng"
 draft = true
 [taxonomies]
 categories = ["笔记"]

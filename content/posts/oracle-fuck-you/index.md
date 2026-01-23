@@ -3,7 +3,7 @@ title = "珍爱数据，远离 Oracle Cloud"
 description = ""
 date = 2023-02-24 10:46:01+08:00
 updated = 2023-02-24 10:46:01+08:00
-author = "Lin Yinfeng"
+author = "Yinfeng"
 draft = false
 [taxonomies]
 categories = ["运维日志"]

@@ -3,7 +3,7 @@ title = "不要在 Python 里 exec/eval/import 不可信代码"
 description = ""
 date = 2025-09-27 13:11:10+08:00
 updated = 2025-09-27 13:11:10+08:00
-author = "Lin Yinfeng"
+author = "Yinfeng"
 draft = false
 [taxonomies]
 categories = ["笔记"]

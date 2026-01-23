@@ -1,6 +1,6 @@
 # The URL the site will be built for
 base_url = "https://blog.linyinfeng.com"
-title = "Yinfeng's Blog"
+title = "Yinfeng's"
 #description = "Just a blog"
 
 default_language = "zh-CN"
@@ -38,7 +38,7 @@ global_nav_items = [
 ]
 
 # Footer settings
-copyright = "© Lin Yinfeng"
+copyright = "© [Yinfeng](https://github.com/linyinfeng)"
 powered_by = "Powered by [Zola](https://www.getzola.org)"
 
 index_aside_taxonomies = [

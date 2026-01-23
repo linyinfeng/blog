@@ -3,10 +3,10 @@ title = "土制 Nix S3 Binary Cache"
 description = ""
 date = 2026-01-23 16:21:36+08:00
 updated = 2026-01-23 16:21:36+08:00
-author = "Lin Yinfeng"
+author = "Yinfeng"
 draft = false
 [taxonomies]
-categories = ["笔记"]
+categories = ["笔记", "运维日志"]
 tags = ["Nix", "Nix Cache", "S3"]
 [extra]
 license_image = "license-buttons/l/by-nc-sa/4.0/88x31.png"

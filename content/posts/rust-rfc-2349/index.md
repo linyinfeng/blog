@@ -3,7 +3,7 @@ title = "Rust RFC 2349 - Pin 翻译"
 description = ""
 date = 2018-08-19 07:36:17+08:00
 updated = 2018-08-21 08:52:15+08:00
-author = "Lin Yinfeng"
+author = "Yinfeng"
 draft = false
 [taxonomies]
 categories = ["翻译"]
