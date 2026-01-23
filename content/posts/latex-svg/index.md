@@ -1,6 +1,6 @@
 +++
 title = "如何用 LaTeX 画 SVG 矢量图"
-description = "使用 dvisvgm 生成 SVG 矢量图"
+# description = ""
 date = 2026-01-23 23:32:25+08:00
 updated = 2026-01-23 23:57:39+08:00
 author = "Yinfeng"

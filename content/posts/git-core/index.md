@@ -1,6 +1,6 @@
 +++
 title = "Git plumbling 命令"
-description = "核心 Git 命令的使用教程阅读笔记"
+# description = ""
 date = 2021-09-16 23:40:53+08:00
 updated = 2021-09-16 23:40:53+08:00
 author = "Yinfeng"

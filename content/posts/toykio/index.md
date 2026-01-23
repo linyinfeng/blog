@@ -1,6 +1,6 @@
 +++
 title = "Futures-rs 博文 Toykio 翻译"
-description = "对 Rust futures-rs 博客的博文 Toykio 的中文翻译"
+# description = ""
 date = 2018-08-18 18:24:51+08:00
 updated = 2018-08-21 08:52:15+08:00
 author = "Yinfeng"

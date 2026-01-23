@@ -1,6 +1,6 @@
 +++
 title = "斯科特定理"
-description = "斯科特定理的学习笔记"
+# description = ""
 date = 2021-04-28 16:03:07+08:00
 updated = 2021-04-28 16:03:07+08:00
 author = "Yinfeng"

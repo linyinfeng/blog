@@ -1,6 +1,6 @@
 +++
 title = "土制 Nix S3 Binary Cache"
-description = "介绍一下我自己已经用了三年多的 Nix S3 Binary Cache 的实现方案和思路"
+# description = ""
 date = 2026-01-23 16:21:36+08:00
 updated = 2026-01-24 00:47:43+08:00
 author = "Yinfeng"
@@ -288,7 +288,6 @@ Sig: cache.nixos.org-1:K25JMfP03adJ85zC7xg8qLa2LEjK7edYMZ+JzZyaZTuKYL6EXDoPXFWaM
 ## 结语
 
 通过以上配置，我已经使用了三年多的 Nix S3 binary cache，成本极低（目前每月账单都是 0 USD），且不论是上传还是下载的性能都远超需要中间服务器的方案，如 [attic](https://github.com/zhaofengli/attic)。
-
 
 {{ image(path="s3-cache-flow.svg", alt="一张 S3 binary cache 的流程图", caption="我的 S3 cache 的工作流程图")}}
 

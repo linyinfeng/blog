@@ -1,6 +1,6 @@
 +++
 title = "分布式系统一致性模型简介"
-description = "Sebastian Burckhardt 的 Principles of Eventual Consistency 的阅读笔记"
+# description = ""
 date = 2021-01-12 14:06:51+08:00
 updated = 2021-01-12 14:06:51+08:00
 author = "Yinfeng"

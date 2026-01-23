@@ -1,6 +1,6 @@
 +++
 title = "珍爱数据，远离 Oracle Cloud"
-description = "Oracle Cloud 免费账户无预警禁用的经历"
+# description = ""
 date = 2023-02-24 10:46:01+08:00
 updated = 2023-02-24 10:46:01+08:00
 author = "Yinfeng"

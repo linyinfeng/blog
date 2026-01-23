@@ -250,6 +250,8 @@
     <meta property="og:url" content="{{ current_url | safe }}" />
     {%- if page.description %}
         <meta property="og:description" content="{{ page.description }}" />
+    {%- elif page.summary %}
+        <meta property="og:description" content="{{ page.summary | striptags | truncate(length=160, end='...') }}" />
     {%- else %}
         <meta property="og:description" content="{{ config.description }}" />
     {%- endif %}
