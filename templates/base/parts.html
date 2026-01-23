@@ -123,17 +123,17 @@
     <div class="dates-container">
         <div class="date-container">
             <time datetime={{ page.date}}>{{ page.date | date(format=config.extra.date_format) }}</time>
- 	    {% if verbose %}
+ 	        {% if verbose %}
             <span class="date-label">(created)</span>
             {% endif %}
         </div>
-        {% if verbose and page.updated %}
+        {% if verbose and page.updated and page.updated != page.date %}
         <div class="date-container">
 	    <time datetime={{ page.updated }}>{{ page.updated | date(format=config.extra.date_format) }}</time>
-            <span class="date-label">(last updated)</span>
+            <span class="date-label">(updated)</span>
         </div>
+        {% endif %}
     </div>
-    {% endif %}
 {% endmacro article_datetime %}
 
 {% macro article_summary(page, config) %}
