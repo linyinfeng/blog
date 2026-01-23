@@ -6,7 +6,7 @@
   katex,
   license-buttons,
   normalize-css,
-  favicon-ico,
+  favicon-normal,
 }:
 
 stdenvNoCC.mkDerivation {
@@ -17,9 +17,10 @@ stdenvNoCC.mkDerivation {
   nativeBuildInputs = [ zola ];
 
   buildPhase = ''
-    cp    "${favicon-ico}"   static/favicon.ico
-    cp -r "${katex}"         static/katex
-    cp    "${normalize-css}" static/normalize.css
+    cp "${favicon-normal}/favicon-normal.ico" static/favicon.ico
+    cp "${favicon-normal}/favicon-normal.svg" static/favicon.svg
+    cp -r "${katex}"      static/katex
+    cp "${normalize-css}" static/normalize.css
 
     mkdir static/license-buttons
     cp -r "${license-buttons}"/{l,p} static/license-buttons
@@ -31,7 +32,7 @@ stdenvNoCC.mkDerivation {
       ''
     else
       ''
-        zola build ${extraOptions}
+        zola build ${lib.escapeShellArgs extraOptions}
       ''
   );
 

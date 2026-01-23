@@ -1,0 +1,16 @@
+\documentclass[dvisvgm]{standalone}
+
+\usepackage{tikz}
+\usepackage{amsfonts}
+
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{tikzpicture}[every node/.style={inner sep=0,outer sep=0}]
+    % fill with transparent background
+    \fill [white, fill opacity=0] (-20cm, -20cm) -- (-20cm, 20cm) -- (20cm, 20cm) -- (20cm, -20cm) -- cycle;
+    \node [color=black, scale=100] at (0, 0) {$\mathfrak{Y}$};
+\end{tikzpicture}
+
+\end{document}
