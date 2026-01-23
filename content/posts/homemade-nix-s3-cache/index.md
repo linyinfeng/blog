@@ -76,7 +76,11 @@ nix key generate-secret --key-name "$KEY_NAME"
 cat "$SECRET_KEY_FILE" | nix key convert-secret-to-public
 ```
 
-获得的公钥形如 `cache.li7g.com:YIVuYf8AjnOc5oncjClmtM19RaAZfOKLFFyZUpOrfqM=`（这是我的 cache 的公钥）。
+获得的公钥形如（这是我的 cache 的公钥）：
+
+```plain
+cache.li7g.com:YIVuYf8AjnOc5oncjClmtM19RaAZfOKLFFyZUpOrfqM=
+```
 
 ### 使用
 
