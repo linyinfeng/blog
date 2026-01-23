@@ -10,7 +10,7 @@ let
   tex = texlive.combine { inherit (texlive) scheme-small standalone dvisvgm; };
 in
 stdenvNoCC.mkDerivation {
-  name = "favicon";
+  inherit name;
 
   src = ../favicon;
 

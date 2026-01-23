@@ -7,6 +7,7 @@
   license-buttons,
   normalize-css,
   favicon-normal,
+  default-open-graph-image,
 }:
 
 stdenvNoCC.mkDerivation {
@@ -19,6 +20,7 @@ stdenvNoCC.mkDerivation {
   buildPhase = ''
     cp "${favicon-normal}/favicon-normal.ico" static/favicon.ico
     cp "${favicon-normal}/favicon-normal.svg" static/favicon.svg
+    cp "${default-open-graph-image}"          static/default-open-graph-image.png
     cp -r "${katex}"      static/katex
     cp "${normalize-css}" static/normalize.css
 

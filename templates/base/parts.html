@@ -263,7 +263,7 @@
     {%- if page.extra.thumbnail %}
         <meta property="og:image" content="{{ get_url(path=page.path ~ page.extra.thumbnail, cachebust=true) }}" />
     {%- else %}
-        <meta property="og:image" content="{{ get_url(path=cfg.default_thumbnail, cachebust=true) }}" />
+        <meta property="og:image" content="{{ get_url(path=cfg.default_image, cachebust=true) }}" />
     {%- endif %}
     <meta property="og:site_name" content="{{ config.title }}" />
     <meta property="og:locale" content="{{ lang }}" />
