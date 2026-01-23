@@ -7,14 +7,14 @@
       <generator>Zola</generator>
       <language>zh-CN</language>
       <atom:link href="https://blog.linyinfeng.com/rss.xml" rel="self" type="application/rss+xml"/>
-      <lastBuildDate>Fri, 23 Jan 2026 23:43:23 +0800</lastBuildDate>
+      <lastBuildDate>Fri, 23 Jan 2026 23:53:44 +0800</lastBuildDate>
       <item>
           <title>如何用 LaTeX 画 SVG 矢量图</title>
           <pubDate>Fri, 23 Jan 2026 23:32:25 +0800</pubDate>
           <author>Unknown</author>
           <link>https://blog.linyinfeng.com/posts/latex-svg/</link>
           <guid>https://blog.linyinfeng.com/posts/latex-svg/</guid>
-          <description xml:base="https://blog.linyinfeng.com/posts/latex-svg/">&lt;p&gt;眼尖的你一定已经发现了，本博客的 logo 其实是一个圈里面写了一个 &lt;code&gt;\mathfrak{Y}&lt;&#x2F;code&gt;，其实它是我用 &lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;tikz.dev&#x2F;&quot;&gt;TikZ&lt;&#x2F;a&gt; 画的。
+          <description xml:base="https://blog.linyinfeng.com/posts/latex-svg/">&lt;p&gt;眼尖的你一定已经发现了，本博客的 logo 其实是一个圈里面写了一个 &lt;code&gt;\mathfrak{Y}&lt;&#x2F;code&gt;，其实它是用 &lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;tikz.dev&#x2F;&quot;&gt;TikZ&lt;&#x2F;a&gt; 画的。
 我们可以使用 &lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;dvisvgm.de&#x2F;&quot;&gt;dvisvgm&lt;&#x2F;a&gt; 生成高质量的 SVG 在各种地方使用。&lt;&#x2F;p&gt;</description>
       </item>
       <item>
