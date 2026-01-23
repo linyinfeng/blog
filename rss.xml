@@ -22,8 +22,7 @@
 &lt;li&gt;&lt;strong&gt;几乎 Serverless&lt;&#x2F;strong&gt;：稳定，高性能，无服务器瓶颈&lt;&#x2F;li&gt;
 &lt;li&gt;&lt;strong&gt;极佳兼容性&lt;&#x2F;strong&gt;：使用 &lt;code&gt;nix copy&lt;&#x2F;code&gt; 直接上传&lt;&#x2F;li&gt;
 &lt;&#x2F;ol&gt;
-&lt;p&gt;注：第一点与其他特色并没有冲突。&lt;&#x2F;p&gt;
-&lt;img src=&quot;https:&amp;#x2F;&amp;#x2F;blog.linyinfeng.com&amp;#x2F;posts&amp;#x2F;homemade-nix-s3-cache&amp;#x2F;s3-cache-flow.svg?h=bc0611f630ddd9583a4f&quot; alt=&quot;一张 S3 binary cache 的流程图&quot;&gt;</description>
+&lt;p&gt;注：第一点与其他特色并没有冲突。&lt;&#x2F;p&gt;</description>
       </item>
       <item>
           <title>不要在 Python 里 exec&#x2F;eval&#x2F;import 不可信代码</title>
