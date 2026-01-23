@@ -2,7 +2,7 @@
 title = "如何用 LaTeX 画 SVG 矢量图"
 # description = ""
 date = 2026-01-23 23:32:25+08:00
-updated = 2026-01-23 23:57:39+08:00
+updated = 2026-01-24 01:35:07+08:00
 author = "Yinfeng"
 draft = false
 [taxonomies]
@@ -14,7 +14,7 @@ license_image_alt = "CC BY-NC-SA 4.0"
 license = "This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/)"
 +++
 
-眼尖的你一定已经发现了，本博客的 logo 其实是一个圈里面写了一个 `\mathfrak{Y}`，其实它是用 [TikZ](https://tikz.dev/) 画的。
+眼尖的你一定已经发现了，本博客的 logo 其实是一个圆里面写了一个 `\mathfrak{Y}`，其实它是用 [TikZ](https://tikz.dev/) 画的。
 我们可以使用 [dvisvgm](https://dvisvgm.de/) 生成高质量的 SVG 在各种地方使用。
 
 <!-- more -->
