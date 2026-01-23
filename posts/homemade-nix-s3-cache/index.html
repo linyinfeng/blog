@@ -78,7 +78,8 @@
 
 注：第..." />
         <meta property="og:title" content="土制 Nix S3 Binary Cache | Yinfeng&#x27;s" />
-        <meta property="og:image" content="https://blog.linyinfeng.com/posts/homemade-nix-s3-cache/s3-cache-flow.svg?h=bc0611f630ddd9583a4f" />
+        
+        <meta property="og:image" content="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;processed_images&#x2F;nix-cache-overlay-screenshot.4dc04e8222431aa8.png" />
     <meta property="og:site_name" content="Yinfeng&#x27;s" />
     <meta property="og:locale" content="zh-CN" />
     <meta property="og:type" content="website" />
@@ -287,7 +288,7 @@
         </div>
         
         <div class="date-container">
-	    <time datetime=2026-01-24T00:47:43+08:00>2026-01-24 00:47</time>
+	    <time datetime=2026-01-24T01:57:10+08:00>2026-01-24 01:57</time>
             <span class="date-label">(updated)</span>
         </div>
         
@@ -432,6 +433,11 @@ nix-cache-overlay</h3>
 <li>把所有上游尝试完毕都 404 后，对请求做认证，成功后把请求签上 SigV4 签名，转发到 S3 存储服务。</li>
 </ol>
 <p>认证部分直接忽略签名，把客户端提供的 <code>AWS_ACCESS_KEY_ID</code> 当成一个 token 来使用。因此不容易在中间代理过程中出错，代价是降低了一些安全性。</p>
+<p>由于 <code>nix-cache-overlay</code> 直接转发请求，因此可以直接支持 S3 multipart 上传：</p>
+<figure>
+    <img src="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;homemade-nix-s3-cache&#x2F;nix-cache-overlay-screenshot.png?h=4ab1ecf5d3ab963738c0" alt="一张 Journald 的截图，内容是 nix-cache-overlay 的日志" />
+    <figcaption>一张含有 multipart 上传的日志截图</figcaption>
+</figure>
 <p>使用方法就是首先起一个 nix-cache-overlay 服务（添加 overlay 和 NixOS module 后）：</p>
 <pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="nix"><span class="giallo-l"><span>{</span></span>
 <span class="giallo-l"><span style="color: #0550AE;">  services</span><span>.</span><span style="color: #0550AE;">nix-cache-overlay</span><span style="color: #CF222E;"> =</span><span> {</span></span>
