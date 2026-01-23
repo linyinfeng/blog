@@ -2,7 +2,7 @@
 title = "如何用 LaTeX 画 SVG 矢量图"
 description = ""
 date = 2026-01-23 23:32:25+08:00
-updated = 2026-01-23 23:53:44+08:00
+updated = 2026-01-23 23:55:56+08:00
 author = "Yinfeng"
 draft = false
 [taxonomies]
@@ -77,7 +77,7 @@ license = "This work is licensed under a [Creative Commons Attribution-NonCommer
 
    {{ image(path="with-woff-font.svg", alt="一张可以在大多数现代浏览器中正确显示的 SVG 图片", caption="使用 WOFF 字体的本站 logo", width="200")}}
 
-   但是在非浏览器中，比如一些图片查看器中，可能仍然无法正确显示字体。
+   但是在非浏览器，比如一些图片查看器中，可能仍然无法正确显示字体。
 
 2. 或者，我们可以让 `dvisvgm` 将字体转换为路径，这样就彻底不依赖字体支持了。使用 `--no-fonts` 选项即可。
 
