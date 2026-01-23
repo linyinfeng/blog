@@ -7,6 +7,7 @@ default_language = "zh-CN"
 
 # Generate RSS
 generate_feeds = true
+feed_filenames = ["atom.xml", "rss.xml"]
 
 compile_sass = true
 

@@ -234,7 +234,7 @@
 {% endmacro giscus_placeholder %}
 
 {% macro katex(render_options) %}
-    <link rel="stylesheet" href="{{ get_url(path="katex/katex.min.css", cachebust=true) }}">
+    <link rel="stylesheet" href="{{ get_url(path="katex/katex.min.css", cachebust=true) }}" />
     <script defer src="{{ get_url(path="katex/katex.min.js", cachebust=true) }}"></script>
     <script defer src="{{ get_url(path="katex/contrib/mathtex-script-type.min.js", cachebust=true) }}"></script>
     <script defer src="{{ get_url(path="katex/contrib/copy-tex.min.js", cachebust=true) }}"></script>

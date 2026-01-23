@@ -8,8 +8,8 @@
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
         {% endblock meta %}
-        <link rel=stylesheet type="text/css" href={{ get_url(path="normalize.css", cachebust=true) }}>
-        <link rel=stylesheet type="text/css" href={{ get_url(path="style.css", cachebust=true) }}>
+        <link rel=stylesheet type="text/css" href={{ get_url(path="normalize.css", cachebust=true) }} />
+        <link rel=stylesheet type="text/css" href={{ get_url(path="style.css", cachebust=true) }} />
         <script defer src={{ get_url(path="layout-helper.js", cachebust=true) }}></script>
         {% if config.extra.google_tag_manager.enable %}
             {{ parts::google_tag_manager(code=config.extra.google_tag_manager.code) }}
@@ -25,10 +25,13 @@
             {{  parts::giscus(cfg=config.extra.giscus) }}
         {% endif %}
         {% block atom %}
-            <link rel="alternate" type="application/atom+xml" title="Atom" href="{{ get_url(path="/atom.xml") }}">
+            <link rel="alternate" type="application/atom+xml" title="Atom" href="{{ get_url(path="atom.xml") }}" />
         {% endblock atom %}
+        {% block rss %}
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="{{ get_url(path="rss.xml") }}" />
+        {% endblock rss %}
         {% if config.extra.mastodon.enable %}
-            <link rel="me" href="{{ config.extra.mastodon.link }}">
+            <link rel="me" href="{{ config.extra.mastodon.link }}" />
         {% endif %}
     {% endblock head %}
 </head>
