@@ -192,7 +192,7 @@
         </div>
         
         <div class="date-container">
-	    <time datetime=2026-01-23T23:32:25+08:00>2026-01-23 23:32</time>
+	    <time datetime=2026-01-23T23:43:23+08:00>2026-01-23 23:43</time>
             <span class="date-label">(last updated)</span>
         </div>
     </div>
@@ -261,7 +261,7 @@ $\TeX$ 的输出机制</h2>
 <p>解决方法有多种：</p>
 <ol>
 <li>
-<p>我们可以使用现代的 WOFF/WOFF2 字体格式，将字体嵌入 SVG。使用 <code>--font-format=woff</code> 选项。</p>
+<p>我们可以使用现代的 WOFF/WOFF2 字体格式，将字体嵌入 SVG。使用 <code>--font-format=woff/woff2</code> 选项。（其实 dvisvgm 还支持嵌入 TTF，但这听起来很不浏览器。）</p>
 <pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #953800;">dvisvgm</span><span style="color: #0550AE;"> --font-format=woff2</span><span style="color: #0A3069;"> image.dvi</span></span></code></pre>
 <p>这样生成的 SVG 可以在大多数现代浏览器中正确显示。</p>
 <figure>
