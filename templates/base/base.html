@@ -8,9 +8,9 @@
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
         {% endblock meta %}
-        <link rel=stylesheet type="text/css" href={{ get_url(path="normalize.css", trailing_slash=false) }}>
-        <link rel=stylesheet type="text/css" href={{ get_url(path="style.css", trailing_slash=false) }}>
-        <script defer src={{ get_url(path="layout-helper.js", trailing_slash=false) }}></script>
+        <link rel=stylesheet type="text/css" href={{ get_url(path="normalize.css", cachebust=true) }}>
+        <link rel=stylesheet type="text/css" href={{ get_url(path="style.css", cachebust=true) }}>
+        <script defer src={{ get_url(path="layout-helper.js", cachebust=true) }}></script>
         {% if config.extra.google_tag_manager.enable %}
             {{ parts::google_tag_manager(code=config.extra.google_tag_manager.code) }}
         {% endif %}
@@ -25,7 +25,7 @@
             {{  parts::giscus(cfg=config.extra.giscus) }}
         {% endif %}
         {% block atom %}
-            <link rel="alternate" type="application/atom+xml" title="Atom" href="{{ get_url(path="atom.xml", trailing_slash=false) }}">
+            <link rel="alternate" type="application/atom+xml" title="Atom" href="{{ get_url(path="/atom.xml") }}">
         {% endblock atom %}
         {% if config.extra.mastodon.enable %}
             <link rel="me" href="{{ config.extra.mastodon.link }}">

@@ -3,7 +3,7 @@
   stdenvNoCC,
   python3,
   makeFontsConf,
-  wrapGAppsHook,
+  wrapGAppsHook3,
   gobject-introspection,
   gtk3,
 }:
@@ -23,7 +23,7 @@ stdenvNoCC.mkDerivation rec {
 
   nativeBuildInputs = [
     python
-    wrapGAppsHook
+    wrapGAppsHook3
   ];
 
   buildInputs = [

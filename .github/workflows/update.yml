@@ -1,7 +1,6 @@
 name: "Automatic update"
 on:
   schedule:
-    # every day 00:00 +08:00
     - cron: "0 16 * * 5"
   workflow_dispatch:
 

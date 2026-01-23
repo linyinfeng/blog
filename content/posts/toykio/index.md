@@ -211,7 +211,7 @@ loop {
 
 这就是今天的所有内容！你可以在 [github][toykio-github] 和 [crates.io][toykio-crates-io] 上找到 toykio。Hacking 快乐！
 
-[toykio]: https://rust-lang-nursery.github.io/futures-rs/blog/2018/08/17/toykio.html
+[toykio]: https://rust-lang.github.io/futures-rs/blog/2018/08/17/toykio.html
 [toykio-github]: https://github.com/polachok/toykio/tree/futures-0.3
 [toykio-crates-io]: https://crates.io/crates/toykio
 [polachok]: https://github.com/polachok
