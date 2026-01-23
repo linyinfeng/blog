@@ -267,7 +267,7 @@ FileHash: sha256:0jra6lgdxfkivpxgr8vlfp7ccypy7a6g48jma9v2vps50xy13hn7
 FileSize: 57600
 NarHash: sha256:1m4yy5hgxm1445f005fdqdm6ky6h2pdwy80kck9c4pvy9n6vbabx
 NarSize: 274568
-References: i3zw7h6pg3n9r5i63iyqxrapa70i4v5w-hello-2.12.2 j193mfi0f921y0kfs8vjc1znnr45ispv-glibc-2.40-66
+References: i3zw7h6pg3n9r5i63iyqxrapa70i4v5w-hello-2.12.2 j193mfi0f921y0kfs8vjc1znnr45isp0-glibc-2.40-66
 Deriver: bkhfq83jwis7h9wak3h0kz0cv1r7xfnq-hello-2.12.2.drv
 Sig: cache.nixos.org-1:K25JMfP03adJ85zC7xg8qLa2LEjK7edYMZ+JzZyaZTuKYL6EXDoPXFWaMnw/1Dlmz5/vvjILYOonkyG/fwMPDg==
 ```
@@ -309,3 +309,23 @@ Sig: cache.nixos.org-1:K25JMfP03adJ85zC7xg8qLa2LEjK7edYMZ+JzZyaZTuKYL6EXDoPXFWaM
 我的 [dotfiles](https://github.com/linyinfeng/dotfiles) 仓库的一个分支 `nixos-tested-fsn0` 就会指向构建出这个 closure 的 revision。
 每天凌晨，`fsn0` 就会自动更新到 `github:linyinfeng/dotfiles/nixos-tested-fsn0`，并按需重启。
 配合 `flake.lock` 的自动更新，各种监控，报警，我能用最少的精力维护我的服务器（大部分时候不需要投入任何精力）。
+
+## 一件趣事
+
+我的博客也是用 Nix 构建的，我的 CI 会检查博客文件是否自包含，即不依赖 `/nix/store`。
+
+```yaml
+- name: Check self-contained
+  run: |
+    [ $(nix path-info --recursive ./result | wc -l) == "1" ]
+```
+
+写完这篇文章后发现这个检查失败了，原因是文中包含了一个 `narinfo` 文件，其中 `References:` 中有 glibc 的 store path：
+
+```
+j193mfi0f921y0kfs8vjc1znnr45isp0-glibc-2.40-66
+```
+
+这是因为 Nix 检查运行时依赖的方法是。只要产物中包含某个编译期依赖的 hash，比如此处的 `j193mfi0f921y0kfs8vjc1znnr45isp0`，这个编译期依赖就会被认为是一个运行时依赖。
+
+解决方法就是把 hash 的最后一位手动修改为 `0` 了。
