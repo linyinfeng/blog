@@ -1,6 +1,4 @@
 +++
-title = "Posts"
-description = ""
 #weight = 10
 sort_by = "date"
 #template = "section.html"

@@ -1,6 +1,6 @@
 +++
 title = "Rust 闭包笔记"
-description = ""
+description = "Rust 闭包的工作原理笔记"
 date = 2019-03-15 11:06:01+08:00
 updated = 2021-01-15 13:19:42+08:00
 author = "Yinfeng"

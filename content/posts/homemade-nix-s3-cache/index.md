@@ -1,6 +1,6 @@
 +++
 title = "土制 Nix S3 Binary Cache"
-description = ""
+description = "介绍一下我自己已经用了三年多的 Nix S3 Binary Cache 的实现方案和思路"
 date = 2026-01-23 16:21:36+08:00
 updated = 2026-01-23 23:32:25+08:00
 author = "Yinfeng"

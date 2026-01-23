@@ -1,6 +1,6 @@
 +++
 title = "Rust RFC 2349 - Pin 翻译"
-description = ""
+description = "对 Rust RFC 2349 - Pin 的中文翻译"
 date = 2018-08-19 07:36:17+08:00
 updated = 2018-08-21 08:52:15+08:00
 author = "Yinfeng"

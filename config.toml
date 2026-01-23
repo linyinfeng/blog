@@ -1,7 +1,7 @@
 # The URL the site will be built for
 base_url = "https://blog.linyinfeng.com"
 title = "Yinfeng's"
-#description = "Just a blog"
+description = "Yinfeng's Blog"
 
 default_language = "zh-CN"
 
@@ -89,3 +89,6 @@ theme="light"
 [extra.mastodon]
 enable = true
 link = "https://mastodon.li7g.com/@yinfeng"
+
+[extra.open_graph]
+enable = true

@@ -24,6 +24,9 @@
         {% if config.extra.giscus.enable %}
             {{  parts::giscus(cfg=config.extra.giscus) }}
         {% endif %}
+        {% if config.extra.open_graph.enable %}
+            {{  parts::open_graph(cfg=config.extra.open_graph) }}
+        {% endif %}
         {% block atom %}
             <link rel="alternate" type="application/atom+xml" title="Atom" href="{{ get_url(path="atom.xml") }}" />
         {% endblock atom %}

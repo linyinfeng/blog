@@ -1,6 +1,6 @@
 +++
 title = "不要在 Python 里 exec/eval/import 不可信代码"
-description = ""
+description = "在同一个 Python 解释器中为部分代码做沙箱是不现实的"
 date = 2025-09-27 13:11:10+08:00
 updated = 2025-09-27 13:11:10+08:00
 author = "Yinfeng"

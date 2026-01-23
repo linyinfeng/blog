@@ -1,6 +1,6 @@
 +++
 title = "莱斯定理"
-description = ""
+description = "莱斯定理的学习笔记"
 date = 2020-12-13 23:01:20+08:00
 updated = 2021-04-28 16:04:37+08:00
 author = "Yinfeng"
