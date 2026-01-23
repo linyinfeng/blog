@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang=zh-CN>
+<head>
+    
+        <title>
+    土制 Nix S3 Binary Cache -
+    Lin Yinfeng
+</title>
+        
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel=stylesheet type="text/css" href=https://blog.linyinfeng.com/normalize.css?h=580818700724d42d7fcc />
+        <link rel=stylesheet type="text/css" href=https://blog.linyinfeng.com/style.css?h=ad13708a8c32b996160d />
+        <script defer src=https://blog.linyinfeng.com/layout-helper.js?h=f433ff057abd07e8dc0b></script>
+        
+            
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-K74P2G7');</script>
+    <!-- End Google Tag Manager -->
+
+        
+        
+            
+                
+    <link rel="stylesheet" href="https://blog.linyinfeng.com/katex/katex.min.css?h=e189fd0238811989c364" />
+    <script defer src="https://blog.linyinfeng.com/katex/katex.min.js?h=6b909443e6c8f6e5d24c"></script>
+    <script defer src="https://blog.linyinfeng.com/katex/contrib/mathtex-script-type.min.js?h=0799b28b8bc80621fc86"></script>
+    <script defer src="https://blog.linyinfeng.com/katex/contrib/copy-tex.min.js?h=07770af90943a1de1a10"></script>
+    <script defer src="https://blog.linyinfeng.com/katex/contrib/auto-render.min.js?h=bb53eb953394531aae36"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+    macros: {
+        "\\set": "\\left\\{ #1 \\right\\}"
+    },
+    delimiters: [
+        {left: "$$",  right: "$$",  display: true },
+        {left: "$",   right: "$",   display: false},
+        {left: "\\(", right: "\\)", display: false},
+        {left: "\\[", right: "\\]", display: true }
+    ]
+}
+ );
+        });
+    </script>
+
+            
+        
+        
+            
+    <script src="https://giscus.app/client.js"
+            data-repo="linyinfeng&#x2F;blog"
+            data-repo-id="MDEwOlJlcG9zaXRvcnkxNDMxMjU5NTA="
+            data-category-id="MDE4OkRpc2N1c3Npb25DYXRlZ29yeTMyOTkyOTcy"
+            data-mapping="pathname"
+            data-reactions-enabled="1"
+            data-theme="light"
+            crossorigin="anonymous"
+            async>
+    </script>
+
+        
+        
+            <link rel="alternate" type="application/atom+xml" title="Atom" href="https://blog.linyinfeng.com/atom.xml" />
+        
+        
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.linyinfeng.com/rss.xml" />
+        
+        
+            <link rel="me" href="https:&#x2F;&#x2F;mastodon.li7g.com&#x2F;@yinfeng" />
+        
+    
+</head>
+<body>
+    
+        
+        <header id="header">
+            
+            
+    <div class="header-container container">
+        <h1 id="blog-title" class="title">
+            <a href=https:&#x2F;&#x2F;blog.linyinfeng.com>
+                <img src="https://blog.linyinfeng.com/favicon.ico?h=a550b8b505d34225d40d" alt="Lin Yinfeng" />
+            </a>
+        </h1>
+        <nav id="global-nav"><span class="global-nav-item-container"><a class="global-nav-item"
+                    href=https://blog.linyinfeng.com
+                >Home</a></span><span class="global-nav-item-container"><a class="global-nav-item"
+                    href=https://blog.linyinfeng.com/archive
+                >Archive</a></span><span class="global-nav-item-container"><a class="global-nav-item"
+                    href=https://blog.linyinfeng.com/links
+                >Links</a></span><span class="global-nav-item-container"><a class="global-nav-item"
+                    href=https:&#x2F;&#x2F;github.com&#x2F;linyinfeng&#x2F;blog
+                >Source</a></span></nav>
+    </div>
+
+            
+        </header>
+        <div id="main-aside-container">
+            
+    
+        
+                <aside id="aside">
+                    <div id="aside-container">
+                        
+    
+    <div class="toc-container container">
+        <h1 class="title toc-title">Table of Contents</h1>
+        
+    
+        <ul class="toc-parent">
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;homemade-nix-s3-cache&#x2F;#zui-jian-dan-de-nix-s3-binary-cache>最简单的 Nix S3 Binary Cache</a>
+                    
+    
+        <ul class="toc-parent">
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;homemade-nix-s3-cache&#x2F;#qian-ming>签名</a>
+                    
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;homemade-nix-s3-cache&#x2F;#shi-yong>使用</a>
+                    
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;homemade-nix-s3-cache&#x2F;#wo-de-pei-zhi>我的配置</a>
+                    
+    
+
+                </li>
+                
+        </ul>
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;homemade-nix-s3-cache&#x2F;#hu-lue-shang-you-yi-you-nei-rong>忽略上游已有内容</a>
+                    
+    
+        <ul class="toc-parent">
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;homemade-nix-s3-cache&#x2F;#nix-copy-de-xing-wei>nix copy 的行为</a>
+                    
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;homemade-nix-s3-cache&#x2F;#nix-cache-overlay>nix-cache-overlay</a>
+                    
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;homemade-nix-s3-cache&#x2F;#wo-de-pei-zhi-1>我的配置</a>
+                    
+    
+
+                </li>
+                
+        </ul>
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;homemade-nix-s3-cache&#x2F;#gc>GC</a>
+                    
+    
+        <ul class="toc-parent">
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;homemade-nix-s3-cache&#x2F;#guan-li-gc-roots>管理 GC roots</a>
+                    
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;homemade-nix-s3-cache&#x2F;#gen-ju-gc-roots-jin-xing-gc>根据 GC roots 进行 GC</a>
+                    
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;homemade-nix-s3-cache&#x2F;#wo-de-pei-zhi-2>我的配置</a>
+                    
+    
+
+                </li>
+                
+        </ul>
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;homemade-nix-s3-cache&#x2F;#jie-yu>结语</a>
+                    
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;homemade-nix-s3-cache&#x2F;#yi-jian-qu-shi>一件趣事</a>
+                    
+    
+
+                </li>
+                
+        </ul>
+    
+
+    </div>
+
+
+                    </div>
+                </aside>
+            
+    
+
+            <main id="main">
+                <div id="main-container">
+                    
+    
+                    
+    
+    <article class="article-container container">
+        
+    <h1 class="title article-title">
+        <a class="article-title-link" href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;homemade-nix-s3-cache&#x2F;">
+            
+    <span class="draft-indicator">
+        
+    </span>
+    <span>
+        土制 Nix S3 Binary Cache
+    </span>
+
+        </a>
+    </h1>
+
+        
+    <div class="dates-container">
+        <div class="date-container">
+            <time datetime=2026-01-23T16:21:36+08:00>2026-01-23 16:21</time>
+ 	    
+            <span class="date-label">(created)</span>
+            
+        </div>
+        
+        <div class="date-container">
+	    <time datetime=2026-01-23T16:21:36+08:00>2026-01-23 16:21</time>
+            <span class="date-label">(last updated)</span>
+        </div>
+    </div>
+    
+
+        
+    <div class="article-taxonomies"><span class="article-taxonomy"><a class="article-taxonomy-name" href="https://blog.linyinfeng.com/tags">
+                Tags</a><span class="article-terms"><a class="article-term-name" href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;tags&#x2F;nix&#x2F;">Nix</a><a class="article-term-name" href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;tags&#x2F;nix-cache&#x2F;">Nix Cache</a><a class="article-term-name" href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;tags&#x2F;s3&#x2F;">S3</a></span></span><span class="article-taxonomy"><a class="article-taxonomy-name" href="https://blog.linyinfeng.com/categories">
+                Categories</a><span class="article-terms"><a class="article-term-name" href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;categories&#x2F;bi-ji&#x2F;">笔记</a></span></span></div>
+
+        
+    
+        <section class="article-license">
+            
+                <div class="license-image">
+                    <img src="https://blog.linyinfeng.com/license-buttons/l/by-nc-sa/4.0/88x31.png?h=f46d7b11bac0d593eab6" alt="CC BY-NC-SA 4.0" />
+                </div>
+            
+            <small class="license-text">This work is licensed under a <a rel="external" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a></small>
+        </section>
+    
+
+        <section class="article-content"><p>介绍一下我自己已经用了三年多的 Nix S3 Binary Cache 的实现方案和思路。</p>
+<p>特色：</p>
+<ol>
+<li><strong>土制灵车</strong></li>
+<li><strong>极低成本</strong>：使用 Cloudflare R2 等有免费额度的 S3 服务，每月 0 USD 免费用</li>
+<li><strong>几乎 Serverless</strong>：稳定，高性能，无服务器瓶颈</li>
+<li><strong>极佳兼容性</strong>：使用 <code>nix copy</code> 直接上传</li>
+</ol>
+<p>注：第一点与其他特色并没有冲突。</p>
+<img src="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;homemade-nix-s3-cache&#x2F;s3-cache-flow.svg?h=bc0611f630ddd9583a4f" alt="一张 S3 binary cache 的流程图">
+<span id="continue-reading"></span>
+<p>本文所有命令都使用实验性的 Nix CLI v3，需开启 <code>experimental-features = nix-command flakes</code>。</p>
+<h2 id="zui-jian-dan-de-nix-s3-binary-cache"><a class="zola-anchor" href="#zui-jian-dan-de-nix-s3-binary-cache" aria-label="Anchor link for: zui-jian-dan-de-nix-s3-binary-cache">
+    ⚓
+</a>
+最简单的 Nix S3 Binary Cache</h2>
+<p>在 Nix 中，S3 binary cache 也是一种 store。它的 store URL 形如 <code>s3://BUCKET_NAME</code>。文档见 <a rel="external" href="https://nix.dev/manual/nix/2.33/store/types/s3-binary-cache-store">Nix Manual - S3 Binary Cache Store</a>。</p>
+<p>如果不是 AWS S3，而是其他兼容 S3 API 的存储服务，比如 Cloudflare R2、Backblaze B2、以及 MinIO 等，可以在 store URL 中通过 query 字符串指定 endpoint：<code>s3://BUCKET_NAME?endpoint=ENDPOINT_URL</code>。</p>
+<p>Nix 使用官方的 AWS SDK 来访问 S3 存储服务，因此它支持的认证方式和 AWS SDK 支持的认证方式是一致的。常见的认证方式包括环境变量 <code>AWS_ACCESS_KEY_ID</code> 和 <code>AWS_SECRET_ACCESS_KEY</code>，以及使用 <code>~/.aws/credentials</code> 文件等。</p>
+<p>因此，最简单的 Nix S3 binary cache 的使用方式，就是准备一个 S3 兼容的 bucket，然后设置好认证信息，然后直接使用 <code>nix copy</code>：</p>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #CF222E;">export</span><span> AWS_ACCESS_KEY_ID</span><span style="color: #CF222E;">=</span><span style="color: #0A3069;">&quot;...&quot;</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">export</span><span> AWS_SECRET_ACCESS_KEY</span><span style="color: #CF222E;">=</span><span style="color: #0A3069;">&quot;...&quot;</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">export</span><span> AWS_EC2_METADATA_DISABLED</span><span style="color: #CF222E;">=</span><span>true</span><span style="color: #6E7781;"> # 如果你用的不是 AWS</span></span>
+<span class="giallo-l"><span style="color: #953800;">nix</span><span style="color: #0A3069;"> copy &quot;nixpkgs#hello&quot;</span><span style="color: #0550AE;"> --to</span><span style="color: #0A3069;"> &quot;s3://</span><span>$BUCKET_NAME</span><span style="color: #0A3069;">?endpoint=</span><span>$ENDPOINT_URL</span><span style="color: #0A3069;">&quot;</span></span></code></pre>
+<p>这样就把 <code>nixpkgs#hello</code> 上传到 bucket 中了。</p>
+<h3 id="qian-ming"><a class="zola-anchor" href="#qian-ming" aria-label="Anchor link for: qian-ming">
+    ⚓
+</a>
+签名</h3>
+<p>这样的 binary cache 无法正常使用，因为我们没有对上传到的内容做签名。要对 store path 做签名，可以使用 <code>nix store sign</code> 命令：</p>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #953800;">nix</span><span style="color: #0A3069;"> store sign &quot;nixpkgs#hello&quot;</span><span style="color: #0550AE;"> --recursive --key-file</span><span style="color: #0A3069;"> &quot;</span><span>$SECRET_KEY_FILE</span><span style="color: #0A3069;">&quot;</span></span>
+<span class="giallo-l"><span style="color: #6E7781;"># 本地签名后再上传到 binary cache</span></span>
+<span class="giallo-l"><span style="color: #953800;">nix</span><span style="color: #0A3069;"> copy &quot;nixpkgs#hello&quot;</span><span style="color: #0550AE;"> --to</span><span style="color: #0A3069;"> &quot;s3://</span><span>$BUCKET_NAME</span><span style="color: #0A3069;">?endpoint=</span><span>$ENDPOINT_URL</span><span style="color: #0A3069;">&quot;</span></span></code></pre>
+<p>这样就会对 <code>nixpkgs#hello</code> 以及它的所有依赖做签名。签名信息会存储在本地的 Nix store 中。</p>
+<p>要生成签名密钥，可以使用 <code>nix key generate-secret</code> 命令：</p>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #953800;">nix</span><span style="color: #0A3069;"> key generate-secret</span><span style="color: #0550AE;"> --key-name</span><span style="color: #0A3069;"> &quot;</span><span>$KEY_NAME</span><span style="color: #0A3069;">&quot;</span></span></code></pre>
+<p>该命令会生成一个私钥，输出到 stdout，将它妥善保管。</p>
+<p>生成私钥后，使用 <code>nix key convert-secret-to-public</code> 命令导出公钥：</p>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #953800;">cat</span><span style="color: #0A3069;"> &quot;</span><span>$SECRET_KEY_FILE</span><span style="color: #0A3069;">&quot;</span><span style="color: #CF222E;"> |</span><span style="color: #953800;"> nix</span><span style="color: #0A3069;"> key convert-secret-to-public</span></span></code></pre>
+<p>获得的公钥形如（这是我的 cache 的公钥）：</p>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="plain"><span class="giallo-l"><span>cache.li7g.com:YIVuYf8AjnOc5oncjClmtM19RaAZfOKLFFyZUpOrfqM=</span></span></code></pre><h3 id="shi-yong"><a class="zola-anchor" href="#shi-yong" aria-label="Anchor link for: shi-yong">
+    ⚓
+</a>
+使用</h3>
+<p>要使用这个 binary cache，为 Nix 配置 binary cache 的 HTTP URL 和公钥。分别位于 <code>nix.conf</code> 的 <code>substituters</code> 和 <code>trusted-public-keys</code> 选项中。别忘了使得 S3 bucket 能通过 HTTP URL 被公开访问。</p>
+<h3 id="wo-de-pei-zhi"><a class="zola-anchor" href="#wo-de-pei-zhi" aria-label="Anchor link for: wo-de-pei-zhi">
+    ⚓
+</a>
+我的配置</h3>
+<p>我使用公开的 Cloudflare R2 作为存储，设置了自定义域名 <code>cache.li7g.com</code>，并配置好写入使用的 token：</p>
+<p><a rel="external" href="https://github.com/linyinfeng/dotfiles/blob/3e0be19e10fbbcf08bab95583f6e3ae61cdf4af9/terraform/cloudflare.tf#L427-L472">https://github.com/linyinfeng/dotfiles/blob/3e0be19e10fbbcf08bab95583f6e3ae61cdf4af9/terraform/cloudflare.tf#L427-L472</a></p>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="terraform"><span class="giallo-l"><span style="color: #953800;">resource</span><span style="color: #0550AE;"> &quot;cloudflare_r2_bucket&quot; &quot;cache&quot;</span><span> {</span></span>
+<span class="giallo-l"><span>  account_id</span><span style="color: #CF222E;">    =</span><span> local</span><span style="color: #CF222E;">.</span><span>cloudflare_main_account_id</span></span>
+<span class="giallo-l"><span>  name</span><span style="color: #CF222E;">          =</span><span style="color: #0A3069;"> &quot;cache-li7g-com&quot;</span></span>
+<span class="giallo-l"><span>  location</span><span style="color: #CF222E;">      =</span><span style="color: #0A3069;"> &quot;APAC&quot;</span><span style="color: #6E7781;"> # Asia Pacific</span></span>
+<span class="giallo-l"><span>  storage_class</span><span style="color: #CF222E;"> =</span><span style="color: #0A3069;"> &quot;Standard&quot;</span></span>
+<span class="giallo-l"><span>}</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #953800;">resource</span><span style="color: #0550AE;"> &quot;cloudflare_r2_custom_domain&quot; &quot;cache&quot;</span><span> {</span></span>
+<span class="giallo-l"><span>  account_id</span><span style="color: #CF222E;">  =</span><span> local</span><span style="color: #CF222E;">.</span><span>cloudflare_main_account_id</span></span>
+<span class="giallo-l"><span>  enabled</span><span style="color: #CF222E;">     =</span><span style="color: #0550AE;"> true</span></span>
+<span class="giallo-l"><span>  bucket_name</span><span style="color: #CF222E;"> =</span><span> cloudflare_r2_bucket</span><span style="color: #CF222E;">.</span><span>cache</span><span style="color: #CF222E;">.</span><span>name</span></span>
+<span class="giallo-l"><span>  domain</span><span style="color: #CF222E;">      =</span><span style="color: #0A3069;"> &quot;cache.</span><span style="color: #CF222E;">${</span><span>cloudflare_zone</span><span style="color: #CF222E;">.</span><span>com_li7g</span><span style="color: #CF222E;">.</span><span>name</span><span style="color: #CF222E;">}</span><span style="color: #0A3069;">&quot;</span></span>
+<span class="giallo-l"><span>  zone_id</span><span style="color: #CF222E;">     =</span><span> cloudflare_zone</span><span style="color: #CF222E;">.</span><span>com_li7g</span><span style="color: #CF222E;">.</span><span>id</span></span>
+<span class="giallo-l"><span>}</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #953800;">resource</span><span style="color: #0550AE;"> &quot;cloudflare_api_token&quot; &quot;cache&quot;</span><span> {</span></span>
+<span class="giallo-l"><span>  name</span><span style="color: #CF222E;">   =</span><span style="color: #0A3069;"> &quot;cache&quot;</span></span>
+<span class="giallo-l"><span>  status</span><span style="color: #CF222E;"> =</span><span style="color: #0A3069;"> &quot;active&quot;</span></span>
+<span class="giallo-l"><span>  policies</span><span style="color: #CF222E;"> =</span><span> [{</span></span>
+<span class="giallo-l"><span>    effect</span><span style="color: #CF222E;"> =</span><span style="color: #0A3069;"> &quot;allow&quot;</span></span>
+<span class="giallo-l"><span>    permission_groups</span><span style="color: #CF222E;"> =</span><span> [</span></span>
+<span class="giallo-l"><span>      { id</span><span style="color: #CF222E;"> =</span><span> local.permissions_groups_map[</span><span style="color: #0A3069;">&quot;Workers R2 Storage Bucket Item Write&quot;</span><span>] }</span></span>
+<span class="giallo-l"><span>    ]</span></span>
+<span class="giallo-l"><span>    resources</span><span style="color: #CF222E;"> =</span><span style="color: #0550AE;"> jsonencode</span><span>({</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">      &quot;com.cloudflare.edge.r2.bucket.</span><span style="color: #CF222E;">${</span><span>local</span><span style="color: #CF222E;">.</span><span>cloudflare_main_account_id</span><span style="color: #CF222E;">}</span><span style="color: #0A3069;">_default_</span><span style="color: #CF222E;">${</span><span>cloudflare_r2_bucket</span><span style="color: #CF222E;">.</span><span>cache</span><span style="color: #CF222E;">.</span><span>name</span><span style="color: #CF222E;">}</span><span style="color: #0A3069;">&quot;</span><span style="color: #CF222E;"> :</span><span style="color: #0A3069;"> &quot;*&quot;</span></span>
+<span class="giallo-l"><span>    })</span></span>
+<span class="giallo-l"><span>  }]</span></span>
+<span class="giallo-l"><span>}</span></span></code></pre>
+<p>使用时，只需要做如下设置：</p>
+<p><a rel="external" href="https://github.com/linyinfeng/dotfiles/blob/3e0be19e10fbbcf08bab95583f6e3ae61cdf4af9/nixos/profiles/nix/settings/default.nix#L45-L52">https://github.com/linyinfeng/dotfiles/blob/3e0be19e10fbbcf08bab95583f6e3ae61cdf4af9/nixos/profiles/nix/settings/default.nix#L45-L52</a></p>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="nix"><span class="giallo-l"><span>{</span></span>
+<span class="giallo-l"><span style="color: #0550AE;">    nix</span><span>.</span><span style="color: #0550AE;">settings</span><span style="color: #CF222E;"> =</span><span> {</span></span>
+<span class="giallo-l"><span style="color: #0550AE;">        substituters</span><span style="color: #CF222E;"> =</span><span> [</span><span style="color: #0A3069;"> &quot;https://cache.li7g.com&quot;</span><span> ];</span></span>
+<span class="giallo-l"><span style="color: #0550AE;">        trusted-public-keys</span><span style="color: #CF222E;"> =</span><span> [</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">            &quot;cache.li7g.com:YIVuYf8AjnOc5oncjClmtM19RaAZfOKLFFyZUpOrfqM=&quot;</span></span>
+<span class="giallo-l"><span>        ];</span></span>
+<span class="giallo-l"><span>    };</span></span>
+<span class="giallo-l"><span>}</span></span></code></pre><h2 id="hu-lue-shang-you-yi-you-nei-rong"><a class="zola-anchor" href="#hu-lue-shang-you-yi-you-nei-rong" aria-label="Anchor link for: hu-lue-shang-you-yi-you-nei-rong">
+    ⚓
+</a>
+忽略上游已有内容</h2>
+<p><code>nix copy</code> 命令上传时，并不会考虑 <a rel="external" href="https://cache.nixos.org">cache.nixos.org</a> 中是否已经有了相同内容的问题。</p>
+<p>这意味着我们要花钱存完全没必要存储的内容，无法接受。</p>
+<p>查看我的主力机的 closure 大小：</p>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="shellsession"><span class="giallo-l"><span>$ nix path-info /run/current-system --closure-size --human-readable</span></span>
+<span class="giallo-l"><span style="color: #0550AE;">/nix/store/7rx2223cw2lbhzhnyd77r9k81xs4blrn-nixos-system-parrot-26.05.20260121.88d3861	  35.5 GiB</span></span></code></pre>
+<p>35.5GiB，可以看到，已经远超 Cloudflare R2 和 Backblaze B2 的免费额度（10GB）。</p>
+<h3 id="nix-copy-de-xing-wei"><a class="zola-anchor" href="#nix-copy-de-xing-wei" aria-label="Anchor link for: nix-copy-de-xing-wei">
+    ⚓
+</a>
+<code>nix copy</code> 的行为</h3>
+<p><code>nix copy</code> 命令在上传时，会先检查目标 binary cache 中是否已经有了相同的内容。如果有，就不会重复上传。</p>
+<p>检查方式是对 <code>narinfo</code> 发送 S3 <code>GetObject</code> 请求：</p>
+<ol>
+<li>例如一个 store path 是 <code>/nix/store/i3zw7h6pg3n9r5i63iyqxrapa70i4v5w-hello-2.12.2</code>。</li>
+<li>它的 <code>narinfo</code> 文件名就是 <code>i3zw7h6pg3n9r5i63iyqxrapa70i4v5w.narinfo</code>。</li>
+<li><code>nix copy</code> 会通过 <code>GetObject</code> 检查 cache 中是否有这个 <code>narinfo</code> 文件。</li>
+</ol>
+<p>如果我们能迷惑 <code>nix copy</code>，从上游 cache 把 <code>narinfo</code> 文件“偷”过来，就能避免重复上传。</p>
+<h3 id="nix-cache-overlay"><a class="zola-anchor" href="#nix-cache-overlay" aria-label="Anchor link for: nix-cache-overlay">
+    ⚓
+</a>
+nix-cache-overlay</h3>
+<p>在以前我使用 nginx 配置 + <a rel="external" href="https://github.com/Kriechi/aws-s3-reverse-proxy">aws-s3-reverse-proxy</a> 来做这个事情，但由于 aws-s3-reverse-proxy 使用 SigV4 认证请求，并且中间过了好多代理，涉及到 <code>Host</code> header 的变化，导致调试非常麻烦。这是真正的灵车，感兴趣的可以看一看我<a rel="external" href="https://github.com/linyinfeng/dotfiles/blob/d360725dd5d36cb13c20549dbbe1e501d67172c1/nixos/profiles/services/cache-overlay/default.nix">之前的配置</a>。</p>
+<p>终于有一天我的原始方案彻底挂了，我看了半天都没看明白为什么 aws-s3-reverse-proxy 算出来的签名和 <code>nix copy</code> 算出来的不一样。</p>
+<p>所以我最近写了一个 <a rel="external" href="https://github.com/linyinfeng/nix-cache-overlay">nix-cache-overlay</a> 专门来做这件事。<code>nix-cache-overlay</code> 是一个非常轻量的代理服务器，只做这么两件事：</p>
+<ol>
+<li>把对 <code>/BUCKET_NAME/*.narinfo</code> 的 <code>GET</code>/<code>HEAD</code> 请求的路径改写成 <code>/*.narinfo</code>，然后转发到上游 binary cache，如果返回 200，把响应返回给客户端；如果返回 404，尝试下一个上游。</li>
+<li>把所有上游尝试完毕都 404 后，对请求做认证，成功后把请求签上 SigV4 签名，转发到 S3 存储服务。</li>
+</ol>
+<p>认证部分直接忽略签名，把客户端提供的 <code>AWS_ACCESS_KEY_ID</code> 当成一个 token 来使用。因此不容易在中间代理过程中出错，代价是降低了一些安全性。</p>
+<p>使用方法就是首先起一个 nix-cache-overlay 服务（添加 overlay 和 NixOS module 后）：</p>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="nix"><span class="giallo-l"><span>{</span></span>
+<span class="giallo-l"><span style="color: #0550AE;">  services</span><span>.</span><span style="color: #0550AE;">nix-cache-overlay</span><span style="color: #CF222E;"> =</span><span> {</span></span>
+<span class="giallo-l"><span style="color: #0550AE;">    enable</span><span style="color: #CF222E;"> =</span><span style="color: #0550AE;"> true</span><span>;</span></span>
+<span class="giallo-l"><span style="color: #0550AE;">    listen</span><span style="color: #CF222E;"> =</span><span style="color: #0A3069;"> &quot;[::1]:8080&quot;</span><span>;</span></span>
+<span class="giallo-l"><span style="color: #0550AE;">    endpoint</span><span style="color: #CF222E;"> =</span><span style="color: #0A3069;"> &quot;https://host.of.s3.endpoint&quot;</span><span>;</span></span>
+<span class="giallo-l"><span style="color: #0550AE;">    environmentFile</span><span style="color: #CF222E;"> =</span><span style="color: #0A3069;"> /path/to/env/file</span><span>;</span></span>
+<span class="giallo-l"><span>  };</span></span>
+<span class="giallo-l"><span>}</span></span></code></pre>
+<p><code>environmentFile</code> 中需要存储 token 和用于连接到 S3 的 credential：</p>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="plain"><span class="giallo-l"><span>AWS_ACCESS_KEY_ID=...</span></span>
+<span class="giallo-l"><span>AWS_SECRET_ACCESS_KEY=...</span></span>
+<span class="giallo-l"><span>AWS_EC2_METADATA_DISABLED=true</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span>NIX_CACHE_OVERLAY_TOKEN=...</span></span></code></pre>
+<p>让 <code>nix copy</code> 使用 nix-cache-overlay，只需要把 binary cache 的 endpoint 指向 overlay，并配置 token 到 <code>AWS_ACCESS_KEY_ID</code> 即可：</p>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #CF222E;">export</span><span> AWS_ACCESS_KEY_ID</span><span style="color: #CF222E;">=</span><span style="color: #0A3069;">&quot;</span><span>$NIX_CACHE_OVERLAY_TOKEN</span><span style="color: #0A3069;">&quot;</span><span style="color: #6E7781;"> # 不再使用 S3 的 access key</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">export</span><span> AWS_SECRET_ACCESS_KEY</span><span style="color: #CF222E;">=</span><span style="color: #0A3069;">&quot;-&quot;</span><span style="color: #6E7781;"> # 不需要 secret key，只根据 key id 做认证</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">export</span><span> AWS_EC2_METADATA_DISABLED</span><span style="color: #CF222E;">=</span><span>true</span></span>
+<span class="giallo-l"><span style="color: #953800;">nix</span><span style="color: #0A3069;"> store sign &quot;nixpkgs#hello&quot;</span><span style="color: #0550AE;"> --recursive --key-file</span><span style="color: #0A3069;"> &quot;</span><span>$SECRET_KEY_FILE</span><span style="color: #0A3069;">&quot;</span></span>
+<span class="giallo-l"><span style="color: #953800;">nix</span><span style="color: #0A3069;"> copy &quot;nixpkgs#hello&quot;</span><span style="color: #0550AE;"> --to</span><span style="color: #0A3069;"> &quot;s3://</span><span>$BUCKET_NAME</span><span style="color: #0A3069;">?endpoint=http://[::1]:8080&quot;</span></span></code></pre>
+<p><strong>注意</strong>，<code>nix copy</code> 对 <code>narinfo</code> 查询的并发非常恐怖，因此建议把 overlay 服务直接部署在本地机器上，并且不要通过反向代理服务器访问 overlay 服务。
+反向代理服务器的连接数可能被打满，导致 <code>nix copy</code> 收到一堆 500 然后挂掉。</p>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="log"><span class="giallo-l"><span>Jan </span><span style="color: #0550AE;">22</span><span style="color: #6E7781;"> 23:30:21</span><span> nuc nginx[</span><span style="color: #0550AE;">85266</span><span>]: </span><span style="color: #0550AE;">2026</span><span>/</span><span style="color: #0550AE;">01</span><span>/</span><span style="color: #0550AE;">22</span><span style="color: #6E7781;"> 23:30:21</span><span> [alert] </span><span style="color: #0550AE;">85266</span><span>#</span><span style="color: #0550AE;">85266</span><span>: </span><span style="color: #0550AE;">512</span><span> worker_connections are not enough</span></span>
+<span class="giallo-l"><span>Jan </span><span style="color: #0550AE;">22</span><span style="color: #6E7781;"> 23:30:21</span><span> nuc nginx[</span><span style="color: #0550AE;">85266</span><span>]: </span><span style="color: #0550AE;">2026</span><span>/</span><span style="color: #0550AE;">01</span><span>/</span><span style="color: #0550AE;">22</span><span style="color: #6E7781;"> 23:30:21</span><span> [alert] </span><span style="color: #0550AE;">85266</span><span>#</span><span style="color: #0550AE;">85266</span><span>: *</span><span style="color: #0550AE;">554 512</span><span> worker_connections are not enough while connecting to upstream, client: </span><span style="color: #0550AE;">100</span><span>.</span><span style="color: #0550AE;">95</span><span>.</span><span style="color: #0550AE;">57</span><span>.</span><span style="color: #0550AE;">26</span><span>, server: cache-overlay.*, reque&gt;</span></span>
+<span class="giallo-l"><span>Jan </span><span style="color: #0550AE;">22</span><span style="color: #6E7781;"> 23:30:21</span><span> nuc nginx[</span><span style="color: #0550AE;">85266</span><span>]: </span><span style="color: #0550AE;">2026</span><span>/</span><span style="color: #0550AE;">01</span><span>/</span><span style="color: #0550AE;">22</span><span style="color: #6E7781;"> 23:30:21</span><span> [alert] </span><span style="color: #0550AE;">85266</span><span>#</span><span style="color: #0550AE;">85266</span><span>: *</span><span style="color: #0550AE;">554 512</span><span> worker_connections are not enough while connecting to upstream, client: </span><span style="color: #0550AE;">100</span><span>.</span><span style="color: #0550AE;">95</span><span>.</span><span style="color: #0550AE;">57</span><span>.</span><span style="color: #0550AE;">26</span><span>, server: cache-overlay.*, reque&gt;</span></span>
+<span class="giallo-l"><span>Jan </span><span style="color: #0550AE;">22</span><span style="color: #6E7781;"> 23:30:21</span><span> nuc nginx[</span><span style="color: #0550AE;">85266</span><span>]: </span><span style="color: #0550AE;">2026</span><span>/</span><span style="color: #0550AE;">01</span><span>/</span><span style="color: #0550AE;">22</span><span style="color: #6E7781;"> 23:30:21</span><span> [alert] </span><span style="color: #0550AE;">85266</span><span>#</span><span style="color: #0550AE;">85266</span><span>: </span><span style="color: #0550AE;">512</span><span> worker_connections are not enough</span></span>
+<span class="giallo-l"><span>Jan </span><span style="color: #0550AE;">22</span><span style="color: #6E7781;"> 23:30:21</span><span> nuc nginx[</span><span style="color: #0550AE;">85266</span><span>]: </span><span style="color: #0550AE;">2026</span><span>/</span><span style="color: #0550AE;">01</span><span>/</span><span style="color: #0550AE;">22</span><span style="color: #6E7781;"> 23:30:21</span><span> [alert] </span><span style="color: #0550AE;">85266</span><span>#</span><span style="color: #0550AE;">85266</span><span>: *</span><span style="color: #0550AE;">554 512</span><span> worker_connections are not enough while connecting to upstream, client: </span><span style="color: #0550AE;">100</span><span>.</span><span style="color: #0550AE;">95</span><span>.</span><span style="color: #0550AE;">57</span><span>.</span><span style="color: #0550AE;">26</span><span>, server: cache-overlay.*, reque&gt;</span></span>
+<span class="giallo-l"><span>Jan </span><span style="color: #0550AE;">22</span><span style="color: #6E7781;"> 23:30:21</span><span> nuc nginx[</span><span style="color: #0550AE;">85266</span><span>]: </span><span style="color: #0550AE;">2026</span><span>/</span><span style="color: #0550AE;">01</span><span>/</span><span style="color: #0550AE;">22</span><span style="color: #6E7781;"> 23:30:21</span><span> [alert] </span><span style="color: #0550AE;">85266</span><span>#</span><span style="color: #0550AE;">85266</span><span>: *</span><span style="color: #0550AE;">554 512</span><span> worker_connections are not enough while connecting to upstream, client: </span><span style="color: #0550AE;">100</span><span>.</span><span style="color: #0550AE;">95</span><span>.</span><span style="color: #0550AE;">57</span><span>.</span><span style="color: #0550AE;">26</span><span>, server: cache-overlay.*, reque&gt;</span></span>
+<span class="giallo-l"><span>Jan </span><span style="color: #0550AE;">22</span><span style="color: #6E7781;"> 23:30:21</span><span> nuc nginx[</span><span style="color: #0550AE;">85266</span><span>]: </span><span style="color: #0550AE;">2026</span><span>/</span><span style="color: #0550AE;">01</span><span>/</span><span style="color: #0550AE;">22</span><span style="color: #6E7781;"> 23:30:21</span><span> [alert] </span><span style="color: #0550AE;">85266</span><span>#</span><span style="color: #0550AE;">85266</span><span>: </span><span style="color: #0550AE;">512</span><span> worker_connections are not enough</span></span></code></pre><h3 id="wo-de-pei-zhi-1"><a class="zola-anchor" href="#wo-de-pei-zhi-1" aria-label="Anchor link for: wo-de-pei-zhi-1">
+    ⚓
+</a>
+我的配置</h3>
+<p>通过使用 <code>nix-cache-overlay</code>，我只需要不到 4GiB 的 R2 存储空间，就能缓存我所有机器的 closure。</p>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="shellsession"><span class="giallo-l"><span>$ mc du r2-cache/cache-li7g-com</span></span>
+<span class="giallo-l"><span style="color: #0550AE;">3.2GiB	12629 objects	cache-li7g-com</span></span></code></pre><h2 id="gc"><a class="zola-anchor" href="#gc" aria-label="Anchor link for: gc">
+    ⚓
+</a>
+GC</h2>
+<p>Nix S3 binary cache 本身并不支持 GC，这也是一大痛点。
+因此需要我们自己实现 GC 机制。</p>
+<p>对 binary cache 进行 GC 其实分为两部分：</p>
+<ol>
+<li>管理 GC roots</li>
+<li>根据 GC roots 进行 GC</li>
+</ol>
+<h3 id="guan-li-gc-roots"><a class="zola-anchor" href="#guan-li-gc-roots" aria-label="Anchor link for: guan-li-gc-roots">
+    ⚓
+</a>
+管理 GC roots</h3>
+<p>许多人比较随意地向 binary cache push 内容，然后并不记录他们 push 的是什么东西，要保留多久。我个人对这种用法的 binary cache 直接使用 cachix，因为 cachix 提供了自动 GC 的功能。</p>
+<p>而我自己建立的 S3 cache 则只存储我的 hydra CI 构建出来的内容。Hydra 其实提供了一个目录，里面存储了所有的 GC roots。如果你注意过 hydra 的 job 的配置的话，你会发现里面有一项叫作 "Number of evaluations to keep"。Hydra 会根据这个数字来决定保留多少个 evaluation 作为 GC roots。</p>
+<p>所以我的方案就是使用 hydra 提供的 GC roots，来作为 binary cache 的 GC roots。</p>
+<h3 id="gen-ju-gc-roots-jin-xing-gc"><a class="zola-anchor" href="#gen-ju-gc-roots-jin-xing-gc" aria-label="Anchor link for: gen-ju-gc-roots-jin-xing-gc">
+    ⚓
+</a>
+根据 GC roots 进行 GC</h3>
+<p>这也是一大难点，因为我们不是在内存里，而是在 S3 上存储内容。显然我们不太能做各种 copying GC，那么就做 tracing GC 吧。</p>
+<p>但是做 tracing GC 意味着还需要解析 <code>narinfo</code> 文件，获得它的依赖列表，然后递归地找到所有可达的其他 <code>narinfo</code>。S3 上的请求延迟会比较高，因此这个过程会比较耗时。</p>
+<p>一个典型的 narinfo 文件内容：</p>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="plain"><span class="giallo-l"><span>StorePath: /nix/store/i3zw7h6pg3n9r5i63iyqxrapa70i4v5w-hello-2.12.2</span></span>
+<span class="giallo-l"><span>URL: nar/0jra6lgdxfkivpxgr8vlfp7ccypy7a6g48jma9v2vps50xy13hn7.nar.xz</span></span>
+<span class="giallo-l"><span>Compression: xz</span></span>
+<span class="giallo-l"><span>FileHash: sha256:0jra6lgdxfkivpxgr8vlfp7ccypy7a6g48jma9v2vps50xy13hn7</span></span>
+<span class="giallo-l"><span>FileSize: 57600</span></span>
+<span class="giallo-l"><span>NarHash: sha256:1m4yy5hgxm1445f005fdqdm6ky6h2pdwy80kck9c4pvy9n6vbabx</span></span>
+<span class="giallo-l"><span>NarSize: 274568</span></span>
+<span class="giallo-l"><span>References: i3zw7h6pg3n9r5i63iyqxrapa70i4v5w-hello-2.12.2 j193mfi0f921y0kfs8vjc1znnr45isp0-glibc-2.40-66</span></span>
+<span class="giallo-l"><span>Deriver: bkhfq83jwis7h9wak3h0kz0cv1r7xfnq-hello-2.12.2.drv</span></span>
+<span class="giallo-l"><span>Sig: cache.nixos.org-1:K25JMfP03adJ85zC7xg8qLa2LEjK7edYMZ+JzZyaZTuKYL6EXDoPXFWaMnw/1Dlmz5/vvjILYOonkyG/fwMPDg==</span></span></code></pre>
+<p>由于我的主要使用场景是存储 hydra 构建的内容，因此所有 closure 中的 store path 本地其实都有。所以，我的选择是直接在本地对 store path 调用 <code>nix-store --query --requisites</code> 来判断依赖关系，而不是下载并解析 <code>narinfo</code> 文件（也许直接让 <code>nix</code> 做递归查询会更好，快很多，不过我之前没有那样写）。这种做法其实比较局限，它要求 binary cache 中的内容必须在本地都有，但对于我的使用场景来说，这个要求是可以接受的。</p>
+<p>知道哪些 <code>narinfo</code> 文件是需要保留的之后，根据其中的 <code>URL</code> 字段判断哪些 <code>nar</code> 文件是需要保留的。<code>nar</code> 文件的文件名其实是它自己的 hash，因此多个 <code>narinfo</code> 文件可能会引用同一个 <code>nar</code> 文件，因此这一步需要逐个下载所有要保留的 <code>narinfo</code> 文件。</p>
+<p>最后调用 S3 API 把不需要保留的 <code>narinfo</code> 和 <code>nar</code> 文件删除掉即可，一次 API call 可以删除多达 1000 个对象，因此这一步其实并不耗时。</p>
+<p>我写了一个 Python 脚本来做这件事，代码见 <a rel="external" href="https://github.com/linyinfeng/nix-gc-s3">linyinfeng/nix-gc-s3</a>。</p>
+<h3 id="wo-de-pei-zhi-2"><a class="zola-anchor" href="#wo-de-pei-zhi-2" aria-label="Anchor link for: wo-de-pei-zhi-2">
+    ⚓
+</a>
+我的配置</h3>
+<p>我配置了一个 systemd 服务对 S3 cache 每晚执行一次 GC：</p>
+<p><a rel="external" href="https://github.com/linyinfeng/dotfiles/blob/3e0be19e10fbbcf08bab95583f6e3ae61cdf4af9/nixos/profiles/services/hydra/_cache.nix#L58-L99">https://github.com/linyinfeng/dotfiles/blob/3e0be19e10fbbcf08bab95583f6e3ae61cdf4af9/nixos/profiles/services/hydra/_cache.nix#L58-L99</a></p>
+<p>服务内容其实就是调用一次 <code>nix-gc-s3</code> 脚本。</p>
+<p>但这里仍然有需要注意的事项：<code>nix-gc-s3</code> 和 <code>nix copy</code> 不应该同时运行，所以我只在固定的 systemd 服务中运行 <code>nix-gc-s3</code> 和 <code>nix copy</code>，并且用 <code>flock</code> 加了互斥锁。</p>
+<h2 id="jie-yu"><a class="zola-anchor" href="#jie-yu" aria-label="Anchor link for: jie-yu">
+    ⚓
+</a>
+结语</h2>
+<p>通过以上配置，我已经使用了三年多的 Nix S3 binary cache，成本极低（目前每月账单都是 0 USD），且不论是上传还是下载的性能都远超需要中间服务器的方案，如 <a rel="external" href="https://github.com/zhaofengli/attic">attic</a>。</p>
+<p>但该方案也是一个土制方案：</p>
+<ol>
+<li>没有基于时间的 GC，必须自己维护 GC roots</li>
+<li>GC 机制要求 binary cache 中的内容必须在本地都有</li>
+<li>没有统一的工具管理上传和 GC，必须在 <code>nix copy</code> 和 <code>nix-gc-s3</code> 时手动加锁</li>
+</ol>
+<p>这些缺点限制了这个方案基本上只能和 hydra CI 结合使用，但对于我个人的使用场景来说，这已经足够了。</p>
+<p>如果需要没有以上缺点的，能实现基于时间 GC 的方案，可以考虑使用 <a rel="external" href="https://github.com/Mic92/niks3">niks3</a>。</p>
+<p>最后介绍一下我个人的使用场景：
+我用这个 cache 存储我所有机器的 closure，一旦某个机器，比如 <code>fsn0</code> 的 closure 成功上传到 cache，
+我的 <a rel="external" href="https://github.com/linyinfeng/dotfiles">dotfiles</a> 仓库的一个分支 <code>nixos-tested-fsn0</code> 就会指向构建出这个 closure 的 revision。
+每天凌晨，<code>fsn0</code> 就会自动更新到 <code>github:linyinfeng/dotfiles/nixos-tested-fsn0</code>，并按需重启。
+配合 <code>flake.lock</code> 的自动更新，各种监控，报警，我能用最少的精力维护我的服务器（大部分时候不需要投入任何精力）。</p>
+<h2 id="yi-jian-qu-shi"><a class="zola-anchor" href="#yi-jian-qu-shi" aria-label="Anchor link for: yi-jian-qu-shi">
+    ⚓
+</a>
+一件趣事</h2>
+<p>我的博客也是用 Nix 构建的，我的 CI 会检查博客文件是否自包含，即不依赖 <code>/nix/store</code>。</p>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="yaml"><span class="giallo-l"><span>-</span><span style="color: #116329;"> name</span><span>:</span><span style="color: #0A3069;"> Check self-contained</span></span>
+<span class="giallo-l"><span style="color: #116329;">  run</span><span>:</span><span style="color: #CF222E;"> |</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">    [ $(nix path-info --recursive ./result | wc -l) == &quot;1&quot; ]</span></span></code></pre>
+<p>写完这篇文章后发现这个检查失败了，原因是文中包含了一个 <code>narinfo</code> 文件，其中 <code>References:</code> 中有 glibc 的 store path：</p>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="plain"><span class="giallo-l"><span>j193mfi0f921y0kfs8vjc1znnr45isp0-glibc-2.40-66</span></span></code></pre>
+<p>这是因为 Nix 检查运行时依赖的方法是。只要产物中包含某个编译期依赖的 hash，比如此处的 <code>j193mfi0f921y0kfs8vjc1znnr45isp0</code>，这个编译期依赖就会被认为是一个运行时依赖。</p>
+<p>解决方法就是把 hash 的最后一位手动修改为 <code>0</code> 了。</p>
+</section>
+    </article>
+
+    
+        
+    <div class="giscus" />
+
+    
+
+                </div>
+            </main>
+        </div>
+        <footer id="footer">
+            
+            
+    <div class="footer-container container">
+        <div id="copyright-container">
+            <small id="copyright">© Lin Yinfeng</small>
+        </div>
+
+        
+            <div id="powered-by-container">
+                <small id="powered-by">Powered by <a rel="external" href="https://www.getzola.org">Zola</a></small>
+            </div>
+        
+    </div>
+
+            
+        </footer>
+    
+</body>
+</html>

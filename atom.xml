@@ -4,8 +4,36 @@
     <link rel="self" type="application/atom+xml" href="https://blog.linyinfeng.com/atom.xml"/>
     <link rel="alternate" type="text/html" href="https://blog.linyinfeng.com"/>
     <generator uri="https://www.getzola.org/">Zola</generator>
-    <updated>2025-09-27T13:11:10+08:00</updated>
+    <updated>2026-01-23T16:21:36+08:00</updated>
     <id>https://blog.linyinfeng.com/atom.xml</id>
+    <entry xml:lang="zh-CN">
+        <title>土制 Nix S3 Binary Cache</title>
+        <published>2026-01-23T16:21:36+08:00</published>
+        <updated>2026-01-23T16:21:36+08:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://blog.linyinfeng.com/posts/homemade-nix-s3-cache/"/>
+        <id>https://blog.linyinfeng.com/posts/homemade-nix-s3-cache/</id>
+        
+        <summary type="html">&lt;p&gt;介绍一下我自己已经用了三年多的 Nix S3 Binary Cache 的实现方案和思路。&lt;&#x2F;p&gt;
+&lt;p&gt;特色：&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;土制灵车&lt;&#x2F;strong&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;极低成本&lt;&#x2F;strong&gt;：使用 Cloudflare R2 等有免费额度的 S3 服务，每月 0 USD 免费用&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;几乎 Serverless&lt;&#x2F;strong&gt;：稳定，高性能，无服务器瓶颈&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;极佳兼容性&lt;&#x2F;strong&gt;：使用 &lt;code&gt;nix copy&lt;&#x2F;code&gt; 直接上传&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;注：第一点与其他特色并没有冲突。&lt;&#x2F;p&gt;
+&lt;img src=&quot;https:&amp;#x2F;&amp;#x2F;blog.linyinfeng.com&amp;#x2F;posts&amp;#x2F;homemade-nix-s3-cache&amp;#x2F;s3-cache-flow.svg?h=bc0611f630ddd9583a4f&quot; alt=&quot;一张 S3 binary cache 的流程图&quot;&gt;</summary>
+        
+    </entry>
     <entry xml:lang="zh-CN">
         <title>不要在 Python 里 exec&#x2F;eval&#x2F;import 不可信代码</title>
         <published>2025-09-27T13:11:10+08:00</published>
@@ -99,10 +127,10 @@
         <link rel="alternate" type="text/html" href="https://blog.linyinfeng.com/posts/rust-rfc-2349/"/>
         <id>https://blog.linyinfeng.com/posts/rust-rfc-2349/</id>
         
-        <summary type="html">&lt;p&gt;本文为 &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;rust-lang&#x2F;rfcs&#x2F;blob&#x2F;master&#x2F;text&#x2F;2349-pin.md&quot;&gt;Rust RFC 2349 - Pin&lt;&#x2F;a&gt; 的中文翻译。&lt;&#x2F;p&gt;
+        <summary type="html">&lt;p&gt;本文为 &lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;rust-lang&#x2F;rfcs&#x2F;blob&#x2F;master&#x2F;text&#x2F;2349-pin.md&quot;&gt;Rust RFC 2349 - Pin&lt;&#x2F;a&gt; 的中文翻译。&lt;&#x2F;p&gt;
 &lt;p&gt;Rust RFCs 并非一成不变，本文翻译于 2018 年 08 月 19 日。&lt;&#x2F;p&gt;
-&lt;p&gt;Rust RFCs 仓库目前（2018-08-21）为可选的 MIT 和 Apache 授权，本文使用了其 MIT 授权。&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;linyinfeng&#x2F;blog&#x2F;tree&#x2F;master&#x2F;content&#x2F;posts&#x2F;rust-rfc-2349&#x2F;LICENSE-MIT&quot;&gt;MIT 许可证副本&lt;&#x2F;a&gt;。&lt;&#x2F;p&gt;
-&lt;p&gt;文中有众多 Rust 中的其他 RFC 甚至 crates 中的概念，水平有限，如有翻译错误或建议，可以向我的 &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;linyinfeng&#x2F;blog&quot;&gt;GitHub&lt;&#x2F;a&gt; 仓库提 Issue 或者直接发起 PR 指正，本文文件：&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;linyinfeng&#x2F;blog&#x2F;tree&#x2F;master&#x2F;content&#x2F;posts&#x2F;rust-rfc-2349&#x2F;index.md&quot;&gt;content&#x2F;posts&#x2F;rust-rfc-2349&#x2F;index.md&lt;&#x2F;a&gt;。&lt;&#x2F;p&gt;</summary>
+&lt;p&gt;Rust RFCs 仓库目前（2018-08-21）为可选的 MIT 和 Apache 授权，本文使用了其 MIT 授权。&lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;linyinfeng&#x2F;blog&#x2F;tree&#x2F;master&#x2F;content&#x2F;posts&#x2F;rust-rfc-2349&#x2F;LICENSE-MIT&quot;&gt;MIT 许可证副本&lt;&#x2F;a&gt;。&lt;&#x2F;p&gt;
+&lt;p&gt;文中有众多 Rust 中的其他 RFC 甚至 crates 中的概念，水平有限，如有翻译错误或建议，可以向我的 &lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;linyinfeng&#x2F;blog&quot;&gt;GitHub&lt;&#x2F;a&gt; 仓库提 Issue 或者直接发起 PR 指正，本文文件：&lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;linyinfeng&#x2F;blog&#x2F;tree&#x2F;master&#x2F;content&#x2F;posts&#x2F;rust-rfc-2349&#x2F;index.md&quot;&gt;content&#x2F;posts&#x2F;rust-rfc-2349&#x2F;index.md&lt;&#x2F;a&gt;。&lt;&#x2F;p&gt;</summary>
         
     </entry>
     <entry xml:lang="zh-CN">
@@ -121,9 +149,9 @@
         <link rel="alternate" type="text/html" href="https://blog.linyinfeng.com/posts/toykio/"/>
         <id>https://blog.linyinfeng.com/posts/toykio/</id>
         
-        <summary type="html">&lt;p&gt;本文为 Rust futures-rs 博客 2018 年 8 月 17 日 的 博文 &lt;a href=&quot;https:&#x2F;&#x2F;rust-lang-nursery.github.io&#x2F;futures-rs&#x2F;blog&#x2F;2018&#x2F;08&#x2F;17&#x2F;toykio.html&quot;&gt;Toykio&lt;&#x2F;a&gt; 的中文翻译。&lt;&#x2F;p&gt;
-&lt;p&gt;原文作者 Alexander Polakov（&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;polachok&quot;&gt;@polachok&lt;&#x2F;a&gt;）。&lt;&#x2F;p&gt;
-&lt;p&gt;原文目前（2018-08-21）为可选的 MIT 和 Apache 授权，本文使用了其 MIT 授权。&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;linyinfeng&#x2F;blog&#x2F;tree&#x2F;master&#x2F;content&#x2F;posts&#x2F;toykio&#x2F;LICENSE-MIT&quot;&gt;MIT 许可证副本&lt;&#x2F;a&gt;。&lt;&#x2F;p&gt;</summary>
+        <summary type="html">&lt;p&gt;本文为 Rust futures-rs 博客 2018 年 8 月 17 日 的 博文 &lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;rust-lang-nursery.github.io&#x2F;futures-rs&#x2F;blog&#x2F;2018&#x2F;08&#x2F;17&#x2F;toykio.html&quot;&gt;Toykio&lt;&#x2F;a&gt; 的中文翻译。&lt;&#x2F;p&gt;
+&lt;p&gt;原文作者 Alexander Polakov（&lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;polachok&quot;&gt;@polachok&lt;&#x2F;a&gt;）。&lt;&#x2F;p&gt;
+&lt;p&gt;原文目前（2018-08-21）为可选的 MIT 和 Apache 授权，本文使用了其 MIT 授权。&lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;linyinfeng&#x2F;blog&#x2F;tree&#x2F;master&#x2F;content&#x2F;posts&#x2F;toykio&#x2F;LICENSE-MIT&quot;&gt;MIT 许可证副本&lt;&#x2F;a&gt;。&lt;&#x2F;p&gt;</summary>
         
     </entry>
     <entry xml:lang="zh-CN">

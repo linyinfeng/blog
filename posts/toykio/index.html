@@ -10,9 +10,9 @@
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
-        <link rel=stylesheet type="text/css" href=https://blog.linyinfeng.com/normalize.css>
-        <link rel=stylesheet type="text/css" href=https://blog.linyinfeng.com/style.css>
-        <script defer src=https://blog.linyinfeng.com/layout-helper.js></script>
+        <link rel=stylesheet type="text/css" href=https://blog.linyinfeng.com/normalize.css?h=580818700724d42d7fcc />
+        <link rel=stylesheet type="text/css" href=https://blog.linyinfeng.com/style.css?h=ad13708a8c32b996160d />
+        <script defer src=https://blog.linyinfeng.com/layout-helper.js?h=f433ff057abd07e8dc0b></script>
         
             
     <!-- Google Tag Manager -->
@@ -27,11 +27,11 @@
         
             
                 
-    <link rel="stylesheet" href="https://blog.linyinfeng.com/katex/katex.min.css">
-    <script defer src="https://blog.linyinfeng.com/katex/katex.min.js"></script>
-    <script defer src="https://blog.linyinfeng.com/katex/contrib/mathtex-script-type.min.js"></script>
-    <script defer src="https://blog.linyinfeng.com/katex/contrib/copy-tex.min.js"></script>
-    <script defer src="https://blog.linyinfeng.com/katex/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="https://blog.linyinfeng.com/katex/katex.min.css?h=e189fd0238811989c364" />
+    <script defer src="https://blog.linyinfeng.com/katex/katex.min.js?h=6b909443e6c8f6e5d24c"></script>
+    <script defer src="https://blog.linyinfeng.com/katex/contrib/mathtex-script-type.min.js?h=0799b28b8bc80621fc86"></script>
+    <script defer src="https://blog.linyinfeng.com/katex/contrib/copy-tex.min.js?h=07770af90943a1de1a10"></script>
+    <script defer src="https://blog.linyinfeng.com/katex/contrib/auto-render.min.js?h=bb53eb953394531aae36"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             renderMathInElement(document.body, {
@@ -66,10 +66,13 @@
 
         
         
-            <link rel="alternate" type="application/atom+xml" title="Atom" href="https://blog.linyinfeng.com/atom.xml">
+            <link rel="alternate" type="application/atom+xml" title="Atom" href="https://blog.linyinfeng.com/atom.xml" />
         
         
-            <link rel="me" href="https:&#x2F;&#x2F;mastodon.li7g.com&#x2F;@yinfeng">
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.linyinfeng.com/rss.xml" />
+        
+        
+            <link rel="me" href="https:&#x2F;&#x2F;mastodon.li7g.com&#x2F;@yinfeng" />
         
     
 </head>
@@ -82,7 +85,7 @@
     <div class="header-container container">
         <h1 id="blog-title" class="title">
             <a href=https:&#x2F;&#x2F;blog.linyinfeng.com>
-                <img src="https://blog.linyinfeng.com/favicon.ico" alt="Lin Yinfeng" />
+                <img src="https://blog.linyinfeng.com/favicon.ico?h=a550b8b505d34225d40d" alt="Lin Yinfeng" />
             </a>
         </h1>
         <nav id="global-nav"><span class="global-nav-item-container"><a class="global-nav-item"
@@ -205,16 +208,16 @@
         <section class="article-license">
             
                 <div class="license-image">
-                    <img src="https://blog.linyinfeng.com/license-buttons/l/by-nc-sa/4.0/88x31.png" alt="CC BY-NC-SA 4.0" />
+                    <img src="https://blog.linyinfeng.com/license-buttons/l/by-nc-sa/4.0/88x31.png?h=f46d7b11bac0d593eab6" alt="CC BY-NC-SA 4.0" />
                 </div>
             
-            <small class="license-text">This work is licensed under a <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a></small>
+            <small class="license-text">This work is licensed under a <a rel="external" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a></small>
         </section>
     
 
-        <section class="article-content"><p>本文为 Rust futures-rs 博客 2018 年 8 月 17 日 的 博文 <a href="https://rust-lang-nursery.github.io/futures-rs/blog/2018/08/17/toykio.html">Toykio</a> 的中文翻译。</p>
-<p>原文作者 Alexander Polakov（<a href="https://github.com/polachok">@polachok</a>）。</p>
-<p>原文目前（2018-08-21）为可选的 MIT 和 Apache 授权，本文使用了其 MIT 授权。<a href="https://github.com/linyinfeng/blog/tree/master/content/posts/toykio/LICENSE-MIT">MIT 许可证副本</a>。</p>
+        <section class="article-content"><p>本文为 Rust futures-rs 博客 2018 年 8 月 17 日 的 博文 <a rel="external" href="https://rust-lang-nursery.github.io/futures-rs/blog/2018/08/17/toykio.html">Toykio</a> 的中文翻译。</p>
+<p>原文作者 Alexander Polakov（<a rel="external" href="https://github.com/polachok">@polachok</a>）。</p>
+<p>原文目前（2018-08-21）为可选的 MIT 和 Apache 授权，本文使用了其 MIT 授权。<a rel="external" href="https://github.com/linyinfeng/blog/tree/master/content/posts/toykio/LICENSE-MIT">MIT 许可证副本</a>。</p>
 <span id="continue-reading"></span>
 <p>在这个博文中我将展示 toykio，一个用于学习带有事件循环的 executor 如何工作的简单 futures executor。Toykio 仅仅提供很少的特性：一个事件循环以及 TCP 流和监听器。但是事实证明，由于 futures 是可组合的，这已经足够用来构建复杂的客户端和服务器程序。</p>
 <p>在下文中，我将向你提供 toykio 组件的快速概述。</p>
@@ -229,24 +232,23 @@
 <code>AsyncRead</code> 和 <code>AsyncWrite</code></h2>
 <p><code>AsyncRead</code> 和 <code>AsyncWrite</code> traits 是所有 I/O 特性的基础。<code>AsyncReadExt</code> 和 <code>AsyncWriteExt</code> 的扩展方法（如 <code>read</code> 和 <code>write_all</code>）均在其上构建。这些 traits 提供了一种 futures 与事件循环连接的方法，同时保证它们独立于任何特定的事件循环实现。</p>
 <p>让我们看看为 <code>AsyncTcpStream</code> 实现 <code>AsyncRead</code> 的方法：</p>
-<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#a626a4;">impl </span><span>AsyncRead </span><span style="color:#a626a4;">for </span><span>AsyncTcpStream {
-</span><span>    </span><span style="color:#a626a4;">fn </span><span style="color:#0184bc;">poll_read</span><span>(</span><span style="color:#a626a4;">&amp;mut </span><span style="color:#e45649;">self</span><span>, </span><span style="color:#e45649;">cx</span><span>: </span><span style="color:#a626a4;">&amp;mut</span><span> Context, </span><span style="color:#e45649;">buf</span><span>: </span><span style="color:#a626a4;">&amp;mut</span><span> [</span><span style="color:#a626a4;">u8</span><span>]) -&gt; Poll&lt;Result&lt;</span><span style="color:#a626a4;">usize</span><span>, Error&gt;&gt; {
-</span><span>        </span><span style="color:#a626a4;">match </span><span style="color:#e45649;">self</span><span>.</span><span style="color:#c18401;">0.</span><span style="color:#0184bc;">read</span><span>(buf) {
-</span><span>            Ok(len) </span><span style="color:#a626a4;">=&gt; </span><span>Poll::Ready(Ok(len)),
-</span><span>            Err(</span><span style="color:#a626a4;">ref</span><span> err) </span><span style="color:#a626a4;">if</span><span> err.</span><span style="color:#0184bc;">kind</span><span>() </span><span style="color:#a626a4;">== </span><span>std::io::ErrorKind::WouldBlock </span><span style="color:#a626a4;">=&gt; </span><span>{
-</span><span>                </span><span style="color:#a0a1a7;">// 获取 TcpStream 文件描述符
-</span><span>                </span><span style="color:#a626a4;">let</span><span> fd </span><span style="color:#a626a4;">= </span><span style="color:#e45649;">self</span><span>.</span><span style="color:#c18401;">0.</span><span style="color:#0184bc;">as_raw_fd</span><span>();
-</span><span>                </span><span style="color:#a626a4;">let</span><span> waker </span><span style="color:#a626a4;">=</span><span> cx.</span><span style="color:#0184bc;">waker</span><span>();
-</span><span>
-</span><span>                </span><span style="color:#c18401;">REACTOR</span><span>.</span><span style="color:#0184bc;">with</span><span>(|</span><span style="color:#e45649;">reactor</span><span>| reactor.</span><span style="color:#0184bc;">add_read_interest</span><span>(fd, waker.</span><span style="color:#0184bc;">clone</span><span>()));
-</span><span>
-</span><span>                Poll::Pending
-</span><span>            }
-</span><span>            Err(err) </span><span style="color:#a626a4;">=&gt; </span><span>panic!(</span><span style="color:#50a14f;">&quot;error {:?}&quot;</span><span>, err),
-</span><span>        }
-</span><span>    }
-</span><span>}
-</span></code></pre>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="rust"><span class="giallo-l"><span style="color: #CF222E;">impl</span><span style="color: #953800;"> AsyncRead</span><span style="color: #CF222E;"> for</span><span style="color: #953800;"> AsyncTcpStream</span><span> {</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">    fn</span><span style="color: #8250DF;"> poll_read</span><span>(</span><span style="color: #CF222E;">&amp;mut</span><span style="color: #0550AE;"> self</span><span>, cx</span><span style="color: #CF222E;">: &amp;mut</span><span style="color: #953800;"> Context</span><span>, buf</span><span style="color: #CF222E;">: &amp;mut</span><span> [</span><span style="color: #953800;">u8</span><span>])</span><span style="color: #CF222E;"> -&gt;</span><span style="color: #953800;"> Poll</span><span>&lt;</span><span style="color: #953800;">Result</span><span>&lt;</span><span style="color: #953800;">usize</span><span>,</span><span style="color: #953800;"> Error</span><span>&gt;&gt; {</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">        match</span><span style="color: #0550AE;"> self</span><span style="color: #CF222E;">.</span><span style="color: #0550AE;">0.</span><span style="color: #8250DF;">read</span><span>(buf) {</span></span>
+<span class="giallo-l"><span style="color: #953800;">            Ok</span><span>(len)</span><span style="color: #CF222E;"> =&gt;</span><span style="color: #953800;"> Poll</span><span style="color: #CF222E;">::</span><span style="color: #8250DF;">Ready</span><span>(</span><span style="color: #953800;">Ok</span><span>(len)),</span></span>
+<span class="giallo-l"><span style="color: #953800;">            Err</span><span>(</span><span style="color: #CF222E;">ref</span><span> err)</span><span style="color: #CF222E;"> if</span><span> err</span><span style="color: #CF222E;">.</span><span style="color: #8250DF;">kind</span><span>()</span><span style="color: #CF222E;"> ==</span><span style="color: #953800;"> std</span><span style="color: #CF222E;">::</span><span style="color: #953800;">io</span><span style="color: #CF222E;">::</span><span style="color: #953800;">ErrorKind</span><span style="color: #CF222E;">::</span><span style="color: #953800;">WouldBlock</span><span style="color: #CF222E;"> =&gt;</span><span> {</span></span>
+<span class="giallo-l"><span style="color: #6E7781;">                // 获取 TcpStream 文件描述符</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">                let</span><span> fd</span><span style="color: #CF222E;"> =</span><span style="color: #0550AE;"> self</span><span style="color: #CF222E;">.</span><span style="color: #0550AE;">0.</span><span style="color: #8250DF;">as_raw_fd</span><span>();</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">                let</span><span> waker</span><span style="color: #CF222E;"> =</span><span> cx</span><span style="color: #CF222E;">.</span><span style="color: #8250DF;">waker</span><span>();</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #0550AE;">                REACTOR</span><span style="color: #CF222E;">.</span><span style="color: #8250DF;">with</span><span>(</span><span style="color: #CF222E;">|</span><span>reactor</span><span style="color: #CF222E;">|</span><span> reactor</span><span style="color: #CF222E;">.</span><span style="color: #8250DF;">add_read_interest</span><span>(fd, waker</span><span style="color: #CF222E;">.</span><span style="color: #8250DF;">clone</span><span>()));</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #953800;">                Poll</span><span style="color: #CF222E;">::</span><span style="color: #953800;">Pending</span></span>
+<span class="giallo-l"><span>            }</span></span>
+<span class="giallo-l"><span style="color: #953800;">            Err</span><span>(err)</span><span style="color: #CF222E;"> =&gt;</span><span style="color: #8250DF;"> panic!</span><span>(</span><span style="color: #0A3069;">&quot;error {:?}&quot;</span><span>, err),</span></span>
+<span class="giallo-l"><span>        }</span></span>
+<span class="giallo-l"><span>    }</span></span>
+<span class="giallo-l"><span>}</span></span></code></pre>
 <p>它尝试从底层的 <code>TcpStream</code> 读取。如果读取成功了，切片将被填上数据。如果失败并且返回了 <code>WouldBlock</code> 错误，就将当前任务的唤醒器注册，这样它将在数据可用的时候被唤醒。下一节中将提到更多有关的细节。</p>
 <p><code>AsyncWrite</code> 的实现对 <code>write</code> 做了类似的事。</p>
 <h2 id="shi-jian-xun-huan"><a class="zola-anchor" href="#shi-jian-xun-huan" aria-label="Anchor link for: shi-jian-xun-huan">
@@ -254,117 +256,110 @@
 </a>
 事件循环</h2>
 <p><code>Eventloop</code>（通常也被叫做 reactor）是这个 executor 的核心。它像这样被定义：</p>
-<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#a626a4;">struct </span><span>InnerEventLoop {
-</span><span>    </span><span style="color:#e45649;">read</span><span>: RefCell&lt;BTreeMap&lt;RawFd, Waker&gt;&gt;,
-</span><span>    </span><span style="color:#e45649;">write</span><span>: RefCell&lt;BTreeMap&lt;RawFd, Waker&gt;&gt;,
-</span><span>    </span><span style="color:#e45649;">counter</span><span>: Cell&lt;</span><span style="color:#a626a4;">usize</span><span>&gt;,
-</span><span>    </span><span style="color:#e45649;">wait_queue</span><span>: RefCell&lt;BTreeMap&lt;TaskId, Task&gt;&gt;,
-</span><span>    </span><span style="color:#e45649;">run_queue</span><span>: RefCell&lt;VecDeque&lt;Wakeup&gt;&gt;,
-</span><span>}
-</span></code></pre>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="rust"><span class="giallo-l"><span style="color: #CF222E;">struct</span><span style="color: #953800;"> InnerEventLoop</span><span> {</span></span>
+<span class="giallo-l"><span>    read</span><span style="color: #CF222E;">:</span><span style="color: #953800;"> RefCell</span><span>&lt;</span><span style="color: #953800;">BTreeMap</span><span>&lt;</span><span style="color: #953800;">RawFd</span><span>,</span><span style="color: #953800;"> Waker</span><span>&gt;&gt;,</span></span>
+<span class="giallo-l"><span>    write</span><span style="color: #CF222E;">:</span><span style="color: #953800;"> RefCell</span><span>&lt;</span><span style="color: #953800;">BTreeMap</span><span>&lt;</span><span style="color: #953800;">RawFd</span><span>,</span><span style="color: #953800;"> Waker</span><span>&gt;&gt;,</span></span>
+<span class="giallo-l"><span>    counter</span><span style="color: #CF222E;">:</span><span style="color: #953800;"> Cell</span><span>&lt;</span><span style="color: #953800;">usize</span><span>&gt;,</span></span>
+<span class="giallo-l"><span>    wait_queue</span><span style="color: #CF222E;">:</span><span style="color: #953800;"> RefCell</span><span>&lt;</span><span style="color: #953800;">BTreeMap</span><span>&lt;</span><span style="color: #953800;">TaskId</span><span>,</span><span style="color: #953800;"> Task</span><span>&gt;&gt;,</span></span>
+<span class="giallo-l"><span>    run_queue</span><span style="color: #CF222E;">:</span><span style="color: #953800;"> RefCell</span><span>&lt;</span><span style="color: #953800;">VecDeque</span><span>&lt;</span><span style="color: #953800;">Wakeup</span><span>&gt;&gt;,</span></span>
+<span class="giallo-l"><span>}</span></span></code></pre>
 <ul>
 <li><code>read</code> 和 <code>write</code> 是 <code>BTreeMaps</code>，将文件描述符映射到唤醒器。</li>
 <li><code>wait_queue</code> 保存了阻塞的等待事件的任务。</li>
 <li><code>run_queue</code> 保存了唤醒消息。</li>
 </ul>
 <p>事件循环提供了在 <code>read</code> 和 <code>write</code> 事件中注册（和移除）兴趣的方法。让我们看看 <code>add_read_interest</code> 做了什么：</p>
-<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#a626a4;">fn </span><span style="color:#0184bc;">add_read_interest</span><span>(</span><span style="color:#a626a4;">&amp;</span><span style="color:#e45649;">self</span><span>, </span><span style="color:#e45649;">fd</span><span>: RawFd, </span><span style="color:#e45649;">waker</span><span>: Waker) {
-</span><span>    </span><span style="color:#a626a4;">if !</span><span style="color:#e45649;">self</span><span>.read.</span><span style="color:#0184bc;">borrow</span><span>().</span><span style="color:#0184bc;">contains_key</span><span>(</span><span style="color:#a626a4;">&amp;</span><span>fd) {
-</span><span>        </span><span style="color:#e45649;">self</span><span>.read.</span><span style="color:#0184bc;">borrow_mut</span><span>().</span><span style="color:#0184bc;">insert</span><span>(fd, waker);
-</span><span>    }
-</span><span>}
-</span></code></pre>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="rust"><span class="giallo-l"><span style="color: #CF222E;">fn</span><span style="color: #8250DF;"> add_read_interest</span><span>(</span><span style="color: #CF222E;">&amp;</span><span style="color: #0550AE;">self</span><span>, fd</span><span style="color: #CF222E;">:</span><span style="color: #953800;"> RawFd</span><span>, waker</span><span style="color: #CF222E;">:</span><span style="color: #953800;"> Waker</span><span>) {</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">    if !</span><span style="color: #0550AE;">self</span><span style="color: #CF222E;">.</span><span>read</span><span style="color: #CF222E;">.</span><span style="color: #8250DF;">borrow</span><span>()</span><span style="color: #CF222E;">.</span><span style="color: #8250DF;">contains_key</span><span>(</span><span style="color: #CF222E;">&amp;</span><span>fd) {</span></span>
+<span class="giallo-l"><span style="color: #0550AE;">        self</span><span style="color: #CF222E;">.</span><span>read</span><span style="color: #CF222E;">.</span><span style="color: #8250DF;">borrow_mut</span><span>()</span><span style="color: #CF222E;">.</span><span style="color: #8250DF;">insert</span><span>(fd, waker);</span></span>
+<span class="giallo-l"><span>    }</span></span>
+<span class="giallo-l"><span>}</span></span></code></pre>
 <p>但它仅仅是把 <code>fd</code> 和 <code>waker</code> 插入到 <code>read</code> 树中！所有的魔法到底发生在哪里？在主循环中。事件循环被叫做循环是有原因的。让我们看看：</p>
-<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#a626a4;">loop </span><span>{
-</span><span>    </span><span style="color:#a0a1a7;">// 事件循环迭代超时。如果没有描述符就绪我们也继续迭代。
-</span><span>    </span><span style="color:#a626a4;">let mut</span><span> tv: timeval </span><span style="color:#a626a4;">=</span><span> timeval {
-</span><span>        tv_sec: </span><span style="color:#c18401;">1</span><span>,
-</span><span>        tv_usec: </span><span style="color:#c18401;">0</span><span>,
-</span><span>    };
-</span><span>
-</span><span>    </span><span style="color:#a0a1a7;">// 初始化 fd_sets（文件描述符集）
-</span><span>    </span><span style="color:#a626a4;">let mut</span><span> read_fds: fd_set </span><span style="color:#a626a4;">= unsafe </span><span>{ std::mem::zeroed() };
-</span><span>    </span><span style="color:#a626a4;">let mut</span><span> write_fds: fd_set </span><span style="color:#a626a4;">= unsafe </span><span>{ std::mem::zeroed() };
-</span><span>
-</span><span>    </span><span style="color:#a626a4;">unsafe </span><span>{ </span><span style="color:#c18401;">FD_ZERO</span><span>(</span><span style="color:#a626a4;">&amp;mut</span><span> read_fds) };
-</span><span>    </span><span style="color:#a626a4;">unsafe </span><span>{ </span><span style="color:#c18401;">FD_ZERO</span><span>(</span><span style="color:#a626a4;">&amp;mut</span><span> write_fds) };
-</span></code></pre>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="rust"><span class="giallo-l"><span style="color: #CF222E;">loop</span><span> {</span></span>
+<span class="giallo-l"><span style="color: #6E7781;">    // 事件循环迭代超时。如果没有描述符就绪我们也继续迭代。</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">    let mut</span><span> tv</span><span style="color: #CF222E;">:</span><span> timeval</span><span style="color: #CF222E;"> =</span><span> timeval {</span></span>
+<span class="giallo-l"><span>        tv_sec</span><span style="color: #CF222E;">:</span><span style="color: #0550AE;"> 1</span><span>,</span></span>
+<span class="giallo-l"><span>        tv_usec</span><span style="color: #CF222E;">:</span><span style="color: #0550AE;"> 0</span><span>,</span></span>
+<span class="giallo-l"><span>    };</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #6E7781;">    // 初始化 fd_sets（文件描述符集）</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">    let mut</span><span> read_fds</span><span style="color: #CF222E;">:</span><span> fd_set</span><span style="color: #CF222E;"> = unsafe</span><span> {</span><span style="color: #953800;"> std</span><span style="color: #CF222E;">::</span><span style="color: #953800;">mem</span><span style="color: #CF222E;">::</span><span style="color: #8250DF;">zeroed</span><span>() };</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">    let mut</span><span> write_fds</span><span style="color: #CF222E;">:</span><span> fd_set</span><span style="color: #CF222E;"> = unsafe</span><span> {</span><span style="color: #953800;"> std</span><span style="color: #CF222E;">::</span><span style="color: #953800;">mem</span><span style="color: #CF222E;">::</span><span style="color: #8250DF;">zeroed</span><span>() };</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #CF222E;">    unsafe</span><span> {</span><span style="color: #0550AE;"> FD_ZERO</span><span>(</span><span style="color: #CF222E;">&amp;mut</span><span> read_fds) };</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">    unsafe</span><span> {</span><span style="color: #0550AE;"> FD_ZERO</span><span>(</span><span style="color: #CF222E;">&amp;mut</span><span> write_fds) };</span></span></code></pre>
 <p>唔哦，这里有非常多的 <code>unsafe</code>！但是别担心，这就是 C FFI 的工作方式。我们需要初始化一些 C 结构体，一个超时和 <code>fd_set</code>s。它们后面将被传递给 select(2) 函数。</p>
-<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span>    </span><span style="color:#a0a1a7;">// 将所有读兴趣加入到读 fd_sets
-</span><span>    </span><span style="color:#a626a4;">for</span><span> fd </span><span style="color:#a626a4;">in </span><span style="color:#e45649;">self</span><span>.read.</span><span style="color:#0184bc;">borrow</span><span>().</span><span style="color:#0184bc;">keys</span><span>() {
-</span><span>        </span><span style="color:#a626a4;">unsafe </span><span>{ </span><span style="color:#c18401;">FD_SET</span><span>(</span><span style="color:#a626a4;">*</span><span>fd, </span><span style="color:#a626a4;">&amp;mut</span><span> read_fds </span><span style="color:#a626a4;">as *mut</span><span> fd_set) };
-</span><span>        nfds </span><span style="color:#a626a4;">= </span><span>std::cmp::max(nfds, fd </span><span style="color:#a626a4;">+ </span><span style="color:#c18401;">1</span><span>);
-</span><span>    }
-</span><span>
-</span><span>    </span><span style="color:#a0a1a7;">// 将所有写兴趣加入到写 fd_sets
-</span><span>    </span><span style="color:#a626a4;">for</span><span> fd </span><span style="color:#a626a4;">in </span><span style="color:#e45649;">self</span><span>.write.</span><span style="color:#0184bc;">borrow</span><span>().</span><span style="color:#0184bc;">keys</span><span>() {
-</span><span>        </span><span style="color:#a626a4;">unsafe </span><span>{ </span><span style="color:#c18401;">FD_SET</span><span>(</span><span style="color:#a626a4;">*</span><span>fd, </span><span style="color:#a626a4;">&amp;mut</span><span> write_fds </span><span style="color:#a626a4;">as *mut</span><span> fd_set) };
-</span><span>        nfds </span><span style="color:#a626a4;">= </span><span>std::cmp::max(nfds, fd </span><span style="color:#a626a4;">+ </span><span style="color:#c18401;">1</span><span>);
-</span><span>    }
-</span></code></pre>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="rust"><span class="giallo-l"><span style="color: #6E7781;">    // 将所有读兴趣加入到读 fd_sets</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">    for</span><span> fd</span><span style="color: #CF222E;"> in</span><span style="color: #0550AE;"> self</span><span style="color: #CF222E;">.</span><span>read</span><span style="color: #CF222E;">.</span><span style="color: #8250DF;">borrow</span><span>()</span><span style="color: #CF222E;">.</span><span style="color: #8250DF;">keys</span><span>() {</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">        unsafe</span><span> {</span><span style="color: #0550AE;"> FD_SET</span><span>(</span><span style="color: #CF222E;">*</span><span>fd,</span><span style="color: #CF222E;"> &amp;mut</span><span> read_fds</span><span style="color: #CF222E;"> as *mut</span><span> fd_set) };</span></span>
+<span class="giallo-l"><span>        nfds</span><span style="color: #CF222E;"> =</span><span style="color: #953800;"> std</span><span style="color: #CF222E;">::</span><span style="color: #953800;">cmp</span><span style="color: #CF222E;">::</span><span style="color: #8250DF;">max</span><span>(nfds, fd</span><span style="color: #CF222E;"> +</span><span style="color: #0550AE;"> 1</span><span>);</span></span>
+<span class="giallo-l"><span>    }</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #6E7781;">    // 将所有写兴趣加入到写 fd_sets</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">    for</span><span> fd</span><span style="color: #CF222E;"> in</span><span style="color: #0550AE;"> self</span><span style="color: #CF222E;">.</span><span>write</span><span style="color: #CF222E;">.</span><span style="color: #8250DF;">borrow</span><span>()</span><span style="color: #CF222E;">.</span><span style="color: #8250DF;">keys</span><span>() {</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">        unsafe</span><span> {</span><span style="color: #0550AE;"> FD_SET</span><span>(</span><span style="color: #CF222E;">*</span><span>fd,</span><span style="color: #CF222E;"> &amp;mut</span><span> write_fds</span><span style="color: #CF222E;"> as *mut</span><span> fd_set) };</span></span>
+<span class="giallo-l"><span>        nfds</span><span style="color: #CF222E;"> =</span><span style="color: #953800;"> std</span><span style="color: #CF222E;">::</span><span style="color: #953800;">cmp</span><span style="color: #CF222E;">::</span><span style="color: #8250DF;">max</span><span>(nfds, fd</span><span style="color: #CF222E;"> +</span><span style="color: #0550AE;"> 1</span><span>);</span></span>
+<span class="giallo-l"><span>    }</span></span></code></pre>
 <p>这里我们将之前 <code>read</code> 和 <code>write</code> maps 中的文件描述符置入到 <code>fd_set</code>s 中。</p>
-<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span>    </span><span style="color:#a0a1a7;">// `select` 将阻塞到文件描述符上有一些事件发生或者超时
-</span><span>    </span><span style="color:#a626a4;">let</span><span> rv </span><span style="color:#a626a4;">= unsafe </span><span>{
-</span><span>        </span><span style="color:#0184bc;">select</span><span>(
-</span><span>            nfds,
-</span><span>            </span><span style="color:#a626a4;">&amp;mut</span><span> read_fds,
-</span><span>            </span><span style="color:#a626a4;">&amp;mut</span><span> write_fds,
-</span><span>            std::ptr::null_mut(),
-</span><span>            </span><span style="color:#a626a4;">&amp;mut</span><span> tv,
-</span><span>        )
-</span><span>    };
-</span><span>
-</span><span>    </span><span style="color:#a0a1a7;">// 不在乎错误
-</span><span>    </span><span style="color:#a626a4;">if</span><span> rv </span><span style="color:#a626a4;">== -</span><span style="color:#c18401;">1 </span><span>{
-</span><span>        panic!(</span><span style="color:#50a14f;">&quot;select()&quot;</span><span>);
-</span><span>    } </span><span style="color:#a626a4;">else if</span><span> rv </span><span style="color:#a626a4;">== </span><span style="color:#c18401;">0 </span><span>{
-</span><span>        debug!(</span><span style="color:#50a14f;">&quot;timeout&quot;</span><span>);
-</span><span>    } </span><span style="color:#a626a4;">else </span><span>{
-</span><span>        debug!(</span><span style="color:#50a14f;">&quot;data available on {} fds&quot;</span><span>, rv);
-</span><span>    }
-</span></code></pre>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="rust"><span class="giallo-l"><span style="color: #6E7781;">    // `select` 将阻塞到文件描述符上有一些事件发生或者超时</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">    let</span><span> rv</span><span style="color: #CF222E;"> = unsafe</span><span> {</span></span>
+<span class="giallo-l"><span style="color: #8250DF;">        select</span><span>(</span></span>
+<span class="giallo-l"><span>            nfds,</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">            &amp;mut</span><span> read_fds,</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">            &amp;mut</span><span> write_fds,</span></span>
+<span class="giallo-l"><span style="color: #953800;">            std</span><span style="color: #CF222E;">::</span><span style="color: #953800;">ptr</span><span style="color: #CF222E;">::</span><span style="color: #8250DF;">null_mut</span><span>(),</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">            &amp;mut</span><span> tv,</span></span>
+<span class="giallo-l"><span>        )</span></span>
+<span class="giallo-l"><span>    };</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #6E7781;">    // 不在乎错误</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">    if</span><span> rv</span><span style="color: #CF222E;"> == -</span><span style="color: #0550AE;">1</span><span> {</span></span>
+<span class="giallo-l"><span style="color: #8250DF;">        panic!</span><span>(</span><span style="color: #0A3069;">&quot;select()&quot;</span><span>);</span></span>
+<span class="giallo-l"><span>    }</span><span style="color: #CF222E;"> else if</span><span> rv</span><span style="color: #CF222E;"> ==</span><span style="color: #0550AE;"> 0</span><span> {</span></span>
+<span class="giallo-l"><span style="color: #8250DF;">        debug!</span><span>(</span><span style="color: #0A3069;">&quot;timeout&quot;</span><span>);</span></span>
+<span class="giallo-l"><span>    }</span><span style="color: #CF222E;"> else</span><span> {</span></span>
+<span class="giallo-l"><span style="color: #8250DF;">        debug!</span><span>(</span><span style="color: #0A3069;">&quot;data available on {} fds&quot;</span><span>, rv);</span></span>
+<span class="giallo-l"><span>    }</span></span></code></pre>
 <p>终于我们使用准备的参数调用了 <code>select</code>。<code>select()</code> 接受 3 个 <code>fd_set</code>s（我们在这个例子中忽略了第三个）和一个超时并且返回一些非 0 值如果一个（或多个）集合中的文件标识符就绪了。我们应该随后找到是哪些文件标识符！</p>
-<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span>    </span><span style="color:#a0a1a7;">// 检查是哪些文件标识符并将合适的 future 置入 run 队列
-</span><span>    </span><span style="color:#a626a4;">for </span><span>(fd, waker) </span><span style="color:#a626a4;">in </span><span style="color:#e45649;">self</span><span>.read.</span><span style="color:#0184bc;">borrow</span><span>().</span><span style="color:#0184bc;">iter</span><span>() {
-</span><span>        </span><span style="color:#a626a4;">let</span><span> is_set </span><span style="color:#a626a4;">= unsafe </span><span>{ </span><span style="color:#c18401;">FD_ISSET</span><span>(</span><span style="color:#a626a4;">*</span><span>fd, </span><span style="color:#a626a4;">&amp;mut</span><span> read_fds </span><span style="color:#a626a4;">as *mut</span><span> fd_set) };
-</span><span>        </span><span style="color:#a626a4;">if</span><span> is_set {
-</span><span>            waker.</span><span style="color:#0184bc;">wake</span><span>();
-</span><span>        }
-</span><span>    }
-</span><span>
-</span><span>    </span><span style="color:#a0a1a7;">// 对 write 做一样的事
-</span><span>    </span><span style="color:#a626a4;">for </span><span>(fd, waker) </span><span style="color:#a626a4;">in </span><span style="color:#e45649;">self</span><span>.write.</span><span style="color:#0184bc;">borrow</span><span>().</span><span style="color:#0184bc;">iter</span><span>() {
-</span><span>        </span><span style="color:#a626a4;">let</span><span> is_set </span><span style="color:#a626a4;">= unsafe </span><span>{ </span><span style="color:#c18401;">FD_ISSET</span><span>(</span><span style="color:#a626a4;">*</span><span>fd, </span><span style="color:#a626a4;">&amp;mut</span><span> write_fds </span><span style="color:#a626a4;">as *mut</span><span> fd_set) };
-</span><span>        </span><span style="color:#a626a4;">if</span><span> is_set {
-</span><span>            waker.</span><span style="color:#0184bc;">wake</span><span>();
-</span><span>        }
-</span><span>    }
-</span></code></pre>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="rust"><span class="giallo-l"><span style="color: #6E7781;">    // 检查是哪些文件标识符并将合适的 future 置入 run 队列</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">    for</span><span> (fd, waker)</span><span style="color: #CF222E;"> in</span><span style="color: #0550AE;"> self</span><span style="color: #CF222E;">.</span><span>read</span><span style="color: #CF222E;">.</span><span style="color: #8250DF;">borrow</span><span>()</span><span style="color: #CF222E;">.</span><span style="color: #8250DF;">iter</span><span>() {</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">        let</span><span> is_set</span><span style="color: #CF222E;"> = unsafe</span><span> {</span><span style="color: #0550AE;"> FD_ISSET</span><span>(</span><span style="color: #CF222E;">*</span><span>fd,</span><span style="color: #CF222E;"> &amp;mut</span><span> read_fds</span><span style="color: #CF222E;"> as *mut</span><span> fd_set) };</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">        if</span><span> is_set {</span></span>
+<span class="giallo-l"><span>            waker</span><span style="color: #CF222E;">.</span><span style="color: #8250DF;">wake</span><span>();</span></span>
+<span class="giallo-l"><span>        }</span></span>
+<span class="giallo-l"><span>    }</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #6E7781;">    // 对 write 做一样的事</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">    for</span><span> (fd, waker)</span><span style="color: #CF222E;"> in</span><span style="color: #0550AE;"> self</span><span style="color: #CF222E;">.</span><span>write</span><span style="color: #CF222E;">.</span><span style="color: #8250DF;">borrow</span><span>()</span><span style="color: #CF222E;">.</span><span style="color: #8250DF;">iter</span><span>() {</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">        let</span><span> is_set</span><span style="color: #CF222E;"> = unsafe</span><span> {</span><span style="color: #0550AE;"> FD_ISSET</span><span>(</span><span style="color: #CF222E;">*</span><span>fd,</span><span style="color: #CF222E;"> &amp;mut</span><span> write_fds</span><span style="color: #CF222E;"> as *mut</span><span> fd_set) };</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">        if</span><span> is_set {</span></span>
+<span class="giallo-l"><span>            waker</span><span style="color: #CF222E;">.</span><span style="color: #8250DF;">wake</span><span>();</span></span>
+<span class="giallo-l"><span>        }</span></span>
+<span class="giallo-l"><span>    }</span></span></code></pre>
 <p>我们再次遍历了我们的 map 并检查它们是否在 <code>fd_set</code>s 中被设为就绪。当它们被设为就绪，我们就调用它们关联的唤醒器的 wake 方法，这将会把 Wakeup 事件置于准备执行队列上。</p>
-<pre data-lang="rust" style="background-color:#fafafa;color:#383a42;" class="language-rust "><code class="language-rust" data-lang="rust"><span>    </span><span style="color:#a626a4;">let mut</span><span> tasks_done </span><span style="color:#a626a4;">= </span><span>Vec::new();
-</span><span>
-</span><span>    </span><span style="color:#a0a1a7;">// 现在从 run 队列中 pop 任务并 poll 它们
-</span><span>    </span><span style="color:#a626a4;">while let </span><span>Some(wakeup) </span><span style="color:#a626a4;">= </span><span style="color:#e45649;">self</span><span>.run_queue.</span><span style="color:#0184bc;">borrow_mut</span><span>().</span><span style="color:#0184bc;">pop_front</span><span>() {
-</span><span>        </span><span style="color:#a626a4;">let mut</span><span> handle </span><span style="color:#a626a4;">= </span><span style="color:#e45649;">self</span><span>.</span><span style="color:#0184bc;">handle</span><span>();
-</span><span>
-</span><span>        </span><span style="color:#a626a4;">if let </span><span>Some(</span><span style="color:#a626a4;">ref mut</span><span> task) </span><span style="color:#a626a4;">= </span><span style="color:#e45649;">self</span><span>.wait_queue.</span><span style="color:#0184bc;">borrow_mut</span><span>().</span><span style="color:#0184bc;">get_mut</span><span>(</span><span style="color:#a626a4;">&amp;</span><span>wakeup.index) {
-</span><span>            </span><span style="color:#a0a1a7;">// 如果一个任务返回了 `Poll::Ready`, 我们就完成了它
-</span><span>            </span><span style="color:#a626a4;">if</span><span> task.</span><span style="color:#0184bc;">poll</span><span>(wakeup.waker, </span><span style="color:#a626a4;">&amp;mut</span><span> handle).</span><span style="color:#0184bc;">is_ready</span><span>() {
-</span><span>                tasks_done.</span><span style="color:#0184bc;">push</span><span>(wakeup.index);
-</span><span>            }
-</span><span>        }
-</span><span>    }
-</span><span>
-</span><span>    </span><span style="color:#a0a1a7;">// 删除已经完成的任务
-</span><span>    </span><span style="color:#a626a4;">for</span><span> idx </span><span style="color:#a626a4;">in</span><span> tasks_done {
-</span><span>        </span><span style="color:#e45649;">self</span><span>.wait_queue.</span><span style="color:#0184bc;">borrow_mut</span><span>().</span><span style="color:#0184bc;">remove</span><span>(</span><span style="color:#a626a4;">&amp;</span><span>idx);
-</span><span>    }
-</span><span>
-</span><span>    </span><span style="color:#a0a1a7;">// 如果 `wait_queue` 中没有更多的任务，停止循环
-</span><span>    </span><span style="color:#a626a4;">if </span><span style="color:#e45649;">self</span><span>.wait_queue.</span><span style="color:#0184bc;">borrow</span><span>().</span><span style="color:#0184bc;">is_empty</span><span>() {
-</span><span>        </span><span style="color:#a626a4;">return</span><span>;
-</span><span>    }
-</span></code></pre>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="rust"><span class="giallo-l"><span style="color: #CF222E;">    let mut</span><span> tasks_done</span><span style="color: #CF222E;"> =</span><span style="color: #953800;"> Vec</span><span style="color: #CF222E;">::</span><span style="color: #8250DF;">new</span><span>();</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #6E7781;">    // 现在从 run 队列中 pop 任务并 poll 它们</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">    while let</span><span style="color: #953800;"> Some</span><span>(wakeup)</span><span style="color: #CF222E;"> =</span><span style="color: #0550AE;"> self</span><span style="color: #CF222E;">.</span><span>run_queue</span><span style="color: #CF222E;">.</span><span style="color: #8250DF;">borrow_mut</span><span>()</span><span style="color: #CF222E;">.</span><span style="color: #8250DF;">pop_front</span><span>() {</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">        let mut</span><span> handle</span><span style="color: #CF222E;"> =</span><span style="color: #0550AE;"> self</span><span style="color: #CF222E;">.</span><span style="color: #8250DF;">handle</span><span>();</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #CF222E;">        if let</span><span style="color: #953800;"> Some</span><span>(</span><span style="color: #CF222E;">ref mut</span><span> task)</span><span style="color: #CF222E;"> =</span><span style="color: #0550AE;"> self</span><span style="color: #CF222E;">.</span><span>wait_queue</span><span style="color: #CF222E;">.</span><span style="color: #8250DF;">borrow_mut</span><span>()</span><span style="color: #CF222E;">.</span><span style="color: #8250DF;">get_mut</span><span>(</span><span style="color: #CF222E;">&amp;</span><span>wakeup</span><span style="color: #CF222E;">.</span><span>index) {</span></span>
+<span class="giallo-l"><span style="color: #6E7781;">            // 如果一个任务返回了 `Poll::Ready`, 我们就完成了它</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">            if</span><span> task</span><span style="color: #CF222E;">.</span><span style="color: #8250DF;">poll</span><span>(wakeup</span><span style="color: #CF222E;">.</span><span>waker,</span><span style="color: #CF222E;"> &amp;mut</span><span> handle)</span><span style="color: #CF222E;">.</span><span style="color: #8250DF;">is_ready</span><span>() {</span></span>
+<span class="giallo-l"><span>                tasks_done</span><span style="color: #CF222E;">.</span><span style="color: #8250DF;">push</span><span>(wakeup</span><span style="color: #CF222E;">.</span><span>index);</span></span>
+<span class="giallo-l"><span>            }</span></span>
+<span class="giallo-l"><span>        }</span></span>
+<span class="giallo-l"><span>    }</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #6E7781;">    // 删除已经完成的任务</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">    for</span><span> idx</span><span style="color: #CF222E;"> in</span><span> tasks_done {</span></span>
+<span class="giallo-l"><span style="color: #0550AE;">        self</span><span style="color: #CF222E;">.</span><span>wait_queue</span><span style="color: #CF222E;">.</span><span style="color: #8250DF;">borrow_mut</span><span>()</span><span style="color: #CF222E;">.</span><span style="color: #8250DF;">remove</span><span>(</span><span style="color: #CF222E;">&amp;</span><span>idx);</span></span>
+<span class="giallo-l"><span>    }</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #6E7781;">    // 如果 `wait_queue` 中没有更多的任务，停止循环</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">    if</span><span style="color: #0550AE;"> self</span><span style="color: #CF222E;">.</span><span>wait_queue</span><span style="color: #CF222E;">.</span><span style="color: #8250DF;">borrow</span><span>()</span><span style="color: #CF222E;">.</span><span style="color: #8250DF;">is_empty</span><span>() {</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">        return</span><span>;</span></span>
+<span class="giallo-l"><span>    }</span></span></code></pre>
 <p>我们消耗了 <code>run_queue</code>，获取 <code>wait_queue</code> 中的任务索引并询问这些任务。Ready(done) 任务将从 <code>wait_queue</code> 中被移除。</p>
 <h2 id="yi-ge-future-de-yi-sheng"><a class="zola-anchor" href="#yi-ge-future-de-yi-sheng" aria-label="Anchor link for: yi-ge-future-de-yi-sheng">
     ⚓
@@ -381,8 +376,8 @@
     ⚓
 </a>
 感谢</h2>
-<p>感谢 futures 团队的所有人。特别感谢 <a href="https://github.com/aturon">@aturon</a> 的鼓励和 <a href="https://github.com/MajorBreakfast">@MajorBreakfast</a> 的编辑。</p>
-<p>这就是今天的所有内容！你可以在 <a href="https://github.com/polachok/toykio/tree/futures-0.3">github</a> 和 <a href="https://crates.io/crates/toykio">crates.io</a> 上找到 toykio。Hacking 快乐！</p>
+<p>感谢 futures 团队的所有人。特别感谢 <a rel="external" href="https://github.com/aturon">@aturon</a> 的鼓励和 <a rel="external" href="https://github.com/MajorBreakfast">@MajorBreakfast</a> 的编辑。</p>
+<p>这就是今天的所有内容！你可以在 <a rel="external" href="https://github.com/polachok/toykio/tree/futures-0.3">github</a> 和 <a rel="external" href="https://crates.io/crates/toykio">crates.io</a> 上找到 toykio。Hacking 快乐！</p>
 </section>
     </article>
 
@@ -405,7 +400,7 @@
 
         
             <div id="powered-by-container">
-                <small id="powered-by">Powered by <a href="https://www.getzola.org">Zola</a></small>
+                <small id="powered-by">Powered by <a rel="external" href="https://www.getzola.org">Zola</a></small>
             </div>
         
     </div>

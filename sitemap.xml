@@ -25,6 +25,10 @@
         <loc>https://blog.linyinfeng.com/links/</loc>
     </url>
     <url>
+        <loc>https://blog.linyinfeng.com/posts/homemade-nix-s3-cache/</loc>
+        <lastmod>2026-01-23T16:21:36+08:00</lastmod>
+    </url>
+    <url>
         <loc>https://blog.linyinfeng.com/posts/how-do-rust-closures-work/</loc>
         <lastmod>2021-01-15T13:19:42+08:00</lastmod>
     </url>
@@ -80,6 +84,12 @@
         <loc>https://blog.linyinfeng.com/tags/lei-xing-xi-tong/</loc>
     </url>
     <url>
+        <loc>https://blog.linyinfeng.com/tags/nix-cache/</loc>
+    </url>
+    <url>
+        <loc>https://blog.linyinfeng.com/tags/nix/</loc>
+    </url>
+    <url>
         <loc>https://blog.linyinfeng.com/tags/oracle-cloud/</loc>
     </url>
     <url>
@@ -90,6 +100,9 @@
     </url>
     <url>
         <loc>https://blog.linyinfeng.com/tags/rust/</loc>
+    </url>
+    <url>
+        <loc>https://blog.linyinfeng.com/tags/s3/</loc>
     </url>
     <url>
         <loc>https://blog.linyinfeng.com/tags/tu-cao/</loc>
