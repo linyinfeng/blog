@@ -66,6 +66,18 @@
 
         
         
+            
+    <meta property="og:url" content="https://blog.linyinfeng.com/posts/homemade-nix-s3-cache/" />
+        <meta property="og:description" content="介绍一下我自己已经用了三年多的 Nix S3 Binary Cache 的实现方案和思路" />
+        <meta property="og:title" content="土制 Nix S3 Binary Cache | Yinfeng&#x27;s" />
+        <meta property="og:image" content="https://blog.linyinfeng.com/posts/homemade-nix-s3-cache/s3-cache-flow.svg?h=bc0611f630ddd9583a4f" />
+    <meta property="og:site_name" content="Yinfeng&#x27;s" />
+    <meta property="og:locale" content="zh-CN" />
+    <meta property="og:type" content="website" />
+        <meta property="og:updated_time" content="2026-01-24" />
+
+        
+        
             <link rel="alternate" type="application/atom+xml" title="Atom" href="https://blog.linyinfeng.com/atom.xml" />
         
         
@@ -267,7 +279,7 @@
         </div>
         
         <div class="date-container">
-	    <time datetime=2026-01-23T23:32:25+08:00>2026-01-23 23:32</time>
+	    <time datetime=2026-01-24T00:47:43+08:00>2026-01-24 00:47</time>
             <span class="date-label">(updated)</span>
         </div>
         
@@ -299,10 +311,7 @@
 <li><strong>极佳兼容性</strong>：使用 <code>nix copy</code> 直接上传</li>
 </ol>
 <p>注：第一点与其他特色并没有冲突。</p>
-<span id="continue-reading"></span><figure>
-    <img src="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;homemade-nix-s3-cache&#x2F;s3-cache-flow.svg?h=bc0611f630ddd9583a4f" alt="一张 S3 binary cache 的流程图" />
-    <figcaption>我的 S3 cache 的工作流程图</figcaption>
-</figure>
+<span id="continue-reading"></span>
 <p>本文所有命令都使用实验性的 Nix CLI v3，需开启 <code>experimental-features = nix-command flakes</code>。</p>
 <h2 id="zui-jian-dan-de-nix-s3-binary-cache"><a class="zola-anchor" href="#zui-jian-dan-de-nix-s3-binary-cache" aria-label="Anchor link for: zui-jian-dan-de-nix-s3-binary-cache">
     ⚓
@@ -500,6 +509,10 @@ GC</h2>
 </a>
 结语</h2>
 <p>通过以上配置，我已经使用了三年多的 Nix S3 binary cache，成本极低（目前每月账单都是 0 USD），且不论是上传还是下载的性能都远超需要中间服务器的方案，如 <a rel="external" href="https://github.com/zhaofengli/attic">attic</a>。</p>
+<figure>
+    <img src="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;homemade-nix-s3-cache&#x2F;s3-cache-flow.svg?h=bc0611f630ddd9583a4f" alt="一张 S3 binary cache 的流程图" />
+    <figcaption>我的 S3 cache 的工作流程图</figcaption>
+</figure>
 <p>但该方案也是一个土制方案：</p>
 <ol>
 <li>没有基于时间的 GC，必须自己维护 GC roots</li>

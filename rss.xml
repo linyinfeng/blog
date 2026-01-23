@@ -3,11 +3,11 @@
     <channel>
       <title>Yinfeng&#x27;s</title>
       <link>https://blog.linyinfeng.com</link>
-      <description></description>
+      <description>Yinfeng&#x27;s Blog</description>
       <generator>Zola</generator>
       <language>zh-CN</language>
       <atom:link href="https://blog.linyinfeng.com/rss.xml" rel="self" type="application/rss+xml"/>
-      <lastBuildDate>Fri, 23 Jan 2026 23:57:39 +0800</lastBuildDate>
+      <lastBuildDate>Sat, 24 Jan 2026 00:47:43 +0800</lastBuildDate>
       <item>
           <title>如何用 LaTeX 画 SVG 矢量图</title>
           <pubDate>Fri, 23 Jan 2026 23:32:25 +0800</pubDate>
