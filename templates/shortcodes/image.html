@@ -1,2 +1,5 @@
 {%- set url = get_url(path=page.colocated_path ~ path, cachebust=true) -%}
-<img src="{{ url }}" alt="{{ alt }}">
+<figure>
+    <img src="{{ url }}" alt="{{ alt }}"{% if width %} width="{{ width }}"{% endif %} {% if height %} height="{{ height }}"{% endif %}{% if class %} class="{{ class }}"{% endif %}/>
+    {% if caption %}<figcaption>{{ caption }}</figcaption>{% endif %}
+</figure>

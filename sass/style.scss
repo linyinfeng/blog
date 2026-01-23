@@ -12,6 +12,7 @@ $sidebar-shadow-color: $theme-shadow;
 $floating-aside-border-color: black;
 $link-default-color: $theme-color;
 $date-color: gray;
+$caption-color: darken(gray, 20%);
 $main-container-max-width: 760px;
 $aside-width: 240px;
 $layout-change-width: 980px;
@@ -57,6 +58,14 @@ code {
 
 img {
   max-width: 100%;
+}
+
+figure {
+  text-align: center;
+  figcaption {
+    font-size: 0.9em;
+    color: $caption-color;
+  }
 }
 
 .zola-anchor {

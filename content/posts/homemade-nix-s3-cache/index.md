@@ -2,7 +2,7 @@
 title = "土制 Nix S3 Binary Cache"
 description = ""
 date = 2026-01-23 16:21:36+08:00
-updated = 2026-01-23 16:21:36+08:00
+updated = 2026-01-23 23:32:25+08:00
 author = "Yinfeng"
 draft = false
 [taxonomies]
@@ -27,7 +27,7 @@ license = "This work is licensed under a [Creative Commons Attribution-NonCommer
 
 <!-- more -->
 
-{{ image(path="s3-cache-flow.svg", alt="一张 S3 binary cache 的流程图")}}
+{{ image(path="s3-cache-flow.svg", alt="一张 S3 binary cache 的流程图", caption="我的 S3 cache 的工作流程图")}}
 
 本文所有命令都使用实验性的 Nix CLI v3，需开启 `experimental-features = nix-command flakes`。
 
@@ -90,8 +90,6 @@ cache.li7g.com:YIVuYf8AjnOc5oncjClmtM19RaAZfOKLFFyZUpOrfqM=
 
 我使用公开的 Cloudflare R2 作为存储，设置了自定义域名 `cache.li7g.com`，并配置好写入使用的 token：
 
-<https://github.com/linyinfeng/dotfiles/blob/3e0be19e10fbbcf08bab95583f6e3ae61cdf4af9/terraform/cloudflare.tf#L427-L472>
-
 ```terraform
 resource "cloudflare_r2_bucket" "cache" {
   account_id    = local.cloudflare_main_account_id
@@ -123,9 +121,9 @@ resource "cloudflare_api_token" "cache" {
 }
 ```
 
-使用时，只需要做如下设置：
+[（代码链接）](https://github.com/linyinfeng/dotfiles/blob/3e0be19e10fbbcf08bab95583f6e3ae61cdf4af9/terraform/cloudflare.tf#L427-L472)
 
-<https://github.com/linyinfeng/dotfiles/blob/3e0be19e10fbbcf08bab95583f6e3ae61cdf4af9/nixos/profiles/nix/settings/default.nix#L45-L52>
+使用时，只需要做如下设置：
 
 ```nix
 {
@@ -137,6 +135,8 @@ resource "cloudflare_api_token" "cache" {
     };
 }
 ```
+
+[（代码链接）](https://github.com/linyinfeng/dotfiles/blob/3e0be19e10fbbcf08bab95583f6e3ae61cdf4af9/nixos/profiles/nix/settings/default.nix#L45-L52)
 
 ## 忽略上游已有内容
 
@@ -282,11 +282,7 @@ Sig: cache.nixos.org-1:K25JMfP03adJ85zC7xg8qLa2LEjK7edYMZ+JzZyaZTuKYL6EXDoPXFWaM
 
 ### 我的配置
 
-我配置了一个 systemd 服务对 S3 cache 每晚执行一次 GC：
-
-<https://github.com/linyinfeng/dotfiles/blob/3e0be19e10fbbcf08bab95583f6e3ae61cdf4af9/nixos/profiles/services/hydra/_cache.nix#L58-L99>
-
-服务内容其实就是调用一次 `nix-gc-s3` 脚本。
+我配置了一个 [systemd 服务](https://github.com/linyinfeng/dotfiles/blob/3e0be19e10fbbcf08bab95583f6e3ae61cdf4af9/nixos/profiles/services/hydra/_cache.nix#L58-L99)对 S3 cache 每晚执行一次 GC，服务内容其实就是调用一次 `nix-gc-s3` 脚本。
 
 但这里仍然有需要注意的事项：`nix-gc-s3` 和 `nix copy` 不应该同时运行，所以我只在固定的 systemd 服务中运行 `nix-gc-s3` 和 `nix copy`，并且用 `flock` 加了互斥锁。
 

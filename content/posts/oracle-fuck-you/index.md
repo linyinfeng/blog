@@ -58,9 +58,9 @@ license = "This work is licensed under a [Creative Commons Attribution-NonCommer
 
 `GetCompartment` 操作 `401`，随即尝试打开机器上部署的 grafana 查看，Cloudflare 提示主机无响应。
 
-登录 Oracle Cloud web 页面（它居然还给我登录）查看 instance 状态，结果为：You don’t have permission to view these resources in this compartment. Try another compartment, or contact your administrator for help.
+登录 Oracle Cloud web 页面（它居然还给我登录）查看 instances 状态，结果为：You don’t have permission to view these resources in this compartment. Try another compartment, or contact your administrator for help.
 
-{{ image(path="instances-page.png", alt="Instances page says: You don’t have permission to view these resources in this compartment. Try another compartment, or contact your administrator for help.")}}
+{{ image(path="instances-page.png", alt="Instances page says: You don’t have permission to view these resources in this compartment. Try another compartment, or contact your administrator for help.", caption="Instances 状态截图")}}
 
 看来我的免费实例是彻底挂了。
 

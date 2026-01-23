@@ -21,7 +21,7 @@ stdenvNoCC.mkDerivation {
 
   buildPhase = ''
     xelatex --no-pdf "${name}.tex"
-    dvisvgm --no-fonts "${name}.xdv"
+    dvisvgm --no-fonts --bbox=papersize "${name}.xdv"
     magick \
         -background none \
         "${name}.svg" \
