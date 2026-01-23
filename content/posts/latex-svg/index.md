@@ -2,7 +2,7 @@
 title = "如何用 LaTeX 画 SVG 矢量图"
 description = ""
 date = 2026-01-23 23:32:25+08:00
-updated = 2026-01-23 23:55:56+08:00
+updated = 2026-01-23 23:57:39+08:00
 author = "Yinfeng"
 draft = false
 [taxonomies]
@@ -109,7 +109,7 @@ license = "This work is licensed under a [Creative Commons Attribution-NonCommer
 
 （当时我不知道怎么想的就画了一个直径 40cm 的巨大 logo。）
 
-由 Nix 调用 $\TeX$ 和 ImageMagick [构建](https://github.com/linyinfeng/blog/blob/b6f1d0dd8fba8d38fc45488f8461580ebaae7d47/nix/favicon.nix)生成。
+由 Nix 调用 $\TeX$ 和 [ImageMagick](https://imagemagick.org) 构建生成（代码可见[本站源码](https://github.com/linyinfeng/blog/blob/b6f1d0dd8fba8d38fc45488f8461580ebaae7d47/nix/favicon.nix)）。
 
 ## 参考
 
