@@ -25,9 +25,9 @@ license = "This work is licensed under a [Creative Commons Attribution-NonCommer
 
 注：第一点与其他特色并没有冲突。
 
-{{ image(path="s3-cache-flow.svg", alt="一张 S3 binary cache 的流程图")}}
-
 <!-- more -->
+
+{{ image(path="s3-cache-flow.svg", alt="一张 S3 binary cache 的流程图")}}
 
 本文所有命令都使用实验性的 Nix CLI v3，需开启 `experimental-features = nix-command flakes`。
 
