@@ -2,7 +2,7 @@
 title = "土制 Nix S3 Binary Cache"
 # description = ""
 date = 2026-01-23 16:21:36+08:00
-updated = 2026-01-24 00:47:43+08:00
+updated = 2026-01-24 01:57:10+08:00
 author = "Yinfeng"
 draft = false
 [taxonomies]
@@ -12,7 +12,7 @@ tags = ["Nix", "Nix Cache", "S3"]
 license_image = "license-buttons/l/by-nc-sa/4.0/88x31.png"
 license_image_alt = "CC BY-NC-SA 4.0"
 license = "This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/)"
-thumbnail = "s3-cache-flow.svg"
+thumbnail = "nix-cache-overlay-screenshot.png"
 +++
 
 介绍一下我自己已经用了三年多的 Nix S3 Binary Cache 的实现方案和思路。
@@ -176,6 +176,10 @@ $ nix path-info /run/current-system --closure-size --human-readable
 2. 把所有上游尝试完毕都 404 后，对请求做认证，成功后把请求签上 SigV4 签名，转发到 S3 存储服务。
 
 认证部分直接忽略签名，把客户端提供的 `AWS_ACCESS_KEY_ID` 当成一个 token 来使用。因此不容易在中间代理过程中出错，代价是降低了一些安全性。
+
+由于 `nix-cache-overlay` 直接转发请求，因此可以直接支持 S3 multipart 上传：
+
+{{ image(path="nix-cache-overlay-screenshot.png", alt="一张 Journald 的截图，内容是 nix-cache-overlay 的日志", caption="一张含有 multipart 上传的日志截图") }}
 
 使用方法就是首先起一个 nix-cache-overlay 服务（添加 overlay 和 NixOS module 后）：
 

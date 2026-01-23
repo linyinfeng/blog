@@ -261,7 +261,8 @@
         <meta property="og:title" content="{{ config.title }}" />
     {%- endif %}
     {%- if page.extra.thumbnail %}
-        <meta property="og:image" content="{{ get_url(path=page.path ~ page.extra.thumbnail, cachebust=true) }}" />
+        {% set image = resize_image(path=page.path ~ page.extra.thumbnail, format="png", width=1200, height=630, op="fill") %}
+        <meta property="og:image" content="{{ image.url }}" />
     {%- else %}
         <meta property="og:image" content="{{ get_url(path=cfg.default_image, cachebust=true) }}" />
     {%- endif %}
