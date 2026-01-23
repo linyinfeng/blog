@@ -2,7 +2,7 @@
 title = "如何用 LaTeX 画 SVG 矢量图"
 description = ""
 date = 2026-01-23 23:32:25+08:00
-updated = 2026-01-23 23:32:25+08:00
+updated = 2026-01-23 23:43:23+08:00
 author = "Yinfeng"
 draft = false
 [taxonomies]
@@ -67,7 +67,7 @@ license = "This work is licensed under a [Creative Commons Attribution-NonCommer
 
 解决方法有多种：
 
-1. 我们可以使用现代的 WOFF/WOFF2 字体格式，将字体嵌入 SVG。使用 `--font-format=woff` 选项。
+1. 我们可以使用现代的 WOFF/WOFF2 字体格式，将字体嵌入 SVG。使用 `--font-format=woff/woff2` 选项。（其实 dvisvgm 还支持嵌入 TTF，但这听起来很不浏览器。）
 
    ```bash
    dvisvgm --font-format=woff2 image.dvi
