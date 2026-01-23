@@ -1,6 +1,6 @@
 # The URL the site will be built for
 base_url = "https://blog.linyinfeng.com"
-title = "Yinfeng's"
+title = "Yinfeng's Blog"
 #description = "Just a blog"
 
 default_language = "zh-CN"
