@@ -92,4 +92,3 @@ link = "https://mastodon.li7g.com/@yinfeng"
 
 [extra.open_graph]
 enable = true
-default_thumbnail = "favicon.svg"
