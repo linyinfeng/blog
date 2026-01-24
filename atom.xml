@@ -5,8 +5,27 @@
     <link rel="self" type="application/atom+xml" href="https://blog.linyinfeng.com/atom.xml"/>
     <link rel="alternate" type="text/html" href="https://blog.linyinfeng.com"/>
     <generator uri="https://www.getzola.org/">Zola</generator>
-    <updated>2026-01-24T02:42:21+08:00</updated>
+    <updated>2026-01-24T17:10:00+08:00</updated>
     <id>https://blog.linyinfeng.com/atom.xml</id>
+    <entry xml:lang="zh-CN">
+        <title>土制 Nix Flake Channel</title>
+        <published>2026-01-24T17:10:00+08:00</published>
+        <updated>2026-01-24T17:10:00+08:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://blog.linyinfeng.com/posts/homemade-nix-flake-channel/"/>
+        <id>https://blog.linyinfeng.com/posts/homemade-nix-flake-channel/</id>
+        
+        <summary type="html">&lt;p&gt;这是 Nix 土制系列的第二篇文章，继&lt;a href=&quot;https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;homemade-nix-s3-cache&#x2F;&quot;&gt;土制 Nix S3 Binary Cache&lt;&#x2F;a&gt;之后，继续介绍我的 Nix channel 方案。即使是 all-in flake 的用法，channel 这个概念仍然非常有用，甚至在某些场景下更重要了，因为它表明了可用性。&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
     <entry xml:lang="zh-CN">
         <title>如何用 LaTeX 画 SVG 矢量图</title>
         <published>2026-01-23T23:32:25+08:00</published>

@@ -25,6 +25,10 @@
         <loc>https://blog.linyinfeng.com/links/</loc>
     </url>
     <url>
+        <loc>https://blog.linyinfeng.com/posts/homemade-nix-flake-channel/</loc>
+        <lastmod>2026-01-24T17:10:00+08:00</lastmod>
+    </url>
+    <url>
         <loc>https://blog.linyinfeng.com/posts/homemade-nix-s3-cache/</loc>
         <lastmod>2026-01-24T02:42:21+08:00</lastmod>
     </url>
@@ -77,6 +81,9 @@
     </url>
     <url>
         <loc>https://blog.linyinfeng.com/tags/han-shu-shi-bian-cheng/</loc>
+    </url>
+    <url>
+        <loc>https://blog.linyinfeng.com/tags/hydra/</loc>
     </url>
     <url>
         <loc>https://blog.linyinfeng.com/tags/ji-suan-li-lun/</loc>

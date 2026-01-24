@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang=zh-CN>
+<head>
+    
+        <title>
+    土制 Nix Flake Channel -
+    Yinfeng&#x27;s
+</title>
+        
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel=stylesheet type="text/css" href=https://blog.linyinfeng.com/normalize.css?h=580818700724d42d7fcc />
+        <link rel=stylesheet type="text/css" href=https://blog.linyinfeng.com/style.css?h=055736ec043ea4794f77 />
+        <script defer src=https://blog.linyinfeng.com/layout-helper.js?h=f433ff057abd07e8dc0b></script>
+        
+            
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-K74P2G7');</script>
+    <!-- End Google Tag Manager -->
+
+        
+        
+            
+                
+    <link rel="stylesheet" href="https://blog.linyinfeng.com/katex/katex.min.css?h=e189fd0238811989c364" />
+    <script defer src="https://blog.linyinfeng.com/katex/katex.min.js?h=6b909443e6c8f6e5d24c"></script>
+    <script defer src="https://blog.linyinfeng.com/katex/contrib/mathtex-script-type.min.js?h=0799b28b8bc80621fc86"></script>
+    <script defer src="https://blog.linyinfeng.com/katex/contrib/copy-tex.min.js?h=07770af90943a1de1a10"></script>
+    <script defer src="https://blog.linyinfeng.com/katex/contrib/auto-render.min.js?h=bb53eb953394531aae36"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+    macros: {
+        "\\set": "\\left\\{ #1 \\right\\}"
+    },
+    delimiters: [
+        {left: "$$",  right: "$$",  display: true },
+        {left: "$",   right: "$",   display: false},
+        {left: "\\(", right: "\\)", display: false},
+        {left: "\\[", right: "\\]", display: true }
+    ]
+}
+ );
+        });
+    </script>
+
+            
+        
+        
+            
+    <script src="https://giscus.app/client.js"
+            data-repo="linyinfeng&#x2F;blog"
+            data-repo-id="MDEwOlJlcG9zaXRvcnkxNDMxMjU5NTA="
+            data-category-id="MDE4OkRpc2N1c3Npb25DYXRlZ29yeTMyOTkyOTcy"
+            data-mapping="pathname"
+            data-reactions-enabled="1"
+            data-theme="light"
+            crossorigin="anonymous"
+            async>
+    </script>
+
+        
+        
+            
+    <meta property="og:url" content="https://blog.linyinfeng.com/posts/homemade-nix-flake-channel/" />
+        <meta property="og:description" content="这是 Nix 土制系列的第二篇文章，继土制 Nix S3 Binary Cache之后，继续介绍我的 Nix channel 方案。即使是 all-in flake 的用法，channel 这个概念仍然非常有用，甚至在某些场景下更重要了，因为它表明了可用性。" />
+        <meta property="og:title" content="土制 Nix Flake Channel | Yinfeng&#x27;s" />
+        
+        <meta property="og:image" content="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;processed_images&#x2F;hydra-and-flakes.ca6355e3a50a6762.png" />
+    <meta property="og:site_name" content="Yinfeng&#x27;s" />
+    <meta property="og:locale" content="zh-CN" />
+    <meta property="og:type" content="website" />
+        <meta property="og:updated_time" content="2026-01-24" />
+
+        
+        
+            <link rel="alternate" type="application/atom+xml" title="Atom" href="https://blog.linyinfeng.com/atom.xml" />
+        
+        
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.linyinfeng.com/rss.xml" />
+        
+        
+            <link rel="me" href="https:&#x2F;&#x2F;mastodon.li7g.com&#x2F;@yinfeng" />
+        
+    
+</head>
+<body>
+    
+        
+        <header id="header">
+            
+            
+    <div class="header-container container">
+        <h1 id="blog-title" class="title">
+            <a href=https:&#x2F;&#x2F;blog.linyinfeng.com>
+                <img src="https://blog.linyinfeng.com/favicon.svg?h=13cd5e503c308246963d" alt="Yinfeng&#x27;s" />
+            </a>
+        </h1>
+        <nav id="global-nav"><span class="global-nav-item-container"><a class="global-nav-item"
+                    href=https://blog.linyinfeng.com
+                >Home</a></span><span class="global-nav-item-container"><a class="global-nav-item"
+                    href=https://blog.linyinfeng.com/archive
+                >Archive</a></span><span class="global-nav-item-container"><a class="global-nav-item"
+                    href=https://blog.linyinfeng.com/links
+                >Links</a></span><span class="global-nav-item-container"><a class="global-nav-item"
+                    href=https:&#x2F;&#x2F;github.com&#x2F;linyinfeng&#x2F;blog
+                >Source</a></span></nav>
+    </div>
+
+            
+        </header>
+        <div id="main-aside-container">
+            
+    
+        
+                <aside id="aside">
+                    <div id="aside-container">
+                        
+    
+    <div class="toc-container container">
+        <h1 class="title toc-title">Table of Contents</h1>
+        
+    
+        <ul class="toc-parent">
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;homemade-nix-flake-channel&#x2F;#wen-ti>问题</a>
+                    
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;homemade-nix-flake-channel&#x2F;#shi-xian>实现</a>
+                    
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;homemade-nix-flake-channel&#x2F;#jie-yu>结语</a>
+                    
+    
+
+                </li>
+                
+        </ul>
+    
+
+    </div>
+
+
+                    </div>
+                </aside>
+            
+    
+
+            <main id="main">
+                <div id="main-container">
+                    
+    
+                    
+    
+    <article class="article-container container">
+        
+    <h1 class="title article-title">
+        <a class="article-title-link" href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;homemade-nix-flake-channel&#x2F;">
+            
+    <span class="draft-indicator">
+        
+    </span>
+    <span>
+        土制 Nix Flake Channel
+    </span>
+
+        </a>
+    </h1>
+
+        
+    <div class="dates-container">
+        <div class="date-container">
+            <time datetime=2026-01-24T17:10:00+08:00>2026-01-24 17:10</time>
+ 	        
+            <span class="date-label">(created)</span>
+            
+        </div>
+        
+    </div>
+
+        
+    <div class="article-taxonomies"><span class="article-taxonomy"><a class="article-taxonomy-name" href="https://blog.linyinfeng.com/tags">
+                Tags</a><span class="article-terms"><a class="article-term-name" href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;tags&#x2F;nix&#x2F;">Nix</a><a class="article-term-name" href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;tags&#x2F;hydra&#x2F;">Hydra</a></span></span><span class="article-taxonomy"><a class="article-taxonomy-name" href="https://blog.linyinfeng.com/categories">
+                Categories</a><span class="article-terms"><a class="article-term-name" href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;categories&#x2F;bi-ji&#x2F;">笔记</a><a class="article-term-name" href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;categories&#x2F;yun-wei-ri-zhi&#x2F;">运维日志</a></span></span></div>
+
+        
+    
+        <section class="article-license">
+            
+                <div class="license-image">
+                    <img src="https://blog.linyinfeng.com/license-buttons/l/by-nc-sa/4.0/88x31.png?h=f46d7b11bac0d593eab6" alt="CC BY-NC-SA 4.0" />
+                </div>
+            
+            <small class="license-text">This work is licensed under a <a rel="external" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a></small>
+        </section>
+    
+
+        <section class="article-content"><p>这是 Nix 土制系列的第二篇文章，继<a href="https://blog.linyinfeng.com/posts/homemade-nix-s3-cache/">土制 Nix S3 Binary Cache</a>之后，继续介绍我的 Nix channel 方案。即使是 all-in flake 的用法，channel 这个概念仍然非常有用，甚至在某些场景下更重要了，因为它表明了可用性。</p>
+<span id="continue-reading"></span><figure>
+    <img src="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;homemade-nix-flake-channel&#x2F;hydra-and-flakes.png?h=4e9551b23fd06785fdd4" alt="一条 hydra 正在构建 flakes" />
+    <figcaption>Hydra 构建 flakes 的珍贵影像（由 Nano Banana Pro 生成）</figcaption>
+</figure>
+<h2 id="wen-ti"><a class="zola-anchor" href="#wen-ti" aria-label="Anchor link for: wen-ti">
+    ⚓
+</a>
+问题</h2>
+<p>我的所有设施都是自动更新的，因为我不希望为“更新”这件事投入精力。我希望我能做到：</p>
+<ol>
+<li>只在机器的配置损坏时才需要干预；</li>
+<li>即使一台机器的配置损坏，也不影响其他机器的自动更新，也就是说我可以任意决定损坏后多久才干预；</li>
+<li>如果是上游导致的损坏，即使我不干预，只要上游完成了修复，一段时间后也能通过自动更新，自动恢复正常。</li>
+</ol>
+<p>这几点使得我平时无须在意任何更新相关的事情，只有出问题时才需要看一看，并且即使出现问题，我也可以拖着不修，甚至一段时间后可能自愈。</p>
+<p>满足这几点的自动更新配置可能如下：</p>
+<ol>
+<li>通过 GitHub Actions 定期更新 flake 的 lock file；</li>
+<li>通过 Hydra 定期构建机器的配置，并且在成功后自动部署。</li>
+</ol>
+<p>但是 2 对我来说不现实，因为我的服务器遍布全球，hydra 机器在国内，链接到各地服务器不稳定。我更希望服务器自己从 cache 拉取更新，而不是 hydra 主动部署更新。</p>
+<p>通常情况下，这可能意味着需要这样配置：</p>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="nix"><span class="giallo-l"><span>{</span></span>
+<span class="giallo-l"><span style="color: #0550AE;">  system</span><span>.</span><span style="color: #0550AE;">autoUpgrade</span><span style="color: #CF222E;"> =</span><span> {</span></span>
+<span class="giallo-l"><span style="color: #0550AE;">    enable</span><span style="color: #CF222E;"> =</span><span style="color: #0550AE;"> true</span><span>;</span></span>
+<span class="giallo-l"><span style="color: #0550AE;">    flake</span><span style="color: #CF222E;"> =</span><span style="color: #0A3069;"> &quot;github:linyinfeng/dotfiles&quot;</span><span>;</span></span>
+<span class="giallo-l"><span style="color: #0550AE;">    allowReboot</span><span style="color: #CF222E;"> =</span><span style="color: #0550AE;"> true</span><span>;</span></span>
+<span class="giallo-l"><span style="color: #0550AE;">    dates</span><span style="color: #CF222E;"> =</span><span style="color: #0A3069;"> &quot;04:00&quot;</span><span>;</span></span>
+<span class="giallo-l"><span style="color: #0550AE;">    randomizedDelaySec</span><span style="color: #CF222E;"> =</span><span style="color: #0A3069;"> &quot;30min&quot;</span><span>;</span></span>
+<span class="giallo-l"><span>  };</span></span>
+<span class="giallo-l"><span>}</span></span></code></pre>
+<p>但是这样做的问题是，服务器如何知道自己的配置在 hydra 上是否构建成功呢？如果没有，服务器就会去构建一个必定构建失败的配置，非常不合理。</p>
+<p>如果能为每个服务器做一个更新用的 channel 的话，问题就可以得到解决。</p>
+<p>对于每一个服务器，都有一个 branch <code>nixos-tested-${hostName}</code>，一旦 hydra 构建成功某个配置，就把 branch 向前设置到这个配置的 commit。
+每晚服务器都自动更新到这个 branch，这样就能保证它只会更新到 hydra 构建成功（所以有 cache）的配置。</p>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="nix"><span class="giallo-l"><span>{ config</span><span style="color: #CF222E;">, ...</span><span> }:</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">let</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">  inherit</span><span> (</span><span style="color: #953800;">config</span><span style="color: #CF222E;">.</span><span style="color: #953800;">networking</span><span>)</span><span style="color: #0550AE;"> hostName</span><span>;</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">in</span></span>
+<span class="giallo-l"><span>{</span></span>
+<span class="giallo-l"><span style="color: #0550AE;">  system</span><span>.</span><span style="color: #0550AE;">autoUpgrade</span><span style="color: #CF222E;"> =</span><span> {</span></span>
+<span class="giallo-l"><span style="color: #6E7781;">    # ...</span></span>
+<span class="giallo-l"><span style="color: #0550AE;">    flake</span><span style="color: #CF222E;"> =</span><span style="color: #0A3069;"> &quot;github:linyinfeng/dotfiles/nixos-tested-</span><span style="color: #CF222E;">${</span><span style="color: #0550AE;">hostName</span><span style="color: #CF222E;">}</span><span style="color: #0A3069;">&quot;</span><span>;</span></span>
+<span class="giallo-l"><span style="color: #6E7781;">    # ...</span></span>
+<span class="giallo-l"><span>  };</span></span>
+<span class="giallo-l"><span>}</span></span></code></pre><h2 id="shi-xian"><a class="zola-anchor" href="#shi-xian" aria-label="Anchor link for: shi-xian">
+    ⚓
+</a>
+实现</h2>
+<p>代码可以在<a rel="external" href="https://github.com/linyinfeng/dotfiles/blob/214c35a60579d5fb2f33307a320e7d09f765aa5a/nixos/profiles/services/hydra/_channel.nix">这里</a>找到。</p>
+<p>Hydra 有一个插件叫作 <code>RunCommand</code>，Hydra 的<a rel="external" href="https://nixos.org/hydra/manual/">文档</a>有单独一节介绍了这个插件。</p>
+<p>该插件支持静态和动态两种配置，静态命令配置在 Hydra 配置中，而动态命令可以在特定的 Hydra job 构建完成后，调用构建产物。</p>
+<p>因为我需要对所有的 job 都上传 cache，并对部分 job 做 channel 更新，所以我选择了静态命令。</p>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="nix"><span class="giallo-l"><span style="color: #953800;">services</span><span style="color: #CF222E;">.</span><span style="color: #953800;">hydra</span><span style="color: #CF222E;">.</span><span style="color: #953800;">extraConfig</span><span style="color: #82071E;font-style: italic;"> =</span><span style="color: #953800;"> lib</span><span style="color: #CF222E;">.</span><span style="color: #953800;">mkAfter</span><span style="color: #0A3069;"> &#39;&#39;</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">  &lt;runcommand&gt;</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">    command = &quot;</span><span style="color: #CF222E;">${</span><span style="color: #0550AE;">lib</span><span style="color: #CF222E;">.</span><span style="color: #0550AE;">getExe hydraHook</span><span style="color: #CF222E;">}</span><span style="color: #0A3069;">&quot;</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">  &lt;/runcommand&gt;</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">&#39;&#39;</span><span style="color: #82071E;font-style: italic;">;</span></span></code></pre>
+<p>命令定义在 <code>hydraHook</code> 中,.定义如下：</p>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="nix"><span class="giallo-l"><span style="color: #953800;">hydraHook</span><span style="color: #82071E;font-style: italic;"> =</span><span style="color: #953800;"> pkgs</span><span style="color: #CF222E;">.</span><span style="color: #953800;">writeShellApplication</span><span> {</span></span>
+<span class="giallo-l"><span style="color: #0550AE;">  name</span><span style="color: #CF222E;"> =</span><span style="color: #0A3069;"> &quot;hydra-hook&quot;</span><span>;</span></span>
+<span class="giallo-l"><span style="color: #0550AE;">  runtimeInputs</span><span style="color: #CF222E;"> = with</span><span style="color: #953800;"> pkgs</span><span>; [</span></span>
+<span class="giallo-l"><span style="color: #953800;">    jq</span></span>
+<span class="giallo-l"><span style="color: #953800;">    systemd</span></span>
+<span class="giallo-l"><span style="color: #953800;">    getFlakeCommit</span></span>
+<span class="giallo-l"><span style="color: #953800;">    channelUpdate</span></span>
+<span class="giallo-l"><span>  ];</span></span>
+<span class="giallo-l"><span style="color: #0550AE;">  text</span><span style="color: #CF222E;"> =</span><span style="color: #0A3069;"> &#39;&#39;</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">    echo &quot;--- begin event ---&quot;</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">    cat &quot;$HYDRA_JSON&quot; | jq</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">    echo &quot;--- end event ---&quot;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #0A3069;">    # ...</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">  &#39;&#39;</span><span>;</span></span>
+<span class="giallo-l"><span>}</span><span style="color: #82071E;font-style: italic;">;</span></span></code></pre>
+<p>其中省略部分在后面介绍。这个命令分为几部分，我们一步步来看。</p>
+<p>首先 Hydra 会将事件信息以 JSON 格式传递给命令，存储在 <code>$HYDRA_JSON</code> 文件中。首先把这个文件打印出来，方便调试。</p>
+<p>然后判断这是否是一个构建成功的事件，如果不是，就退出。</p>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #CF222E;">if</span><span> [</span><span style="color: #0A3069;"> &quot;$(</span><span style="color: #953800;">jq</span><span style="color: #0A3069;"> &#39;.event == &quot;buildFinished&quot; and .buildStatus == 0&#39; &quot;</span><span>$HYDRA_JSON</span><span style="color: #0A3069;">&quot;)&quot;</span><span style="color: #CF222E;">  !=</span><span style="color: #0A3069;"> &quot;true&quot;</span><span> ];</span><span style="color: #CF222E;"> then</span></span>
+<span class="giallo-l"><span style="color: #0550AE;">  echo</span><span style="color: #0A3069;"> &quot;not a successful buildFinished event, exit.&quot;</span></span>
+<span class="giallo-l"><span style="color: #0550AE;">  exit 0</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">fi</span></span></code></pre>
+<p>如果构建成功，就将构建好的包上传到我的<a href="https://blog.linyinfeng.com/posts/homemade-nix-s3-cache/">土制 Nix S3 Binary Cache</a>中，我将上传逻辑包装在了一个 <code>copy-cache-li7g-com@.service</code> 服务中，所以脚本中是对每一个输出调用 <code>systemctl start</code>。</p>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #0550AE;">echo</span><span style="color: #0A3069;"> &quot;copying outputs to cache...&quot;</span></span>
+<span class="giallo-l"><span style="color: #953800;">jq</span><span style="color: #0550AE;"> --raw-output</span><span style="color: #0A3069;"> &#39;.outputs[].path&#39; &quot;</span><span>$HYDRA_JSON</span><span style="color: #0A3069;">&quot;</span><span style="color: #CF222E;"> | while</span><span style="color: #0550AE;"> read -r</span><span style="color: #0A3069;"> out</span><span>;</span><span style="color: #CF222E;"> do</span></span>
+<span class="giallo-l"><span style="color: #0550AE;">  echo</span><span style="color: #0A3069;"> &quot;copying to cache: </span><span>$out</span><span style="color: #0A3069;">...&quot;</span></span>
+<span class="giallo-l"><span style="color: #953800;">  systemctl</span><span style="color: #0A3069;"> start &quot;copy-cache-li7g-com@$(</span><span style="color: #953800;">systemd-escape</span><span style="color: #0A3069;"> &quot;</span><span>$out</span><span style="color: #0A3069;">&quot;).service&quot;</span></span>
+<span class="giallo-l"><span style="color: #0550AE;">  echo</span><span style="color: #0A3069;"> &quot;done.&quot;</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">done</span></span></code></pre>
+<p>Hydra 的权限不能调用 <code>systemctl</code>，添加 polkit 规则允许 Hydra 用户调用这个服务（不要使用 sudo）：</p>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="nix"><span class="giallo-l"><span style="color: #953800;">security</span><span style="color: #CF222E;">.</span><span style="color: #953800;">polkit</span><span style="color: #CF222E;">.</span><span style="color: #953800;">extraConfig</span><span style="color: #82071E;font-style: italic;"> =</span><span style="color: #0A3069;"> &#39;&#39;</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">  polkit.addRule(function(action, subject) {</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">    if (action.id == &quot;org.freedesktop.systemd1.manage-units&quot; &amp;&amp;</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">        RegExp(&#39;copy-cache-li7g-com@.+\.service&#39;).test(action.lookup(&quot;unit&quot;)) === true &amp;&amp;</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">        subject.isInGroup(&quot;hydra&quot;)) {</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">      return polkit.Result.YES;</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">    }</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">  });</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">&#39;&#39;</span><span style="color: #82071E;font-style: italic;">;</span></span></code></pre>
+<p>接下来判断这个 job 需不需要更新 channel。在我的 <a rel="external" href="https://github.com/linyinfeng/dotfiles">dotfiles</a> 中，凡是以 <code>nixos-</code> 开头的 <code>hydraJobs</code> 都需要更新 channel。</p>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #CF222E;">if</span><span> [</span><span style="color: #0A3069;"> &quot;$(</span><span style="color: #953800;">jq</span><span style="color: #0550AE;"> --from-file</span><span style="color: #0A3069;"> &quot;${</span><span>dotfilesChannelJobFilter</span><span style="color: #0A3069;">}&quot; &quot;</span><span>$HYDRA_JSON</span><span style="color: #0A3069;">&quot;)&quot;</span><span style="color: #CF222E;"> =</span><span style="color: #0A3069;"> &quot;true&quot;</span><span> ];</span><span style="color: #CF222E;"> then</span></span>
+<span class="giallo-l"><span style="color: #0550AE;">  echo</span><span style="color: #0A3069;"> &quot;dotfiles channel job detected, update channel...&quot;</span></span>
+<span class="giallo-l"><span>  host</span><span style="color: #CF222E;">=</span><span style="color: #0A3069;">&quot;$(</span><span style="color: #953800;">jq</span><span style="color: #0550AE;"> --raw-output</span><span style="color: #0A3069;"> &#39;.job | capture(&quot;^nixos-(?&lt;host&gt;[^/]*)\\.(.*)$&quot;).host&#39; &quot;</span><span>$HYDRA_JSON</span><span style="color: #0A3069;">&quot;)&quot;</span></span>
+<span class="giallo-l"><span>  branch</span><span style="color: #CF222E;">=</span><span style="color: #0A3069;">&quot;nixos-tested-</span><span>$host</span><span style="color: #0A3069;">&quot;</span></span>
+<span class="giallo-l"><span>  commit</span><span style="color: #CF222E;">=</span><span style="color: #0A3069;">&quot;$(</span><span style="color: #953800;">get-flake-commit</span><span style="color: #0A3069;">)&quot;</span></span>
+<span class="giallo-l"><span style="color: #953800;">  channel-update</span><span style="color: #0A3069;"> &quot;linyinfeng&quot; &quot;dotfiles&quot; &quot;</span><span>$branch</span><span style="color: #0A3069;">&quot; &quot;</span><span>$commit</span><span style="color: #0A3069;">&quot;</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">fi</span></span></code></pre>
+<p>其中 <code>jq</code> 的参数 <code>dotfilesChannelJobFilter</code> 因为内容太复杂了，如果写在 bash 里又需要考虑多一层的 escape，所以定义到单独文件中了：</p>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="nix"><span class="giallo-l"><span style="color: #953800;">dotfilesChannelJobFilter</span><span style="color: #82071E;font-style: italic;"> =</span><span style="color: #953800;"> pkgs</span><span style="color: #CF222E;">.</span><span style="color: #953800;">writeTextFile</span><span> {</span></span>
+<span class="giallo-l"><span style="color: #0550AE;">  name</span><span style="color: #CF222E;"> =</span><span style="color: #0A3069;"> &quot;nixos-job-filter.jq&quot;</span><span>;</span></span>
+<span class="giallo-l"><span style="color: #0550AE;">  text</span><span style="color: #CF222E;"> =</span><span style="color: #0A3069;"> &#39;&#39;</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">    .project == &quot;dotfiles&quot; and</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">    .jobset == &quot;main&quot; and</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">    (.job | test(&quot;^nixos-([^/]*)\\.(.*)$&quot;))</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">  &#39;&#39;</span><span>;</span></span>
+<span class="giallo-l"><span>}</span><span style="color: #82071E;font-style: italic;">;</span></span></code></pre>
+<p>意思就是判断 job 是否是 <code>dotfiles:main:nixos-&lt;host&gt;.&lt;system&gt;</code> 这种格式。</p>
+<p>随后，还是利用 <code>jq</code> 从 job 名称中提取出 host 名称，构造 branch 名称 <code>nixos-tested-&lt;host&gt;</code>。并调用另一个脚本 <code>get-flake-commit</code> 获得 flake 的 commit，这个信息 <code>$HYDRA_JSON</code> 中没有，得从 hydra 的数据库中查询：</p>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="nix"><span class="giallo-l"><span style="color: #953800;">getFlakeCommit</span><span style="color: #82071E;font-style: italic;"> =</span><span style="color: #953800;"> pkgs</span><span style="color: #CF222E;">.</span><span style="color: #953800;">writeShellApplication</span><span> {</span></span>
+<span class="giallo-l"><span style="color: #0550AE;">  name</span><span style="color: #CF222E;"> =</span><span style="color: #0A3069;"> &quot;get-flake-commit&quot;</span><span>;</span></span>
+<span class="giallo-l"><span style="color: #0550AE;">  runtimeInputs</span><span style="color: #CF222E;"> = with</span><span style="color: #953800;"> pkgs</span><span>; [</span></span>
+<span class="giallo-l"><span style="color: #953800;">    jq</span></span>
+<span class="giallo-l"><span style="color: #953800;">    postgresql</span></span>
+<span class="giallo-l"><span style="color: #953800;">    ripgrep</span></span>
+<span class="giallo-l"><span>  ];</span></span>
+<span class="giallo-l"><span style="color: #0550AE;">  text</span><span style="color: #CF222E;"> =</span><span style="color: #0A3069;"> &#39;&#39;</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">    build_id=$(jq &#39;.build&#39; &quot;$HYDRA_JSON&quot;)</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">    flake_url=$(psql --tuples-only --username=hydra --dbname=hydra --command=&quot;</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">        SELECT flake FROM jobsetevals</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">        WHERE id = (SELECT eval FROM jobsetevalmembers</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">                    WHERE build = $build_id</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">                    LIMIT 1)</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">        ORDER BY id DESC</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">        LIMIT 1</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">      &quot;)</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">    echo &quot;$flake_url&quot; | rg --only-matching &#39;/(\w{40})(\?.*)?$&#39; --replace &#39;$1&#39;</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">  &#39;&#39;</span><span>;</span></span>
+<span class="giallo-l"><span>}</span><span style="color: #82071E;font-style: italic;">;</span></span></code></pre>
+<p>（这个脚本的最后一步从 <code>$flake_url</code> 匹配出 commit hash 我随手调了个 ripgrep，直接用 bash 也完全可以。）</p>
+<p>最后调用 <code>channel-update</code> 脚本做分支的更新：</p>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="nix"><span class="giallo-l"><span style="color: #953800;">channelUpdate</span><span style="color: #82071E;font-style: italic;"> =</span><span style="color: #953800;"> pkgs</span><span style="color: #CF222E;">.</span><span style="color: #953800;">writeShellApplication</span><span> {</span></span>
+<span class="giallo-l"><span style="color: #0550AE;">  name</span><span style="color: #CF222E;"> =</span><span style="color: #0A3069;"> &quot;channel-update&quot;</span><span>;</span></span>
+<span class="giallo-l"><span style="color: #0550AE;">  runtimeInputs</span><span style="color: #CF222E;"> = with</span><span style="color: #953800;"> pkgs</span><span>; [</span></span>
+<span class="giallo-l"><span style="color: #953800;">    jq</span></span>
+<span class="giallo-l"><span style="color: #953800;">    git</span></span>
+<span class="giallo-l"><span style="color: #953800;">    util-linux</span></span>
+<span class="giallo-l"><span>  ];</span></span>
+<span class="giallo-l"><span style="color: #0550AE;">  text</span><span style="color: #CF222E;"> =</span><span style="color: #0A3069;"> &#39;&#39;</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">    owner=&quot;$1&quot;</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">    repo=&quot;$2&quot;</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">    branch=&quot;$3&quot;</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">    commit=&quot;$4&quot;</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">    token=$(cat &quot;$CREDENTIALS_DIRECTORY/github-token&quot;)</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #0A3069;">    echo &quot;updating $owner/$repo/$branch to $commit...&quot;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #0A3069;">    cd /var/tmp</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">    mkdir --parents &quot;hydra-channel-update/$owner/$repo&quot;</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">    cd &quot;hydra-channel-update/$owner/$repo&quot;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #0A3069;">    (</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">      echo &quot;waiting for repository lock...&quot;</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">      flock 200</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">      echo &quot;enter critical section&quot;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #0A3069;">      if [ ! -d &quot;repo.git&quot; ]; then</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">        git clone &quot;https://github.com/$owner/$repo.git&quot; --filter=tree:0 --bare repo.git</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">      fi</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #0A3069;">      function repo-git {</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">        git -C repo.git &quot;$@&quot;</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">      }</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #0A3069;">      repo-git remote set-url origin &quot;https://-:$token@github.com/$owner/$repo.git&quot;</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">      repo-git fetch --all</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">      if repo-git merge-base --is-ancestor &quot;$commit&quot; &quot;$branch&quot;; then</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">        echo &quot;commit $commit is already in branch $branch, skip.&quot;</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">        exit 0</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">      fi</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">      repo-git push origin &quot;$commit:$branch&quot;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #0A3069;">      echo &quot;leave critical section&quot;</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">    ) 200&gt;lock</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">  &#39;&#39;</span><span>;</span></span>
+<span class="giallo-l"><span>}</span><span style="color: #82071E;font-style: italic;">;</span></span></code></pre>
+<p>这个脚本会做这么几件事：</p>
+<ol>
+<li>确保在 <code>/var/tmp/hydra-channel-update/&lt;owner&gt;/&lt;repo&gt;/repo.git</code> 是目标仓库的 bare clone；</li>
+<li>设置 GitHub token 确保 push 权限；</li>
+<li>对仓库进行 <code>fetch --all</code>，这里不 fetch 具体分支是因为目标分支可能不存在，懒得写错误处理；</li>
+<li>判断 commit 是否已经在分支上了（并且分支存在），如果是就跳过；</li>
+<li>否则就把 commit push 到目标分支。</li>
+</ol>
+<p>极端条件下，有可能会发生竞态条件，导致部分脚本运行失败，所以用 <code>flock</code> 做了锁，确保同一时间只有一个脚本在操作这个仓库。</p>
+<p>Token 通过 systemd 的 <code>LoadCredential</code> 功能提供，并通过 sops-nix 分发到目标主机上：</p>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="nix"><span class="giallo-l"><span style="color: #953800;">systemd</span><span style="color: #CF222E;">.</span><span style="color: #953800;">services</span><span style="color: #CF222E;">.</span><span style="color: #953800;">hydra-notify</span><span style="color: #CF222E;">.</span><span style="color: #953800;">serviceConfig</span><span style="color: #CF222E;">.</span><span style="color: #953800;">LoadCredential</span><span style="color: #82071E;font-style: italic;"> =</span><span> [</span></span>
+<span class="giallo-l"><span style="color: #0A3069;">  &quot;github-token:</span><span style="color: #CF222E;">${</span><span style="color: #0550AE;">config</span><span style="color: #CF222E;">.</span><span style="color: #0550AE;">sops</span><span style="color: #CF222E;">.</span><span style="color: #0550AE;">secrets</span><span style="color: #CF222E;">.</span><span style="color: #0A3069;">&quot;github_token_nano&quot;</span><span style="color: #CF222E;">.</span><span style="color: #0550AE;">path</span><span style="color: #CF222E;">}</span><span style="color: #0A3069;">&quot;</span></span>
+<span class="giallo-l"><span>]</span><span style="color: #82071E;font-style: italic;">;</span></span></code></pre><h2 id="jie-yu"><a class="zola-anchor" href="#jie-yu" aria-label="Anchor link for: jie-yu">
+    ⚓
+</a>
+结语</h2>
+<p>整件事情还是挺简单的，唯一比较 tricky 的地方是 flake commit 得从 hydra 的数据库中查出来。不过整体来说，复杂度还在 bash 脚本可接受的范围内。</p>
+<p>另外从这个例子就可以看出 Nix 打包的便捷性，只要有需要，就可以用几行代码随手打成包，比如 <code>dotfilesChannelJobFilter</code>；此外用 Nix 的 <code>writeShellApplication</code> 来打包一些 bash 脚本的能力是非常方便且强大的，Nix 能极其容易地描述 bash 脚本对外部程序的依赖，以及 bash 脚本之间的依赖。总结就是，把 bash 带到了不属于它的高度（大雾</p>
+</section>
+    </article>
+
+    
+        
+    <div class="giscus" />
+
+    
+
+                </div>
+            </main>
+        </div>
+        <footer id="footer">
+            
+            
+    <div class="footer-container container">
+        <div id="copyright-container">
+            <small id="copyright">© <a rel="external" href="https://github.com/linyinfeng">Yinfeng</a></small>
+        </div>
+
+        
+            <div id="powered-by-container">
+                <small id="powered-by">Powered by <a rel="external" href="https://www.getzola.org">Zola</a></small>
+            </div>
+        
+    </div>
+
+            
+        </footer>
+    
+</body>
+</html>
