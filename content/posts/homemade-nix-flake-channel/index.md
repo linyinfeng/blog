@@ -2,7 +2,7 @@
 title = "土制 Nix Flake Channel"
 # description = ""
 date = 2026-01-24 17:10:00+08:00
-updated = 2026-01-24 17:10:00+08:00
+updated = 2026-01-24 20:23:36+08:00
 author = "Yinfeng"
 draft = false
 [taxonomies]
@@ -114,7 +114,7 @@ hydraHook = pkgs.writeShellApplication {
 
 其中省略部分在后面介绍。这个命令分为几部分，我们一步步来看。
 
-首先 Hydra 会将事件信息以 JSON 格式传递给命令，存储在 `$HYDRA_JSON` 文件中。首先把这个文件打印出来，方便调试。
+首先 Hydra 会将事件信息以 JSON 格式传递给命令，存储在 `$HYDRA_JSON` 文件中。把这个文件输出到日志里，方便调试。
 
 然后判断这是否是一个构建成功的事件，如果不是，就退出。
 
@@ -256,7 +256,7 @@ channelUpdate = pkgs.writeShellApplication {
 
 这个脚本会做这么几件事：
 
-1. 确保在 `/var/tmp/hydra-channel-update/<owner>/<repo>/repo.git` 是目标仓库的 bare clone；
+1. 确保 `/var/tmp/hydra-channel-update/<owner>/<repo>/repo.git` 是目标仓库的 bare clone；
 2. 设置 GitHub token 确保 push 权限；
 3. 对仓库进行 `fetch --all`，这里不 fetch 具体分支是因为目标分支可能不存在，懒得写错误处理；
 4. 判断 commit 是否已经在分支上了（并且分支存在），如果是就跳过；
@@ -276,4 +276,4 @@ systemd.services.hydra-notify.serviceConfig.LoadCredential = [
 
 整件事情还是挺简单的，唯一比较 tricky 的地方是 flake commit 得从 hydra 的数据库中查出来。不过整体来说，复杂度还在 bash 脚本可接受的范围内。
 
-另外从这个例子就可以看出 Nix 打包的便捷性，只要有需要，就可以用几行代码随手打成包，比如 `dotfilesChannelJobFilter`；此外用 Nix 的 `writeShellApplication` 来打包一些 bash 脚本的能力是非常方便且强大的，Nix 能极其容易地描述 bash 脚本对外部程序的依赖，以及 bash 脚本之间的依赖。总结就是，把 bash 带到了不属于它的高度（大雾
+另外从这个例子就可以看出 Nix 打包的便捷性，只要有需要，就可以用几行代码随手打成包，比如 `dotfilesChannelJobFilter`；此外用 Nixpkgs 的 `writeShellApplication` 来打包一些 bash 脚本的能力是非常方便且强大的，Nix 能极其容易地描述 bash 脚本对外部程序的依赖，以及 bash 脚本之间的依赖。总结就是，把 bash 带到了不属于它的高度（大雾
