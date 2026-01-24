@@ -190,6 +190,11 @@
             
         </div>
         
+        <div class="date-container">
+	    <time datetime=2026-01-24T20:23:36+08:00>2026-01-24 20:23</time>
+            <span class="date-label">(updated)</span>
+        </div>
+        
     </div>
 
         
@@ -288,7 +293,7 @@
 <span class="giallo-l"><span style="color: #0A3069;">  &#39;&#39;</span><span>;</span></span>
 <span class="giallo-l"><span>}</span><span style="color: #82071E;font-style: italic;">;</span></span></code></pre>
 <p>其中省略部分在后面介绍。这个命令分为几部分，我们一步步来看。</p>
-<p>首先 Hydra 会将事件信息以 JSON 格式传递给命令，存储在 <code>$HYDRA_JSON</code> 文件中。首先把这个文件打印出来，方便调试。</p>
+<p>首先 Hydra 会将事件信息以 JSON 格式传递给命令，存储在 <code>$HYDRA_JSON</code> 文件中。把这个文件输出到日志里，方便调试。</p>
 <p>然后判断这是否是一个构建成功的事件，如果不是，就退出。</p>
 <pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #CF222E;">if</span><span> [</span><span style="color: #0A3069;"> &quot;$(</span><span style="color: #953800;">jq</span><span style="color: #0A3069;"> &#39;.event == &quot;buildFinished&quot; and .buildStatus == 0&#39; &quot;</span><span>$HYDRA_JSON</span><span style="color: #0A3069;">&quot;)&quot;</span><span style="color: #CF222E;">  !=</span><span style="color: #0A3069;"> &quot;true&quot;</span><span> ];</span><span style="color: #CF222E;"> then</span></span>
 <span class="giallo-l"><span style="color: #0550AE;">  echo</span><span style="color: #0A3069;"> &quot;not a successful buildFinished event, exit.&quot;</span></span>
@@ -399,7 +404,7 @@
 <span class="giallo-l"><span>}</span><span style="color: #82071E;font-style: italic;">;</span></span></code></pre>
 <p>这个脚本会做这么几件事：</p>
 <ol>
-<li>确保在 <code>/var/tmp/hydra-channel-update/&lt;owner&gt;/&lt;repo&gt;/repo.git</code> 是目标仓库的 bare clone；</li>
+<li>确保 <code>/var/tmp/hydra-channel-update/&lt;owner&gt;/&lt;repo&gt;/repo.git</code> 是目标仓库的 bare clone；</li>
 <li>设置 GitHub token 确保 push 权限；</li>
 <li>对仓库进行 <code>fetch --all</code>，这里不 fetch 具体分支是因为目标分支可能不存在，懒得写错误处理；</li>
 <li>判断 commit 是否已经在分支上了（并且分支存在），如果是就跳过；</li>
@@ -414,7 +419,7 @@
 </a>
 结语</h2>
 <p>整件事情还是挺简单的，唯一比较 tricky 的地方是 flake commit 得从 hydra 的数据库中查出来。不过整体来说，复杂度还在 bash 脚本可接受的范围内。</p>
-<p>另外从这个例子就可以看出 Nix 打包的便捷性，只要有需要，就可以用几行代码随手打成包，比如 <code>dotfilesChannelJobFilter</code>；此外用 Nix 的 <code>writeShellApplication</code> 来打包一些 bash 脚本的能力是非常方便且强大的，Nix 能极其容易地描述 bash 脚本对外部程序的依赖，以及 bash 脚本之间的依赖。总结就是，把 bash 带到了不属于它的高度（大雾</p>
+<p>另外从这个例子就可以看出 Nix 打包的便捷性，只要有需要，就可以用几行代码随手打成包，比如 <code>dotfilesChannelJobFilter</code>；此外用 Nixpkgs 的 <code>writeShellApplication</code> 来打包一些 bash 脚本的能力是非常方便且强大的，Nix 能极其容易地描述 bash 脚本对外部程序的依赖，以及 bash 脚本之间的依赖。总结就是，把 bash 带到了不属于它的高度（大雾</p>
 </section>
     </article>
 
