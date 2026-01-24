@@ -1,6 +1,6 @@
 {%- set url = get_url(path=page.colocated_path ~ path, cachebust=true) -%}
 <figure>
-    <a href="{{ url }}" target="_blank">
+    <a href="{{ url }}">
         <img src="{{ url }}" alt="{{ alt }}"
             {%- if width %} width="{{ width }}"{% endif %}
             {%- if height %} height="{{ height }}"{% endif %}
