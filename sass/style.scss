@@ -13,64 +13,13 @@ $floating-aside-border-color: black;
 $link-default-color: $theme-color;
 $date-color: gray;
 $caption-color: darken(gray, 20%);
+
 $main-container-max-width: 760px;
 $aside-width: 240px;
 $layout-change-width: 980px;
 $list-indent-size: 16px;
 $shadow-blur-radius: 0;
 $shadow-spread-radius: 2px;
-
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&family=Noto+Serif+SC:wght@500;700&family=Source+Code+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap");
-
-body {
-  font-family: "Noto Serif SC", serif;
-  font-weight: 500;
-  line-height: 1.6;
-
-  code,
-  pre {
-    font-family: "Source Code Pro", monospace;
-    font-weight: normal;
-  }
-}
-
-p {
-  text-align: justify;
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
-
-  &:hover {
-    box-shadow: 0 0.125em 0 0 $link-default-color;
-  }
-}
-
-.zola-anchor {
-  color: $theme-color;
-}
-
-code {
-  padding: 1px;
-  border-radius: 3px;
-}
-
-img {
-  max-width: 100%;
-}
-
-figure {
-  text-align: center;
-  figcaption {
-    font-size: 0.9em;
-    color: $caption-color;
-  }
-}
-
-.zola-anchor {
-  margin-right: 8px;
-}
 
 @import "global";
 @import "article";
@@ -80,3 +29,5 @@ figure {
 @import "aside";
 @import "katex";
 @import "giscus";
+@import "contents";
+@import "fonts";

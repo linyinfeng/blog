@@ -1,0 +1,41 @@
+p {
+  text-align: justify;
+  text-autospace: normal;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 0.125em 0 0 $link-default-color;
+  }
+}
+
+.zola-anchor {
+  color: $theme-color;
+}
+
+code {
+  padding: 1px;
+  border-radius: 5px;
+}
+
+figure {
+  text-align: center;
+  img {
+    max-width: 100%;
+    border-radius: 5px;
+    background: repeating-conic-gradient(rgb(235, 235, 235) 0% 25%, lightgray 0% 50%);
+    background-size:25px 25px;
+  }
+  figcaption {
+    font-size: 0.9em;
+    color: $caption-color;
+  }
+}
+
+.zola-anchor {
+  margin-right: 8px;
+}
