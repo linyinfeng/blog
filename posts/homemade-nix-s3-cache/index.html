@@ -435,7 +435,7 @@ nix-cache-overlay</h3>
 <p>认证部分直接忽略签名，把客户端提供的 <code>AWS_ACCESS_KEY_ID</code> 当成一个 token 来使用。因此不容易在中间代理过程中出错，代价是降低了一些安全性。</p>
 <p>由于 <code>nix-cache-overlay</code> 直接转发请求，因此可以直接支持 S3 multipart 上传：</p>
 <figure>
-    <a href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;homemade-nix-s3-cache&#x2F;nix-cache-overlay-screenshot.png?h=4ab1ecf5d3ab963738c0" target="_blank">
+    <a href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;homemade-nix-s3-cache&#x2F;nix-cache-overlay-screenshot.png?h=4ab1ecf5d3ab963738c0">
         <img src="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;homemade-nix-s3-cache&#x2F;nix-cache-overlay-screenshot.png?h=4ab1ecf5d3ab963738c0" alt="一张 Journald 的截图，内容是 nix-cache-overlay 的日志"/>
     </a>
     <figcaption>一张含有 multipart 上传的日志截图</figcaption>
@@ -526,7 +526,7 @@ GC</h2>
 结语</h2>
 <p>通过以上配置，我已经使用了三年多的 Nix S3 binary cache，成本极低（目前每月账单都是 0 USD），且不论是上传还是下载的性能都远超需要中间服务器的方案，如 <a rel="external" href="https://github.com/zhaofengli/attic">attic</a>。</p>
 <figure>
-    <a href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;homemade-nix-s3-cache&#x2F;s3-cache-flow.png?h=0eb165538a19116d0ae0" target="_blank">
+    <a href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;homemade-nix-s3-cache&#x2F;s3-cache-flow.png?h=0eb165538a19116d0ae0">
         <img src="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;homemade-nix-s3-cache&#x2F;s3-cache-flow.png?h=0eb165538a19116d0ae0" alt="一张 S3 binary cache 的流程图"/>
     </a>
     <figcaption>当前 S3 cache 的工作流程图</figcaption>
