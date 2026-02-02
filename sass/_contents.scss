@@ -17,9 +17,15 @@ a {
   color: $theme-color;
 }
 
-code {
-  padding: 1px;
-  border-radius: 5px;
+p code {
+  background-color: $code-background-color;
+  padding: 0.5ex;
+  border-radius: 1ex;
+}
+
+pre {
+  border: 1px solid $code-block-border;
+  border-radius: 1ex;
 }
 
 figure {
