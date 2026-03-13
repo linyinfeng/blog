@@ -620,10 +620,6 @@ const handleObject = (tree, a11yStrings, atomType) => {
       {
         throw new Error("KaTeX-a11y: vphantom not implemented yet");
       }
-    case "hphantom":
-      {
-        throw new Error("KaTeX-a11y: hphantom not implemented yet");
-      }
     case "operatorname":
       {
         buildA11yStrings(tree.body, a11yStrings, atomType);
