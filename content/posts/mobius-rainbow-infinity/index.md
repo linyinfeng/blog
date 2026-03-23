@@ -136,7 +136,7 @@ main_path = build_main_path()
 我的做法是：
 
 1. 直接计算坐标，用样条生成整个环的边界线，它将形成成一条闭合的 `Wire`。
-2. 但是由于莫比乌斯环的特殊性（具体原因其实我不知道），`build123d` 并无法从这条 `Wire` 执行 `Face.make_surface` 来生成一个表面。
+2. 但是由于莫比乌斯环的特殊性（具体原因其实我不知道），build123d 并无法从这条 `Wire` 执行 `Face.make_surface` 来生成一个表面。
 3. 所以我将这条边界线切分为两个部分，变成两个闭合的 `Wire`，每个 `Wire` 都可以执行 `Face.make_surface` 来生成一个面。
 4. 最后将这两个面拼接在一起，就得到了完整的莫比乌斯环。
 
@@ -162,7 +162,7 @@ line1 = rotating_spline()
 line2 = rotating_spline(math.pi)
 ```
 
-1. 我用样条生成边界线，边界上的每个点都是在主路径上偏移一个 `offset` 得到的。
+1. 我用样条生成边界线，边界上的每个点都是在主路径上偏移一个 `offset` 向量得到的。
 2. `offset` 是由一个角度 `rotation_radian` 控制的，这个角度从 `begin_angle` 开始，随着主路径的前进而不断旋转，旋转一周后旋转 180 度。
 3. 一次生成一圈，第一圈 `rotation_radian` 从 0 度开始，第二圈 `rotation_radian` 从 180 度开始，因为每圈过后 `rotation_radian` 变化 180 度，因此两圈就会首尾相接。
 
@@ -176,7 +176,7 @@ line2 = rotating_spline(math.pi)
 
 {{ image(path="spline-line1-line2.png", alt="完整的边界线", caption="完整的边界线", width="500") }}
 
-其中一个有意思的点是角度 `rotation_radian` 的参照系。我将这个角度的 0 度设置为原点到主路径的向量，也就是 `radial` 这个向量。也就是说，`rotation_radian` 的值为 0 度时，偏移的方向是直接朝向主路径的径向的。角度的 90 度位置设置为 `up` 向量，`up` 与 Z 轴和 `radial` 向量共面，且 `up` 与 `radial` 垂直。
+其中一个有意思的点是角度 `rotation_radian` 的参照系。我将这个角度的 0 度设置为原点到主路径的向量 `radial`。也就是说，`rotation_radian` 的值为 0 度时，偏移的方向是直接朝向主路径的径向的。角度的 90 度位置设置为 `up` 向量，`up` 与 Z 轴和 `radial` 向量共面，且 `up` 与 `radial` 垂直。
 
 这里我在写代码时，发现立体几何和线性代数有点还给老师了，不知道该怎么算出 `up` 向量。向 LLM 请教一番后，才想起来法向量这个东西。
 

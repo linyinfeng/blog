@@ -16,5 +16,5 @@
     {% endif %}
 {% endblock optional_aside %}
 {% block aside %}
-    {{ parts::toc(toc=page.toc, title=config.extra.text_toc_title) }}
+    {{ parts::toc(toc=page.toc, title=trans(key="table_of_contents", lang=lang)) }}
 {% endblock aside %}

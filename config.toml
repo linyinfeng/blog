@@ -15,11 +15,40 @@ compile_sass = true
 # build_search_index = true
 
 taxonomies = [
-    #{ name = "tags", paginate_by = 10 },
     { name = "tags" },
-    #{ name = "categories", paginate_by = 10 },
     { name = "categories" },
 ]
+
+[translations]
+languages = "语言"
+this_language = "简体中文"
+table_of_contents = "目录"
+continue_reading = "继续阅读……"
+about = "关于"
+archive = "归档"
+links = "链接"
+tags = "标签"
+categories = "类别"
+
+[languages.en-US]
+title = "Yinfeng's"
+description = "Yinfeng's Blog"
+generate_feeds = true
+taxonomies = [
+    { name = "tags" },
+    { name = "categories" },
+]
+
+[languages.en-US.translations]
+languages = "Languages"
+this_language = "English (US)"
+table_of_contents = "Table of Contents"
+continue_reading = "Continue reading..."
+about = "About"
+archive = "Archive"
+links = "Links"
+tags = "Tags"
+categories = "Categories"
 
 [markdown.highlighting]
 error_on_missing_language = true
@@ -31,10 +60,9 @@ theme = "github-light-default"
 [extra]
 # Header settings
 global_nav_items = [
-    { name = "Home", path = "/" },
-    { name = "Archive", path = "/archive" },
-    { name = "Links", path = "/links" },
-    { name = "Source", link = "https://github.com/linyinfeng/blog" },
+    { key = "archive", path = "archive" },
+    { key = "links", path = "links" },
+    { key = "about", path = "about" },
 ]
 
 # Footer settings
@@ -48,7 +76,6 @@ index_aside_taxonomies = [
 
 # Text settings
 text_continue_reading = "Continue reading..."
-text_toc_title = "Table of Contents"
 text_draft = "Draft"
 
 date_format = "%Y-%m-%d %H:%M"

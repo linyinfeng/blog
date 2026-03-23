@@ -1,12 +1,12 @@
 {% extends "base/base.html" %}
 {% block title %}
-    {% set taxonomy_name = taxonomy.name | capitalize %}
+    {% set taxonomy_name = trans(key=taxonomy.name, lang=lang) %}
     {{ term.name ~ " - " ~ taxonomy_name ~ " -" }}
     {{ super() }}
 {% endblock title %}
 {% block main %}
     {{ super() }}
-    {% set taxonomy_name = taxonomy.name | capitalize %}
+    {% set taxonomy_name = trans(key=taxonomy.name, lang=lang) %}
     {% set title = taxonomy_name ~ " - " ~ term.name %}
     {{ parts::pages_list(
         pages=term.pages,
@@ -17,12 +17,13 @@
     ) }}
 {% endblock main %}
 {% block aside %}
-    {% set taxonomy_with_items = get_taxonomy(kind=taxonomy.name) %}
+    {% set taxonomy_name = trans(key=taxonomy.name, lang=lang) %}
+    {% set taxonomy_with_items = get_taxonomy(kind=taxonomy.name, lang=lang) %}
     {% set terms = taxonomy_with_items.items %}
     {{ parts::taxonomy_list(
         terms=terms,
-        title=taxonomy.name | capitalize,
-        title_url=get_url(path=taxonomy.name),
+        title=taxonomy_name,
+        title_url=get_url(path=taxonomy.name, lang=lang),
         have_title=true
     ) }}
 {% endblock %}

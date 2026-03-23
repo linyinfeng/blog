@@ -1,0 +1,38 @@
+.language-selector {
+  display: inline-block;
+  position: relative;
+  transition: opacity 0.3s;
+  cursor: default;
+  .languages-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    display: none;
+  }
+  &:hover .languages-dropdown {
+    display: block;
+  }
+}
+
+.language-title {
+  padding: 8px 16px;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.languages-dropdown {
+  margin: 0;
+  padding: 0;
+  background: $background-color;
+  list-style-type: none;
+  border: 2px solid $floating-aside-border-color;
+  width: auto;
+
+  text-wrap: nowrap;
+  text-align: center;
+  li {
+    margin: 1ex;
+    cursor: point;
+  }
+}

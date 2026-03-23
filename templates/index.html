@@ -1,7 +1,7 @@
 {% extends "base/base.html" %}
 {% block main %}
     {{ super() }}
-    {% set section = get_section(path="posts/_index.md") %}
+    {% set section = get_section(path="posts/_index.md", lang=lang) %}
     {{ parts::pages_list(
         pages=section.pages,
         have_title=false,
@@ -14,12 +14,12 @@
     {{ super() }}
     {% for taxonomy_settings in config.extra.index_aside_taxonomies %}
         {% set taxonomy_name = taxonomy_settings.name %}
-        {% set taxonomy = get_taxonomy(kind=taxonomy_name) %}
+        {% set taxonomy = get_taxonomy(kind=taxonomy_name, lang=lang) %}
         {% set terms = taxonomy.items %}
         {{ parts::taxonomy_list(
             terms=terms,
-            title=taxonomy_name | capitalize,
-            title_url=get_url(path=taxonomy_name),
+            title=trans(key=taxonomy_name, lang=lang),
+            title_url=get_url(path=taxonomy_name, lang=lang),
             have_title=true
         ) }}
     {% endfor %}

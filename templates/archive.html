@@ -1,7 +1,7 @@
 {% extends "base/base.html" %}
 {% block main %}
     {{ super() }}
-    {% set section = get_section(path="posts/_index.md") %}
+    {% set section = get_section(path="posts/_index.md", lang=lang) %}
     {{ parts::pages_list_by_year(
         pages=section.pages,
         have_title=true,

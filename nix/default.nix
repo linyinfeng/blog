@@ -15,7 +15,7 @@ lib.makeScope newScope (
     blog = callPackage ./blog.nix { };
     blog-local = callPackage ./blog.nix {
       extraOptions = [
-        "--base-url=/"
+        "--base-url=http://localhost:8000"
         "--drafts"
       ];
     };

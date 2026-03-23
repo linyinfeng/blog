@@ -28,10 +28,10 @@
             {{  parts::open_graph(cfg=config.extra.open_graph) }}
         {% endif %}
         {% block atom %}
-            <link rel="alternate" type="application/atom+xml" title="Atom" href="{{ get_url(path="atom.xml") }}" />
+            <link rel="alternate" type="application/atom+xml" title="Atom" href="{{ get_url(path="atom.xml", lang=lang) }}" />
         {% endblock atom %}
         {% block rss %}
-            <link rel="alternate" type="application/rss+xml" title="RSS" href="{{ get_url(path="rss.xml") }}" />
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="{{ get_url(path="rss.xml", lang=lang) }}" />
         {% endblock rss %}
         {% if config.extra.mastodon.enable %}
             <link rel="me" href="{{ config.extra.mastodon.link }}" />
@@ -46,7 +46,7 @@
         <header id="header">
             {% block header %}
             {{ parts::header(title=config.title,
-                title_url=config.base_url,
+                title_url=get_url(path="/", lang=lang),
                 nav_items=config.extra.global_nav_items) }}
             {% endblock header %}
         </header>

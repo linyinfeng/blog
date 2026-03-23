@@ -9,9 +9,10 @@
         <nav id="global-nav">
             {%- for nav_item in nav_items -%}
                 <span class="global-nav-item-container"><a class="global-nav-item"
-                    href={% if nav_item.path %}{{ get_url(path=nav_item.path) }}{% else %}{{ nav_item.link }}{% endif %}
-                >{{ nav_item.name }}</a></span>
+                    href={% if nav_item.path %}{{ get_url(path=nav_item.path, lang=lang) }}{% else %}{{ nav_item.link }}{% endif %}
+                >{{ trans(key=nav_item.key, lang=lang) }}</a></span>
             {%- endfor -%}
+            {{ self::language_selector() }}
         </nav>
     </div>
 {% endmacro header %}
@@ -96,13 +97,13 @@
         {%- for taxonomy_config in config.taxonomies -%}
             {%- set taxonomy_name = taxonomy_config.name -%}
             {%- set term_names = page.taxonomies[taxonomy_name] -%}
-            <span class="article-taxonomy"><a class="article-taxonomy-name" href="{{ get_url(path=taxonomy_name) }}">
-                {{ taxonomy_name | capitalize }}</a><span class="article-terms">
+            <span class="article-taxonomy"><a class="article-taxonomy-name" href="{{ get_url(path=taxonomy_name, lang=lang) }}">
+                {{ trans(key=taxonomy_name, lang=lang) }}</a><span class="article-terms">
                 {%- for term_name in term_names -%}
                     {%- if page.draft == true -%}
                         <span class="article-term-name">{{ term_name }}</span>
                     {%- else -%}
-                        {%- set term_url = get_taxonomy_url(kind=taxonomy_name, name=term_name) -%}
+                        {%- set term_url = get_taxonomy_url(kind=taxonomy_name, name=term_name, lang=page.lang) -%}
                         <a class="article-term-name" href="{{ term_url }}">{{ term_name }}</a>
                     {%- endif -%}
                 {%- endfor -%}
@@ -145,11 +146,29 @@
             {# page.summary | safe | striptags #}
             {{ page.summary | safe }}
             <a class="continue-reading-link" href="{{ page.permalink }}#continue-reading">
-                {{ config.extra.text_continue_reading }}
+                {{ trans(key="continue_reading", lang=lang) }}
             </a>
         </section>
     </article>
 {% endmacro article_summary %}
+
+{% macro language_selector() %}
+    {% if page.translations %}
+        {% set translations = page.translations %}
+    {% elif section.translations %}
+        {% set translations = section.translations %}
+    {% endif %}
+    {% if translations %}
+        <span class="language-selector">
+            <span class="language-selectort-title">{{ trans(key="languages", lang=lang) }}</span>
+            <ul class="languages-dropdown">
+                {% for translation in translations %}
+                    <li class="language-item"><a href="{{ translation.permalink }}">{{ trans(key="this_language", lang=translation.lang) }}</a></li>
+                {% endfor %}
+            </ul>
+        </span>
+    {% endif %}
+{% endmacro language_selector %}
 
 {% macro article_license(page, config) %}
     {% if page.extra.license %}
@@ -261,7 +280,7 @@
         <meta property="og:title" content="{{ config.title }}" />
     {%- endif %}
     {%- if page.extra.thumbnail %}
-        {% set image = resize_image(path=page.path ~ page.extra.thumbnail, format="png", width=1200, height=630, op="fill") %}
+        {% set image = resize_image(path=page.colocated_path ~ page.extra.thumbnail, format="png", width=1200, height=630, op="fill") %}
         <meta property="og:image" content="{{ image.url }}" />
     {%- else %}
         <meta property="og:image" content="{{ get_url(path=cfg.default_image, cachebust=true) }}" />
