@@ -85,6 +85,11 @@
     content: ":";
   }
 
+  .article-terms {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
   .article-term-name {
     margin-right: 4px;
 
