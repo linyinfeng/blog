@@ -12,7 +12,7 @@ tags = ["3D 建模", "平面设计", "Python", "build123d"]
 license_image = "license-buttons/l/by-nc-sa/4.0/88x31.png"
 license_image_alt = "CC BY-NC-SA 4.0"
 license = "This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/)"
-thumbnail = "render-square-1080p-black.png"
+thumbnail = "render-square-thumbnail.png"
 +++
 
 记录一个有趣的 3D 建模和渲染项目：莫比乌斯环构成的彩虹渐变无限符号。

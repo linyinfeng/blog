@@ -12,7 +12,7 @@ draft = false
 license_image = "license-buttons/l/by-nc-sa/4.0/88x31.png"
 license_image_alt = "CC BY-NC-SA 4.0"
 license = "This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/)"
-thumbnail = "render-square-1080p-black.png"
+thumbnail = "render-square-thumbnail.png"
 +++
 
 Documenting an interesting 3D modeling and rendering project: a rainbow infinity symbol composed of Möbius strips.
