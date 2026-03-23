@@ -48,3 +48,10 @@ figure {
 .zola-anchor {
   margin-right: 8px;
 }
+
+.row-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
