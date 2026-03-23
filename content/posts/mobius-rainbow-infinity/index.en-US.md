@@ -15,7 +15,7 @@ license = "This work is licensed under a [Creative Commons Attribution-NonCommer
 thumbnail = "render-square-thumbnail.png"
 +++
 
-Documenting an interesting 3D modeling and rendering project: a rainbow infinity symbol composed of Möbius strips.
+Documenting an interesting 3D modeling and rendering project: a rainbow infinity symbol composed of a Möbius strip.
 
 <!-- more -->
 
