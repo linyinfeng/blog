@@ -11,7 +11,7 @@ tags = ["版本管理", "Git"]
 [extra]
 license_image = "license-buttons/l/by-nc-sa/4.0/88x31.png"
 license_image_alt = "CC BY-NC-SA 4.0"
-license = "This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/)"
+license = "本作品采用[署名—非商业性使用—相同方式共享 4.0 协议国际版](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans)协议授权。"
 +++
 
 近日发现 git 的文档中有一个名为 [gitcore-tutorial](https://git-scm.com/docs/gitcore-tutorial) 的教程。这个教程解释了如何使用一些“核心” git 命令在 git 仓库上工作，学习后我认为这个教程非常有用。

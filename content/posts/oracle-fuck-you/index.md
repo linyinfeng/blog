@@ -11,7 +11,7 @@ tags = ["Oracle", "Oracle Cloud", "吐嘈"]
 [extra]
 license_image = "license-buttons/l/by-nc-sa/4.0/88x31.png"
 license_image_alt = "CC BY-NC-SA 4.0"
-license = "This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/)"
+license = "本作品采用[署名—非商业性使用—相同方式共享 4.0 协议国际版](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans)协议授权。"
 +++
 
 我的 Oracle Cloud 免费账户的权限被禁用了，无任何邮件提醒，不提供数据恢复手段。好在我没有部署任何存储有价值数据的服务到 Oracle Cloud 实例上。现已重部署所有服务到其他机器上。提醒大家珍爱数据，远离 Oracle Cloud。

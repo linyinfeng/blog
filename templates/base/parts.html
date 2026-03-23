@@ -125,13 +125,13 @@
         <div class="date-container">
             <time datetime={{ page.date}}>{{ page.date | date(format=config.extra.date_format) }}</time>
  	        {% if verbose %}
-            <span class="date-label">(created)</span>
+            <span class="date-label">({{ trans(key="created", lang=lang) }})</span>
             {% endif %}
         </div>
         {% if verbose and page.updated and page.updated != page.date %}
         <div class="date-container">
 	    <time datetime={{ page.updated }}>{{ page.updated | date(format=config.extra.date_format) }}</time>
-            <span class="date-label">(updated)</span>
+            <span class="date-label">({{ trans(key="updated", lang=lang) }})</span>
         </div>
         {% endif %}
     </div>

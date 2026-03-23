@@ -11,7 +11,7 @@ tags = ["Nix", "Nix Cache", "S3"]
 [extra]
 license_image = "license-buttons/l/by-nc-sa/4.0/88x31.png"
 license_image_alt = "CC BY-NC-SA 4.0"
-license = "This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/)"
+license = "本作品采用[署名—非商业性使用—相同方式共享 4.0 协议国际版](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans)协议授权。"
 thumbnail = "s3-cache-flow.png"
 +++
 

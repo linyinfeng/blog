@@ -11,7 +11,7 @@ tags = ["莱斯定理", "计算理论", "形式语言与自动机"]
 [extra]
 license_image = "license-buttons/l/by-nc-sa/4.0/88x31.png"
 license_image_alt = "CC BY-NC-SA 4.0"
-license = "This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/)"
+license = "本作品采用[署名—非商业性使用—相同方式共享 4.0 协议国际版](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans)协议授权。"
 +++
 
 学习形式语言自动机这课时花了很久才理解莱斯定理（Rice's Theorem）。懂了以后发现，其实就是之前对着书瞎想的时候，没先把全局要做的事情理清楚，这个定理其实并不复杂。这篇带了一些偷懒（省略）的文章是我对莱斯定理的笔记。

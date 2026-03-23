@@ -29,6 +29,8 @@ archive = "归档"
 links = "链接"
 tags = "标签"
 categories = "类别"
+created = "创建"
+updated = "更新"
 
 [languages.en-US]
 title = "Yinfeng's"
@@ -49,6 +51,8 @@ archive = "Archive"
 links = "Links"
 tags = "Tags"
 categories = "Categories"
+created = "created"
+updated = "updated"
 
 [markdown.highlighting]
 error_on_missing_language = true
