@@ -4,6 +4,9 @@
         <loc>https://blog.linyinfeng.com/</loc>
     </url>
     <url>
+        <loc>https://blog.linyinfeng.com/about/</loc>
+    </url>
+    <url>
         <loc>https://blog.linyinfeng.com/archive/</loc>
     </url>
     <url>
@@ -20,6 +23,43 @@
     </url>
     <url>
         <loc>https://blog.linyinfeng.com/categories/yun-wei-ri-zhi/</loc>
+    </url>
+    <url>
+        <loc>https://blog.linyinfeng.com/en-US/</loc>
+    </url>
+    <url>
+        <loc>https://blog.linyinfeng.com/en-US/about/</loc>
+    </url>
+    <url>
+        <loc>https://blog.linyinfeng.com/en-US/archive/</loc>
+    </url>
+    <url>
+        <loc>https://blog.linyinfeng.com/en-US/categories/</loc>
+    </url>
+    <url>
+        <loc>https://blog.linyinfeng.com/en-US/categories/note/</loc>
+    </url>
+    <url>
+        <loc>https://blog.linyinfeng.com/en-US/links/</loc>
+    </url>
+    <url>
+        <loc>https://blog.linyinfeng.com/en-US/posts/mobius-rainbow-infinity/</loc>
+        <lastmod>2026-03-23T19:02:41+08:00</lastmod>
+    </url>
+    <url>
+        <loc>https://blog.linyinfeng.com/en-US/tags/</loc>
+    </url>
+    <url>
+        <loc>https://blog.linyinfeng.com/en-US/tags/3d-modeling/</loc>
+    </url>
+    <url>
+        <loc>https://blog.linyinfeng.com/en-US/tags/build123d/</loc>
+    </url>
+    <url>
+        <loc>https://blog.linyinfeng.com/en-US/tags/graphic-design/</loc>
+    </url>
+    <url>
+        <loc>https://blog.linyinfeng.com/en-US/tags/python/</loc>
     </url>
     <url>
         <loc>https://blog.linyinfeng.com/links/</loc>
@@ -39,6 +79,10 @@
     <url>
         <loc>https://blog.linyinfeng.com/posts/latex-svg/</loc>
         <lastmod>2026-01-24T01:35:07+08:00</lastmod>
+    </url>
+    <url>
+        <loc>https://blog.linyinfeng.com/posts/mobius-rainbow-infinity/</loc>
+        <lastmod>2026-03-23T19:02:41+08:00</lastmod>
     </url>
     <url>
         <loc>https://blog.linyinfeng.com/posts/oracle-fuck-you/</loc>
@@ -68,10 +112,16 @@
         <loc>https://blog.linyinfeng.com/tags/</loc>
     </url>
     <url>
+        <loc>https://blog.linyinfeng.com/tags/3d-jian-mo/</loc>
+    </url>
+    <url>
         <loc>https://blog.linyinfeng.com/tags/bi-bao/</loc>
     </url>
     <url>
         <loc>https://blog.linyinfeng.com/tags/bo-ke/</loc>
+    </url>
+    <url>
+        <loc>https://blog.linyinfeng.com/tags/build123d/</loc>
     </url>
     <url>
         <loc>https://blog.linyinfeng.com/tags/dvisvgm/</loc>
@@ -114,6 +164,9 @@
     </url>
     <url>
         <loc>https://blog.linyinfeng.com/tags/oracle/</loc>
+    </url>
+    <url>
+        <loc>https://blog.linyinfeng.com/tags/ping-mian-she-ji/</loc>
     </url>
     <url>
         <loc>https://blog.linyinfeng.com/tags/python/</loc>

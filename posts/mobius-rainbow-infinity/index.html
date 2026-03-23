@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang=zh-CN>
+<head>
+    
+        <title>
+    莫比乌斯环彩虹无限符号 -
+    Yinfeng&#x27;s
+</title>
+        
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel=stylesheet type="text/css" href=https://blog.linyinfeng.com/normalize.css?h=580818700724d42d7fcc />
+        <link rel=stylesheet type="text/css" href=https://blog.linyinfeng.com/style.css?h=ec0bbd91baa225a87a49 />
+        <script defer src=https://blog.linyinfeng.com/layout-helper.js?h=f433ff057abd07e8dc0b></script>
+        
+            
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-K74P2G7');</script>
+    <!-- End Google Tag Manager -->
+
+        
+        
+            
+                
+    <link rel="stylesheet" href="https://blog.linyinfeng.com/katex/katex.min.css?h=c32153bde5fa6844805f" />
+    <script defer src="https://blog.linyinfeng.com/katex/katex.min.js?h=759450e87b7d6523ab99"></script>
+    <script defer src="https://blog.linyinfeng.com/katex/contrib/mathtex-script-type.min.js?h=b4e3488de2be4a0aa243"></script>
+    <script defer src="https://blog.linyinfeng.com/katex/contrib/copy-tex.min.js?h=c571c49b520cb8e90402"></script>
+    <script defer src="https://blog.linyinfeng.com/katex/contrib/auto-render.min.js?h=e5372d199bcdae8b4de7"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+    macros: {
+        "\\set": "\\left\\{ #1 \\right\\}"
+    },
+    delimiters: [
+        {left: "$$",  right: "$$",  display: true },
+        {left: "$",   right: "$",   display: false},
+        {left: "\\(", right: "\\)", display: false},
+        {left: "\\[", right: "\\]", display: true }
+    ]
+}
+ );
+        });
+    </script>
+
+            
+        
+        
+            
+    <script src="https://giscus.app/client.js"
+            data-repo="linyinfeng&#x2F;blog"
+            data-repo-id="MDEwOlJlcG9zaXRvcnkxNDMxMjU5NTA="
+            data-category-id="MDE4OkRpc2N1c3Npb25DYXRlZ29yeTMyOTkyOTcy"
+            data-mapping="pathname"
+            data-reactions-enabled="1"
+            data-theme="light"
+            crossorigin="anonymous"
+            async>
+    </script>
+
+        
+        
+            
+    <meta property="og:url" content="https://blog.linyinfeng.com/posts/mobius-rainbow-infinity/" />
+        <meta property="og:description" content="记录一个有趣的 3D 建模和渲染项目：莫比乌斯环构成的彩虹渐变无限符号。" />
+        <meta property="og:title" content="莫比乌斯环彩虹无限符号 | Yinfeng&#x27;s" />
+        
+        <meta property="og:image" content="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;processed_images&#x2F;render-square-1080p-black.3d16c06a5c27365f.png" />
+    <meta property="og:site_name" content="Yinfeng&#x27;s" />
+    <meta property="og:locale" content="zh-CN" />
+    <meta property="og:type" content="website" />
+        <meta property="og:updated_time" content="2026-03-23" />
+
+        
+        
+            <link rel="alternate" type="application/atom+xml" title="Atom" href="https://blog.linyinfeng.com/atom.xml" />
+        
+        
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.linyinfeng.com/rss.xml" />
+        
+        
+            <link rel="me" href="https:&#x2F;&#x2F;mastodon.li7g.com&#x2F;@yinfeng" />
+        
+    
+</head>
+<body>
+    
+        
+        <header id="header">
+            
+            
+    <div class="header-container container">
+        <h1 id="blog-title" class="title">
+            <a href=https:&#x2F;&#x2F;blog.linyinfeng.com>
+                <img src="https://blog.linyinfeng.com/favicon.svg?h=13cd5e503c308246963d" alt="Yinfeng&#x27;s" />
+            </a>
+        </h1>
+        <nav id="global-nav"><span class="global-nav-item-container"><a class="global-nav-item"
+                    href=https://blog.linyinfeng.com/archive
+                >归档</a></span><span class="global-nav-item-container"><a class="global-nav-item"
+                    href=https://blog.linyinfeng.com/links
+                >链接</a></span><span class="global-nav-item-container"><a class="global-nav-item"
+                    href=https://blog.linyinfeng.com/about
+                >关于</a></span>
+    
+        
+    
+    
+        <span class="language-selector">
+            <span class="language-selectort-title">语言</span>
+            <ul class="languages-dropdown">
+                
+                    <li class="language-item"><a href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;">简体中文</a></li>
+                
+                    <li class="language-item"><a href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;en-US&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;">English (US)</a></li>
+                
+            </ul>
+        </span>
+    
+
+        </nav>
+    </div>
+
+            
+        </header>
+        <div id="main-aside-container">
+            
+    
+        
+                <aside id="aside">
+                    <div id="aside-container">
+                        
+    
+    <div class="toc-container container">
+        <h1 class="title toc-title">目录</h1>
+        
+    
+        <ul class="toc-parent">
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;#mu-biao>目标</a>
+                    
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;#jian-mo>建模</a>
+                    
+    
+        <ul class="toc-parent">
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;#yu-bei-gong-zuo>预备工作</a>
+                    
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;#zhu-lu-jing>主路径</a>
+                    
+    
+        <ul class="toc-parent">
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;#di-yi-xiang-xian>第一象限</a>
+                    
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;#si-xiang-xian-zu-he>四象限组合</a>
+                    
+    
+
+                </li>
+                
+        </ul>
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;#mo-bi-wu-si-huan>莫比乌斯环</a>
+                    
+    
+        <ul class="toc-parent">
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;#bian-jie-xian>边界线</a>
+                    
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;#huan-mian>环面</a>
+                    
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;#ti-ji>体积</a>
+                    
+    
+
+                </li>
+                
+        </ul>
+    
+
+                </li>
+                
+        </ul>
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;#xuan-ran>渲染</a>
+                    
+    
+
+                </li>
+                
+                <li class="toc-entry">
+                    <a href=https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;#zui-zhong-xiao-guo>最终效果</a>
+                    
+    
+
+                </li>
+                
+        </ul>
+    
+
+    </div>
+
+
+                    </div>
+                </aside>
+            
+    
+
+            <main id="main">
+                <div id="main-container">
+                    
+    
+                    
+    
+    <article class="article-container container">
+        
+    <h1 class="title article-title">
+        <a class="article-title-link" href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;">
+            
+    <span class="draft-indicator">
+        
+    </span>
+    <span>
+        莫比乌斯环彩虹无限符号
+    </span>
+
+        </a>
+    </h1>
+
+        
+    <div class="dates-container">
+        <div class="date-container">
+            <time datetime=2026-03-23T12:13:03+08:00>2026-03-23 12:13</time>
+ 	        
+            <span class="date-label">(created)</span>
+            
+        </div>
+        
+        <div class="date-container">
+	    <time datetime=2026-03-23T19:02:41+08:00>2026-03-23 19:02</time>
+            <span class="date-label">(updated)</span>
+        </div>
+        
+    </div>
+
+        
+    <div class="article-taxonomies"><span class="article-taxonomy"><a class="article-taxonomy-name" href="https://blog.linyinfeng.com/tags">
+                标签</a><span class="article-terms"><a class="article-term-name" href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;tags&#x2F;3d-jian-mo&#x2F;">3D 建模</a><a class="article-term-name" href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;tags&#x2F;ping-mian-she-ji&#x2F;">平面设计</a><a class="article-term-name" href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;tags&#x2F;python&#x2F;">Python</a><a class="article-term-name" href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;tags&#x2F;build123d&#x2F;">build123d</a></span></span><span class="article-taxonomy"><a class="article-taxonomy-name" href="https://blog.linyinfeng.com/categories">
+                类别</a><span class="article-terms"><a class="article-term-name" href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;categories&#x2F;bi-ji&#x2F;">笔记</a></span></span></div>
+
+        
+    
+        <section class="article-license">
+            
+                <div class="license-image">
+                    <img src="https://blog.linyinfeng.com/license-buttons/l/by-nc-sa/4.0/88x31.png?h=f46d7b11bac0d593eab6" alt="CC BY-NC-SA 4.0" />
+                </div>
+            
+            <small class="license-text">This work is licensed under a <a rel="external" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a></small>
+        </section>
+    
+
+        <section class="article-content"><p>记录一个有趣的 3D 建模和渲染项目：莫比乌斯环构成的彩虹渐变无限符号。</p>
+<span id="continue-reading"></span><h2 id="mu-biao"><a class="zola-anchor" href="#mu-biao" aria-label="Anchor link for: mu-biao">
+    ⚓
+</a>
+目标</h2>
+<p>我想要建模一个由莫比乌斯环构成的无限符号，我希望这个物体：</p>
+<ol>
+<li>在俯视图下是一个完美的正圆形。</li>
+<li>在前后视图和两个侧视图下都呈现出完美的无限符号（$\infty$）的形状。</li>
+</ol>
+<p>为什么需要是正圆形？因为这样我就可以使用从原点开始，径向色相渐变的彩色光为该物体做照明，从而渲染出一个均匀的流光溢彩的无限符号。</p>
+<figure>
+    <a href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;point-lighting.png?h=ab5bb5fe5cb259442d9f">
+        <img src="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;point-lighting.png?h=ab5bb5fe5cb259442d9f" alt="径向色相渐变点状光源" width="250"/>
+    </a>
+    <figcaption>径向色相渐变点状光源</figcaption>
+</figure>
+<h2 id="jian-mo"><a class="zola-anchor" href="#jian-mo" aria-label="Anchor link for: jian-mo">
+    ⚓
+</a>
+建模</h2>
+<p>我使用 Python 的 <a rel="external" href="https://build123d.readthedocs.io">build123d</a> 库来建模。这个库是一个基于 Open CASCADE 内核的 CAD 建模库，可以直接使用代码设计复杂的 3D 模型。</p>
+<p>我在中途犯过很多的错误，要建模一个不规则的莫比乌斯环实际上并不容易，本文将直接展示一条正确的建模路径，并且会偶尔提一嘴我之前犯过的错误。</p>
+<h3 id="yu-bei-gong-zuo"><a class="zola-anchor" href="#yu-bei-gong-zuo" aria-label="Anchor link for: yu-bei-gong-zuo">
+    ⚓
+</a>
+预备工作</h3>
+<p>首先先导入 build123d 和用来调试的 ocp_vscode 库，然后先定义一些参数，一些参数的意义将在后面被提到。</p>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="python"><span class="giallo-l"><span style="color: #CF222E;">from</span><span> build123d</span><span style="color: #CF222E;"> import *</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">from</span><span> ocp_vscode</span><span style="color: #CF222E;"> import *</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">import</span><span> math</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #CF222E;">class</span><span style="color: #953800;"> Config</span><span>:</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">    def</span><span style="color: #0550AE;"> __init__</span><span>(self):</span></span>
+<span class="giallo-l"><span style="color: #0550AE;">        self</span><span>.radius</span><span style="color: #CF222E;"> =</span><span style="color: #0550AE;"> 20.0</span></span>
+<span class="giallo-l"><span style="color: #0550AE;">        self</span><span>.max_height</span><span style="color: #CF222E;"> =</span><span style="color: #0550AE;"> self</span><span>.radius</span></span>
+<span class="giallo-l"><span style="color: #0550AE;">        self</span><span>.width</span><span style="color: #CF222E;"> =</span><span style="color: #0550AE;"> 5.0</span></span>
+<span class="giallo-l"><span style="color: #0550AE;">        self</span><span>.thickness</span><span style="color: #CF222E;"> =</span><span style="color: #0550AE;"> self</span><span>.width</span></span>
+<span class="giallo-l"><span style="color: #0550AE;">        self</span><span>.segments</span><span style="color: #CF222E;"> =</span><span style="color: #0550AE;"> 360</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span>cfg</span><span style="color: #CF222E;"> =</span><span> Config()</span></span></code></pre><h3 id="zhu-lu-jing"><a class="zola-anchor" href="#zhu-lu-jing" aria-label="Anchor link for: zhu-lu-jing">
+    ⚓
+</a>
+主路径</h3>
+<p>我首先选择建模一条主路径，也就是整个物体的中心线。这个路径需要满足前面提到的两个条件，俯视图下是正圆，且测试图看起来是一个无线符号。</p>
+<h4 id="di-yi-xiang-xian"><a class="zola-anchor" href="#di-yi-xiang-xian" aria-label="Anchor link for: di-yi-xiang-xian">
+    ⚓
+</a>
+第一象限</h4>
+<p>将主路径这个正圆的圆心放在原点，简单思考就会意识到，这条主路径在四个象限都是相似的。
+所以，我只需要建模第一象限的路径，然后通过镜像/旋转等操作就可以得到完整的路径了。</p>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="python"><span class="giallo-l"><span style="color: #CF222E;">def</span><span style="color: #8250DF;"> build_q1_line</span><span>():</span></span>
+<span class="giallo-l"><span>    q1_xy</span><span style="color: #CF222E;"> =</span><span> CenterArc((</span><span style="color: #0550AE;">0</span><span>,</span><span style="color: #0550AE;"> 0</span><span>), cfg.radius,</span><span style="color: #0550AE;"> 0</span><span>,</span><span style="color: #0550AE;"> 90</span><span>)</span></span>
+<span class="giallo-l"><span>    wall_face</span><span style="color: #CF222E;"> =</span><span> sweep(q1_xy, Line((</span><span style="color: #0550AE;">0</span><span>,</span><span style="color: #0550AE;"> 0</span><span>,</span><span style="color: #0550AE;"> 0</span><span>), (</span><span style="color: #0550AE;">0</span><span>,</span><span style="color: #0550AE;"> 0</span><span>, cfg.max_height)))</span></span>
+<span class="giallo-l"><span>    q1_plane</span><span style="color: #CF222E;"> =</span><span> Plane.</span><span style="color: #0550AE;">XY</span><span style="color: #CF222E;"> *</span><span> Pos(cfg.radius</span><span style="color: #CF222E;"> /</span><span style="color: #0550AE;"> 2</span><span>, cfg.radius</span><span style="color: #CF222E;"> /</span><span style="color: #0550AE;"> 2</span><span>)</span><span style="color: #CF222E;">  *</span><span> Rotation(</span><span style="color: #953800;">Z</span><span style="color: #CF222E;">=-</span><span style="color: #0550AE;">45</span><span>)</span><span style="color: #CF222E;"> *</span><span> Rotation(</span><span style="color: #953800;">X</span><span style="color: #CF222E;">=</span><span style="color: #0550AE;">45</span><span>)</span></span>
+<span class="giallo-l"><span>    splitted</span><span style="color: #CF222E;"> =</span><span> split(wall_face,</span><span style="color: #953800;"> bisect_by</span><span style="color: #CF222E;">=</span><span>q1_plane,</span><span style="color: #953800;"> keep</span><span style="color: #CF222E;">=</span><span>Keep.</span><span style="color: #0550AE;">BOTH</span><span>)</span></span>
+<span class="giallo-l"><span>    edges_diff</span><span style="color: #CF222E;"> =</span><span> splitted.edges()</span><span style="color: #CF222E;"> -</span><span> wall_face.edges()</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">    assert</span><span style="color: #0550AE;"> len</span><span>(edges_diff)</span><span style="color: #CF222E;"> ==</span><span style="color: #0550AE;"> 1</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">    return</span><span> edges_diff[</span><span style="color: #0550AE;">0</span><span>]</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span>q1_line</span><span style="color: #CF222E;"> =</span><span> build_q1_line()</span></span></code></pre>
+<p>我们一步一步来看：</p>
+<ol>
+<li>
+<p>首先我创建了一个第一象限的圆弧 <code>q1_xy</code>，这个圆弧是主路径在 XY 平面上的投影。并使用 sweep 将圆弧抬升成一个面 <code>wall_face</code>。</p>
+<figure>
+    <a href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;wall-face.png?h=786b8f801d051ad893eb">
+        <img src="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;wall-face.png?h=786b8f801d051ad893eb" alt="第一象限的圆弧面" width="500"/>
+    </a>
+    <figcaption>第一象限的圆弧面</figcaption>
+</figure>
+</li>
+<li>
+<p>第二步，我构造了一个斜 45 度向上的 plane，并用这个 plane 切割之前的面。这个 plane 与第一象限的圆弧的两个端点相交。因此切割后，切割线两端的端点一定刚好落在坐标轴上。</p>
+<figure>
+    <a href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;splitted.png?h=2cfcafcf4cba0c658f95">
+        <img src="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;splitted.png?h=2cfcafcf4cba0c658f95" alt="切割后的圆弧面" width="500"/>
+    </a>
+    <figcaption>切割后的圆弧面</figcaption>
+</figure>
+</li>
+<li>
+<p>第三步，只保留这条切割线，这条切割线就是第一象限的主路径了。因为切割后只会多出一条边，因此直接计算切割前后的边的差集就可以得到这条边了。</p>
+<figure>
+    <a href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;q1-line.png?h=8f13cc80dcfbfe8b37a0">
+        <img src="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;q1-line.png?h=8f13cc80dcfbfe8b37a0" alt="第一象限的主路径（斜视图）" width="500"/>
+    </a>
+    <figcaption>第一象限的主路径（斜视图）</figcaption>
+</figure>
+<figure>
+    <a href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;q1-line-front.png?h=28c247fbb2182b9e729b">
+        <img src="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;q1-line-front.png?h=28c247fbb2182b9e729b" alt="第一象限的主路径（前视图）" width="500"/>
+    </a>
+    <figcaption>第一象限的主路径（前视图）</figcaption>
+</figure>
+<p>可以看到，前视图呈现一个 1/4 无限符号。</p>
+</li>
+</ol>
+<h4 id="si-xiang-xian-zu-he"><a class="zola-anchor" href="#si-xiang-xian-zu-he" aria-label="Anchor link for: si-xiang-xian-zu-he">
+    ⚓
+</a>
+四象限组合</h4>
+<p>接下来，通过镜像和旋转操作，拼合出一个完整的圈。</p>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="python"><span class="giallo-l"><span style="color: #CF222E;">def</span><span style="color: #8250DF;"> build_main_path</span><span>():</span></span>
+<span class="giallo-l"><span>    q2_line</span><span style="color: #CF222E;"> =</span><span> mirror(q1_line, Plane.</span><span style="color: #0550AE;">XY</span><span>).rotate(Axis.Z,</span><span style="color: #0550AE;"> 90</span><span>)</span></span>
+<span class="giallo-l"><span>    half_circle</span><span style="color: #CF222E;"> =</span><span> q1_line</span><span style="color: #CF222E;"> +</span><span> q2_line</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">    return</span><span> half_circle</span><span style="color: #CF222E;"> +</span><span> half_circle.rotate(Axis.Z,</span><span style="color: #0550AE;"> 180</span><span>)</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span>main_path</span><span style="color: #CF222E;"> =</span><span> build_main_path()</span></span></code></pre>
+<ol>
+<li>
+<p>第一步，将第一象限路径镜像到下方，然后旋转 90 度到第二象限，并拼接成一个半圆。</p>
+<figure>
+    <a href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;half-circle.png?h=a60e7eb387533ae9eb4d">
+        <img src="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;half-circle.png?h=a60e7eb387533ae9eb4d" alt="第一二象限的主路径" width="500"/>
+    </a>
+    <figcaption>第一二象限的主路径</figcaption>
+</figure>
+</li>
+<li>
+<p>第二步，将这个半圆再旋转 180 度，并拼接到原来半圆的后面，就得到了完整的主路径。</p>
+<figure>
+    <a href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;main-path.png?h=b25925f5b47198784ee5">
+        <img src="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;main-path.png?h=b25925f5b47198784ee5" alt="完整的主路径（斜视图）" width="500"/>
+    </a>
+    <figcaption>完整的主路径（斜视图）</figcaption>
+</figure>
+<div class="row-container">
+<figure>
+    <a href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;main-path-front.png?h=0e405b63020d2f9e35b6">
+        <img src="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;main-path-front.png?h=0e405b63020d2f9e35b6" alt="完整的主路径（前视图）" width="250"/>
+    </a>
+    <figcaption>完整的主路径（前视图）</figcaption>
+</figure>
+<figure>
+    <a href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;main-path-top.png?h=c0287dbc091d39fce54c">
+        <img src="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;main-path-top.png?h=c0287dbc091d39fce54c" alt="完整的主路径（顶视图）" width="250"/>
+    </a>
+    <figcaption>完整的主路径（顶视图）</figcaption>
+</figure>
+</div>
+<p>可以看到，前视图呈现一个无限符号，顶视图呈现一个正圆形。</p>
+</li>
+</ol>
+<h3 id="mo-bi-wu-si-huan"><a class="zola-anchor" href="#mo-bi-wu-si-huan" aria-label="Anchor link for: mo-bi-wu-si-huan">
+    ⚓
+</a>
+莫比乌斯环</h3>
+<p>接下来，我需要在这个主路径的基础上建模出一个莫比乌斯环。也就是说，我需要在主路径的每个位置构造一个横截面，并且让这个横截面沿着主路径进行旋转 180 度的扭转。</p>
+<p>你可能会想到，我可以先构造一个横截面，然后让这个截面跟随主路径进行 <code>sweep</code>，直接生成一个莫比乌斯环。理论上这是可行的，但是在 build123d 里就不太可行。在 build123d 里，要控制这个截面进行 180 度的旋转，就需要生成一条 binormal 路径作为参考来进行控制。但是，由于主路径和 binormal 路径都非常不规则，内核生成的 binormal 路径和主路径的对应关系是错误的，导致生成的莫比乌斯环会出现宽度和厚度的扭曲，这<strong>不完美</strong>。</p>
+<p>我的做法是：</p>
+<ol>
+<li>直接计算坐标，用样条生成整个环的边界线，它将形成成一条闭合的 <code>Wire</code>。</li>
+<li>但是由于莫比乌斯环的特殊性（具体原因其实我不知道），build123d 并无法从这条 <code>Wire</code> 执行 <code>Face.make_surface</code> 来生成一个表面。</li>
+<li>所以我将这条边界线切分为两个部分，变成两个闭合的 <code>Wire</code>，每个 <code>Wire</code> 都可以执行 <code>Face.make_surface</code> 来生成一个面。</li>
+<li>最后将这两个面拼接在一起，就得到了完整的莫比乌斯环。</li>
+</ol>
+<h4 id="bian-jie-xian"><a class="zola-anchor" href="#bian-jie-xian" aria-label="Anchor link for: bian-jie-xian">
+    ⚓
+</a>
+边界线</h4>
+<p>我分为两部分来生成这条边界线，一次生成一半，然后合并。</p>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="python"><span class="giallo-l"><span style="color: #CF222E;">def</span><span style="color: #8250DF;"> rotating_spline</span><span>(begin_angle</span><span style="color: #CF222E;">=</span><span style="color: #0550AE;">0.0</span><span>, distance</span><span style="color: #CF222E;">=</span><span>cfg.width</span><span style="color: #CF222E;"> /</span><span style="color: #0550AE;"> 2.0</span><span>):</span></span>
+<span class="giallo-l"><span>    pts</span><span style="color: #CF222E;"> =</span><span> []</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">    for</span><span> i</span><span style="color: #CF222E;"> in</span><span style="color: #0550AE;"> range</span><span>(cfg.segments</span><span style="color: #CF222E;"> +</span><span style="color: #0550AE;"> 1</span><span>):</span></span>
+<span class="giallo-l"><span>        position</span><span style="color: #CF222E;"> =</span><span> main_path</span><span style="color: #CF222E;"> @</span><span> (i</span><span style="color: #CF222E;"> /</span><span> cfg.segments)</span></span>
+<span class="giallo-l"><span>        circle_radian</span><span style="color: #CF222E;"> =</span><span> math.radians(</span><span style="color: #0550AE;">360.0</span><span style="color: #CF222E;"> *</span><span> i</span><span style="color: #CF222E;"> /</span><span> cfg.segments)</span></span>
+<span class="giallo-l"><span>        rotation_radian</span><span style="color: #CF222E;"> =</span><span> begin_angle</span><span style="color: #CF222E;"> +</span><span> circle_radian</span><span style="color: #CF222E;"> /</span><span style="color: #0550AE;"> 2.0</span></span>
+<span class="giallo-l"><span>        radial</span><span style="color: #CF222E;"> =</span><span> position.normalized()</span></span>
+<span class="giallo-l"><span>        normal</span><span style="color: #CF222E;"> =</span><span> position.cross(Vector(</span><span style="color: #0550AE;">0</span><span>,</span><span style="color: #0550AE;"> 0</span><span>,</span><span style="color: #0550AE;"> 1</span><span>))</span></span>
+<span class="giallo-l"><span>        up</span><span style="color: #CF222E;"> =</span><span> normal.cross(radial).normalized()</span></span>
+<span class="giallo-l"><span>        offset</span><span style="color: #CF222E;"> =</span><span> (radial</span><span style="color: #CF222E;"> *</span><span> math.cos(rotation_radian)</span><span style="color: #CF222E;"> +</span><span> up</span><span style="color: #CF222E;"> *</span><span> math.sin(rotation_radian))</span><span style="color: #CF222E;"> *</span><span> distance</span></span>
+<span class="giallo-l"><span>        pts.append((position</span><span style="color: #CF222E;"> +</span><span> offset).center())</span></span>
+<span class="giallo-l"><span style="color: #CF222E;">    return</span><span> Spline(pts)</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span>line1</span><span style="color: #CF222E;"> =</span><span> rotating_spline()</span></span>
+<span class="giallo-l"><span>line2</span><span style="color: #CF222E;"> =</span><span> rotating_spline(math.pi)</span></span></code></pre>
+<ol>
+<li>我用样条生成边界线，边界上的每个点都是在主路径上偏移一个 <code>offset</code> 向量得到的。</li>
+<li><code>offset</code> 是由一个角度 <code>rotation_radian</code> 控制的，这个角度从 <code>begin_angle</code> 开始，随着主路径的前进而不断旋转，旋转一周后旋转 180 度。</li>
+<li>一次生成一圈，第一圈 <code>rotation_radian</code> 从 0 度开始，第二圈 <code>rotation_radian</code> 从 180 度开始，因为每圈过后 <code>rotation_radian</code> 变化 180 度，因此两圈就会首尾相接。</li>
+</ol>
+<div class="row-container">
+<figure>
+    <a href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;spline-line1.png?h=4d1e28a5c5e95ac4ad7a">
+        <img src="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;spline-line1.png?h=4d1e28a5c5e95ac4ad7a" alt="边界线的第一部分" width="250"/>
+    </a>
+    <figcaption>边界线的第一部分</figcaption>
+</figure>
+<figure>
+    <a href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;spline-line2.png?h=c6b9e31a0157cde60570">
+        <img src="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;spline-line2.png?h=c6b9e31a0157cde60570" alt="边界线的第二部分" width="250"/>
+    </a>
+    <figcaption>边界线的第二部分</figcaption>
+</figure>
+</div>
+<figure>
+    <a href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;spline-line1-line2.png?h=99c7cfec9865842b74a8">
+        <img src="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;spline-line1-line2.png?h=99c7cfec9865842b74a8" alt="完整的边界线" width="500"/>
+    </a>
+    <figcaption>完整的边界线</figcaption>
+</figure>
+<p>其中一个有意思的点是角度 <code>rotation_radian</code> 的参照系。我将这个角度的 0 度设置为原点到主路径的向量 <code>radial</code>。也就是说，<code>rotation_radian</code> 的值为 0 度时，偏移的方向是直接朝向主路径的径向的。角度的 90 度位置设置为 <code>up</code> 向量，<code>up</code> 与 Z 轴和 <code>radial</code> 向量共面，且 <code>up</code> 与 <code>radial</code> 垂直。</p>
+<p>这里我在写代码时，发现立体几何和线性代数有点还给老师了，不知道该怎么算出 <code>up</code> 向量。向 LLM 请教一番后，才想起来法向量这个东西。</p>
+<ol>
+<li>计算平面的法向量，可以计算平面上两个向量的叉积，就能得到垂直于这两个向量的第三个向量。</li>
+<li>首先算出 Z 轴和 <code>radial</code> 构成的平面的法向量 <code>normal</code>，然后再计算法向量与 <code>radial</code> 的叉积，就得到了 <code>up</code> 向量了，<code>up</code> 向量一定在该平面上，且与 <code>radial</code> 向量垂直。</li>
+<li>利用两次右手定则，使得 <code>up</code> 朝上方即可。</li>
+</ol>
+<h4 id="huan-mian"><a class="zola-anchor" href="#huan-mian" aria-label="Anchor link for: huan-mian">
+    ⚓
+</a>
+环面</h4>
+<p>我将两条边界线 <code>line1</code> 和 <code>line2</code> 切分成两部分，得到四条线段，然后将这些线段拼接成两个闭合的 <code>Wire</code>，为每个 <code>Wire</code> 分别执行 <code>Face.make_surface</code> 生成一个非平面，最后将这两个面拼接在一起，就得到了完整的莫比乌斯环面。</p>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="plain"><span class="giallo-l"><span>line11, line12 = line1.split(Plane.XZ, keep=Keep.BOTH)</span></span>
+<span class="giallo-l"><span>line21, line22 = line2.split(Plane.XZ, keep=Keep.BOTH)</span></span>
+<span class="giallo-l"><span>connect_line1 = Line(line11 @ 0, line21 @ 0)</span></span>
+<span class="giallo-l"><span>connect_line2 = Line(line11 @ 1, line21 @ 1)</span></span>
+<span class="giallo-l"><span>wire1 = Wire([line11, line21, connect_line1, connect_line2])</span></span>
+<span class="giallo-l"><span>wire2 = Wire([line12, line22, connect_line1, connect_line2])</span></span>
+<span class="giallo-l"><span>face1 = Face.make_surface(wire1)</span></span>
+<span class="giallo-l"><span>face2 = Face.make_surface(wire2)</span></span>
+<span class="giallo-l"><span>infinity_face = face1 + face2</span></span></code></pre><div class="row-container">
+<figure>
+    <a href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;wire1.png?h=07cd363995b8e45aa9bb">
+        <img src="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;wire1.png?h=07cd363995b8e45aa9bb" alt="切分后拼接得到的第一个环" width="250"/>
+    </a>
+    <figcaption>切分后拼接得到的第一个环</figcaption>
+</figure>
+<figure>
+    <a href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;wire2.png?h=4d30e8c87c01b6f5c711">
+        <img src="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;wire2.png?h=4d30e8c87c01b6f5c711" alt="切分后拼接得到的第二个环" width="250"/>
+    </a>
+    <figcaption>切分后拼接得到的第二个环</figcaption>
+</figure>
+</div>
+<figure>
+    <a href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;infinity-face.png?h=5e817604df9bbb83e3cc">
+        <img src="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;infinity-face.png?h=5e817604df9bbb83e3cc" alt="完整的莫比乌斯环面" width="500"/>
+    </a>
+    <figcaption>完整的莫比乌斯环面</figcaption>
+</figure>
+<h4 id="ti-ji"><a class="zola-anchor" href="#ti-ji" aria-label="Anchor link for: ti-ji">
+    ⚓
+</a>
+体积</h4>
+<p>最后，只要使用 <code>thicken</code> 操作将这个面加厚，就得到了一个完整的有体积的莫比乌斯环了。在 <code>build123d</code> 中，<code>thicken</code> 操作可以作用于非平面。</p>
+<pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="python"><span class="giallo-l"><span>infinity</span><span style="color: #CF222E;"> =</span><span> thicken(infinity_face, cfg.thickness</span><span style="color: #CF222E;"> /</span><span style="color: #0550AE;"> 2.0</span><span>,</span><span style="color: #953800;"> both</span><span style="color: #CF222E;">=</span><span style="color: #0550AE;">True</span><span>)</span></span></code></pre><div class="row-container">
+<figure>
+    <a href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;square.png?h=2685999086da926fe39e">
+        <img src="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;square.png?h=2685999086da926fe39e" alt="方形截面的莫比乌斯环（斜视图）" width="250"/>
+    </a>
+    <figcaption>方形截面的莫比乌斯环（斜视图）</figcaption>
+</figure>
+<figure>
+    <a href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;square-top.png?h=3f17140bf61185b0fd80">
+        <img src="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;square-top.png?h=3f17140bf61185b0fd80" alt="方形截面的莫比乌斯环（顶视图）" width="250"/>
+    </a>
+    <figcaption>方形截面的莫比乌斯环（顶视图）</figcaption>
+</figure>
+<figure>
+    <a href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;square-front.png?h=0f3aa0387bb41776a2e2">
+        <img src="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;square-front.png?h=0f3aa0387bb41776a2e2" alt="方形截面的莫比乌斯环（前视图）" width="250"/>
+    </a>
+    <figcaption>方形截面的莫比乌斯环（前视图）</figcaption>
+</figure>
+<figure>
+    <a href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;square-left.png?h=a06e79689896327da058">
+        <img src="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;square-left.png?h=a06e79689896327da058" alt="方形截面的莫比乌斯环（左视图）" width="250"/>
+    </a>
+    <figcaption>方形截面的莫比乌斯环（左视图）</figcaption>
+</figure>
+</div>
+<p>可以看到，两个侧视图展现出了不同的扭转角度，可以渲染出不同的效果。</p>
+<p>在最开始我设置的参数中，<code>thickness</code> 等于 <code>width</code> 的值，这样就得到了一个方形截面的莫比乌斯环了。我还将 <code>thickness</code> 的值设置为 <code>width</code> 的一半，得到一个矩形截面的莫比乌斯环。</p>
+<div class="row-container">
+<figure>
+    <a href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;rectangle-infinity.png?h=28e99bd7875099ca72c7">
+        <img src="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;rectangle-infinity.png?h=28e99bd7875099ca72c7" alt="矩形截面的莫比乌斯环" width="250"/>
+    </a>
+    <figcaption>矩形截面的莫比乌斯环</figcaption>
+</figure>
+<figure>
+    <a href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;rectangle-infinity-top.png?h=608c9ec7bfb44f49831b">
+        <img src="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;rectangle-infinity-top.png?h=608c9ec7bfb44f49831b" alt="矩形截面的莫比乌斯环（顶视图）" width="250"/>
+    </a>
+    <figcaption>矩形截面的莫比乌斯环（顶视图）</figcaption>
+</figure>
+<figure>
+    <a href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;rectangle-infinity-front.png?h=73b9bbc05078fae81132">
+        <img src="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;rectangle-infinity-front.png?h=73b9bbc05078fae81132" alt="矩形截面的莫比乌斯环（前视图）" width="250"/>
+    </a>
+    <figcaption>矩形截面的莫比乌斯环（前视图）</figcaption>
+</figure>
+<figure>
+    <a href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;rectangle-infinity-left.png?h=cff7d24f7f1c158353b3">
+        <img src="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;rectangle-infinity-left.png?h=cff7d24f7f1c158353b3" alt="矩形截面的莫比乌斯环（左视图）" width="250"/>
+    </a>
+    <figcaption>矩形截面的莫比乌斯环（左视图）</figcaption>
+</figure>
+</div>
+<p>在矩形截面的版本中，前视图的左侧会略小于右侧，导致视觉不平衡。但左侧截面中，位于前方的部分宽度更窄，所以我利用透视相机，把更窄的这部分放在更近的位置（因此看起来更大），以达到左右视觉对称。</p>
+<h2 id="xuan-ran"><a class="zola-anchor" href="#xuan-ran" aria-label="Anchor link for: xuan-ran">
+    ⚓
+</a>
+渲染</h2>
+<p>目前我只做了一个比较基础的渲染。直接将模型导入 Blender，设置一系列从原点开始的径向色相渐变光源，就可以渲染出彩虹的效果了。我取巧没有试图通过材质（还没学会）使得这个莫比乌斯环呈现出彩虹效果，而是使用光源间接赋予这个环色彩。</p>
+<p>我一共采用了三种光源：</p>
+<ol>
+<li>上下各一个点光源照亮模型内侧；</li>
+<li>上下各一个面光源照亮模型的上方和下方；</li>
+<li>一个圆柱形的光源，照亮模型的外侧。</li>
+</ol>
+<p>放置如下，所有被选中（橙色）物体都是光源。</p>
+<figure>
+    <a href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;blender-lighting.png?h=c33c9d0d0a36319dd1c6">
+        <img src="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;blender-lighting.png?h=c33c9d0d0a36319dd1c6" alt="Blender 中的光源放置" width="500"/>
+    </a>
+    <figcaption>Blender 中的光源放置</figcaption>
+</figure>
+<p>每个光源的配置都大差不差，以面光源为例。使用坐标作为输入，构造一个径向渐变纹理即可。</p>
+<figure>
+    <a href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;blender-lighting-shader.png?h=a6b013950702a81f236a">
+        <img src="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;blender-lighting-shader.png?h=a6b013950702a81f236a" alt="面光源的 shader 配置" width="500"/>
+    </a>
+    <figcaption>面光源的 shader 配置</figcaption>
+</figure>
+<p>最后调整好相机位置，模型的材质，以及色彩管理的设置，就可以渲染出最终的效果了。</p>
+<h2 id="zui-zhong-xiao-guo"><a class="zola-anchor" href="#zui-zhong-xiao-guo" aria-label="Anchor link for: zui-zhong-xiao-guo">
+    ⚓
+</a>
+最终效果</h2>
+<p>那么最后，请看渲染结果。</p>
+<div class="row-container">
+<figure>
+    <a href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;render-square-1080p.png?h=97cb26f4d3147ed2dd9d">
+        <img src="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;render-square-1080p.png?h=97cb26f4d3147ed2dd9d" alt="莫比乌斯环彩虹无限符号（方形截面版本）" width="300"/>
+    </a>
+    <figcaption>莫比乌斯环彩虹无限符号（方形截面）</figcaption>
+</figure>
+<figure>
+    <a href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;render-rectangle-1080p.png?h=63585bf37fe7172498a3">
+        <img src="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;render-rectangle-1080p.png?h=63585bf37fe7172498a3" alt="莫比乌斯环彩虹无限符号（矩形截面版本）" width="300"/>
+    </a>
+    <figcaption>莫比乌斯环彩虹无限符号（矩形截面）</figcaption>
+</figure>
+<figure>
+    <a href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;render-square-front-1080p.png?h=b59d3f7fe31273a8b462">
+        <img src="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;render-square-front-1080p.png?h=b59d3f7fe31273a8b462" alt="方形截面的莫比乌斯环（前视图渲染）" width="300"/>
+    </a>
+    <figcaption>莫比乌斯环彩虹无限符号（方形截面，前视图）</figcaption>
+</figure>
+</div>
+</section>
+    </article>
+
+    
+        
+    <div class="giscus" />
+
+    
+
+                </div>
+            </main>
+        </div>
+        <footer id="footer">
+            
+            
+    <div class="footer-container container">
+        <div id="copyright-container">
+            <small id="copyright">© <a rel="external" href="https://github.com/linyinfeng">Yinfeng</a></small>
+        </div>
+
+        
+            <div id="powered-by-container">
+                <small id="powered-by">Powered by <a rel="external" href="https://www.getzola.org">Zola</a></small>
+            </div>
+        
+    </div>
+
+            
+        </footer>
+    
+</body>
+</html>

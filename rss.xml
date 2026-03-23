@@ -7,7 +7,15 @@
       <generator>Zola</generator>
       <language>zh-CN</language>
       <atom:link href="https://blog.linyinfeng.com/rss.xml" rel="self" type="application/rss+xml"/>
-      <lastBuildDate>Sat, 24 Jan 2026 20:23:36 +0800</lastBuildDate>
+      <lastBuildDate>Mon, 23 Mar 2026 19:02:41 +0800</lastBuildDate>
+      <item>
+          <title>莫比乌斯环彩虹无限符号</title>
+          <pubDate>Mon, 23 Mar 2026 12:13:03 +0800</pubDate>
+          <author>Unknown</author>
+          <link>https://blog.linyinfeng.com/posts/mobius-rainbow-infinity/</link>
+          <guid>https://blog.linyinfeng.com/posts/mobius-rainbow-infinity/</guid>
+          <description xml:base="https://blog.linyinfeng.com/posts/mobius-rainbow-infinity/">&lt;p&gt;记录一个有趣的 3D 建模和渲染项目：莫比乌斯环构成的彩虹渐变无限符号。&lt;&#x2F;p&gt;</description>
+      </item>
       <item>
           <title>土制 Nix Flake Channel</title>
           <pubDate>Sat, 24 Jan 2026 17:10:00 +0800</pubDate>
