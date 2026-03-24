@@ -12,6 +12,8 @@ tags = ["分布式系统", "一致性"]
 license_image = "license-buttons/l/by-nc-sa/4.0/88x31.png"
 license_image_alt = "CC BY-NC-SA 4.0"
 license = "本作品采用[署名—非商业性使用—相同方式共享 4.0 协议国际版](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans)协议授权。"
+[extra.giscus]
+term = "posts/consistency-model-of-distributed-system"
 [extra.katex]
 render_options = '''
 {

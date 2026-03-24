@@ -13,6 +13,8 @@ license_image = "license-buttons/l/by-nc-sa/4.0/88x31.png"
 license_image_alt = "CC BY-NC-SA 4.0"
 license = "本作品采用[署名—非商业性使用—相同方式共享 4.0 协议国际版](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans)协议授权。"
 thumbnail = "render-square-thumbnail.png"
+[extra.giscus]
+term = "posts/mobius-rainbow-infinity"
 +++
 
 记录一个有趣的 3D 建模和渲染项目：莫比乌斯环构成的彩虹渐变无限符号。

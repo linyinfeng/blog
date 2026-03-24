@@ -8,7 +8,8 @@ draft = false
 [taxonomies]
 categories = ["随想"]
 tags = ["博客", "静态网站"]
-[extra]
+[extra.giscus]
+term = "posts/start-blogging"
 +++
 
 咸鱼了很久觉得还是应该写个博客记录和总结一下日常的学习。

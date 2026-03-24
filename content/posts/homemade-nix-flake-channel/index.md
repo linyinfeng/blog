@@ -13,6 +13,8 @@ license_image = "license-buttons/l/by-nc-sa/4.0/88x31.png"
 license_image_alt = "CC BY-NC-SA 4.0"
 license = "本作品采用[署名—非商业性使用—相同方式共享 4.0 协议国际版](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans)协议授权。"
 thumbnail = "hydra-and-flakes.png"
+[extra.giscus]
+term = "posts/homemade-nix-flake-channel"
 +++
 
 这是 Nix 土制系列的第二篇文章，继[土制 Nix S3 Binary Cache](@/posts/homemade-nix-s3-cache/index.md)之后，继续介绍我的 Nix channel 方案。即使是 all-in flake 的用法，channel 这个概念仍然非常有用，甚至在某些场景下更重要了，因为它表明了可用性。

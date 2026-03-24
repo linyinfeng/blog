@@ -1,6 +1,8 @@
 +++
 title = "关于我"
 template = "simple-page.html"
+[extra.giscus]
+term = "site"
 +++
 
 我是 Yinfeng。在 2026 年 03 月 23 日我是，

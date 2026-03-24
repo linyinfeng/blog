@@ -1,6 +1,8 @@
 +++
 title = "链接"
 template = "simple-page.html"
+[extra.giscus]
+term = "site"
 +++
 
 ## 我

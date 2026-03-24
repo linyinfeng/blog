@@ -112,7 +112,6 @@ enable = true
 repo = "linyinfeng/blog"
 repo_id = "MDEwOlJlcG9zaXRvcnkxNDMxMjU5NTA="
 category_id = "MDE4OkRpc2N1c3Npb25DYXRlZ29yeTMyOTkyOTcy"
-mapping = "pathname"
 reactions_enabled="1"
 theme="light"
 

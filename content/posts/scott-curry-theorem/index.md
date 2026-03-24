@@ -30,6 +30,8 @@ render_options = '''
     ]
 }
 '''
+[extra.giscus]
+term = "posts/scott-curry-theorem"
 +++
 
 上一篇笔记中，我介绍了[莱斯定理](@/posts/rices-theorem/index.md)，它是图灵机上的不可判定性结果。Lambda 演算作为一个图灵完备的计算模型，其上也有一个非常类似的重要的不可判定性结果，它就是斯科特定理（Scott's theorem），或称斯科特-柯里定理（Scott–Curry theorem）。

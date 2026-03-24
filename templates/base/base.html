@@ -22,7 +22,13 @@
             {% endif %}
         {% endif %}
         {% if config.extra.giscus.enable %}
-            {{  parts::giscus(cfg=config.extra.giscus) }}
+            {% if page %}
+                {{  parts::giscus(cfg=config.extra.giscus, term=page.extra.giscus.term) }}
+            {% elif section %}
+                {{  parts::giscus(cfg=config.extra.giscus, term=section.extra.giscus.term) }}
+            {% else %}
+                {{  parts::giscus(cfg=config.extra.giscus, term="site") }}
+            {% endif %}
         {% endif %}
         {% if config.extra.open_graph.enable %}
             {{  parts::open_graph(cfg=config.extra.open_graph) }}
@@ -63,6 +69,9 @@
                 <div id="main-container">
                     {% block main %}
                     {% endblock main %}
+                    {% if config.extra.giscus.enable %}
+                        {{  parts::giscus_placeholder() }}
+                    {% endif %}
                 </div>
             </main>
         </div>

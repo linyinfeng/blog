@@ -12,6 +12,8 @@ tags = ["Python"]
 license_image = "license-buttons/l/by-nc-sa/4.0/88x31.png"
 license_image_alt = "CC BY-NC-SA 4.0"
 license = "本作品采用[署名—非商业性使用—相同方式共享 4.0 协议国际版](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans)协议授权。"
+[extra.giscus]
+term = "posts/python-jailbreak"
 +++
 
 在同一个 Python 解释器中为部分代码做沙箱是不现实的。

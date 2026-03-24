@@ -1,6 +1,8 @@
 +++
 title = "About Me"
 template = "simple-page.html"
+[extra.giscus]
+term = "site"
 +++
 
 I am Yinfeng. On March 23, 2026, I am:

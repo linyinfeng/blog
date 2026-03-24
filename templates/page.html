@@ -6,9 +6,6 @@
 {% block main %}
     {{ super() }}
     {{ parts::article(page=page, config=config) }}
-    {% if config.extra.giscus.enable %}
-        {{  parts::giscus_placeholder() }}
-    {% endif %}
 {% endblock main %}
 {% block optional_aside %}
     {% if page.toc %}

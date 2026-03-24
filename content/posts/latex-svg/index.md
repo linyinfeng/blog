@@ -12,6 +12,8 @@ tags = ["TeX", "LaTeX", "TikZ", "dvisvgm", "冷知识"]
 license_image = "license-buttons/l/by-nc-sa/4.0/88x31.png"
 license_image_alt = "CC BY-NC-SA 4.0"
 license = "本作品采用[署名—非商业性使用—相同方式共享 4.0 协议国际版](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans)协议授权。"
+[extra.giscus]
+term = "posts/latex-svg"
 +++
 
 眼尖的你一定已经发现了，本博客的 logo 其实是一个圆里面写了一个 `\mathfrak{Y}`，其实它是用 [TikZ](https://tikz.dev/) 画的。
