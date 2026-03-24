@@ -36,7 +36,15 @@
 
   .article-license {
     margin: 16px 0;
-
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    .license-image {
+      img {
+        display: block; // no baseline
+      }
+      margin-right: 8px;
+    }
     a {
       color: $link-default-color;
     }
