@@ -31,6 +31,7 @@ tags = "标签"
 categories = "类别"
 created = "创建"
 updated = "更新"
+navigation = "导航"
 
 [languages.en-US]
 title = "Yinfeng's"
@@ -53,6 +54,7 @@ tags = "Tags"
 categories = "Categories"
 created = "created"
 updated = "updated"
+navigation = "Navigation"
 
 [markdown.highlighting]
 error_on_missing_language = true

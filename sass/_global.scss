@@ -64,6 +64,10 @@ body {
         padding-bottom: 16px;
       }
     }
+
+    #aside-after {
+      display: none;
+    }
   }
 }
 
@@ -90,13 +94,12 @@ body {
       left: 0;
     }
 
-    #aside::after {
+    #aside-after {
       display: flex;
       z-index: 2;
       justify-content: center;
       align-items: center;
       // color: $theme-color;
-      content: "Navigation";
       font-weight: bold;
       position: fixed;
       bottom: 0;
@@ -112,7 +115,7 @@ body {
       transition: all 0.3s;
     }
 
-    #aside:hover::after {
+    #aside:hover #aside-after {
       // left: 0;
       opacity: 1;
       // content: "";
