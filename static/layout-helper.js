@@ -1,8 +1,6 @@
 var REAL_ASIDE_MARGIN_LEFT = 1 * 16; // in px
 
-var INITIAL_SIDEBAR_TOP_PADDING = 1 * 16;
 var MINIMAL_SIDEBAR_TOP_PADDING = 0;
-var INITIAL_SIDEBAR_BOTTOM_PADDING = 0 * 16;
 var MINIMAL_SIDEBAR_BOTTOM_PADDING = 0 * 16;
 
 var MEDIA_STRING = "(min-width: 980px)";
@@ -19,7 +17,7 @@ function handleScroll(pos) {
   // var innerContainer = aside.querySelectorAll("div:last-child")[0];
   var mql = window.matchMedia(MEDIA_STRING);
   if (mql.matches) {
-    var topPadding = header.offsetHeight + INITIAL_SIDEBAR_TOP_PADDING - pos;
+    var topPadding = header.offsetHeight - pos;
     // console.log(header.offsetHeight);
     if (topPadding < MINIMAL_SIDEBAR_TOP_PADDING)
       topPadding = MINIMAL_SIDEBAR_TOP_PADDING;
@@ -28,9 +26,7 @@ function handleScroll(pos) {
     var windowHeight = window.innerHeight;
     var documentHeight = document.body.clientHeight;
     var bottomPadding =
-      footer.offsetHeight +
-      INITIAL_SIDEBAR_BOTTOM_PADDING -
-      (documentHeight - windowHeight - pos);
+      footer.offsetHeight - (documentHeight - windowHeight - pos);
     if (bottomPadding < MINIMAL_SIDEBAR_BOTTOM_PADDING)
       bottomPadding = MINIMAL_SIDEBAR_BOTTOM_PADDING;
     var height = windowHeight - bottomPadding;

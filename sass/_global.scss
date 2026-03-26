@@ -30,10 +30,6 @@ body {
       max-width: $main-container-max-width;
     }
   }
-
-  #aside-container {
-    padding: 0 16px;
-  }
 }
 
 @media all and (min-width: $layout-change-width) {
@@ -59,14 +55,16 @@ body {
       // margin-right: 32px;
       overflow-y: auto;
 
-      #aside-container {
-        // direction: ltr;
-        padding-bottom: 16px;
-      }
+      padding-top: $header-height;
     }
 
     #aside-after {
       display: none;
+    }
+
+    #aside-container {
+      padding: 0 16px;
+      margin: 16px 0;
     }
   }
 }
@@ -84,8 +82,8 @@ body {
       border: 2px solid $floating-aside-border-color;
       border-left: 0;
       transition: left 0.3s;
-      padding-top: 8px;
-      padding-bottom: 8px;
+      padding: 0 8px;
+      margin: 0;
       overflow: auto;
       white-space: nowrap;
     }
