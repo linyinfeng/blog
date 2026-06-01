@@ -120,9 +120,9 @@
             <span class="language-selectort-title">Languages</span>
             <ul class="languages-dropdown">
                 
-                    <li class="language-item"><a href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;">简体中文</a></li>
-                
                     <li class="language-item"><a href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;en-US&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;">English (US)</a></li>
+                
+                    <li class="language-item"><a href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;">简体中文</a></li>
                 
             </ul>
         </span>
@@ -313,7 +313,7 @@
 
         <section class="article-content"><p>Documenting an interesting 3D modeling and rendering project: a rainbow infinity symbol composed of a Möbius strip.</p>
 <span id="continue-reading"></span><h2 id="goal"><a class="zola-anchor" href="#goal" aria-label="Anchor link for: goal">
-    ⚓
+    🔗
 </a>
 Goal</h2>
 <p>I want to model an infinity symbol made of Möbius strips, with these properties:</p>
@@ -329,14 +329,14 @@ Goal</h2>
     <figcaption>Radially hue-gradient point light</figcaption>
 </figure>
 <h2 id="modeling"><a class="zola-anchor" href="#modeling" aria-label="Anchor link for: modeling">
-    ⚓
+    🔗
 </a>
 Modeling</h2>
 <p>I used Python's <a rel="external" href="https://build123d.readthedocs.io">build123d</a> library for modeling.
 This library is a CAD modeling library based on the Open CASCADE kernel, allowing design of complex 3D models in code.</p>
 <p>I made many mistakes along the way; modeling an irregular Möbius strip is actually not easy. This article will directly present a correct modeling path, occasionally mentioning the errors I made earlier.</p>
 <h3 id="preparation"><a class="zola-anchor" href="#preparation" aria-label="Anchor link for: preparation">
-    ⚓
+    🔗
 </a>
 Preparation</h3>
 <p>First, import build123d, and the ocp_vscode library for debugging, then define some parameters, the meanings of these parameters will be mentioned later.</p>
@@ -353,12 +353,12 @@ Preparation</h3>
 <span class="giallo-l"><span style="color: #0550AE;">        self</span><span>.segments</span><span style="color: #CF222E;"> =</span><span style="color: #0550AE;"> 360</span></span>
 <span class="giallo-l"></span>
 <span class="giallo-l"><span>cfg</span><span style="color: #CF222E;"> =</span><span> Config()</span></span></code></pre><h3 id="main-path"><a class="zola-anchor" href="#main-path" aria-label="Anchor link for: main-path">
-    ⚓
+    🔗
 </a>
 Main Path</h3>
 <p>I model the main path first, which is the centerline of the entire object. This path needs to meet the two properties mentioned earlier: a perfect circle in the top view, and looking like an infinity symbol in the front/back/side views.</p>
 <h4 id="first-quadrant"><a class="zola-anchor" href="#first-quadrant" aria-label="Anchor link for: first-quadrant">
-    ⚓
+    🔗
 </a>
 First Quadrant</h4>
 <p>Placing the center of this main path circle at the origin, a simple thought reveals that this main path is similar in all four quadrants.
@@ -411,7 +411,7 @@ So, I only need to model the path in the first quadrant, then use mirroring&amp;
 </li>
 </ol>
 <h4 id="combining-four-quadrants"><a class="zola-anchor" href="#combining-four-quadrants" aria-label="Anchor link for: combining-four-quadrants">
-    ⚓
+    🔗
 </a>
 Combining Four Quadrants</h4>
 <p>Next, through mirroring and rotation operations, assemble a complete circle.</p>
@@ -457,7 +457,7 @@ Combining Four Quadrants</h4>
 </li>
 </ol>
 <h3 id="mobius-strip"><a class="zola-anchor" href="#mobius-strip" aria-label="Anchor link for: mobius-strip">
-    ⚓
+    🔗
 </a>
 Möbius Strip</h3>
 <p>Next, I need to model a Möbius strip based on this main path. That is, at each position on the main path, construct a cross-section, and have this cross-section rotate 180 degrees along the main path.</p>
@@ -478,7 +478,7 @@ Möbius Strip</h3>
 </li>
 </ol>
 <h4 id="boundary-line"><a class="zola-anchor" href="#boundary-line" aria-label="Anchor link for: boundary-line">
-    ⚓
+    🔗
 </a>
 Boundary Line</h4>
 <p>I generate this boundary line in two parts, generating half at a time, then merging.</p>
@@ -542,7 +542,7 @@ Boundary Line</h4>
 </li>
 </ol>
 <h4 id="strip-surface"><a class="zola-anchor" href="#strip-surface" aria-label="Anchor link for: strip-surface">
-    ⚓
+    🔗
 </a>
 Strip Surface</h4>
 <p>I split the two boundary lines <code>line1</code> and <code>line2</code> into two parts each, getting four line segments, then concatenate these segments into two closed <code>Wire</code>s, execute <code>Face.make_surface</code> for each <code>Wire</code> to generate a non-planar face, and finally concatenate the two faces to get the complete Möbius strip surface.</p>
@@ -575,7 +575,7 @@ Strip Surface</h4>
     <figcaption>Complete Möbius strip surface</figcaption>
 </figure>
 <h4 id="volume"><a class="zola-anchor" href="#volume" aria-label="Anchor link for: volume">
-    ⚓
+    🔗
 </a>
 Volume</h4>
 <p>Finally, just use the <code>thicken</code> operation to thicken this surface, obtaining a complete volumetric Möbius strip. In <code>build123d</code>, the <code>thicken</code> operation can act on non-planar surfaces.</p>
@@ -635,7 +635,7 @@ Volume</h4>
 </div>
 <p>In the rectangular cross-section version, the front view's left side is slightly smaller than the right, causing visual imbalance. But in the left cross-section, the front part is narrower, so I use a perspective camera to place the narrower part closer (thus appearing larger) to achieve left-right visual symmetry.</p>
 <h2 id="rendering"><a class="zola-anchor" href="#rendering" aria-label="Anchor link for: rendering">
-    ⚓
+    🔗
 </a>
 Rendering</h2>
 <p>Currently, I've only done a basic rendering. Directly import the model into Blender, set up a series of radially hue-gradient light sources starting from the origin, to produce the rainbow effect. I cheated by not trying to make the Möbius strip show rainbow colors through materials (haven't learned yet), but indirectly giving the strip color through light sources.</p>
@@ -667,7 +667,7 @@ Rendering</h2>
 </figure>
 <p>Finally, adjust the camera position, model materials, and color management settings to render the final effect.</p>
 <h2 id="final-effect"><a class="zola-anchor" href="#final-effect" aria-label="Anchor link for: final-effect">
-    ⚓
+    🔗
 </a>
 Final Effect</h2>
 <p>So, in the end, here are the rendering results.</p>

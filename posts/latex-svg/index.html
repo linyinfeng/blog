@@ -251,7 +251,7 @@
         <section class="article-content"><p>眼尖的你一定已经发现了，本博客的 logo 其实是一个圆里面写了一个 <code>\mathfrak{Y}</code>，其实它是用 <a rel="external" href="https://tikz.dev/">TikZ</a> 画的。
 我们可以使用 <a rel="external" href="https://dvisvgm.de/">dvisvgm</a> 生成高质量的 SVG 在各种地方使用。</p>
 <span id="continue-reading"></span><h2 id="tex-de-shu-chu-ji-zhi"><a class="zola-anchor" href="#tex-de-shu-chu-ji-zhi" aria-label="Anchor link for: tex-de-shu-chu-ji-zhi">
-    ⚓
+    🔗
 </a>
 $\TeX$ 的输出机制</h2>
 <p>一般来说，$\TeX$ 的输出可以被看成两个步骤：</p>
@@ -261,7 +261,7 @@ $\TeX$ 的输出机制</h2>
 </ol>
 <p>可以看到，DVI 的“设备无关”其实挺局限的，因为它依赖程序来解释设备相关的 special 指令。</p>
 <h2 id="shi-yong-dvisvgm-sheng-cheng-svg"><a class="zola-anchor" href="#shi-yong-dvisvgm-sheng-cheng-svg" aria-label="Anchor link for: shi-yong-dvisvgm-sheng-cheng-svg">
-    ⚓
+    🔗
 </a>
 使用 dvisvgm 生成 SVG</h2>
 <p>所以我们要做的就是两步：</p>
@@ -283,7 +283,7 @@ $\TeX$ 的输出机制</h2>
 <pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #953800;">dvisvgm</span><span style="color: #0A3069;"> image.dvi</span></span></code></pre></li>
 </ol>
 <h2 id="zi-ti-qian-ru-wen-ti"><a class="zola-anchor" href="#zi-ti-qian-ru-wen-ti" aria-label="Anchor link for: zi-ti-qian-ru-wen-ti">
-    ⚓
+    🔗
 </a>
 字体嵌入问题</h2>
 <p>默认情况下可能会发现 <code>dvisvgm</code> 生成的 SVG 里面字体显示不正确。这是因为默认情况下，<code>dvisvgm</code> 会使用几乎没有什么浏览器支持的 SVG <code>&lt;font&gt;</code> 元素将字体嵌入图片。</p>
@@ -314,7 +314,7 @@ $\TeX$ 的输出机制</h2>
 </li>
 </ol>
 <h2 id="ben-zhan-de-logo"><a class="zola-anchor" href="#ben-zhan-de-logo" aria-label="Anchor link for: ben-zhan-de-logo">
-    ⚓
+    🔗
 </a>
 本站的 logo</h2>
 <p>最后，本站的 logo 定义如下：</p>
@@ -334,7 +334,7 @@ $\TeX$ 的输出机制</h2>
 <p>（当时我不知道怎么想的就画了一个直径 40cm 的巨大 logo。）</p>
 <p>由 Nix 调用 $\TeX$ 和 <a rel="external" href="https://imagemagick.org">ImageMagick</a> 构建生成（代码可见<a rel="external" href="https://github.com/linyinfeng/blog/blob/b6f1d0dd8fba8d38fc45488f8461580ebaae7d47/nix/favicon.nix">本站源码</a>）。</p>
 <h2 id="can-kao"><a class="zola-anchor" href="#can-kao" aria-label="Anchor link for: can-kao">
-    ⚓
+    🔗
 </a>
 参考</h2>
 <ul>

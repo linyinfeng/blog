@@ -343,7 +343,7 @@
 <span id="continue-reading"></span>
 <p>本文所有命令都使用实验性的 Nix CLI v3，需开启 <code>experimental-features = nix-command flakes</code>。</p>
 <h2 id="zui-jian-dan-de-nix-s3-binary-cache"><a class="zola-anchor" href="#zui-jian-dan-de-nix-s3-binary-cache" aria-label="Anchor link for: zui-jian-dan-de-nix-s3-binary-cache">
-    ⚓
+    🔗
 </a>
 最简单的 Nix S3 Binary Cache</h2>
 <p>在 Nix 中，S3 binary cache 也是一种 store。它的 store URL 形如 <code>s3://BUCKET_NAME</code>。文档见 <a rel="external" href="https://nix.dev/manual/nix/2.33/store/types/s3-binary-cache-store">Nix Manual - S3 Binary Cache Store</a>。</p>
@@ -356,7 +356,7 @@
 <span class="giallo-l"><span style="color: #953800;">nix</span><span style="color: #0A3069;"> copy &quot;nixpkgs#hello&quot;</span><span style="color: #0550AE;"> --to</span><span style="color: #0A3069;"> &quot;s3://</span><span>$BUCKET_NAME</span><span style="color: #0A3069;">?endpoint=</span><span>$ENDPOINT_URL</span><span style="color: #0A3069;">&quot;</span></span></code></pre>
 <p>这样就把 <code>nixpkgs#hello</code> 上传到 bucket 中了。</p>
 <h3 id="qian-ming"><a class="zola-anchor" href="#qian-ming" aria-label="Anchor link for: qian-ming">
-    ⚓
+    🔗
 </a>
 签名</h3>
 <p>这样的 binary cache 无法正常使用，因为我们没有对上传到的内容做签名。要对 store path 做签名，可以使用 <code>nix store sign</code> 命令：</p>
@@ -371,12 +371,12 @@
 <pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #953800;">cat</span><span style="color: #0A3069;"> &quot;</span><span>$SECRET_KEY_FILE</span><span style="color: #0A3069;">&quot;</span><span style="color: #CF222E;"> |</span><span style="color: #953800;"> nix</span><span style="color: #0A3069;"> key convert-secret-to-public</span></span></code></pre>
 <p>获得的公钥形如（这是我的 cache 的公钥）：</p>
 <pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="plain"><span class="giallo-l"><span>cache.li7g.com:YIVuYf8AjnOc5oncjClmtM19RaAZfOKLFFyZUpOrfqM=</span></span></code></pre><h3 id="shi-yong"><a class="zola-anchor" href="#shi-yong" aria-label="Anchor link for: shi-yong">
-    ⚓
+    🔗
 </a>
 使用</h3>
 <p>要使用这个 binary cache，为 Nix 配置 binary cache 的 HTTP URL 和公钥。分别位于 <code>nix.conf</code> 的 <code>substituters</code> 和 <code>trusted-public-keys</code> 选项中。别忘了使得 S3 bucket 能通过 HTTP URL 被公开访问。</p>
 <h3 id="wo-de-pei-zhi"><a class="zola-anchor" href="#wo-de-pei-zhi" aria-label="Anchor link for: wo-de-pei-zhi">
-    ⚓
+    🔗
 </a>
 我的配置</h3>
 <p>我使用公开的 Cloudflare R2 作为存储，设置了自定义域名 <code>cache.li7g.com</code>，并配置好写入使用的 token：</p>
@@ -420,7 +420,7 @@
 <span class="giallo-l"><span>}</span></span></code></pre>
 <p><a rel="external" href="https://github.com/linyinfeng/dotfiles/blob/3e0be19e10fbbcf08bab95583f6e3ae61cdf4af9/nixos/profiles/nix/settings/default.nix#L45-L52">（代码链接）</a></p>
 <h2 id="hu-lue-shang-you-yi-you-nei-rong"><a class="zola-anchor" href="#hu-lue-shang-you-yi-you-nei-rong" aria-label="Anchor link for: hu-lue-shang-you-yi-you-nei-rong">
-    ⚓
+    🔗
 </a>
 忽略上游已有内容</h2>
 <p><code>nix copy</code> 命令上传时，并不会考虑 <a rel="external" href="https://cache.nixos.org">cache.nixos.org</a> 中是否已经有了相同内容的问题。</p>
@@ -430,7 +430,7 @@
 <span class="giallo-l"><span style="color: #0550AE;">/nix/store/7rx2223cw2lbhzhnyd77r9k81xs4blrn-nixos-system-parrot-26.05.20260121.88d3861	  35.5 GiB</span></span></code></pre>
 <p>35.5GiB，可以看到，已经远超 Cloudflare R2 和 Backblaze B2 的免费额度（10GB）。</p>
 <h3 id="nix-copy-de-xing-wei"><a class="zola-anchor" href="#nix-copy-de-xing-wei" aria-label="Anchor link for: nix-copy-de-xing-wei">
-    ⚓
+    🔗
 </a>
 <code>nix copy</code> 的行为</h3>
 <p><code>nix copy</code> 命令在上传时，会先检查目标 binary cache 中是否已经有了相同的内容。如果有，就不会重复上传。</p>
@@ -442,7 +442,7 @@
 </ol>
 <p>如果我们能迷惑 <code>nix copy</code>，从上游 cache 把 <code>narinfo</code> 文件“偷”过来，就能避免重复上传。</p>
 <h3 id="nix-cache-overlay"><a class="zola-anchor" href="#nix-cache-overlay" aria-label="Anchor link for: nix-cache-overlay">
-    ⚓
+    🔗
 </a>
 nix-cache-overlay</h3>
 <p>在以前我使用 nginx 配置 + <a rel="external" href="https://github.com/Kriechi/aws-s3-reverse-proxy">aws-s3-reverse-proxy</a> 来做这个事情，但由于 aws-s3-reverse-proxy 使用 SigV4 认证请求，并且中间过了好多代理，涉及到 <code>Host</code> header 的变化，导致调试非常麻烦。这是真正的灵车，感兴趣的可以看一看我<a rel="external" href="https://github.com/linyinfeng/dotfiles/blob/d360725dd5d36cb13c20549dbbe1e501d67172c1/nixos/profiles/services/cache-overlay/default.nix">之前的配置</a>。</p>
@@ -490,13 +490,13 @@ nix-cache-overlay</h3>
 <span class="giallo-l"><span>Jan </span><span style="color: #0550AE;">22</span><span style="color: #6E7781;"> 23:30:21</span><span> nuc nginx[</span><span style="color: #0550AE;">85266</span><span>]: </span><span style="color: #0550AE;">2026</span><span>/</span><span style="color: #0550AE;">01</span><span>/</span><span style="color: #0550AE;">22</span><span style="color: #6E7781;"> 23:30:21</span><span> [alert] </span><span style="color: #0550AE;">85266</span><span>#</span><span style="color: #0550AE;">85266</span><span>: *</span><span style="color: #0550AE;">554 512</span><span> worker_connections are not enough while connecting to upstream, client: </span><span style="color: #0550AE;">100</span><span>.</span><span style="color: #0550AE;">95</span><span>.</span><span style="color: #0550AE;">57</span><span>.</span><span style="color: #0550AE;">26</span><span>, server: cache-overlay.*, reque&gt;</span></span>
 <span class="giallo-l"><span>Jan </span><span style="color: #0550AE;">22</span><span style="color: #6E7781;"> 23:30:21</span><span> nuc nginx[</span><span style="color: #0550AE;">85266</span><span>]: </span><span style="color: #0550AE;">2026</span><span>/</span><span style="color: #0550AE;">01</span><span>/</span><span style="color: #0550AE;">22</span><span style="color: #6E7781;"> 23:30:21</span><span> [alert] </span><span style="color: #0550AE;">85266</span><span>#</span><span style="color: #0550AE;">85266</span><span>: *</span><span style="color: #0550AE;">554 512</span><span> worker_connections are not enough while connecting to upstream, client: </span><span style="color: #0550AE;">100</span><span>.</span><span style="color: #0550AE;">95</span><span>.</span><span style="color: #0550AE;">57</span><span>.</span><span style="color: #0550AE;">26</span><span>, server: cache-overlay.*, reque&gt;</span></span>
 <span class="giallo-l"><span>Jan </span><span style="color: #0550AE;">22</span><span style="color: #6E7781;"> 23:30:21</span><span> nuc nginx[</span><span style="color: #0550AE;">85266</span><span>]: </span><span style="color: #0550AE;">2026</span><span>/</span><span style="color: #0550AE;">01</span><span>/</span><span style="color: #0550AE;">22</span><span style="color: #6E7781;"> 23:30:21</span><span> [alert] </span><span style="color: #0550AE;">85266</span><span>#</span><span style="color: #0550AE;">85266</span><span>: </span><span style="color: #0550AE;">512</span><span> worker_connections are not enough</span></span></code></pre><h3 id="wo-de-pei-zhi-1"><a class="zola-anchor" href="#wo-de-pei-zhi-1" aria-label="Anchor link for: wo-de-pei-zhi-1">
-    ⚓
+    🔗
 </a>
 我的配置</h3>
 <p>通过使用 <code>nix-cache-overlay</code>，我只需要不到 4GiB 的 R2 存储空间，就能缓存我所有机器的 closure。</p>
 <pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="shellsession"><span class="giallo-l"><span>$ mc du r2-cache/cache-li7g-com</span></span>
 <span class="giallo-l"><span style="color: #0550AE;">3.2GiB	12629 objects	cache-li7g-com</span></span></code></pre><h2 id="gc"><a class="zola-anchor" href="#gc" aria-label="Anchor link for: gc">
-    ⚓
+    🔗
 </a>
 GC</h2>
 <p>Nix S3 binary cache 本身并不支持 GC，这也是一大痛点。
@@ -507,14 +507,14 @@ GC</h2>
 <li>根据 GC roots 进行 GC</li>
 </ol>
 <h3 id="guan-li-gc-roots"><a class="zola-anchor" href="#guan-li-gc-roots" aria-label="Anchor link for: guan-li-gc-roots">
-    ⚓
+    🔗
 </a>
 管理 GC roots</h3>
 <p>许多人比较随意地向 binary cache push 内容，然后并不记录他们 push 的是什么东西，要保留多久。我个人对这种用法的 binary cache 直接使用 cachix，因为 cachix 提供了自动 GC 的功能。</p>
 <p>而我自己建立的 S3 cache 则只存储我的 hydra CI 构建出来的内容。Hydra 其实提供了一个目录，里面存储了所有的 GC roots。如果你注意过 hydra 的 job 的配置的话，你会发现里面有一项叫作 "Number of evaluations to keep"。Hydra 会根据这个数字来决定保留多少个 evaluation 作为 GC roots。</p>
 <p>所以我的方案就是使用 hydra 提供的 GC roots，来作为 binary cache 的 GC roots。</p>
 <h3 id="gen-ju-gc-roots-jin-xing-gc"><a class="zola-anchor" href="#gen-ju-gc-roots-jin-xing-gc" aria-label="Anchor link for: gen-ju-gc-roots-jin-xing-gc">
-    ⚓
+    🔗
 </a>
 根据 GC roots 进行 GC</h3>
 <p>这也是一大难点，因为我们不是在内存里，而是在 S3 上存储内容。显然我们不太能做各种 copying GC，那么就做 tracing GC 吧。</p>
@@ -535,13 +535,13 @@ GC</h2>
 <p>最后调用 S3 API 把不需要保留的 <code>narinfo</code> 和 <code>nar</code> 文件删除掉即可，一次 API call 可以删除多达 1000 个对象，因此这一步其实并不耗时。</p>
 <p>我写了一个 Python 脚本来做这件事，代码见 <a rel="external" href="https://github.com/linyinfeng/nix-gc-s3">linyinfeng/nix-gc-s3</a>。</p>
 <h3 id="wo-de-pei-zhi-2"><a class="zola-anchor" href="#wo-de-pei-zhi-2" aria-label="Anchor link for: wo-de-pei-zhi-2">
-    ⚓
+    🔗
 </a>
 我的配置</h3>
 <p>我配置了一个 <a rel="external" href="https://github.com/linyinfeng/dotfiles/blob/3e0be19e10fbbcf08bab95583f6e3ae61cdf4af9/nixos/profiles/services/hydra/_cache.nix#L58-L99">systemd 服务</a>对 S3 cache 每晚执行一次 GC，服务内容其实就是调用一次 <code>nix-gc-s3</code> 脚本。</p>
 <p>但这里仍然有需要注意的事项：<code>nix-gc-s3</code> 和 <code>nix copy</code> 不应该同时运行，所以我只在固定的 systemd 服务中运行 <code>nix-gc-s3</code> 和 <code>nix copy</code>，并且用 <code>flock</code> 加了互斥锁。</p>
 <h2 id="jie-yu"><a class="zola-anchor" href="#jie-yu" aria-label="Anchor link for: jie-yu">
-    ⚓
+    🔗
 </a>
 结语</h2>
 <p>通过以上配置，我已经使用了三年多的 Nix S3 binary cache，成本极低（目前每月账单都是 0 USD），且不论是上传还是下载的性能都远超需要中间服务器的方案，如 <a rel="external" href="https://github.com/zhaofengli/attic">attic</a>。</p>
@@ -565,7 +565,7 @@ GC</h2>
 每天凌晨，<code>fsn0</code> 就会自动更新到 <code>github:linyinfeng/dotfiles/nixos-tested-fsn0</code>，并按需重启。
 配合 <code>flake.lock</code> 的自动更新，各种监控，报警，我能用最少的精力维护我的服务器（大部分时候不需要投入任何精力）。</p>
 <h2 id="yi-jian-qu-shi"><a class="zola-anchor" href="#yi-jian-qu-shi" aria-label="Anchor link for: yi-jian-qu-shi">
-    ⚓
+    🔗
 </a>
 一件趣事</h2>
 <p>我的博客也是用 Nix 构建的，我的 CI 会检查博客文件是否自包含，即不依赖 <code>/nix/store</code>。</p>

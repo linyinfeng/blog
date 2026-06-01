@@ -120,9 +120,9 @@
             <span class="language-selectort-title">语言</span>
             <ul class="languages-dropdown">
                 
-                    <li class="language-item"><a href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;">简体中文</a></li>
-                
                     <li class="language-item"><a href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;en-US&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;">English (US)</a></li>
+                
+                    <li class="language-item"><a href="https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;mobius-rainbow-infinity&#x2F;">简体中文</a></li>
                 
             </ul>
         </span>
@@ -313,7 +313,7 @@
 
         <section class="article-content"><p>记录一个有趣的 3D 建模和渲染项目：莫比乌斯环构成的彩虹渐变无限符号。</p>
 <span id="continue-reading"></span><h2 id="mu-biao"><a class="zola-anchor" href="#mu-biao" aria-label="Anchor link for: mu-biao">
-    ⚓
+    🔗
 </a>
 目标</h2>
 <p>我想要建模一个由莫比乌斯环构成的无限符号，我希望这个物体：</p>
@@ -329,13 +329,13 @@
     <figcaption>径向色相渐变点状光源</figcaption>
 </figure>
 <h2 id="jian-mo"><a class="zola-anchor" href="#jian-mo" aria-label="Anchor link for: jian-mo">
-    ⚓
+    🔗
 </a>
 建模</h2>
 <p>我使用 Python 的 <a rel="external" href="https://build123d.readthedocs.io">build123d</a> 库来建模。这个库是一个基于 Open CASCADE 内核的 CAD 建模库，可以直接使用代码设计复杂的 3D 模型。</p>
 <p>我在中途犯过很多的错误，要建模一个不规则的莫比乌斯环实际上并不容易，本文将直接展示一条正确的建模路径，并且会偶尔提一嘴我之前犯过的错误。</p>
 <h3 id="yu-bei-gong-zuo"><a class="zola-anchor" href="#yu-bei-gong-zuo" aria-label="Anchor link for: yu-bei-gong-zuo">
-    ⚓
+    🔗
 </a>
 预备工作</h3>
 <p>首先先导入 build123d 和用来调试的 ocp_vscode 库，然后先定义一些参数，一些参数的意义将在后面被提到。</p>
@@ -352,12 +352,12 @@
 <span class="giallo-l"><span style="color: #0550AE;">        self</span><span>.segments</span><span style="color: #CF222E;"> =</span><span style="color: #0550AE;"> 360</span></span>
 <span class="giallo-l"></span>
 <span class="giallo-l"><span>cfg</span><span style="color: #CF222E;"> =</span><span> Config()</span></span></code></pre><h3 id="zhu-lu-jing"><a class="zola-anchor" href="#zhu-lu-jing" aria-label="Anchor link for: zhu-lu-jing">
-    ⚓
+    🔗
 </a>
 主路径</h3>
 <p>我首先选择建模一条主路径，也就是整个物体的中心线。这个路径需要满足前面提到的两个条件，俯视图下是正圆，且测试图看起来是一个无线符号。</p>
 <h4 id="di-yi-xiang-xian"><a class="zola-anchor" href="#di-yi-xiang-xian" aria-label="Anchor link for: di-yi-xiang-xian">
-    ⚓
+    🔗
 </a>
 第一象限</h4>
 <p>将主路径这个正圆的圆心放在原点，简单思考就会意识到，这条主路径在四个象限都是相似的。
@@ -410,7 +410,7 @@
 </li>
 </ol>
 <h4 id="si-xiang-xian-zu-he"><a class="zola-anchor" href="#si-xiang-xian-zu-he" aria-label="Anchor link for: si-xiang-xian-zu-he">
-    ⚓
+    🔗
 </a>
 四象限组合</h4>
 <p>接下来，通过镜像和旋转操作，拼合出一个完整的圈。</p>
@@ -456,7 +456,7 @@
 </li>
 </ol>
 <h3 id="mo-bi-wu-si-huan"><a class="zola-anchor" href="#mo-bi-wu-si-huan" aria-label="Anchor link for: mo-bi-wu-si-huan">
-    ⚓
+    🔗
 </a>
 莫比乌斯环</h3>
 <p>接下来，我需要在这个主路径的基础上建模出一个莫比乌斯环。也就是说，我需要在主路径的每个位置构造一个横截面，并且让这个横截面沿着主路径进行旋转 180 度的扭转。</p>
@@ -469,7 +469,7 @@
 <li>最后将这两个面拼接在一起，就得到了完整的莫比乌斯环。</li>
 </ol>
 <h4 id="bian-jie-xian"><a class="zola-anchor" href="#bian-jie-xian" aria-label="Anchor link for: bian-jie-xian">
-    ⚓
+    🔗
 </a>
 边界线</h4>
 <p>我分为两部分来生成这条边界线，一次生成一半，然后合并。</p>
@@ -521,7 +521,7 @@
 <li>利用两次右手定则，使得 <code>up</code> 朝上方即可。</li>
 </ol>
 <h4 id="huan-mian"><a class="zola-anchor" href="#huan-mian" aria-label="Anchor link for: huan-mian">
-    ⚓
+    🔗
 </a>
 环面</h4>
 <p>我将两条边界线 <code>line1</code> 和 <code>line2</code> 切分成两部分，得到四条线段，然后将这些线段拼接成两个闭合的 <code>Wire</code>，为每个 <code>Wire</code> 分别执行 <code>Face.make_surface</code> 生成一个非平面，最后将这两个面拼接在一起，就得到了完整的莫比乌斯环面。</p>
@@ -554,7 +554,7 @@
     <figcaption>完整的莫比乌斯环面</figcaption>
 </figure>
 <h4 id="ti-ji"><a class="zola-anchor" href="#ti-ji" aria-label="Anchor link for: ti-ji">
-    ⚓
+    🔗
 </a>
 体积</h4>
 <p>最后，只要使用 <code>thicken</code> 操作将这个面加厚，就得到了一个完整的有体积的莫比乌斯环了。在 <code>build123d</code> 中，<code>thicken</code> 操作可以作用于非平面。</p>
@@ -614,7 +614,7 @@
 </div>
 <p>在矩形截面的版本中，前视图的左侧会略小于右侧，导致视觉不平衡。但左侧截面中，位于前方的部分宽度更窄，所以我利用透视相机，把更窄的这部分放在更近的位置（因此看起来更大），以达到左右视觉对称。</p>
 <h2 id="xuan-ran"><a class="zola-anchor" href="#xuan-ran" aria-label="Anchor link for: xuan-ran">
-    ⚓
+    🔗
 </a>
 渲染</h2>
 <p>目前我只做了一个比较基础的渲染。直接将模型导入 Blender，设置一系列从原点开始的径向色相渐变光源，就可以渲染出彩虹的效果了。我取巧没有试图通过材质（还没学会）使得这个莫比乌斯环呈现出彩虹效果，而是使用光源间接赋予这个环色彩。</p>
@@ -640,7 +640,7 @@
 </figure>
 <p>最后调整好相机位置，模型的材质，以及色彩管理的设置，就可以渲染出最终的效果了。</p>
 <h2 id="zui-zhong-xiao-guo"><a class="zola-anchor" href="#zui-zhong-xiao-guo" aria-label="Anchor link for: zui-zhong-xiao-guo">
-    ⚓
+    🔗
 </a>
 最终效果</h2>
 <p>那么最后，请看渲染结果。</p>

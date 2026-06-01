@@ -242,7 +242,7 @@
     <figcaption>Hydra 构建 flakes 的珍贵影像（由 Nano Banana Pro 生成）</figcaption>
 </figure>
 <h2 id="wen-ti"><a class="zola-anchor" href="#wen-ti" aria-label="Anchor link for: wen-ti">
-    ⚓
+    🔗
 </a>
 问题</h2>
 <p>我的所有设施都是自动更新的，因为我不希望为“更新”这件事投入精力。我希望我能做到：</p>
@@ -283,7 +283,7 @@
 <span class="giallo-l"><span style="color: #6E7781;">    # ...</span></span>
 <span class="giallo-l"><span>  };</span></span>
 <span class="giallo-l"><span>}</span></span></code></pre><h2 id="shi-xian"><a class="zola-anchor" href="#shi-xian" aria-label="Anchor link for: shi-xian">
-    ⚓
+    🔗
 </a>
 实现</h2>
 <p>代码可以在<a rel="external" href="https://github.com/linyinfeng/dotfiles/blob/214c35a60579d5fb2f33307a320e7d09f765aa5a/nixos/profiles/services/hydra/_channel.nix">这里</a>找到。</p>
@@ -435,7 +435,7 @@
 <pre class="giallo" style="color: #1F2328; background-color: #FFFFFF;"><code data-lang="nix"><span class="giallo-l"><span style="color: #953800;">systemd</span><span style="color: #CF222E;">.</span><span style="color: #953800;">services</span><span style="color: #CF222E;">.</span><span style="color: #953800;">hydra-notify</span><span style="color: #CF222E;">.</span><span style="color: #953800;">serviceConfig</span><span style="color: #CF222E;">.</span><span style="color: #953800;">LoadCredential</span><span style="color: #82071E;font-style: italic;"> =</span><span> [</span></span>
 <span class="giallo-l"><span style="color: #0A3069;">  &quot;github-token:</span><span style="color: #CF222E;">${</span><span style="color: #0550AE;">config</span><span style="color: #CF222E;">.</span><span style="color: #0550AE;">sops</span><span style="color: #CF222E;">.</span><span style="color: #0550AE;">secrets</span><span style="color: #CF222E;">.</span><span style="color: #0A3069;">&quot;github_token_nano&quot;</span><span style="color: #CF222E;">.</span><span style="color: #0550AE;">path</span><span style="color: #CF222E;">}</span><span style="color: #0A3069;">&quot;</span></span>
 <span class="giallo-l"><span>]</span><span style="color: #82071E;font-style: italic;">;</span></span></code></pre><h2 id="jie-yu"><a class="zola-anchor" href="#jie-yu" aria-label="Anchor link for: jie-yu">
-    ⚓
+    🔗
 </a>
 结语</h2>
 <p>整件事情还是挺简单的，唯一比较 tricky 的地方是 flake commit 得从 hydra 的数据库中查出来。不过整体来说，复杂度还在 bash 脚本可接受的范围内。</p>
