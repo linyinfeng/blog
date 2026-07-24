@@ -11125,9 +11125,26 @@ defineFunction({
         break;
       case "\\htmlData":
         {
-          var data = value.split(",");
-          for (var i = 0; i < data.length; i++) {
-            var item = data[i];
+          // `{,}` escapes a literal comma. Braces are used rather than a
+          // backslash because `\,` is a macro (a thin space) that expands
+          // away before this raw argument is ever read.
+          var ESCAPED_COMMA = "{,}";
+          var data = [];
+          var current = "";
+          for (var i = 0; i < value.length; i++) {
+            if (value.startsWith(ESCAPED_COMMA, i)) {
+              current += ",";
+              i += ESCAPED_COMMA.length - 1;
+            } else if (value[i] === ",") {
+              data.push(current);
+              current = "";
+            } else {
+              current += value[i];
+            }
+          }
+          data.push(current);
+          for (var _i = 0; _i < data.length; _i++) {
+            var item = data[_i];
             var firstEquals = item.indexOf("=");
             if (firstEquals < 0) {
               throw new ParseError("\\htmlData key/value '" + item + "'" + " missing equals sign");
@@ -16245,7 +16262,7 @@ var renderToHTMLTree = function renderToHTMLTree(expression, options) {
     return renderError(error, expression, settings);
   }
 };
-var version = "0.18.0";
+var version = "0.18.1";
 var __domTree = {
   Span,
   Anchor,
