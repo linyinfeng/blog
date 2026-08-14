@@ -315,15 +315,16 @@ function getImplicitDefault(type) {
   }
 }
 function getDefaultValue(schema) {
-  if (schema.default !== undefined) {
+  if (Object.prototype.hasOwnProperty.call(schema, "default") && schema.default !== undefined) {
     return schema.default;
   }
   const type = Array.isArray(schema.type) ? schema.type[0] : schema.type;
   return getImplicitDefault(type);
 }
 function applySetting(target, prop, options, schema) {
-  const optionValue = options[prop];
-  target[prop] = optionValue !== undefined ? schema.processor ? schema.processor(optionValue) : optionValue : getDefaultValue(schema);
+  const optionValue = Object.prototype.hasOwnProperty.call(options, prop) ? options[prop] : undefined;
+  const processor = Object.prototype.hasOwnProperty.call(schema, "processor") ? schema.processor : undefined;
+  target[prop] = optionValue !== undefined ? processor ? processor(optionValue) : optionValue : getDefaultValue(schema);
 }
 
 /**
@@ -7225,6 +7226,7 @@ function isAtom(value) {
 }
 ;// ./src/parseNode.ts
 
+
 /**
  * Asserts that the node is of the given type and returns it with stricter
  * typing. Throws if the node's type does not match.
@@ -7257,6 +7259,25 @@ function checkSymbolNodeType(node) {
     return node;
   }
   return null;
+}
+
+/**
+ * Returns the string spelled out by a group of plain characters, throwing the
+ * given ParseError if the group holds anything else. With allowSpaces, a
+ * literal space counts as a character; `~` and `\ ` do not.
+ */
+function assertCharacterGroup(group, errorMessage, allowSpaces) {
+  let text = "";
+  for (const node of group.body) {
+    if (node.type === "textord") {
+      text += node.text;
+    } else if (allowSpaces && node.type === "spacing" && node.text === " ") {
+      text += " ";
+    } else {
+      throw new src_ParseError(errorMessage, group);
+    }
+  }
+  return text;
 }
 ;// ./src/functions/accent.ts
 
@@ -8186,12 +8207,7 @@ defineFunction({
   handler(_ref, args) {
     let parser = _ref.parser;
     const arg = assertNodeType(args[0], "ordgroup");
-    const group = arg.body;
-    let number = "";
-    for (let i = 0; i < group.length; i++) {
-      const node = assertNodeType(group[i], "textord");
-      number += node.text;
-    }
+    const number = assertCharacterGroup(arg, "\\@char has non-numeric argument");
     let code = parseInt(number);
     let text;
     if (isNaN(code)) {
@@ -9343,7 +9359,7 @@ defineFunction({
   numArgs: 1,
   argTypes: ["primitive"],
   handler: (context, args) => {
-    const delim = checkDelimiter(args[0], context);
+    const delim = checkDelimiter(normalizeArgument(args[0]), context);
     return {
       type: "delimsizing",
       mode: context.parser.mode,
@@ -10063,7 +10079,6 @@ class Token {
 
 
 
-
 // Data stored in the ParseNode associated with the environment.
 
 // Type to indicate column separation in MathML
@@ -10703,12 +10718,12 @@ const alignedHandler = function (context, args) {
     body: []
   };
   if (args[0] && args[0].type === "ordgroup") {
-    let arg0 = "";
-    for (let i = 0; i < args[0].body.length; i++) {
-      const textord = assertNodeType(args[0].body[i], "textord");
-      arg0 += textord.text;
+    const message = "Number of columns should be a positive integer";
+    const numColumns = assertCharacterGroup(args[0], message);
+    if (!/^[0-9]+$/.test(numColumns) || Number(numColumns) < 1) {
+      throw new src_ParseError(message, args[0]);
     }
-    numMaths = Number(arg0);
+    numMaths = Number(numColumns);
     numCols = numMaths * 2;
   }
   const isAligned = !numCols;
@@ -11109,10 +11124,7 @@ defineFunction({
     if (nameGroup.type !== "ordgroup") {
       throw new src_ParseError("Invalid environment name", nameGroup);
     }
-    let envName = "";
-    for (let i = 0; i < nameGroup.body.length; ++i) {
-      envName += assertNodeType(nameGroup.body[i], "textord").text;
-    }
+    const envName = assertCharacterGroup(nameGroup, "Environment name should contain only text characters and spaces", true);
     if (funcName === "\\begin") {
       // begin...end is similar to left...right
       if (!Object.prototype.hasOwnProperty.call(src_environments, envName)) {
@@ -14453,8 +14465,10 @@ class Namespace {
   get(name) {
     if (Object.prototype.hasOwnProperty.call(this.current, name)) {
       return this.current[name];
-    } else {
+    } else if (Object.prototype.hasOwnProperty.call(this.builtins, name)) {
       return this.builtins[name];
+    } else {
+      return undefined;
     }
   }
 
@@ -14486,7 +14500,7 @@ class Namespace {
       // value is the correct one.
       const top = this.undefStack[this.undefStack.length - 1];
       if (top && !Object.prototype.hasOwnProperty.call(top, name)) {
-        top[name] = this.current[name];
+        top[name] = Object.prototype.hasOwnProperty.call(this.current, name) ? this.current[name] : undefined;
       }
     }
     if (value == null) {
@@ -17576,7 +17590,7 @@ const renderToHTMLTree = function (expression, options) {
     return renderError(error, expression, settings);
   }
 };
-const version = "0.18.1";
+const version = "0.18.4";
 const __domTree = {
   Span: Span,
   Anchor: Anchor,
