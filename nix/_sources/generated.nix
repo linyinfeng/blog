@@ -8,10 +8,10 @@
 {
   katex = {
     pname = "katex";
-    version = "v0.18.1";
+    version = "v0.18.4";
     src = fetchurl {
-      url = "https://github.com/KaTeX/KaTeX/releases/download/v0.18.1/katex.tar.gz";
-      sha256 = "sha256-f0Wei3sKOEYrxoX2AcaE2i3Ia6nHzj3mjrJoYda1Yog=";
+      url = "https://github.com/KaTeX/KaTeX/releases/download/v0.18.4/katex.tar.gz";
+      sha256 = "sha256-o2Aq6soVd5R0s0ur11SBxSUaf3jmgkGhto2P4s7AQ+s=";
     };
   };
   license-buttons = {
