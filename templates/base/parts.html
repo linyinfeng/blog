@@ -294,28 +294,3 @@
         <meta property="og:updated_time" content="{{ page.date | date(format='%F') }}" />
     {%- endif %}
 {% endcomponent open_graph %}
-
-{% component image(path, alt, caption = "", width = "", height = "", class = "", @page = {}) %}
-    {%- set url = get_url(path=page.colocated_path ~ path, cachebust=true) -%}
-    <figure>
-        <a href="{{ url }}">
-            <img src="{{ url }}" alt="{{ alt }}"
-                {%- if width %} width="{{ width }}"{% endif %}
-                {%- if height %} height="{{ height }}"{% endif %}
-                {%- if class %} class="{{ class }}"{% endif %}/>
-        </a>
-        {% if caption %}<figcaption>{{ caption }}</figcaption>{% endif %}
-    </figure>
-{% endcomponent image %}
-
-{% component include(path, trimmed = false, @page = {}) %}
-    {%- set content = load_data(path=page.colocated_path ~ path) -%}
-    {%- if trimmed -%}
-        {%- set content = content | trim -%}
-    {%- endif -%}
-    {{- content | safe -}}
-{% endcomponent include %}
-
-{% component tex(block = false) %}
-    <script type="math/tex{% if block %};mode=display{% endif %}">{{ body }}</script>
-{% endcomponent tex %}
