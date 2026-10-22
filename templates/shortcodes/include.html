@@ -1,5 +1,0 @@
-{%- set content = load_data(path=page.colocated_path ~ path) -%}
-{%- if trimmed -%}
-    {%- set content = content | trim -%}
-{%- endif -%}
-{{- content | safe -}}
