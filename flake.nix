@@ -5,6 +5,9 @@
 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    # Zola 0.23 switched to Tera 2 and dropped macros and shortcodes; stay on 0.22.1 until the site migrates.
+    nixpkgs-zola.url = "github:nixos/nixpkgs/9fbb54b33e91ee4ca368e35a78e0613c720600b3";
+
     nvfetcher.url = "github:berberman/nvfetcher";
     nvfetcher.inputs.nixpkgs.follows = "nixpkgs";
     nvfetcher.inputs.flake-utils.follows = "flake-utils";
@@ -38,7 +41,10 @@
         {
           _module.args.pkgs = import inputs.nixpkgs {
             inherit system;
-            overlays = [ inputs.nvfetcher.overlays.default ];
+            overlays = [
+              inputs.nvfetcher.overlays.default
+              (final: prev: { zola = inputs.nixpkgs-zola.legacyPackages.${system}.zola; })
+            ];
           };
           legacyPackages = pkgs.callPackage ./nix { };
           packages = inputs.flake-utils.lib.flattenTree self'.legacyPackages;
