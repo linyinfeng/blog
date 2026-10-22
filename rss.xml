@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-      <title>Yinfeng&#x27;s</title>
+      <title>Yinfeng&#39;s</title>
       <link>https://blog.linyinfeng.com</link>
-      <description>Yinfeng&#x27;s Blog</description>
+      <description>Yinfeng&#39;s Blog</description>
       <generator>Zola</generator>
       <language>zh-CN</language>
       <atom:link href="https://blog.linyinfeng.com/rss.xml" rel="self" type="application/rss+xml"/>
@@ -14,7 +14,7 @@
           <author>Unknown</author>
           <link>https://blog.linyinfeng.com/posts/mobius-rainbow-infinity/</link>
           <guid>https://blog.linyinfeng.com/posts/mobius-rainbow-infinity/</guid>
-          <description xml:base="https://blog.linyinfeng.com/posts/mobius-rainbow-infinity/">&lt;p&gt;记录一个有趣的 3D 建模和渲染项目：莫比乌斯环构成的彩虹渐变无限符号。&lt;&#x2F;p&gt;</description>
+          <description xml:base="https://blog.linyinfeng.com/posts/mobius-rainbow-infinity/">&lt;p&gt;记录一个有趣的 3D 建模和渲染项目：莫比乌斯环构成的彩虹渐变无限符号。&lt;/p&gt;</description>
       </item>
       <item>
           <title>土制 Nix Flake Channel</title>
@@ -22,7 +22,7 @@
           <author>Unknown</author>
           <link>https://blog.linyinfeng.com/posts/homemade-nix-flake-channel/</link>
           <guid>https://blog.linyinfeng.com/posts/homemade-nix-flake-channel/</guid>
-          <description xml:base="https://blog.linyinfeng.com/posts/homemade-nix-flake-channel/">&lt;p&gt;这是 Nix 土制系列的第二篇文章，继&lt;a href=&quot;https:&#x2F;&#x2F;blog.linyinfeng.com&#x2F;posts&#x2F;homemade-nix-s3-cache&#x2F;&quot;&gt;土制 Nix S3 Binary Cache&lt;&#x2F;a&gt;之后，继续介绍我的 Nix channel 方案。即使是 all-in flake 的用法，channel 这个概念仍然非常有用，甚至在某些场景下更重要了，因为它表明了可用性。&lt;&#x2F;p&gt;</description>
+          <description xml:base="https://blog.linyinfeng.com/posts/homemade-nix-flake-channel/">&lt;p&gt;这是 Nix 土制系列的第二篇文章，继&lt;a href=&quot;https://blog.linyinfeng.com/posts/homemade-nix-s3-cache/&quot;&gt;土制 Nix S3 Binary Cache&lt;/a&gt;之后，继续介绍我的 Nix channel 方案。即使是 all-in flake 的用法，channel 这个概念仍然非常有用，甚至在某些场景下更重要了，因为它表明了可用性。&lt;/p&gt;</description>
       </item>
       <item>
           <title>如何用 LaTeX 画 SVG 矢量图</title>
@@ -30,8 +30,8 @@
           <author>Unknown</author>
           <link>https://blog.linyinfeng.com/posts/latex-svg/</link>
           <guid>https://blog.linyinfeng.com/posts/latex-svg/</guid>
-          <description xml:base="https://blog.linyinfeng.com/posts/latex-svg/">&lt;p&gt;眼尖的你一定已经发现了，本博客的 logo 其实是一个圆里面写了一个 &lt;code&gt;\mathfrak{Y}&lt;&#x2F;code&gt;，其实它是用 &lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;tikz.dev&#x2F;&quot;&gt;TikZ&lt;&#x2F;a&gt; 画的。
-我们可以使用 &lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;dvisvgm.de&#x2F;&quot;&gt;dvisvgm&lt;&#x2F;a&gt; 生成高质量的 SVG 在各种地方使用。&lt;&#x2F;p&gt;</description>
+          <description xml:base="https://blog.linyinfeng.com/posts/latex-svg/">&lt;p&gt;眼尖的你一定已经发现了，本博客的 logo 其实是一个圆里面写了一个 &lt;code&gt;\mathfrak{Y}&lt;/code&gt;，其实它是用 &lt;a rel=&quot;external&quot; href=&quot;https://tikz.dev/&quot;&gt;TikZ&lt;/a&gt; 画的。
+我们可以使用 &lt;a rel=&quot;external&quot; href=&quot;https://dvisvgm.de/&quot;&gt;dvisvgm&lt;/a&gt; 生成高质量的 SVG 在各种地方使用。&lt;/p&gt;</description>
       </item>
       <item>
           <title>土制 Nix S3 Binary Cache</title>
@@ -39,23 +39,23 @@
           <author>Unknown</author>
           <link>https://blog.linyinfeng.com/posts/homemade-nix-s3-cache/</link>
           <guid>https://blog.linyinfeng.com/posts/homemade-nix-s3-cache/</guid>
-          <description xml:base="https://blog.linyinfeng.com/posts/homemade-nix-s3-cache/">&lt;p&gt;介绍一下我自己已经用了三年多的 Nix S3 Binary Cache 的实现方案和思路。&lt;&#x2F;p&gt;
-&lt;p&gt;特色：&lt;&#x2F;p&gt;
+          <description xml:base="https://blog.linyinfeng.com/posts/homemade-nix-s3-cache/">&lt;p&gt;介绍一下我自己已经用了三年多的 Nix S3 Binary Cache 的实现方案和思路。&lt;/p&gt;
+&lt;p&gt;特色：&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;土制灵车&lt;&#x2F;strong&gt;&lt;&#x2F;li&gt;
-&lt;li&gt;&lt;strong&gt;极低成本&lt;&#x2F;strong&gt;：使用 Cloudflare R2 等有免费额度的 S3 服务，每月 0 USD 免费用&lt;&#x2F;li&gt;
-&lt;li&gt;&lt;strong&gt;几乎 Serverless&lt;&#x2F;strong&gt;：稳定，高性能，无服务器瓶颈&lt;&#x2F;li&gt;
-&lt;li&gt;&lt;strong&gt;极佳兼容性&lt;&#x2F;strong&gt;：使用 &lt;code&gt;nix copy&lt;&#x2F;code&gt; 直接上传&lt;&#x2F;li&gt;
-&lt;&#x2F;ol&gt;
-&lt;p&gt;注：第一点与其他特色并没有冲突。&lt;&#x2F;p&gt;</description>
+&lt;li&gt;&lt;strong&gt;土制灵车&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;极低成本&lt;/strong&gt;：使用 Cloudflare R2 等有免费额度的 S3 服务，每月 0 USD 免费用&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;几乎 Serverless&lt;/strong&gt;：稳定，高性能，无服务器瓶颈&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;极佳兼容性&lt;/strong&gt;：使用 &lt;code&gt;nix copy&lt;/code&gt; 直接上传&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;注：第一点与其他特色并没有冲突。&lt;/p&gt;</description>
       </item>
       <item>
-          <title>不要在 Python 里 exec&#x2F;eval&#x2F;import 不可信代码</title>
+          <title>不要在 Python 里 exec/eval/import 不可信代码</title>
           <pubDate>Sat, 27 Sep 2025 13:11:10 +0800</pubDate>
           <author>Unknown</author>
           <link>https://blog.linyinfeng.com/posts/python-jailbreak/</link>
           <guid>https://blog.linyinfeng.com/posts/python-jailbreak/</guid>
-          <description xml:base="https://blog.linyinfeng.com/posts/python-jailbreak/">&lt;p&gt;在同一个 Python 解释器中为部分代码做沙箱是不现实的。&lt;&#x2F;p&gt;</description>
+          <description xml:base="https://blog.linyinfeng.com/posts/python-jailbreak/">&lt;p&gt;在同一个 Python 解释器中为部分代码做沙箱是不现实的。&lt;/p&gt;</description>
       </item>
       <item>
           <title>珍爱数据，远离 Oracle Cloud</title>
@@ -63,7 +63,7 @@
           <author>Unknown</author>
           <link>https://blog.linyinfeng.com/posts/oracle-fuck-you/</link>
           <guid>https://blog.linyinfeng.com/posts/oracle-fuck-you/</guid>
-          <description xml:base="https://blog.linyinfeng.com/posts/oracle-fuck-you/">&lt;p&gt;我的 Oracle Cloud 免费账户的权限被禁用了，无任何邮件提醒，不提供数据恢复手段。好在我没有部署任何存储有价值数据的服务到 Oracle Cloud 实例上。现已重部署所有服务到其他机器上。提醒大家珍爱数据，远离 Oracle Cloud。&lt;&#x2F;p&gt;</description>
+          <description xml:base="https://blog.linyinfeng.com/posts/oracle-fuck-you/">&lt;p&gt;我的 Oracle Cloud 免费账户的权限被禁用了，无任何邮件提醒，不提供数据恢复手段。好在我没有部署任何存储有价值数据的服务到 Oracle Cloud 实例上。现已重部署所有服务到其他机器上。提醒大家珍爱数据，远离 Oracle Cloud。&lt;/p&gt;</description>
       </item>
       <item>
           <title>莱斯定理</title>
@@ -71,7 +71,7 @@
           <author>Unknown</author>
           <link>https://blog.linyinfeng.com/posts/rices-theorem/</link>
           <guid>https://blog.linyinfeng.com/posts/rices-theorem/</guid>
-          <description xml:base="https://blog.linyinfeng.com/posts/rices-theorem/">&lt;p&gt;学习形式语言自动机这课时花了很久才理解莱斯定理（Rice&#x27;s Theorem）。懂了以后发现，其实就是之前对着书瞎想的时候，没先把全局要做的事情理清楚，这个定理其实并不复杂。这篇带了一些偷懒（省略）的文章是我对莱斯定理的笔记。&lt;&#x2F;p&gt;</description>
+          <description xml:base="https://blog.linyinfeng.com/posts/rices-theorem/">&lt;p&gt;学习形式语言自动机这课时花了很久才理解莱斯定理（Rice&#39;s Theorem）。懂了以后发现，其实就是之前对着书瞎想的时候，没先把全局要做的事情理清楚，这个定理其实并不复杂。这篇带了一些偷懒（省略）的文章是我对莱斯定理的笔记。&lt;/p&gt;</description>
       </item>
       <item>
           <title>Rust 闭包笔记</title>
@@ -79,8 +79,8 @@
           <author>Unknown</author>
           <link>https://blog.linyinfeng.com/posts/how-do-rust-closures-work/</link>
           <guid>https://blog.linyinfeng.com/posts/how-do-rust-closures-work/</guid>
-          <description xml:base="https://blog.linyinfeng.com/posts/how-do-rust-closures-work/">&lt;p&gt;近日在学习 Rust 语言。Rust 语言的闭包设计非常有趣，一方面，它看起来非常复杂，为了支持闭包设计了三种不同的 trait，&lt;code&gt;Fn&lt;&#x2F;code&gt;、&lt;code&gt;FnMut&lt;&#x2F;code&gt; 和 &lt;code&gt;FnOnce&lt;&#x2F;code&gt;；一方面其设计又透露出了语言设计中闭包的本质。通过考察 Rust 闭包的设计，我们能更好的理解闭包到底是什么，在拥有生存期和借用检查的语言 Rust 中，闭包如何工作。&lt;&#x2F;p&gt;
-&lt;p&gt;本文将在 Rust 下实现一个能够阐述闭包工作原理的朴素版闭包（也是一个 Boxed Closure）。并在实现的基础上对 Rust 闭包作进一步探究。&lt;&#x2F;p&gt;</description>
+          <description xml:base="https://blog.linyinfeng.com/posts/how-do-rust-closures-work/">&lt;p&gt;近日在学习 Rust 语言。Rust 语言的闭包设计非常有趣，一方面，它看起来非常复杂，为了支持闭包设计了三种不同的 trait，&lt;code&gt;Fn&lt;/code&gt;、&lt;code&gt;FnMut&lt;/code&gt; 和 &lt;code&gt;FnOnce&lt;/code&gt;；一方面其设计又透露出了语言设计中闭包的本质。通过考察 Rust 闭包的设计，我们能更好的理解闭包到底是什么，在拥有生存期和借用检查的语言 Rust 中，闭包如何工作。&lt;/p&gt;
+&lt;p&gt;本文将在 Rust 下实现一个能够阐述闭包工作原理的朴素版闭包（也是一个 Boxed Closure）。并在实现的基础上对 Rust 闭包作进一步探究。&lt;/p&gt;</description>
       </item>
       <item>
           <title>Rust RFC 2349 - Pin 翻译</title>
@@ -88,10 +88,10 @@
           <author>Unknown</author>
           <link>https://blog.linyinfeng.com/posts/rust-rfc-2349/</link>
           <guid>https://blog.linyinfeng.com/posts/rust-rfc-2349/</guid>
-          <description xml:base="https://blog.linyinfeng.com/posts/rust-rfc-2349/">&lt;p&gt;本文为 &lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;rust-lang&#x2F;rfcs&#x2F;blob&#x2F;master&#x2F;text&#x2F;2349-pin.md&quot;&gt;Rust RFC 2349 - Pin&lt;&#x2F;a&gt; 的中文翻译。&lt;&#x2F;p&gt;
-&lt;p&gt;Rust RFCs 并非一成不变，本文翻译于 2018 年 08 月 19 日。&lt;&#x2F;p&gt;
-&lt;p&gt;Rust RFCs 仓库目前（2018-08-21）为可选的 MIT 和 Apache 授权，本文使用了其 MIT 授权。&lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;linyinfeng&#x2F;blog&#x2F;tree&#x2F;master&#x2F;content&#x2F;posts&#x2F;rust-rfc-2349&#x2F;LICENSE-MIT&quot;&gt;MIT 许可证副本&lt;&#x2F;a&gt;。&lt;&#x2F;p&gt;
-&lt;p&gt;文中有众多 Rust 中的其他 RFC 甚至 crates 中的概念，水平有限，如有翻译错误或建议，可以向我的 &lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;linyinfeng&#x2F;blog&quot;&gt;GitHub&lt;&#x2F;a&gt; 仓库提 Issue 或者直接发起 PR 指正，本文文件：&lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;linyinfeng&#x2F;blog&#x2F;tree&#x2F;master&#x2F;content&#x2F;posts&#x2F;rust-rfc-2349&#x2F;index.md&quot;&gt;content&#x2F;posts&#x2F;rust-rfc-2349&#x2F;index.md&lt;&#x2F;a&gt;。&lt;&#x2F;p&gt;</description>
+          <description xml:base="https://blog.linyinfeng.com/posts/rust-rfc-2349/">&lt;p&gt;本文为 &lt;a rel=&quot;external&quot; href=&quot;https://github.com/rust-lang/rfcs/blob/master/text/2349-pin.md&quot;&gt;Rust RFC 2349 - Pin&lt;/a&gt; 的中文翻译。&lt;/p&gt;
+&lt;p&gt;Rust RFCs 并非一成不变，本文翻译于 2018 年 08 月 19 日。&lt;/p&gt;
+&lt;p&gt;Rust RFCs 仓库目前（2018-08-21）为可选的 MIT 和 Apache 授权，本文使用了其 MIT 授权。&lt;a rel=&quot;external&quot; href=&quot;https://github.com/linyinfeng/blog/tree/master/content/posts/rust-rfc-2349/LICENSE-MIT&quot;&gt;MIT 许可证副本&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;文中有众多 Rust 中的其他 RFC 甚至 crates 中的概念，水平有限，如有翻译错误或建议，可以向我的 &lt;a rel=&quot;external&quot; href=&quot;https://github.com/linyinfeng/blog&quot;&gt;GitHub&lt;/a&gt; 仓库提 Issue 或者直接发起 PR 指正，本文文件：&lt;a rel=&quot;external&quot; href=&quot;https://github.com/linyinfeng/blog/tree/master/content/posts/rust-rfc-2349/index.md&quot;&gt;content/posts/rust-rfc-2349/index.md&lt;/a&gt;。&lt;/p&gt;</description>
       </item>
       <item>
           <title>Futures-rs 博文 Toykio 翻译</title>
@@ -99,9 +99,9 @@
           <author>Unknown</author>
           <link>https://blog.linyinfeng.com/posts/toykio/</link>
           <guid>https://blog.linyinfeng.com/posts/toykio/</guid>
-          <description xml:base="https://blog.linyinfeng.com/posts/toykio/">&lt;p&gt;本文为 Rust futures-rs 博客 2018 年 8 月 17 日 的 博文 &lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;rust-lang-nursery.github.io&#x2F;futures-rs&#x2F;blog&#x2F;2018&#x2F;08&#x2F;17&#x2F;toykio.html&quot;&gt;Toykio&lt;&#x2F;a&gt; 的中文翻译。&lt;&#x2F;p&gt;
-&lt;p&gt;原文作者 Alexander Polakov（&lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;polachok&quot;&gt;@polachok&lt;&#x2F;a&gt;）。&lt;&#x2F;p&gt;
-&lt;p&gt;原文目前（2018-08-21）为可选的 MIT 和 Apache 授权，本文使用了其 MIT 授权。&lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;linyinfeng&#x2F;blog&#x2F;tree&#x2F;master&#x2F;content&#x2F;posts&#x2F;toykio&#x2F;LICENSE-MIT&quot;&gt;MIT 许可证副本&lt;&#x2F;a&gt;。&lt;&#x2F;p&gt;</description>
+          <description xml:base="https://blog.linyinfeng.com/posts/toykio/">&lt;p&gt;本文为 Rust futures-rs 博客 2018 年 8 月 17 日 的 博文 &lt;a rel=&quot;external&quot; href=&quot;https://rust-lang-nursery.github.io/futures-rs/blog/2018/08/17/toykio.html&quot;&gt;Toykio&lt;/a&gt; 的中文翻译。&lt;/p&gt;
+&lt;p&gt;原文作者 Alexander Polakov（&lt;a rel=&quot;external&quot; href=&quot;https://github.com/polachok&quot;&gt;@polachok&lt;/a&gt;）。&lt;/p&gt;
+&lt;p&gt;原文目前（2018-08-21）为可选的 MIT 和 Apache 授权，本文使用了其 MIT 授权。&lt;a rel=&quot;external&quot; href=&quot;https://github.com/linyinfeng/blog/tree/master/content/posts/toykio/LICENSE-MIT&quot;&gt;MIT 许可证副本&lt;/a&gt;。&lt;/p&gt;</description>
       </item>
       <item>
           <title>开始写博客</title>
@@ -109,7 +109,7 @@
           <author>Unknown</author>
           <link>https://blog.linyinfeng.com/posts/start-blogging/</link>
           <guid>https://blog.linyinfeng.com/posts/start-blogging/</guid>
-          <description xml:base="https://blog.linyinfeng.com/posts/start-blogging/">&lt;p&gt;咸鱼了很久觉得还是应该写个博客记录和总结一下日常的学习。&lt;&#x2F;p&gt;</description>
+          <description xml:base="https://blog.linyinfeng.com/posts/start-blogging/">&lt;p&gt;咸鱼了很久觉得还是应该写个博客记录和总结一下日常的学习。&lt;/p&gt;</description>
       </item>
     </channel>
 </rss>

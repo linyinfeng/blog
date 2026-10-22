@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en-US">
-    <title>Yinfeng&#x27;s</title>
-    <subtitle>Yinfeng&#x27;s Blog</subtitle>
+    <title>Yinfeng&#39;s</title>
+    <subtitle>Yinfeng&#39;s Blog</subtitle>
     <link rel="self" type="application/atom+xml" href="https://blog.linyinfeng.com/en-US/atom.xml"/>
     <link rel="alternate" type="text/html" href="https://blog.linyinfeng.com"/>
     <generator uri="https://www.getzola.org/">Zola</generator>
@@ -13,17 +13,13 @@
         <updated>2026-03-23T19:02:41+08:00</updated>
         
         <author>
-          <name>
-            
-              Unknown
-            
-          </name>
+          <name>Unknown</name>
         </author>
         
         <link rel="alternate" type="text/html" href="https://blog.linyinfeng.com/en-US/posts/mobius-rainbow-infinity/"/>
         <id>https://blog.linyinfeng.com/en-US/posts/mobius-rainbow-infinity/</id>
         
-        <summary type="html">&lt;p&gt;Documenting an interesting 3D modeling and rendering project: a rainbow infinity symbol composed of a Möbius strip.&lt;&#x2F;p&gt;</summary>
+        <summary type="html">&lt;p&gt;Documenting an interesting 3D modeling and rendering project: a rainbow infinity symbol composed of a Möbius strip.&lt;/p&gt;</summary>
         
     </entry>
 </feed>
