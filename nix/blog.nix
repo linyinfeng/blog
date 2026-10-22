@@ -3,6 +3,7 @@
   stdenvNoCC,
   lib,
   zola,
+  cacert,
   katex,
   license-buttons,
   normalize-css,
@@ -16,6 +17,9 @@ stdenvNoCC.mkDerivation {
   src = lib.cleanSource ../.;
 
   nativeBuildInputs = [ zola ];
+
+  # zola 0.23 builds the reqwest client for load_data eagerly, and the sandbox has no system certs.
+  SSL_CERT_FILE = "${cacert}/etc/ssl/certs/ca-bundle.crt";
 
   buildPhase = ''
     cp "${favicon-normal}/favicon-normal.ico" static/favicon.ico

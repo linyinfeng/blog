@@ -1,4 +1,3 @@
-{% import "base/parts.html" as parts %}
 <!DOCTYPE html>
 <html lang={% block language %}{{ lang }}{% endblock language %}>
 <head>
@@ -12,26 +11,18 @@
         <link rel=stylesheet type="text/css" href={{ get_url(path="style.css", cachebust=true) }} />
         <script defer src={{ get_url(path="layout-helper.js", cachebust=true) }}></script>
         {% if config.extra.google_tag_manager.enable %}
-            {{ parts::google_tag_manager(code=config.extra.google_tag_manager.code) }}
+            {{ <google_tag_manager code={config.extra.google_tag_manager.code} /> }}
         {% endif %}
         {% if config.extra.katex.enable %}
-            {% if page.extra.katex.render_options %}
-                {{ parts::katex(render_options=page.extra.katex.render_options) }}
-            {% else %}
-                {{ parts::katex(render_options=config.extra.katex.render_options) }}
-            {% endif %}
+            {% set render_options = page?.extra?.katex?.render_options or config.extra.katex.render_options %}
+            {{ <katex render_options={render_options} /> }}
         {% endif %}
         {% if config.extra.giscus.enable %}
-            {% if page %}
-                {{  parts::giscus(cfg=config.extra.giscus, term=page.extra.giscus.term) }}
-            {% elif section %}
-                {{  parts::giscus(cfg=config.extra.giscus, term=section.extra.giscus.term) }}
-            {% else %}
-                {{  parts::giscus(cfg=config.extra.giscus, term="site") }}
-            {% endif %}
+            {% set giscus_term = page?.extra?.giscus?.term or section?.extra?.giscus?.term or "site" %}
+            {{ <giscus cfg={config.extra.giscus} term={giscus_term} /> }}
         {% endif %}
         {% if config.extra.open_graph.enable %}
-            {{  parts::open_graph(cfg=config.extra.open_graph) }}
+            {{ <open_graph cfg={config.extra.open_graph} /> }}
         {% endif %}
         {% block atom %}
             <link rel="alternate" type="application/atom+xml" title="Atom" href="{{ get_url(path="atom.xml", lang=lang) }}" />
@@ -47,13 +38,11 @@
 <body>
     {% block body %}
         {% if config.extra.google_tag_manager_enable %}
-            {{ parts::google_tag_manager_no_script(code=config.extra.google_tag_manager_code) }}
+            {{ <google_tag_manager_no_script code={config.extra.google_tag_manager_code} /> }}
         {% endif %}
         <header id="header">
             {% block header %}
-            {{ parts::header(title=config.title,
-                title_url=get_url(path="/", lang=lang),
-                nav_items=config.extra.global_nav_items) }}
+            {{ <header title={config.title} title_url={get_url(path="/", lang=lang)} nav_items={config.extra.global_nav_items} /> }}
             {% endblock header %}
         </header>
         <div id="main-aside-container">
@@ -73,14 +62,14 @@
                     {% block main %}
                     {% endblock main %}
                     {% if config.extra.giscus.enable %}
-                        {{  parts::giscus_placeholder() }}
+                        {{ <giscus_placeholder /> }}
                     {% endif %}
                 </div>
             </main>
         </div>
         <footer id="footer">
             {% block footer %}
-            {{ parts::footer(copyright=config.extra.copyright, powered_by=config.extra.powered_by) }}
+            {{ <footer copyright={config.extra.copyright} powered_by={config.extra.powered_by} /> }}
             {% endblock footer %}
         </footer>
     {% endblock body %}

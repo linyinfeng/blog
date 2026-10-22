@@ -5,7 +5,7 @@
 {% endblock title %}
 {% block main %}
     {{ super() }}
-    {{ parts::article(page=page, config=config) }}
+    {{ <article page={page} /> }}
 {% endblock main %}
 {% block optional_aside %}
     {% if page.toc %}
@@ -13,5 +13,5 @@
     {% endif %}
 {% endblock optional_aside %}
 {% block aside %}
-    {{ parts::toc(toc=page.toc, title=trans(key="table_of_contents", lang=lang)) }}
+    {{ <toc toc={page.toc} title={trans(key="table_of_contents", lang=lang)} /> }}
 {% endblock aside %}

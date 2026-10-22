@@ -30,7 +30,7 @@ I want to model an infinity symbol made of Möbius strips, with these properties
 
 Why a perfect circle? Because this allows me to use radially hue-gradient colored lights starting from the origin to illuminate the object, rendering a uniformly shimmering rainbow infinity symbol.
 
-{{ image(path="point-lighting.png", alt="Radially hue-gradient point light", caption="Radially hue-gradient point light", width="250")}}
+{{ <image path="point-lighting.png" alt="Radially hue-gradient point light" caption="Radially hue-gradient point light" width="250" /> }}
 
 ## Modeling
 
@@ -85,17 +85,17 @@ Let's go through it step by step:
 
 1. First, I created a quarter-circle arc `q1_xy` in the first quadrant, which is the projection of the main path on the XY plane. Then I used sweep to lift the arc into a face `wall_face`.
 
-   {{ image(path="wall-face.png", alt="First quadrant arc face", caption="First quadrant arc face", width="500")}}
+   {{ <image path="wall-face.png" alt="First quadrant arc face" caption="First quadrant arc face" width="500" /> }}
 
 2. Second, I constructed a plane tilted 45 degrees upward and used it to cut the previous face. This plane intersects the two endpoints of the first quadrant arc. Therefore, after cutting, the endpoints of the cutting line will exactly fall on the coordinate axes.
 
-   {{ image(path="splitted.png", alt="Cut arc face", caption="Cut arc face", width="500")}}
+   {{ <image path="splitted.png" alt="Cut arc face" caption="Cut arc face" width="500" /> }}
 
 3. Third, only keep this cutting line, which is the main path in the first quadrant. Since cutting only adds one edge, directly calculating the difference in edges before and after cutting gives this edge.
 
-   {{ image(path="q1-line.png", alt="First quadrant main path (oblique view)", caption="First quadrant main path (oblique view)", width="500")}}
+   {{ <image path="q1-line.png" alt="First quadrant main path (oblique view)" caption="First quadrant main path (oblique view)" width="500" /> }}
 
-   {{ image(path="q1-line-front.png", alt="First quadrant main path (front view)", caption="First quadrant main path (front view)", width="500")}}
+   {{ <image path="q1-line-front.png" alt="First quadrant main path (front view)" caption="First quadrant main path (front view)" width="500" /> }}
 
    As you can see, the front view shows a 1/4 infinity symbol.
 
@@ -114,17 +114,17 @@ main_path = build_main_path()
 
 1. First step: mirror the first quadrant path downward, then rotate it 90 degrees to the second quadrant, and concatenate into a semicircle.
 
-   {{ image(path="half-circle.png", alt="Main path in first and second quadrants", caption="Main path in first and second quadrants", width="500")}}
+   {{ <image path="half-circle.png" alt="Main path in first and second quadrants" caption="Main path in first and second quadrants" width="500" /> }}
 
 2. Second step: rotate this semicircle by 180 degrees and concatenate it to the original semicircle, obtaining the complete main path.
 
-   {{ image(path="main-path.png", alt="Complete main path (oblique view)", caption="Complete main path (oblique view)", width="500")}}
+   {{ <image path="main-path.png" alt="Complete main path (oblique view)" caption="Complete main path (oblique view)" width="500" /> }}
 
    <div class="row-container">
 
-   {{ image(path="main-path-front.png", alt="Complete main path (front view)", caption="Complete main path (front view)", width="250")}}
+   {{ <image path="main-path-front.png" alt="Complete main path (front view)" caption="Complete main path (front view)" width="250" /> }}
 
-   {{ image(path="main-path-top.png", alt="Complete main path (top view)", caption="Complete main path (top view)", width="250")}}
+   {{ <image path="main-path-top.png" alt="Complete main path (top view)" caption="Complete main path (top view)" width="250" /> }}
 
    </div>
 
@@ -176,13 +176,13 @@ line2 = rotating_spline(math.pi)
 
 <div class="row-container">
 
-{{ image(path="spline-line1.png", alt="First part of the boundary line", caption="First part of the boundary line", width="250")}}
+{{ <image path="spline-line1.png" alt="First part of the boundary line" caption="First part of the boundary line" width="250" /> }}
 
-{{ image(path="spline-line2.png", alt="Second part of the boundary line", caption="Second part of the boundary line", width="250")}}
+{{ <image path="spline-line2.png" alt="Second part of the boundary line" caption="Second part of the boundary line" width="250" /> }}
 
 </div>
 
-{{ image(path="spline-line1-line2.png", alt="Complete boundary line", caption="Complete boundary line", width="500") }}
+{{ <image path="spline-line1-line2.png" alt="Complete boundary line" caption="Complete boundary line" width="500" /> }}
 
 An interesting point is the reference system for the angle `rotation_radian`. I set 0 degrees for this angle to the vector from the origin to the main path position, `radial`. That is, when `rotation_radian` is 0 degrees, the offset direction is directly radial to the main path. The 90-degree position is set to the `up` vector, which is coplanar with the Z-axis and `radial` vector, and perpendicular to `radial`.
 
@@ -212,13 +212,13 @@ infinity_face = face1 + face2
 
 <div class="row-container">
 
-{{ image(path="wire1.png", alt="First loop after splitting and concatenating", caption="First loop after splitting and concatenating", width="250")}}
+{{ <image path="wire1.png" alt="First loop after splitting and concatenating" caption="First loop after splitting and concatenating" width="250" /> }}
 
-{{ image(path="wire2.png", alt="Second loop after splitting and concatenating", caption="Second loop after splitting and concatenating", width="250")}}
+{{ <image path="wire2.png" alt="Second loop after splitting and concatenating" caption="Second loop after splitting and concatenating" width="250" /> }}
 
 </div>
 
-{{ image(path="infinity-face.png", alt="Complete Möbius strip surface", caption="Complete Möbius strip surface", width="500") }}
+{{ <image path="infinity-face.png" alt="Complete Möbius strip surface" caption="Complete Möbius strip surface" width="500" /> }}
 
 #### Volume
 
@@ -230,13 +230,13 @@ infinity = thicken(infinity_face, cfg.thickness / 2.0, both=True)
 
 <div class="row-container">
 
-{{ image(path="square.png", alt="Möbius strip with square cross-section (oblique view)", caption="Möbius strip with square cross-section (oblique view)", width="250")}}
+{{ <image path="square.png" alt="Möbius strip with square cross-section (oblique view)" caption="Möbius strip with square cross-section (oblique view)" width="250" /> }}
 
-{{ image(path="square-top.png", alt="Möbius strip with square cross-section (top view)", caption="Möbius strip with square cross-section (top view)", width="250")}}
+{{ <image path="square-top.png" alt="Möbius strip with square cross-section (top view)" caption="Möbius strip with square cross-section (top view)" width="250" /> }}
 
-{{ image(path="square-front.png", alt="Möbius strip with square cross-section (front view)", caption="Möbius strip with square cross-section (front view)", width="250")}}
+{{ <image path="square-front.png" alt="Möbius strip with square cross-section (front view)" caption="Möbius strip with square cross-section (front view)" width="250" /> }}
 
-{{ image(path="square-left.png", alt="Möbius strip with square cross-section (left view)", caption="Möbius strip with square cross-section (left view)", width="250")}}
+{{ <image path="square-left.png" alt="Möbius strip with square cross-section (left view)" caption="Möbius strip with square cross-section (left view)" width="250" /> }}
 
 </div>
 
@@ -246,13 +246,13 @@ In the initial parameters I set, `thickness` equals to `width`, giving a square 
 
 <div class="row-container">
 
-{{ image(path="rectangle-infinity.png", alt="Möbius strip with rectangular cross-section", caption="Möbius strip with rectangular cross-section", width="250")}}
+{{ <image path="rectangle-infinity.png" alt="Möbius strip with rectangular cross-section" caption="Möbius strip with rectangular cross-section" width="250" /> }}
 
-{{ image(path="rectangle-infinity-top.png", alt="Möbius strip with rectangular cross-section (top view)", caption="Möbius strip with rectangular cross-section (top view)", width="250")}}
+{{ <image path="rectangle-infinity-top.png" alt="Möbius strip with rectangular cross-section (top view)" caption="Möbius strip with rectangular cross-section (top view)" width="250" /> }}
 
-{{ image(path="rectangle-infinity-front.png", alt="Möbius strip with rectangular cross-section (front view)", caption="Möbius strip with rectangular cross-section (front view)", width="250")}}
+{{ <image path="rectangle-infinity-front.png" alt="Möbius strip with rectangular cross-section (front view)" caption="Möbius strip with rectangular cross-section (front view)" width="250" /> }}
 
-{{ image(path="rectangle-infinity-left.png", alt="Möbius strip with rectangular cross-section (left view)", caption="Möbius strip with rectangular cross-section (left view)", width="250")}}
+{{ <image path="rectangle-infinity-left.png" alt="Möbius strip with rectangular cross-section (left view)" caption="Möbius strip with rectangular cross-section (left view)" width="250" /> }}
 
 </div>
 
@@ -272,11 +272,11 @@ I used three types of light sources in total:
 
 Placed as follows, all selected (orange) objects are light sources.
 
-{{ image(path="blender-lighting.png", alt="Light source placement in Blender", caption="Light source placement in Blender", width="500")}}
+{{ <image path="blender-lighting.png" alt="Light source placement in Blender" caption="Light source placement in Blender" width="500" /> }}
 
 Each light source's configuration is similar, taking the area light as an example. Use coordinates as input to construct a radial gradient texture.
 
-{{ image(path="blender-lighting-shader.png", alt="Area light shader configuration", caption="Area light shader configuration", width="500") }}
+{{ <image path="blender-lighting-shader.png" alt="Area light shader configuration" caption="Area light shader configuration" width="500" /> }}
 
 Finally, adjust the camera position, model materials, and color management settings to render the final effect.
 
@@ -286,10 +286,10 @@ So, in the end, here are the rendering results.
 
 <div class="row-container">
 
-{{ image(path="render-square-1080p.png", alt="Rainbow infinity symbol Möbius strip (square cross-section version)", caption="Rainbow infinity symbol Möbius strip (square cross-section)", width="300")}}
+{{ <image path="render-square-1080p.png" alt="Rainbow infinity symbol Möbius strip (square cross-section version)" caption="Rainbow infinity symbol Möbius strip (square cross-section)" width="300" /> }}
 
-{{ image(path="render-rectangle-1080p.png", alt="Rainbow infinity symbol Möbius strip (rectangular cross-section version)", caption="Rainbow infinity symbol Möbius strip (rectangular cross-section)", width="300")}}
+{{ <image path="render-rectangle-1080p.png" alt="Rainbow infinity symbol Möbius strip (rectangular cross-section version)" caption="Rainbow infinity symbol Möbius strip (rectangular cross-section)" width="300" /> }}
 
-{{ image(path="render-square-front-1080p.png", alt="Möbius strip with square cross-section (front view render)", caption="Rainbow infinity symbol Möbius strip (square cross-section, front view)", width="300")}}
+{{ <image path="render-square-front-1080p.png" alt="Möbius strip with square cross-section (front view render)" caption="Rainbow infinity symbol Möbius strip (square cross-section, front view)" width="300" /> }}
 
 </div>

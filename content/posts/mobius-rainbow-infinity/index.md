@@ -30,7 +30,7 @@ term = "posts/mobius-rainbow-infinity"
 
 为什么需要是正圆形？因为这样我就可以使用从原点开始，径向色相渐变的彩色光为该物体做照明，从而渲染出一个均匀的流光溢彩的无限符号。
 
-{{ image(path="point-lighting.png", alt="径向色相渐变点状光源", caption="径向色相渐变点状光源", width="250")}}
+{{ <image path="point-lighting.png" alt="径向色相渐变点状光源" caption="径向色相渐变点状光源" width="250" /> }}
 
 ## 建模
 
@@ -84,17 +84,17 @@ q1_line = build_q1_line()
 
 1. 首先我创建了一个第一象限的圆弧 `q1_xy`，这个圆弧是主路径在 XY 平面上的投影。并使用 sweep 将圆弧抬升成一个面 `wall_face`。
 
-   {{ image(path="wall-face.png", alt="第一象限的圆弧面", caption="第一象限的圆弧面", width="500")}}
+   {{ <image path="wall-face.png" alt="第一象限的圆弧面" caption="第一象限的圆弧面" width="500" /> }}
 
 2. 第二步，我构造了一个斜 45 度向上的 plane，并用这个 plane 切割之前的面。这个 plane 与第一象限的圆弧的两个端点相交。因此切割后，切割线两端的端点一定刚好落在坐标轴上。
 
-   {{ image(path="splitted.png", alt="切割后的圆弧面", caption="切割后的圆弧面", width="500")}}
+   {{ <image path="splitted.png" alt="切割后的圆弧面" caption="切割后的圆弧面" width="500" /> }}
 
 3. 第三步，只保留这条切割线，这条切割线就是第一象限的主路径了。因为切割后只会多出一条边，因此直接计算切割前后的边的差集就可以得到这条边了。
 
-   {{ image(path="q1-line.png", alt="第一象限的主路径（斜视图）", caption="第一象限的主路径（斜视图）", width="500")}}
+   {{ <image path="q1-line.png" alt="第一象限的主路径（斜视图）" caption="第一象限的主路径（斜视图）" width="500" /> }}
 
-   {{ image(path="q1-line-front.png", alt="第一象限的主路径（前视图）", caption="第一象限的主路径（前视图）", width="500")}}
+   {{ <image path="q1-line-front.png" alt="第一象限的主路径（前视图）" caption="第一象限的主路径（前视图）" width="500" /> }}
 
    可以看到，前视图呈现一个 1/4 无限符号。
 
@@ -113,17 +113,17 @@ main_path = build_main_path()
 
 1. 第一步，将第一象限路径镜像到下方，然后旋转 90 度到第二象限，并拼接成一个半圆。
 
-   {{ image(path="half-circle.png", alt="第一二象限的主路径", caption="第一二象限的主路径", width="500")}}
+   {{ <image path="half-circle.png" alt="第一二象限的主路径" caption="第一二象限的主路径" width="500" /> }}
 
 2. 第二步，将这个半圆再旋转 180 度，并拼接到原来半圆的后面，就得到了完整的主路径。
 
-   {{ image(path="main-path.png", alt="完整的主路径（斜视图）", caption="完整的主路径（斜视图）", width="500")}}
+   {{ <image path="main-path.png" alt="完整的主路径（斜视图）" caption="完整的主路径（斜视图）" width="500" /> }}
 
    <div class="row-container">
 
-   {{ image(path="main-path-front.png", alt="完整的主路径（前视图）", caption="完整的主路径（前视图）", width="250")}}
+   {{ <image path="main-path-front.png" alt="完整的主路径（前视图）" caption="完整的主路径（前视图）" width="250" /> }}
 
-   {{ image(path="main-path-top.png", alt="完整的主路径（顶视图）", caption="完整的主路径（顶视图）", width="250")}}
+   {{ <image path="main-path-top.png" alt="完整的主路径（顶视图）" caption="完整的主路径（顶视图）" width="250" /> }}
 
    </div>
 
@@ -170,13 +170,13 @@ line2 = rotating_spline(math.pi)
 
 <div class="row-container">
 
-{{ image(path="spline-line1.png", alt="边界线的第一部分", caption="边界线的第一部分", width="250")}}
+{{ <image path="spline-line1.png" alt="边界线的第一部分" caption="边界线的第一部分" width="250" /> }}
 
-{{ image(path="spline-line2.png", alt="边界线的第二部分", caption="边界线的第二部分", width="250")}}
+{{ <image path="spline-line2.png" alt="边界线的第二部分" caption="边界线的第二部分" width="250" /> }}
 
 </div>
 
-{{ image(path="spline-line1-line2.png", alt="完整的边界线", caption="完整的边界线", width="500") }}
+{{ <image path="spline-line1-line2.png" alt="完整的边界线" caption="完整的边界线" width="500" /> }}
 
 其中一个有意思的点是角度 `rotation_radian` 的参照系。我将这个角度的 0 度设置为原点到主路径的向量 `radial`。也就是说，`rotation_radian` 的值为 0 度时，偏移的方向是直接朝向主路径的径向的。角度的 90 度位置设置为 `up` 向量，`up` 与 Z 轴和 `radial` 向量共面，且 `up` 与 `radial` 垂直。
 
@@ -204,13 +204,13 @@ infinity_face = face1 + face2
 
 <div class="row-container">
 
-{{ image(path="wire1.png", alt="切分后拼接得到的第一个环", caption="切分后拼接得到的第一个环", width="250")}}
+{{ <image path="wire1.png" alt="切分后拼接得到的第一个环" caption="切分后拼接得到的第一个环" width="250" /> }}
 
-{{ image(path="wire2.png", alt="切分后拼接得到的第二个环", caption="切分后拼接得到的第二个环", width="250")}}
+{{ <image path="wire2.png" alt="切分后拼接得到的第二个环" caption="切分后拼接得到的第二个环" width="250" /> }}
 
 </div>
 
-{{ image(path="infinity-face.png", alt="完整的莫比乌斯环面", caption="完整的莫比乌斯环面", width="500") }}
+{{ <image path="infinity-face.png" alt="完整的莫比乌斯环面" caption="完整的莫比乌斯环面" width="500" /> }}
 
 #### 体积
 
@@ -222,13 +222,13 @@ infinity = thicken(infinity_face, cfg.thickness / 2.0, both=True)
 
 <div class="row-container">
 
-{{ image(path="square.png", alt="方形截面的莫比乌斯环（斜视图）", caption="方形截面的莫比乌斯环（斜视图）", width="250")}}
+{{ <image path="square.png" alt="方形截面的莫比乌斯环（斜视图）" caption="方形截面的莫比乌斯环（斜视图）" width="250" /> }}
 
-{{ image(path="square-top.png", alt="方形截面的莫比乌斯环（顶视图）", caption="方形截面的莫比乌斯环（顶视图）", width="250")}}
+{{ <image path="square-top.png" alt="方形截面的莫比乌斯环（顶视图）" caption="方形截面的莫比乌斯环（顶视图）" width="250" /> }}
 
-{{ image(path="square-front.png", alt="方形截面的莫比乌斯环（前视图）", caption="方形截面的莫比乌斯环（前视图）", width="250")}}
+{{ <image path="square-front.png" alt="方形截面的莫比乌斯环（前视图）" caption="方形截面的莫比乌斯环（前视图）" width="250" /> }}
 
-{{ image(path="square-left.png", alt="方形截面的莫比乌斯环（左视图）", caption="方形截面的莫比乌斯环（左视图）", width="250")}}
+{{ <image path="square-left.png" alt="方形截面的莫比乌斯环（左视图）" caption="方形截面的莫比乌斯环（左视图）" width="250" /> }}
 
 </div>
 
@@ -238,13 +238,13 @@ infinity = thicken(infinity_face, cfg.thickness / 2.0, both=True)
 
 <div class="row-container">
 
-{{ image(path="rectangle-infinity.png", alt="矩形截面的莫比乌斯环", caption="矩形截面的莫比乌斯环", width="250")}}
+{{ <image path="rectangle-infinity.png" alt="矩形截面的莫比乌斯环" caption="矩形截面的莫比乌斯环" width="250" /> }}
 
-{{ image(path="rectangle-infinity-top.png", alt="矩形截面的莫比乌斯环（顶视图）", caption="矩形截面的莫比乌斯环（顶视图）", width="250")}}
+{{ <image path="rectangle-infinity-top.png" alt="矩形截面的莫比乌斯环（顶视图）" caption="矩形截面的莫比乌斯环（顶视图）" width="250" /> }}
 
-{{ image(path="rectangle-infinity-front.png", alt="矩形截面的莫比乌斯环（前视图）", caption="矩形截面的莫比乌斯环（前视图）", width="250")}}
+{{ <image path="rectangle-infinity-front.png" alt="矩形截面的莫比乌斯环（前视图）" caption="矩形截面的莫比乌斯环（前视图）" width="250" /> }}
 
-{{ image(path="rectangle-infinity-left.png", alt="矩形截面的莫比乌斯环（左视图）", caption="矩形截面的莫比乌斯环（左视图）", width="250")}}
+{{ <image path="rectangle-infinity-left.png" alt="矩形截面的莫比乌斯环（左视图）" caption="矩形截面的莫比乌斯环（左视图）" width="250" /> }}
 
 </div>
 
@@ -262,11 +262,11 @@ infinity = thicken(infinity_face, cfg.thickness / 2.0, both=True)
 
 放置如下，所有被选中（橙色）物体都是光源。
 
-{{ image(path="blender-lighting.png", alt="Blender 中的光源放置", caption="Blender 中的光源放置", width="500")}}
+{{ <image path="blender-lighting.png" alt="Blender 中的光源放置" caption="Blender 中的光源放置" width="500" /> }}
 
 每个光源的配置都大差不差，以面光源为例。使用坐标作为输入，构造一个径向渐变纹理即可。
 
-{{ image(path="blender-lighting-shader.png", alt="面光源的 shader 配置", caption="面光源的 shader 配置", width="500") }}
+{{ <image path="blender-lighting-shader.png" alt="面光源的 shader 配置" caption="面光源的 shader 配置" width="500" /> }}
 
 最后调整好相机位置，模型的材质，以及色彩管理的设置，就可以渲染出最终的效果了。
 
@@ -276,10 +276,10 @@ infinity = thicken(infinity_face, cfg.thickness / 2.0, both=True)
 
 <div class="row-container">
 
-{{ image(path="render-square-1080p.png", alt="莫比乌斯环彩虹无限符号（方形截面版本）", caption="莫比乌斯环彩虹无限符号（方形截面）", width="300")}}
+{{ <image path="render-square-1080p.png" alt="莫比乌斯环彩虹无限符号（方形截面版本）" caption="莫比乌斯环彩虹无限符号（方形截面）" width="300" /> }}
 
-{{ image(path="render-rectangle-1080p.png", alt="莫比乌斯环彩虹无限符号（矩形截面版本）", caption="莫比乌斯环彩虹无限符号（矩形截面）", width="300")}}
+{{ <image path="render-rectangle-1080p.png" alt="莫比乌斯环彩虹无限符号（矩形截面版本）" caption="莫比乌斯环彩虹无限符号（矩形截面）" width="300" /> }}
 
-{{ image(path="render-square-front-1080p.png", alt="方形截面的莫比乌斯环（前视图渲染）", caption="莫比乌斯环彩虹无限符号（方形截面，前视图）", width="300")}}
+{{ <image path="render-square-front-1080p.png" alt="方形截面的莫比乌斯环（前视图渲染）" caption="莫比乌斯环彩虹无限符号（方形截面，前视图）" width="300" /> }}
 
 </div>
