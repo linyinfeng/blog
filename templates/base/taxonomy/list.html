@@ -7,11 +7,6 @@
 {% block main %}
     {{ super() }}
     {% set taxonomy_name = trans(key=taxonomy.name, lang=lang) %}
-    {{ parts::taxonomy_list(
-        terms=terms,
-        title=taxonomy_name,
-        title_url=current_url,
-        have_title=true
-    ) }}
+    {{ <taxonomy_list terms={terms} title={taxonomy_name} title_url={current_url} /> }}
 {% endblock main %}
 {# Remove sidebar #}{% block optional_aside %}{% endblock optional_aside %}

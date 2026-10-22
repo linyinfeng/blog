@@ -1,5 +1,5 @@
 {# Header and footer can only be used once #}
-{% macro header(title, title_url, nav_items) %}
+{% component header(title, title_url, nav_items, @lang) %}
     <div class="header-container container">
         <h1 id="blog-title" class="title">
             <a href={{ title_url }}>
@@ -12,12 +12,12 @@
                     href={% if nav_item.path %}{{ get_url(path=nav_item.path, lang=lang) }}{% else %}{{ nav_item.link }}{% endif %}
                 >{{ trans(key=nav_item.key, lang=lang) }}</a></span>
             {%- endfor -%}
-            {{ self::language_selector() }}
+            {{ <language_selector /> }}
         </nav>
     </div>
-{% endmacro header %}
+{% endcomponent header %}
 
-{% macro footer(copyright, powered_by) %}
+{% component footer(copyright, powered_by) %}
     <div class="footer-container container">
         <div id="copyright-container">
             <small id="copyright">{{ copyright | markdown(inline=true) | safe }}</small>
@@ -29,9 +29,9 @@
             </div>
         {% endif %}
     </div>
-{% endmacro footer %}
+{% endcomponent footer %}
 
-{% macro pages_list(pages, title, title_url, have_title=true, config) %}
+{% component pages_list(pages, title, title_url, have_title = true, @config, @lang) %}
     <div class="pages-list-container container">
         {% if have_title == true %}
             <h1 class="title list-title pages-list-title"><a href={{ title_url }}>{{ title }}</a></h1>
@@ -39,14 +39,14 @@
         <ul class="pages-list">
             {% for page in pages %}
                 <li class="pages-list-item">
-                    {{ self::article_summary(page=page, config=config) }}
+                    {{ <article_summary page={page} /> }}
                 </li>
             {% endfor %}
         </ul>
     </div>
-{% endmacro pages_list %}
+{% endcomponent pages_list %}
 
-{% macro taxonomy_list(terms, title, title_url, have_title=true) %}
+{% component taxonomy_list(terms, title, title_url, have_title = true) %}
     <div class="taxonomy-list-container container">
         {% if have_title == true %}
             <h1 class="title list-title taxonomy-list-title"><a href={{ title_url }}>{{ title }}</a></h1>
@@ -59,29 +59,29 @@
             {% endfor %}
         </ul>
     </div>
-{% endmacro taxonomy_list %}
+{% endcomponent taxonomy_list %}
 
-{% macro toc_inner(toc) %}
+{% component toc_inner(toc) %}
     {% if toc | length != 0 %}
         <ul class="toc-parent">
                 {% for entry in toc %}
                 <li class="toc-entry">
                     <a href={{ entry.permalink }}>{{ entry.title | safe | striptags }}</a>
-                    {{ self::toc_inner(toc=entry.children) }}
+                    {{ <toc_inner toc={entry.children} /> }}
                 </li>
                 {% endfor %}
         </ul>
     {% endif %}
-{% endmacro toc_inner %}
+{% endcomponent toc_inner %}
 
-{% macro toc(toc, title) %}
+{% component toc(toc, title) %}
     <div class="toc-container container">
         <h1 class="title toc-title">{{ title }}</h1>
-        {{ self::toc_inner(toc=toc) }}
+        {{ <toc_inner toc={toc} /> }}
     </div>
-{% endmacro toc %}
+{% endcomponent toc %}
 
-{% macro article_title_text(page, config) %}
+{% component article_title_text(page, @config) %}
     <span class="draft-indicator">
         {% if page.draft == true %}
             {{ "[" ~ config.extra.text_draft ~ "]" }}
@@ -90,9 +90,9 @@
     <span>
         {{ page.title }}
     </span>
-{% endmacro article_title_text %}
+{% endcomponent article_title_text %}
 
-{% macro article_taxonomies(page, config) %}
+{% component article_taxonomies(page, @config, @lang) %}
     <div class="article-taxonomies">
         {%- for taxonomy_config in config.taxonomies -%}
             {%- set taxonomy_name = taxonomy_config.name -%}
@@ -103,24 +103,24 @@
                     {%- if page.draft == true -%}
                         <span class="article-term-name">{{ term_name }}</span>
                     {%- else -%}
-                        {%- set term_url = get_taxonomy_url(kind=taxonomy_name, name=term_name, lang=page.lang) -%}
+                        {%- set term_url = get_taxonomy_url(kind=taxonomy_name, term=term_name, lang=page.lang) -%}
                         <a class="article-term-name" href="{{ term_url }}">{{ term_name }}</a>
                     {%- endif -%}
                 {%- endfor -%}
             </span></span>
         {%- endfor -%}
     </div>
-{% endmacro article_taxonomies %}
+{% endcomponent article_taxonomies %}
 
-{% macro article_title(page, config) %}
+{% component article_title(page, @config) %}
     <h1 class="title article-title">
         <a class="article-title-link" href="{{ page.permalink }}">
-            {{ self::article_title_text(page=page, config=config) }}
+            {{ <article_title_text page={page} /> }}
         </a>
     </h1>
-{% endmacro article_title %}
+{% endcomponent article_title %}
 
-{% macro article_datetime(page, config, verbose) %}
+{% component article_datetime(page, @config, @lang, verbose = false) %}
     <div class="dates-container">
         <div class="date-container">
             <time datetime={{ page.date}}>{{ page.date | date(format=config.extra.date_format) }}</time>
@@ -135,13 +135,13 @@
         </div>
         {% endif %}
     </div>
-{% endmacro article_datetime %}
+{% endcomponent article_datetime %}
 
-{% macro article_summary(page, config) %}
+{% component article_summary(page, @config, @lang) %}
     <article class="article-summary-container container">
-        {{ self::article_title(page=page, config=config) }}
-        {{ self::article_datetime(page=page, config=config, verbose=false) }}
-        {{ self::article_taxonomies(page=page, config=config) }}
+        {{ <article_title page={page} /> }}
+        {{ <article_datetime page={page} /> }}
+        {{ <article_taxonomies page={page} /> }}
         <section class="article-summary">
             {# page.summary | safe | striptags #}
             {{ page.summary | safe }}
@@ -150,14 +150,10 @@
             </a>
         </section>
     </article>
-{% endmacro article_summary %}
+{% endcomponent article_summary %}
 
-{% macro language_selector() %}
-    {% if page.translations %}
-        {% set translations = page.translations %}
-    {% elif section.translations %}
-        {% set translations = section.translations %}
-    {% endif %}
+{% component language_selector(@page = {}, @section = {}, @lang) %}
+    {% set translations = page.translations or section.translations %}
     {% if translations %}
         <span class="language-selector">
             <span class="language-selectort-title">{{ trans(key="languages", lang=lang) }}</span>
@@ -168,9 +164,9 @@
             </ul>
         </span>
     {% endif %}
-{% endmacro language_selector %}
+{% endcomponent language_selector %}
 
-{% macro article_license(page, config) %}
+{% component article_license(page, @config) %}
     {% if page.extra.license %}
         <section class="article-license">
             {% if page.extra.license_image %}
@@ -181,44 +177,46 @@
             <small class="license-text">{{ page.extra.license | markdown(inline=true) | safe }}</small>
         </section>
     {% endif %}
-{% endmacro article_license %}
+{% endcomponent article_license %}
 
-{% macro article(page, config) %}
+{% component article(page, @config, @lang) %}
     <article class="article-container container">
-        {{ self::article_title(page=page, config=config) }}
-        {{ self::article_datetime(page=page, config=config, verbose=true) }}
-        {{ self::article_taxonomies(page=page, config=config) }}
-        {{ self::article_license(page=page, config=config) }}
+        {{ <article_title page={page} /> }}
+        {{ <article_datetime page={page} verbose={true} /> }}
+        {{ <article_taxonomies page={page} /> }}
+        {{ <article_license page={page} /> }}
         <section class="article-content">{{ page.content | safe }}</section>
     </article>
-{% endmacro article %}
+{% endcomponent article %}
 
-{% macro pages_list_by_year(pages, title, title_url, have_title=true) %}
+{% component pages_list_by_year(pages, title, title_url, have_title = true) %}
     {% if have_title == true %}
         <h1 class="title list-title page-list-by-year-title"><a href={{ title_url }}>{{ title }}</a></h1>
     {% endif %}
-    {% for year, posts in pages | group_by(attribute="year") %}
+    {% set grouped = pages | group_by(attribute="year") %}
+    {# group_by is a map, so sort its keys to keep the archive newest year first #}
+    {% for year in grouped | keys | sort | reverse %}
         <h2 id="year-{{ year }}">
-            {% set id = "year-{{year}}" %}
+            {% set id = "year-" ~ year %}
             {% include "anchor-link.html" %}
             {{ year }}
         </h2>
         <ul>
-            {% for post in posts %}
+            {% for post in grouped[year] %}
                 <li><a href="{{ post.permalink }}">{{ post.title }}</a></li>
             {% endfor %}
         </ul>
     {% endfor %}
-{% endmacro pages_list_by_year %}
+{% endcomponent pages_list_by_year %}
 
-{% macro simple_page(page, config) %}
+{% component simple_page(page, @config) %}
     <article class="article-container simple-article-container container">
-        {{ self::article_title(page=page, config=config) }}
+        {{ <article_title page={page} /> }}
         <section class="article-content">{{ page.content | safe }}</section>
     </article>
-{% endmacro simple_page %}
+{% endcomponent simple_page %}
 
-{% macro google_tag_manager(code) %}
+{% component google_tag_manager(code) %}
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -226,16 +224,16 @@
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','{{ code }}');</script>
     <!-- End Google Tag Manager -->
-{% endmacro google_tag_manager %}
+{% endcomponent google_tag_manager %}
 
-{% macro google_tag_manager_no_script(code) %}
+{% component google_tag_manager_no_script(code) %}
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ code }}"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
-{% endmacro google_tag_manager_no_script %}
+{% endcomponent google_tag_manager_no_script %}
 
-{% macro giscus(cfg, term) %}
+{% component giscus(cfg, term) %}
     <script src="https://giscus.app/client.js"
             data-repo="{{ cfg.repo }}"
             data-repo-id="{{ cfg.repo_id }}"
@@ -248,13 +246,13 @@
             crossorigin="anonymous"
             async>
     </script>
-{% endmacro giscus %}
+{% endcomponent giscus %}
 
-{% macro giscus_placeholder() %}
+{% component giscus_placeholder() %}
     <div class="giscus" />
-{% endmacro giscus_placeholder %}
+{% endcomponent giscus_placeholder %}
 
-{% macro katex(render_options) %}
+{% component katex(render_options) %}
     <link rel="stylesheet" href="{{ get_url(path="katex/katex.min.css", cachebust=true) }}" />
     <script defer src="{{ get_url(path="katex/katex.min.js", cachebust=true) }}"></script>
     <script defer src="{{ get_url(path="katex/contrib/mathtex-script-type.min.js", cachebust=true) }}"></script>
@@ -265,9 +263,9 @@
             renderMathInElement(document.body, {{ render_options | safe }} );
         });
     </script>
-{% endmacro katex %}
+{% endcomponent katex %}
 
-{% macro open_graph(cfg) %}
+{% component open_graph(cfg, @current_url = "", @config, @lang, @page = {}) %}
     <meta property="og:url" content="{{ current_url | safe }}" />
     {%- if page.description %}
         <meta property="og:description" content="{{ page.description }}" />
@@ -281,8 +279,8 @@
     {%- else %}
         <meta property="og:title" content="{{ config.title }}" />
     {%- endif %}
-    {%- if page.extra.thumbnail %}
-        {% set image = resize_image(path=page.colocated_path ~ page.extra.thumbnail, format="png", width=1200, height=630, op="fill") %}
+    {%- if page.extra?.thumbnail %}
+        {% set image = resize_image(path=page.colocated_path ~ page.extra?.thumbnail, format="png", width=1200, height=630, op="fill") %}
         <meta property="og:image" content="{{ image.url }}" />
     {%- else %}
         <meta property="og:image" content="{{ get_url(path=cfg.default_image, cachebust=true) }}" />
@@ -295,4 +293,29 @@
     {%- elif page.date %}
         <meta property="og:updated_time" content="{{ page.date | date(format='%F') }}" />
     {%- endif %}
-{% endmacro open_graph %}
+{% endcomponent open_graph %}
+
+{% component image(path, alt, caption = "", width = "", height = "", class = "", @page = {}) %}
+    {%- set url = get_url(path=page.colocated_path ~ path, cachebust=true) -%}
+    <figure>
+        <a href="{{ url }}">
+            <img src="{{ url }}" alt="{{ alt }}"
+                {%- if width %} width="{{ width }}"{% endif %}
+                {%- if height %} height="{{ height }}"{% endif %}
+                {%- if class %} class="{{ class }}"{% endif %}/>
+        </a>
+        {% if caption %}<figcaption>{{ caption }}</figcaption>{% endif %}
+    </figure>
+{% endcomponent image %}
+
+{% component include(path, trimmed = false, @page = {}) %}
+    {%- set content = load_data(path=page.colocated_path ~ path) -%}
+    {%- if trimmed -%}
+        {%- set content = content | trim -%}
+    {%- endif -%}
+    {{- content | safe -}}
+{% endcomponent include %}
+
+{% component tex(block = false) %}
+    <script type="math/tex{% if block %};mode=display{% endif %}">{{ body }}</script>
+{% endcomponent tex %}

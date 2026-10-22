@@ -2,12 +2,6 @@
 {% block main %}
     {{ super() }}
     {% set section = get_section(path="posts/_index.md", lang=lang) %}
-    {{ parts::pages_list_by_year(
-        pages=section.pages,
-        have_title=true,
-        title=page.title,
-        title_url=current_url,
-        config=config
-    ) }}
+    {{ <pages_list_by_year pages={section.pages} title={page.title} title_url={current_url} /> }}
 {% endblock main %}
 {# Remove sidebar #}{% block optional_aside %}{% endblock optional_aside %}

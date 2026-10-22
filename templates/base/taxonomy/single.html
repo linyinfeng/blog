@@ -8,22 +8,11 @@
     {{ super() }}
     {% set taxonomy_name = trans(key=taxonomy.name, lang=lang) %}
     {% set title = taxonomy_name ~ " - " ~ term.name %}
-    {{ parts::pages_list(
-        pages=term.pages,
-        have_title=true,
-        title=title,
-        title_url=current_url,
-        config=config
-    ) }}
+    {{ <pages_list pages={term.pages} title={title} title_url={current_url} /> }}
 {% endblock main %}
 {% block aside %}
     {% set taxonomy_name = trans(key=taxonomy.name, lang=lang) %}
     {% set taxonomy_with_items = get_taxonomy(kind=taxonomy.name, lang=lang) %}
     {% set terms = taxonomy_with_items.items %}
-    {{ parts::taxonomy_list(
-        terms=terms,
-        title=taxonomy_name,
-        title_url=get_url(path=taxonomy.name, lang=lang),
-        have_title=true
-    ) }}
+    {{ <taxonomy_list terms={terms} title={taxonomy_name} title_url={get_url(path=taxonomy.name, lang=lang)} /> }}
 {% endblock %}
