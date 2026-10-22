@@ -21,7 +21,7 @@ term = "posts/homemade-nix-flake-channel"
 
 <!-- more -->
 
-{{ image(path="hydra-and-flakes.png", alt="一条 hydra 正在构建 flakes", caption="Hydra 构建 flakes 的珍贵影像（由 Nano Banana Pro 生成）") }}
+{{ <image path="hydra-and-flakes.png" alt="一条 hydra 正在构建 flakes" caption="Hydra 构建 flakes 的珍贵影像（由 Nano Banana Pro 生成）" /> }}
 
 ## 问题
 

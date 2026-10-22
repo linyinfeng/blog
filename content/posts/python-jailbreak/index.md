@@ -27,7 +27,7 @@ term = "posts/python-jailbreak"
 
 ```python
 # homework.py
-{{ include(path="./codes/homework.py", trimmed=true) }}
+{{ <include path="./codes/homework.py" trimmed={true} /> }}
 ```
 
 ### 尝试 1
@@ -36,12 +36,12 @@ term = "posts/python-jailbreak"
 
 ```python
 # utils.py
-{{ include(path="./codes/utils.py", trimmed=true) }}
+{{ <include path="./codes/utils.py" trimmed={true} /> }}
 ```
 
 ```python
 # jail1.py
-{{ include(path="./codes/jail1.py", trimmed=true)}}
+{{ <include path="./codes/jail1.py" trimmed={true} /> }}
 ```
 
 ```console
@@ -94,7 +94,7 @@ warning: can't use pyrepl: function() argument 'code' must be code, not str
 
 ```python
 # jail1_1.py
-{{ include(path="./codes/jail1_1.py", trimmed=true)}}
+{{ <include path="./codes/jail1_1.py" trimmed={true} /> }}
 ```
 
 ```console
@@ -108,7 +108,7 @@ $ # nothing
 
 ```python
 # jail2.py
-{{ include(path="./codes/jail2.py", trimmed=true)}}
+{{ <include path="./codes/jail2.py" trimmed={true} /> }}
 ```
 
 ```console
@@ -133,7 +133,7 @@ You should not use 'list' in this problem.
 
 ```python
 # jail3.py
-{{ include(path="./codes/jail3.py", trimmed=true)}}
+{{ <include path="./codes/jail3.py" trimmed={true} /> }}
 ```
 
 ```console
@@ -153,7 +153,7 @@ $ python jail3.py
 
 ```python
 # jail4.py
-{{ include(path="./codes/jail4.py", trimmed=true)}}
+{{ <include path="./codes/jail4.py" trimmed={true} /> }}
 ```
 
 ```console
@@ -176,7 +176,7 @@ RuntimeError: You should not use square brackets `[...]` in this problem
 
 ```python
 # jail.py
-{{ include(path="./codes/jail.py", trimmed=true)}}
+{{ <include path="./codes/jail.py" trimmed={true} /> }}
 ```
 
 ```console
@@ -206,7 +206,7 @@ ImportError: __import__ not found
 
 ```python
 # jailbreak.py
-{{ include(path="./codes/jailbreak.py", trimmed=true) }}
+{{ <include path="./codes/jailbreak.py" trimmed={true} /> }}
 ```
 
 ```console

@@ -65,7 +65,7 @@ term = "posts/latex-svg"
 
 默认情况下可能会发现 `dvisvgm` 生成的 SVG 里面字体显示不正确。这是因为默认情况下，`dvisvgm` 会使用几乎没有什么浏览器支持的 SVG `<font>` 元素将字体嵌入图片。
 
-{{ image(path="with-svg-font.svg", alt="一张只能在极少数浏览器中正确显示的 SVG 图片", caption="使用 SVG 字体的本站 logo", width="200")}}
+{{ <image path="with-svg-font.svg" alt="一张只能在极少数浏览器中正确显示的 SVG 图片" caption="使用 SVG 字体的本站 logo" width="200" /> }}
 
 解决方法有多种：
 
@@ -77,7 +77,7 @@ term = "posts/latex-svg"
 
    这样生成的 SVG 可以在大多数现代浏览器中正确显示。
 
-   {{ image(path="with-woff-font.svg", alt="一张可以在大多数现代浏览器中正确显示的 SVG 图片", caption="使用 WOFF 字体的本站 logo", width="200")}}
+   {{ <image path="with-woff-font.svg" alt="一张可以在大多数现代浏览器中正确显示的 SVG 图片" caption="使用 WOFF 字体的本站 logo" width="200" /> }}
 
    但是在非浏览器，比如一些图片查看器中，可能仍然无法正确显示字体。
 

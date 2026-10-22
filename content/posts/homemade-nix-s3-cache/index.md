@@ -181,7 +181,7 @@ $ nix path-info /run/current-system --closure-size --human-readable
 
 由于 `nix-cache-overlay` 直接转发请求，因此可以直接支持 S3 multipart 上传：
 
-{{ image(path="nix-cache-overlay-screenshot.png", alt="一张 Journald 的截图，内容是 nix-cache-overlay 的日志", caption="一张含有 multipart 上传的日志截图") }}
+{{ <image path="nix-cache-overlay-screenshot.png" alt="一张 Journald 的截图，内容是 nix-cache-overlay 的日志" caption="一张含有 multipart 上传的日志截图" /> }}
 
 使用方法就是首先起一个 nix-cache-overlay 服务（添加 overlay 和 NixOS module 后）：
 
@@ -295,7 +295,7 @@ Sig: cache.nixos.org-1:K25JMfP03adJ85zC7xg8qLa2LEjK7edYMZ+JzZyaZTuKYL6EXDoPXFWaM
 
 通过以上配置，我已经使用了三年多的 Nix S3 binary cache，成本极低（目前每月账单都是 0 USD），且不论是上传还是下载的性能都远超需要中间服务器的方案，如 [attic](https://github.com/zhaofengli/attic)。
 
-{{ image(path="s3-cache-flow.png", alt="一张 S3 binary cache 的流程图", caption="当前 S3 cache 的工作流程图")}}
+{{ <image path="s3-cache-flow.png" alt="一张 S3 binary cache 的流程图" caption="当前 S3 cache 的工作流程图" /> }}
 
 但该方案也是一个土制方案：
 
