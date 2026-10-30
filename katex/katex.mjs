@@ -15827,7 +15827,12 @@ class Parser {
         }
       case "raw":
         {
+          // Skip spaces and comments up to the opening brace while % is still a comment
+          this.gullet.consumeSpaces();
+          var percentCatcode = this.gullet.lexer.catcodes["%"];
+          this.gullet.lexer.setCatcode("%", 12); // other character
           var token = this.parseStringGroup(optional);
+          this.gullet.lexer.setCatcode("%", percentCatcode);
           return token != null ? {
             type: "raw",
             mode: "text",
@@ -15971,11 +15976,13 @@ class Parser {
    * and setting the catcode of % as an active character (as in \hyperref).
    */
   parseUrlGroup(optional) {
+    var percentCatcode = this.gullet.lexer.catcodes["%"];
+    var tildeCatcode = this.gullet.lexer.catcodes["~"];
     this.gullet.lexer.setCatcode("%", 13); // active character
     this.gullet.lexer.setCatcode("~", 12); // other character
     var res = this.parseStringGroup(optional);
-    this.gullet.lexer.setCatcode("%", 14); // comment character
-    this.gullet.lexer.setCatcode("~", 13); // active character
+    this.gullet.lexer.setCatcode("%", percentCatcode);
+    this.gullet.lexer.setCatcode("~", tildeCatcode);
     if (res == null) {
       return null;
     }
@@ -16371,7 +16378,7 @@ var renderToHTMLTree = function renderToHTMLTree(expression, options) {
     return renderError(error, expression, settings);
   }
 };
-var version = "0.19.0";
+var version = "0.19.1";
 var __domTree = {
   Span,
   Anchor,
