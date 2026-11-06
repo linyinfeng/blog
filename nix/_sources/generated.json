@@ -1,59 +1,59 @@
 {
-    "katex": {
-        "cargoLock": null,
-        "date": null,
-        "extract": null,
-        "name": "katex",
-        "passthru": null,
-        "pinned": false,
-        "src": {
-            "name": null,
-            "sha256": "sha256-dR4p/7DFvBhPCGkqCqkF/4alnO0H9jWifnKnt7xTA2w=",
-            "type": "url",
-            "url": "https://github.com/KaTeX/KaTeX/releases/download/v0.19.1/katex.tar.gz"
-        },
-        "version": "v0.19.1"
+  "katex": {
+    "cargoLock": null,
+    "date": null,
+    "extract": null,
+    "name": "katex",
+    "passthru": null,
+    "pinned": false,
+    "src": {
+      "name": null,
+      "sha256": "sha256-dR4p/7DFvBhPCGkqCqkF/4alnO0H9jWifnKnt7xTA2w=",
+      "type": "url",
+      "url": "https://github.com/KaTeX/KaTeX/releases/download/v0.19.1/katex.tar.gz"
     },
-    "license-buttons": {
-        "cargoLock": null,
-        "date": "2026-11-04",
-        "extract": null,
-        "name": "license-buttons",
-        "passthru": null,
-        "pinned": false,
-        "src": {
-            "deepClone": false,
-            "fetchSubmodules": false,
-            "leaveDotGit": false,
-            "name": null,
-            "owner": "creativecommons",
-            "repo": "licensebuttons",
-            "rev": "5e3d8f7320e2fbed90e546cbc58983ab3235bcb6",
-            "sha256": "sha256-e+2O9ficwxUpuyfGuB5kTbvyEjU/sifD9nbO+9fGYm0=",
-            "sparseCheckout": [],
-            "type": "github"
-        },
-        "version": "5e3d8f7320e2fbed90e546cbc58983ab3235bcb6"
+    "version": "v0.19.1"
+  },
+  "license-buttons": {
+    "cargoLock": null,
+    "date": "2026-11-04",
+    "extract": null,
+    "name": "license-buttons",
+    "passthru": null,
+    "pinned": false,
+    "src": {
+      "deepClone": false,
+      "fetchSubmodules": false,
+      "leaveDotGit": false,
+      "name": null,
+      "owner": "creativecommons",
+      "repo": "licensebuttons",
+      "rev": "5e3d8f7320e2fbed90e546cbc58983ab3235bcb6",
+      "sha256": "sha256-e+2O9ficwxUpuyfGuB5kTbvyEjU/sifD9nbO+9fGYm0=",
+      "sparseCheckout": [],
+      "type": "github"
     },
-    "normalize-css": {
-        "cargoLock": null,
-        "date": null,
-        "extract": null,
-        "name": "normalize-css",
-        "passthru": null,
-        "pinned": false,
-        "src": {
-            "deepClone": false,
-            "fetchSubmodules": false,
-            "leaveDotGit": false,
-            "name": null,
-            "owner": "necolas",
-            "repo": "normalize.css",
-            "rev": "8.0.1",
-            "sha256": "sha256-OviSJZM2ggeGoX/NGut4fVMLePNqBHgAjmK53BfvHEU=",
-            "sparseCheckout": [],
-            "type": "github"
-        },
-        "version": "8.0.1"
-    }
+    "version": "5e3d8f7320e2fbed90e546cbc58983ab3235bcb6"
+  },
+  "normalize-css": {
+    "cargoLock": null,
+    "date": null,
+    "extract": null,
+    "name": "normalize-css",
+    "passthru": null,
+    "pinned": false,
+    "src": {
+      "deepClone": false,
+      "fetchSubmodules": false,
+      "leaveDotGit": false,
+      "name": null,
+      "owner": "necolas",
+      "repo": "normalize.css",
+      "rev": "8.0.1",
+      "sha256": "sha256-OviSJZM2ggeGoX/NGut4fVMLePNqBHgAjmK53BfvHEU=",
+      "sparseCheckout": [],
+      "type": "github"
+    },
+    "version": "8.0.1"
+  }
 }
