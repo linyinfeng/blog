@@ -16,15 +16,15 @@
   };
   license-buttons = {
     pname = "license-buttons";
-    version = "2ae879e0d7a4cd9474c0fc5773abc26b0ba45189";
+    version = "5e3d8f7320e2fbed90e546cbc58983ab3235bcb6";
     src = fetchFromGitHub {
       owner = "creativecommons";
       repo = "licensebuttons";
-      rev = "2ae879e0d7a4cd9474c0fc5773abc26b0ba45189";
+      rev = "5e3d8f7320e2fbed90e546cbc58983ab3235bcb6";
       fetchSubmodules = false;
-      sha256 = "sha256-EGiCvCoKcmkfPLfyHibnzrOMtgrHgK0pX2YLweULaz4=";
+      sha256 = "sha256-e+2O9ficwxUpuyfGuB5kTbvyEjU/sifD9nbO+9fGYm0=";
     };
-    date = "2025-07-01";
+    date = "2026-11-04";
   };
   normalize-css = {
     pname = "normalize-css";
