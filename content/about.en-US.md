@@ -5,4 +5,4 @@ template = "simple-page.html"
 term = "site"
 +++
 
-I am Yinfeng. On June 2, 2026, I find myself at a crossroads.
+I am Yinfeng. May I be a mystery.
